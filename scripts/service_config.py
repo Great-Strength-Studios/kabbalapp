@@ -1,5 +1,4 @@
 import sys
-from termios import ECHOE
 import yaml
 from typing import List
 from functools import wraps
