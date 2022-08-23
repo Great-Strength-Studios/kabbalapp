@@ -42,6 +42,17 @@ class ServiceConfiguration(Model):
     init_params = t.ListType(t.ModelType(ServiceParameter, default=[]), serialize_when_none=False)
     methods = t.ListType(t.ModelType(ServiceMethod), default=[], serialize_when_none=False)
 
+    def add_model(self, name: str, type: str = 'Model'):
+        model = ServiceModel({
+            'name': name,
+            'type': type
+        })
+
+        try:
+            self.models.append(model)
+        except AttributeError:
+            self.models = [model]
+
     def add_parameter(self, name: str, type: str, required: bool = False, default: str = None):
         param = ServiceParameter({
             'name': name,
@@ -80,17 +91,6 @@ class ServiceConfiguration(Model):
             self.methods = [method]
 
         return method
-
-    def add_model(self, name: str, type: str = 'Model'):
-        model = ServiceModel({
-            'name': name,
-            'type': type
-        })
-
-        try:
-            self.models.append(model)
-        except AttributeError:
-            self.models = [model]
 
 
 class InterfaceServiceConfiguration(ServiceConfiguration):
