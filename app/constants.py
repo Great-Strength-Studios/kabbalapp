@@ -113,6 +113,11 @@ CORE_MAPPINGS_DATA_CONTENT = """
 from ..events import *
 """
 
+CORE_MAPPINGS_HEADERS_CONTENT = """
+def default(request, app_context, **kwargs):
+    pass
+"""
+
 CORE_INIT_CONTENT = """
 from typing import Dict
 
@@ -202,7 +207,7 @@ def handle(context):
     pass
 """
 
-CORE_CONTAINER_CONTENT = """
+CORE_CONTAINERS_CONTENT = """
 from schematics import types as t, Model
 
 from ..services import SkyWellness, ConfigurationService
