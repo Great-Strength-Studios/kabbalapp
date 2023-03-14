@@ -22,10 +22,16 @@ SERVICES_DIR_NAME = 'services'
 
 # Printing files
 INIT_FILE = '__init__.py'
+REQUIREMENTS_FILE = 'requirements.txt'
 APP_CONFIG_FILE = 'app.yml'
 APP_CONSTANTS_FILE = 'constants.py'
 
 # Printing file content
+REQUIREMENTS_CONTENT = """
+schematics>=2.1.1
+pyyaml>= 6.0
+"""
+
 APP_INIT_CONTENT = """
 import os, yaml
 
@@ -98,10 +104,9 @@ ERRORS = 'errors'
 CORE_INIT_CONTENT = """
 from typing import Dict
 
-from .error import ErrorManager, Error, AppError
-from .config import *
-from .containers import ContainerConfig, Container, DynamicContainer
-from .routing import MessageContext, EndpointHandler
+from .error import *
+from .containers import *
+from .routing import *
 from .events import *
 
 class AppConfig():
@@ -177,4 +182,55 @@ class AppBuilder():
 
     def build(self):
         pass
+"""
+
+CORE_CONTAINER_CONTENT = """
+from schematics import types as t, Model
+
+from ..services import SkyWellness, ConfigurationService
+
+# Container configuration
+class ContainerConfig(Model):
+    pass
+
+
+# Default container
+class Container():
+
+    # Custom fields below
+    # ...
+
+    def __init__(self, config: ContainerConfig):
+        # Default init
+        self.config = config
+
+        # Custom init below
+        # ...
+
+    def config_service(self) -> ConfigurationService:
+        from ..services.config.yaml import YamlConfigurationService
+
+        return YamlConfigurationService('config.yml')
+
+
+    def skywellness(self, profile_name=None) -> SkyWellness:
+        from ..services.skywellness.salesforce import SkyWellnessSalesforce
+
+        config_service = self.config_service()
+        if not profile_name:
+            profile_name = config_service.config.default_profile
+        profile = self.config_service.get_profile(profile_name)
+        
+        return SkyWellnessSalesforce(
+            profile.username, 
+            profile.password, 
+            profile.security_token, 
+            profile.is_sandbox)
+    
+
+# Default dynamic container
+class DynamicContainer():
+    
+    def add_service(self, service_name, factory_func):
+        setattr(self, service_name, factory_func)
 """
