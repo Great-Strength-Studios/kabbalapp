@@ -18,7 +18,7 @@ class MessageContext():
         self.errors = ErrorManager()
 
 
-class EndpointConfig():
+class EndpointConfig(Model):
 
     def __init__(self, raw_data: dict = None):
         # Account for single-module configuration
