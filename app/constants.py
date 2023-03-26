@@ -229,26 +229,6 @@ class Container():
 
         # Custom init below
         # ...
-
-    def config_service(self) -> ConfigurationService:
-        from ..services.config.yaml import YamlConfigurationService
-
-        return YamlConfigurationService('config.yml')
-
-
-    def skywellness(self, profile_name=None) -> SkyWellness:
-        from ..services.skywellness.salesforce import SkyWellnessSalesforce
-
-        config_service = self.config_service()
-        if not profile_name:
-            profile_name = config_service.config.default_profile
-        profile = self.config_service.get_profile(profile_name)
-        
-        return SkyWellnessSalesforce(
-            profile.username, 
-            profile.password, 
-            profile.security_token, 
-            profile.is_sandbox)
     
 
 # Default dynamic container
