@@ -8,16 +8,14 @@ class AppConfiguration(Model):
         super().__init__(**kwargs)
 
     name = t.StringType(required=True)
-
-    # endpoints: Dict[str, EndpointConfig] = {}
-    # errors: Dict[str, Error] = {}
-
-    # def __init__(self, 
-    #     endpoints: Dict[str, EndpointConfig] = {}, 
-    #     errors: Dict[str, Error] = {}): 
-
-    #     self.endpoints = endpoints
-    #     self.errors = errors
+    data_mapping_path = t.StringType(default='data.core.mappings.data')
+    headers_mapping_path = t.StringType(default='data.core.mappings.headers')
+    services_mapping_path = t.StringType(default='data.core.mappings.services')
+    endpoints = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
+    errors = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
+    mappings = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
+    modules = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
+    services = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
 
 
 class AppConfigurationReader():
