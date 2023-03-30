@@ -1,6 +1,6 @@
 from schematics import types as t, Model
 
-from ..services import SkyWellness, ConfigurationService
+from ..domain import SkyWellness, ConfigurationService
 
 # Container configuration
 class ContainerConfig(Model):

@@ -1,21 +1,12 @@
 from typing import Dict
 
+from ..constants import APP_CONFIGURATION_FILE
 from .error import *
 from .containers import *
 from .routing import *
 from .events import *
 
-class AppConfig():
 
-    endpoints: Dict[str, EndpointConfig] = {}
-    errors: Dict[str, Error] = {}
-
-    def __init__(self, 
-        endpoints: Dict[str, EndpointConfig] = {}, 
-        errors: Dict[str, Error] = {}): 
-
-        self.endpoints = endpoints
-        self.errors = errors
 
 
 class AppContext():
@@ -60,7 +51,7 @@ class AppBuilder():
     def app_config(self) -> AppConfig:
         return self._current_session.app_config
 
-    def create_new_app(self, name: str, **kwargs):
+    def create_new_app(self, name: str, config_file: str = APP_CONFIGURATION_FILE, **kwargs):
         kwargs
         if self._current_session:
             self._current_session = None

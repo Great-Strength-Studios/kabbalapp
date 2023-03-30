@@ -24,6 +24,6 @@ class AppConfigurationReader():
     def __init__(self, app_config_filepath: str):
         self.app_config_filepath = app_config_filepath
 
-    def load_config(self, **kwargs) -> AppConfiguration:
-        kwargs
+    def load_config(self, app_name: str, **kwargs) -> AppConfiguration:
+        app_name, kwargs
         pass 
