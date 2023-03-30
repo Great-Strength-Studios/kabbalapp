@@ -1,7 +1,7 @@
 from typing import Dict
 
 from ..constants import APP_CONFIGURATION_FILE
-from .config import load_app_config_reader, AppConfiguration
+from .config import load_app_config_reader, AppConfigurationReader, AppConfiguration
 from .error import *
 from .containers import *
 from .routing import *
@@ -18,12 +18,11 @@ class AppContext():
     errors: ErrorManager = ErrorManager()
     endpoints: dict = None
     
-    def __init__(self, name: str):
+    def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfig):
         self.name = name
-        app_config = load_app_config_reader(APP_CONFIGURATION_FILE).load_config(name)
         self._load_errors(app_config)
         self._load_endpoints(app_config)
-        self._load_container(None)
+        self._load_container(container_config)
 
     def _load_errors(self, app_config: AppConfiguration) -> None:
         for error in app_config.errors.values():
@@ -43,9 +42,10 @@ class AppContext():
 class AppBuilder():
 
     class Session():
-        name: str = None
-        app_config: AppConfiguration = None
-        container_config: ContainerConfig = None
+        def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfig):
+            self.name = name
+            self.app_config = app_config
+            self.container_config = container_config
 
     _current_session = None
 
@@ -57,8 +57,13 @@ class AppBuilder():
         kwargs
         if self._current_session:
             self._current_session = None
-        self._current_session = self.Session()
-        self._current_session.name = name
+        app_config_reader = load_app_config_reader(config_file)
+        app_config = app_config_reader.load_config(name)
+        self._current_session = self.Session(
+            name=name,
+            app_config=app_config,
+            container_config=None
+        )
         return self
 
     def set_app_config(self, app_config: AppConfiguration):
