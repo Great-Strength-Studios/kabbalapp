@@ -9,7 +9,7 @@ import sys
 sys.path.append(os.getcwd())
 
 
-from app.services.service_config import ServiceConfiguration, InterfaceServiceConfiguration
+from app.domain.service_config import ServiceConfiguration, InterfaceServiceConfiguration
 
 APP_FILE_PATH = '/Users/ashatz/Work/Code/entman-webhooks-api'
 SERVICES_FILE = 'app/services/services.yml'
