@@ -1,4 +1,4 @@
-from schematics import types as t, Model
+from schematics import Model
 
 class RequestEvent(Model):
     pass
