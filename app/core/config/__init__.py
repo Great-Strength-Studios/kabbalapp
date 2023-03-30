@@ -1,3 +1,4 @@
+import os
 from schematics import types as t, Model
 
 class AppConfiguration(Model):
@@ -27,3 +28,8 @@ class AppConfigurationReader():
     def load_config(self, app_name: str, **kwargs) -> AppConfiguration:
         app_name, kwargs
         pass 
+
+def load_app_config_reader(app_config_filepath: str) -> AppConfigurationReader:
+    if os.path.splitext(app_config_filepath)[1] in ['.yaml', '.yml']:
+        from .yaml import YamlAppConfigurationReader
+        return YamlAppConfigurationReader(app_config_filepath)
