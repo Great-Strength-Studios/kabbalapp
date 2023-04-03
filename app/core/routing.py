@@ -63,26 +63,27 @@ class EndpointHandler():
         from time import time
         from importlib import import_module
 
-        # Pull settings first
+        # Pull settings first.
         debug = kwargs.get('debug', False)
 
         # Add errors first.  It's easier this way...
         context.errors = app_context.errors
 
-        # Map incoming message to headers, data, and services
-        header_mappings = import_module(HEADERS_MAPPINGS_PATH)
+        # Begin header mapping process.
         if debug: print('Perform header mapping: "mapping": "{}"'.format(self.endpoint.header_mapping))
-        try:
-            header_mapping = getattr(header_mappings, self.endpoint.header_mapping) 
-        except TypeError:
-            header_mapping = getattr(header_mappings, 'default')
+
+        # Import header mappings module.
+        header_module = import_module(HEADERS_MAPPINGS_PATH)
         
-        # Handle in case header mapping throws an internal error or returns nothing
         try:
-             for key, value in header_mapping(request, app_context, **kwargs).items():
-                context.headers[key] = value
-        except AttributeError:
-            pass
+            # Retrieve header mapping function.
+            header_mapping_func = getattr(header_module, self.endpoint.header_mapping) 
+        except TypeError:
+            # Retrieve default header mapping function if none is specified.
+            header_mapping_func = getattr(header_module, 'default')
+
+        # Get header data and add to message context.
+        context.headers = header_mapping_func(request, app_context, **kwargs)
 
         for module in self.endpoint.modules:
 
