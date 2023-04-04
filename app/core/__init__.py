@@ -8,8 +8,6 @@ from .routing import *
 from .events import *
 
 
-
-
 class AppContext():
 
     name: str = None
@@ -57,7 +55,7 @@ class AppBuilder():
         kwargs
         if self._current_session:
             self._current_session = None
-        app_config_reader = load_app_config_reader(config_file)
+        app_config_reader: AppConfigurationReader = load_app_config_reader(config_file)
         app_config = app_config_reader.load_config(name)
         self._current_session = self.Session(
             name=name,
