@@ -1,7 +1,5 @@
 from schematics import types as t, Model
 
-from ..domain import SkyWellness, ConfigurationService
-
 # Container configuration
 class ContainerConfig(Model):
     pass
