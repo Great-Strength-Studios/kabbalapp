@@ -7,8 +7,9 @@ mappings:
   service: 
 modules: 
   app_project:
-    new:
-      functions:
-      - function_path: new_app_project
-        data_mapping: new_app_project
+    features:
+      new:
+        functions:
+        - function_path: new_app_project
+          data_mapping: new_app_project
 services: 
