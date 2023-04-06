@@ -7,12 +7,12 @@ class AppConfiguration(Model):
 
         class FeatureConfiguration(Model):
             
-            def __init__(self, raw_data: dict = None):
-            # Account for single-module configuration
+            def __init__(self, raw_data: dict = None, **kwargs):
+                # Account for single-module configuration
                 try:
                     config = {}
                     config['modules'] = [{
-                        'module_path': raw_data.pop('module_path'),
+                        'function_path': raw_data.pop('module_path'),
                         'params': raw_data.pop('params', {}),
                         'data_mapping': raw_data.pop('data_mapping', None),
                         'use_services': raw_data.pop('use_services', None),
@@ -24,7 +24,7 @@ class AppConfiguration(Model):
                     super().__init__(raw_data=raw_data)
 
             class FunctionConfiguration(Model): 
-                module_path = t.StringType(required=True)
+                function_path = t.StringType(required=True)
                 data_mapping = t.StringType()
                 use_services = t.StringType()
                 params = t.DictType(t.StringType(), default={})
@@ -36,10 +36,10 @@ class AppConfiguration(Model):
             log_params = t.DictType(t.StringType(), default={})
 
 
-        features = t.DictType(FeatureConfiguration, default={})
+        features = t.DictType(t.ModelType(FeatureConfiguration), default={})
 
-    errors = t.DictType(t.StringType, default={}, serialize_when_none=False)
-    modules = t.DictType(ModuleConfiguration, default={}, serialize_when_none=False)
+    errors = t.DictType(t.StringType, default={})
+    modules = t.DictType(t.ModelType(ModuleConfiguration), default={}, serialize_when_none=False)
 
 class AppConfigurationReader():
 
