@@ -2,6 +2,7 @@
 # Environment
 APP_ENV = 'APP_ENV'
 DEFAULT_APP_ENV = 'prod'
+DEBUG = 'DEBUG'
 
 # Configuration file
 APP_CONFIGURATION_FILE = 'app/app.yml'
@@ -313,10 +314,11 @@ from schematics import types as t, Model
 """
 
 CORE_ROUTING_CONTENT = """
-from schematics import types as t, Model
+from schematics import Model
 from schematics.exceptions import DataError
 
 from . import activity
+from .config import EndpointConfig
 from .error import *
 
 HEADERS_MAPPINGS_PATH = 'app.core.mappings.headers'
@@ -333,38 +335,6 @@ class MessageContext():
         self.errors = ErrorManager()
 
 
-class EndpointConfig():
-
-    def __init__(self, raw_data: dict = None):
-        # Account for single-module configuration
-        try:
-            config = {}
-            config['modules'] = [{
-                'subdomain': raw_data.pop('subdomain'),
-                'module': raw_data.pop('module'),
-                'params': raw_data.pop('params', {}),
-                'data_mapping': raw_data.pop('data_mapping', None),
-                'use_services': raw_data.pop('use_services', None),
-                'log_activity': raw_data.pop('log_activity', True)
-            }]
-            config['header_mapping'] = raw_data.pop('header_mapping', None)
-            super().__init__(raw_data=config)
-        except KeyError:
-            super().__init__(raw_data=raw_data)
-
-    class ModuleConfiguration(Model): 
-        subdomain = t.StringType(required=True)
-        module = t.StringType(required=True)
-        data_mapping = t.StringType()
-        use_services = t.StringType()
-        params = t.DictType(t.StringType(), default={})
-        log_activity = t.BooleanType(default=True)
-
-    header_mapping = t.StringType()
-    modules = t.ListType(t.ModelType(ModuleConfiguration), default=[])
-    log_params = t.DictType(t.StringType(), default={})
-
-
 class EndpointHandler():
     def __init__(self, endpoint):
         if isinstance(endpoint, EndpointConfig):
@@ -374,33 +344,38 @@ class EndpointHandler():
         self.current_step = 0
 
     
-    def handle(self, context: MessageContext, request, app_context, **kwargs):
+    def handle(self, request, app_context, **kwargs):
         from time import time
         from importlib import import_module
 
-        # Pull settings first
+        # Pull settings first.
         debug = kwargs.get('debug', False)
+
+        # Create message context.
+        context = MessageContext()
 
         # Add errors first.  It's easier this way...
         context.errors = app_context.errors
 
-        # Map incoming message to headers, data, and services
-        header_mappings = import_module(HEADERS_MAPPINGS_PATH)
+        # Begin header mapping process.
         if debug: print('Perform header mapping: "mapping": "{}"'.format(self.endpoint.header_mapping))
-        try:
-            header_mapping = getattr(header_mappings, self.endpoint.header_mapping) 
-        except TypeError:
-            header_mapping = getattr(header_mappings, 'default')
+
+        # Import header mappings module.
+        header_module = import_module(HEADERS_MAPPINGS_PATH)
         
-        # Handle in case header mapping throws an internal error or returns nothing
         try:
-             for key, value in header_mapping(request, app_context, **kwargs).items():
-                context.headers[key] = value
-        except AttributeError:
-            pass
+            # Retrieve header mapping function.
+            header_mapping_func = getattr(header_module, self.endpoint.header_mapping) 
+        except TypeError:
+            # Retrieve default header mapping function if none is specified.
+            header_mapping_func = getattr(header_module, 'default')
+
+        # Get header data and add to message context.
+        context.headers = header_mapping_func(request, app_context, **kwargs)
 
         for module in self.endpoint.modules:
-
+            
+            # Map incoming message to headers, data, and services.
             if debug: print('Executing module: "module": "{}"'.format(module.to_primitive()))
 
             # Add current module to headers.

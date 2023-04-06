@@ -10,4 +10,4 @@ class YamlAppConfigurationReader(AppConfigurationReader):
     def load_config(self, **kwargs) -> AppConfiguration:
         with open(self.app_config_filepath) as stream:
             app_components = yaml.safe_load(stream)
-        return AppConfiguration(**app_components)
+        return AppConfiguration(app_components, **kwargs)

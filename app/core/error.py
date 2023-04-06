@@ -50,19 +50,19 @@ class AppError(Exception):
     def to_dict(self):
         return dict(error_code=self.error_code, message=self.message)
 
-INVALID_REQUEST_DATA = Error(dict(
-    error_code='000000001',
-    error_name='INVALID_REQUEST_DATA',
-    message=dict(
-        en_US='Invalid request contains the following errors: {}'
-    )
-))
+INVALID_REQUEST_DATA = Error({
+    'error_code': '000000001',
+    'error_name': 'INVALID_REQUEST_DATA',
+    'message': {
+        'en_US': 'Invalid request contains the following errors: {}'
+    }
+})
 
-ENDPOINT_NOT_FOUND = Error(dict(
-    error_code='000000002', 
-    error_name='ENDPOINT_NOT_FOUND',
-    message=dict(
-        en_US='Unable to find the requested endpoint. Subdomain: '{}', Module: '{}''
-    ), 
-    status_code=404
-))
+ENDPOINT_NOT_FOUND = Error({
+    'error_code': '000000002',
+    'error_name': 'ENDPOINT_NOT_FOUND',
+    'message': {
+        'en_US': 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
+    },
+    'status_code': 404
+})

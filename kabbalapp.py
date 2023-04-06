@@ -1,24 +1,24 @@
 import os
-
-from app import load_app_config, load_container_config, constants
-from app.endpoints.cmd import CmdAppBuilder, CmdAppContext, arguments as args
+from app import CmdAppBuilder, CmdAppContext, args, constants
 
   
-# Remove system arguments
+
+# Pop env from args using default app env if not provided
 env = args.args.pop('env', constants.DEFAULT_APP_ENV)
+
+# Pop debug from args using false if not provided
 debug = args.args.pop('debug', False)
 
 # Preprocess
 os.environ[constants.APP_ENV] = env
 
 builder = CmdAppBuilder().create_new_app('kabbalapp')
-load_app_config(builder)
-load_container_config(builder)
 
 app_context: CmdAppContext = builder.build()
 
 app_context.run(
-    endpoint = args.endpoint,
+    command = args.command,
+    subcommands = args.subcommands,
     args=args.args, 
     env=env,
     debug=debug)

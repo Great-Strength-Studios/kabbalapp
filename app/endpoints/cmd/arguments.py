@@ -14,8 +14,6 @@ try:
 except KeyError:
     raise Exception('Invalid command input')
 try:
-    subcommand = args.pop('subcommand')
+    subcommands = [args.pop('subcommand')]
 except:
     raise Exception('Invalid subcommand input')
-
-endpoint = '{}.{}'.format(command, subcommand)
