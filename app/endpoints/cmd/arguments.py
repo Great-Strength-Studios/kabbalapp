@@ -17,5 +17,3 @@ try:
     subcommand = args.pop('subcommand')
 except:
     raise Exception('Invalid subcommand input')
-
-endpoint = '{}.{}'.format(command, subcommand)
