@@ -12,7 +12,9 @@ class AppProjectManager():
         self.app_project_filepath = app_project_filepath
 
     def load_project(self, app_key: str) -> AppProject:
+        app_key
         pass
 
     def save_project(self, app_project: AppProject):
+        app_project
         pass
