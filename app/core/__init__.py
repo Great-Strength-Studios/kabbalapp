@@ -17,21 +17,22 @@ class AppContext():
     endpoints: dict = None
     
     def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfig):
+        # Set app name.
         self.name = name
-        self._load_errors(app_config)
-        self._load_endpoints(app_config)
-        self._load_container(container_config)
+        
+        # Load app errors.
+        try:
+            for error in app_config.errors.values():
+                self.errors.add(error)
+        except AttributeError:
+            pass
 
-    def _load_errors(self, app_config: AppConfiguration) -> None:
-        for error in app_config.errors.values():
-            self.errors.add(error)
-
-    def _load_endpoints(self, app_config: AppConfiguration) -> None:
         self.endpoints = app_config.endpoints
 
-    def _load_container(self, container_config: ContainerConfig) -> None:
+        # Load container config and container.
         self.container_config = container_config
         self.container = Container(container_config)
+
 
     def run(self, **kwargs):
         pass
