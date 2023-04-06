@@ -17,7 +17,8 @@ builder = CmdAppBuilder().create_new_app('kabbalapp')
 app_context: CmdAppContext = builder.build()
 
 app_context.run(
-    endpoint = args.endpoint,
+    command = args.command,
+    subcommands = args.subcommands,
     args=args.args, 
     env=env,
     debug=debug)
