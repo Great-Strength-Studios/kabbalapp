@@ -336,7 +336,7 @@ class MessageContext():
         self.errors = ErrorManager()
 
 
-class EndpointHandler():
+class FeatureHandler():
     def __init__(self, endpoint):
         if isinstance(endpoint, EndpointConfig):
             self.endpoint = endpoint
