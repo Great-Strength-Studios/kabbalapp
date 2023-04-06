@@ -14,6 +14,7 @@ os.environ[constants.APP_ENV] = env
 
 builder = CmdAppBuilder().create_new_app('kabbalapp')
 
+container_config = ContainerConfigurationuration
 app_context: CmdAppContext = builder.build()
 
 app_context.run(

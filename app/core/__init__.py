@@ -11,12 +11,12 @@ from .events import *
 class AppContext():
 
     name: str = None
-    container_config: ContainerConfig = None
+    container_config: ContainerConfiguration = None
     container: Container = None
     errors: ErrorManager = ErrorManager()
     endpoints: dict = None
     
-    def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfig):
+    def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfiguration):
         # Set app name.
         self.name = name
         
@@ -41,7 +41,7 @@ class AppContext():
 class AppBuilder():
 
     class Session():
-        def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfig):
+        def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfiguration):
             self.name = name
             self.app_config = app_config
             self.container_config = container_config
@@ -69,7 +69,7 @@ class AppBuilder():
         self._current_session.app_config = app_config
         return self
 
-    def set_container_config(self, container_config: ContainerConfig):
+    def set_container_config(self, container_config: ContainerConfiguration):
         self._current_session.container_config = container_config
         return self
 
