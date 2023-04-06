@@ -1,9 +1,9 @@
-endpoints: {}
-errors: {}
-events: {}
+endpoints: 
+errors: 
+events: 
 mappings:
-  data: {}
-  header: {}
-  service: {}
-modules: {}
-services: {}
+  data: 
+  header: 
+  service: 
+modules: 
+services: 
