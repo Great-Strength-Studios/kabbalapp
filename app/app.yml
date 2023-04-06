@@ -1,15 +1,9 @@
-kabbalapp:
-  config_file: app.yml
-  data_mapping_path: app.core.mappings.data
-  headers_mapping_path: app.core.mappings.headers
-  services_mapping_path: app.core.mappings.services
-
-  endpoints: {}
-  errors: {}
-  events: {}
-  mappings:
-    data: {}
-    header: {}
-    service: {}
-  modules: {}
-  services: {}
+endpoints: {}
+errors: {}
+events: {}
+mappings:
+  data: {}
+  header: {}
+  service: {}
+modules: {}
+services: {}

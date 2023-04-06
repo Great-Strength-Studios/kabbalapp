@@ -2,13 +2,7 @@ import os
 from schematics import types as t, Model
 
 class AppConfiguration(Model):
-
-    endpoints = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
-    errors = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
-    mappings = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
-    modules = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
-    services = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
-
+    pass
 
 class AppConfigurationReader():
 
