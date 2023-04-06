@@ -26,7 +26,7 @@ app_context: CmdAppContext = builder.build()
 # Run app context.
 app_context.run(
     command = args.command,
-    subcommands = args.subcommands,
+    function = args.function,
     args=args.args, 
     env=env,
     debug=debug)

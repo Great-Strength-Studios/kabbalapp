@@ -8,18 +8,17 @@ class CmdAppContext(AppContext):
 
         # Remove necessary arguments
         command = kwargs.pop('command')
-        subcommands = kwargs.pop('subcommands')
+        function = kwargs.pop('function')
         args = kwargs.pop('args')
 
         # Format endpoint.
-        subcommands_str = '.'.join(subcommands)
-        endpoint = '{}.{}'.format(command, subcommands_str)
+        function_str = '.'.join(function)
         
         # Load endpoint configuration.
         try:
             endpoint_config = self.endpoints[endpoint]
         except (TypeError, KeyError):
-            raise AppError(ENDPOINT_NOT_FOUND.format_message(command, subcommands_str))
+            raise AppError(ENDPOINT_NOT_FOUND.format_message(command, function_str))
         
         # Create endpoint handler.
         handler = EndpointHandler(endpoint_config)

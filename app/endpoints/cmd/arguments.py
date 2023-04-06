@@ -18,6 +18,6 @@ try:
 except KeyError:
     raise Exception('Invalid command input')
 try:
-    subcommands = [args.pop('subcommand')]
+    function = [args.pop('subcommand')]
 except:
     raise Exception('Invalid subcommand input')
