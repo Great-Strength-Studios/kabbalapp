@@ -15,6 +15,6 @@ class AppProjectManager():
         app_key
         pass
 
-    def save_project(self, app_project: AppProject):
-        app_project
+    def save_project(self, app_key: str, app_project: AppProject):
+        app_key, app_project
         pass
