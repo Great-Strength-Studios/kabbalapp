@@ -2,7 +2,9 @@ import os
 from schematics import types as t, Model
 
 class AppConfiguration(Model):
-    pass
+    
+    errors = t.DictType(t.StringType, default={}, serialize_when_none=False)
+    endpoints = t.DictType(t.StringType, default={}, serialize_when_none=False)
 
 class AppConfigurationReader():
 
