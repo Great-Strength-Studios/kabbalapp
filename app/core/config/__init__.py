@@ -3,14 +3,6 @@ from schematics import types as t, Model
 
 class AppConfiguration(Model):
 
-    def __init__(self, name: str, **kwargs):
-        self.name = name
-        super().__init__(**kwargs)
-
-    name = t.StringType(required=True)
-    data_mapping_path = t.StringType(default='data.core.mappings.data')
-    headers_mapping_path = t.StringType(default='data.core.mappings.headers')
-    services_mapping_path = t.StringType(default='data.core.mappings.services')
     endpoints = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
     errors = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
     mappings = t.DictType(t.StringType(), t.DictType(t.StringType(), t.StringType()))
