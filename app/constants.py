@@ -2,7 +2,7 @@
 # Environment
 APP_ENV = 'APP_ENV'
 DEFAULT_APP_ENV = 'prod'
-PROJECTS_DIR = 'PROJECTS_DIR'
+PROJECTS_FILE_PATH = 'PROJECTS_FILE_PATH'
 DEBUG = 'DEBUG'
 
 # Configuration file
