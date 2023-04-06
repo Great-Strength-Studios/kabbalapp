@@ -1,11 +1,14 @@
-import yaml
+import os, yaml
 
 from . import *
 
 class YamlAppProjectManager(AppProjectManager):
 
     def __init__(self, app_project_filepath: str):
-        self.app_project_filepath = app_project_filepath
+        super().__init__(app_project_filepath)
+        if not os.path.exists(self.app_project_filepath):
+            with open(self.app_project_filepath, 'w') as stream:
+                stream.write('')
 
     def load_project(self, app_key: str) -> AppProject:
         with open(self.app_project_filepath) as stream:
