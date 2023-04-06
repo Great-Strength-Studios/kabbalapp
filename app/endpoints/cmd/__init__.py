@@ -14,7 +14,7 @@ class CmdAppContext(AppContext):
         
         # Load endpoint configuration.
         try:
-            endpoint_config = self.endpoints[command][function]
+            endpoint_config = self.modules[command].features[function]
         except (TypeError, KeyError):
             raise AppError(ENDPOINT_NOT_FOUND.format_message(command, function))
         
