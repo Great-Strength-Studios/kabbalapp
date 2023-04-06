@@ -7,6 +7,7 @@ class YamlAppProjectManager(AppProjectManager):
     def __init__(self, app_project_filepath: str):
         super().__init__(app_project_filepath)
         if not os.path.exists(self.app_project_filepath):
+            os.makedirs(os.path.dirname(self.app_project_filepath), exist_ok=True)
             with open(self.app_project_filepath, 'w') as stream:
                 stream.write('')
 
@@ -18,6 +19,9 @@ class YamlAppProjectManager(AppProjectManager):
     def save_project(self, app_key: str, app_project: AppProject):
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
-        app_projects[app_key] = app_project.to_primitive()
+        try:
+            app_projects[app_key] = app_project.to_primitive()
+        except TypeError:
+            app_projects = {app_key: app_project.to_primitive()}
         with open(self.app_project_filepath, 'w') as stream:
             yaml.safe_dump(app_projects, stream)
