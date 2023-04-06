@@ -56,7 +56,7 @@ class AppBuilder():
         if self._current_session:
             self._current_session = None
         app_config_reader: AppConfigurationReader = load_app_config_reader(config_file)
-        app_config = app_config_reader.load_config()
+        app_config = app_config_reader.load_config(strict=False)
         self._current_session = self.Session(
             name=name,
             app_config=app_config,
