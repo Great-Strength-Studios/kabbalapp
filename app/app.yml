@@ -1,10 +1,4 @@
 endpoints: 
-  app_project:
-    new:
-      modules:
-        - subdomain: app_project
-          module: new_app_project
-          data_mapping: new_app_project
 errors: 
 events: 
 mappings:
@@ -12,4 +6,9 @@ mappings:
   header: 
   service: 
 modules: 
+  app_project:
+    new:
+      functions:
+      - function_path: new_app_project
+        data_mapping: new_app_project
 services: 
