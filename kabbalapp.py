@@ -1,5 +1,5 @@
 import os
-from app import CmdAppBuilder, CmdAppContext, args, constants
+from app import CmdAppBuilder, CmdAppContext, args, constants, ContainerConfiguration
 
   
 
@@ -12,13 +12,21 @@ debug = args.args.pop('debug', False)
 # Preprocess
 os.environ[constants.APP_ENV] = env
 
+# Create builder
 builder = CmdAppBuilder().create_new_app('kabbalapp')
 
+# Set container configuration to builder
+container_config = ContainerConfiguration()
+container_config.app_project_filepath = os.getenv(constants.PROJECTS_FILE_PATH, None)
+builder.set_container_config(container_config)
+
+# Build app context.
 app_context: CmdAppContext = builder.build()
 
+# Run app context.
 app_context.run(
     command = args.command,
-    subcommands = args.subcommands,
+    function = args.function,
     args=args.args, 
     env=env,
     debug=debug)

@@ -2,6 +2,7 @@ from schematics import types as t, Model
 from schematics.exceptions import DataError
 
 from . import activity
+from ..core.config import FeatureConfiguration
 from .error import *
 
 HEADERS_MAPPINGS_PATH = 'app.core.mappings.headers'
@@ -18,44 +19,12 @@ class MessageContext():
         self.errors = ErrorManager()
 
 
-class EndpointConfig(Model):
-
-    def __init__(self, raw_data: dict = None):
-        # Account for single-module configuration
-        try:
-            config = {}
-            config['modules'] = [{
-                'subdomain': raw_data.pop('subdomain'),
-                'module': raw_data.pop('module'),
-                'params': raw_data.pop('params', {}),
-                'data_mapping': raw_data.pop('data_mapping', None),
-                'use_services': raw_data.pop('use_services', None),
-                'log_activity': raw_data.pop('log_activity', True)
-            }]
-            config['header_mapping'] = raw_data.pop('header_mapping', None)
-            super().__init__(raw_data=config)
-        except KeyError:
-            super().__init__(raw_data=raw_data)
-
-    class ModuleConfiguration(Model): 
-        subdomain = t.StringType(required=True)
-        module = t.StringType(required=True)
-        data_mapping = t.StringType()
-        use_services = t.StringType()
-        params = t.DictType(t.StringType(), default={})
-        log_activity = t.BooleanType(default=True)
-
-    header_mapping = t.StringType()
-    modules = t.ListType(t.ModelType(ModuleConfiguration), default=[])
-    log_params = t.DictType(t.StringType(), default={})
-
-
-class EndpointHandler():
-    def __init__(self, endpoint):
-        if isinstance(endpoint, EndpointConfig):
-            self.endpoint = endpoint
-        elif isinstance(endpoint, dict):
-            self.endpoint = EndpointConfig(endpoint)
+class FeatureHandler():
+    def __init__(self, feature_config):
+        if isinstance(feature_config, FeatureConfiguration):
+            self.feature_config = feature_config
+        elif isinstance(feature_config, dict):
+            self.feature_config = FeatureConfiguration(feature_config)
         self.current_step = 0
 
     
@@ -70,14 +39,14 @@ class EndpointHandler():
         context.errors = app_context.errors
 
         # Begin header mapping process.
-        if debug: print('Perform header mapping: "mapping": "{}"'.format(self.endpoint.header_mapping))
+        if debug: print('Perform header mapping: "mapping": "{}"'.format(self.feature_config.header_mapping))
 
         # Import header mappings module.
         header_module = import_module(HEADERS_MAPPINGS_PATH)
         
         try:
             # Retrieve header mapping function.
-            header_mapping_func = getattr(header_module, self.endpoint.header_mapping) 
+            header_mapping_func = getattr(header_module, self.feature_config.header_mapping) 
         except TypeError:
             # Retrieve default header mapping function if none is specified.
             header_mapping_func = getattr(header_module, 'default')
@@ -85,23 +54,19 @@ class EndpointHandler():
         # Get header data and add to message context.
         context.headers = header_mapping_func(request, app_context, **kwargs)
 
-        for module in self.endpoint.modules:
+        for function in self.feature_config.functions:
 
-            if debug: print('Executing module: "module": "{}"'.format(module.to_primitive()))
-
-            # Add current module to headers.
-            context.headers['subdomain'] = module.subdomain
-            context.headers['module'] = module.module
+            if debug: print('Executing function: "function": "{}"'.format(function.to_primitive()))
 
             context.headers['request_start'] = int(time())
 
-            # Set data mapping and service container for endpoint module
+            # Set data mapping and service container for feature function
             try:
-                if module.data_mapping:
-                    if debug: print('Perform data mapping: "mapping": "{}"'.format(module.data_mapping))
-                    data_mapping = getattr(import_module(DATA_MAPPINGS_PATH), module.data_mapping)
-                    context.data = data_mapping(context, request, app_context, **module.params, **kwargs)
-                    if debug: print('Data mapping complete: "mapping": "{}", "data": "{}"'.format(module.data_mapping, context.data.to_primitive()))
+                if function.data_mapping:
+                    if debug: print('Perform data mapping: "mapping": "{}"'.format(function.data_mapping))
+                    data_mapping = getattr(import_module(DATA_MAPPINGS_PATH), function.data_mapping)
+                    context.data = data_mapping(context, request, app_context, **function.params, **kwargs)
+                    if debug: print('Data mapping complete: "mapping": "{}", "data": "{}"'.format(function.data_mapping, context.data.to_primitive()))
                 # Request model state validation
                 try:
                     context.data.validate()
@@ -113,31 +78,31 @@ class EndpointHandler():
                 print(ex)
                 raise AppError(INVALID_REQUEST_DATA.format_message(ex.messages))
             try:
-                use_services = getattr(import_module(SERVICES_MAPPINGS_PATH), module.use_services)
-                context.services = use_services(context, request, app_context, **module.params)
+                use_services = getattr(import_module(SERVICES_MAPPINGS_PATH), function.use_services)
+                context.services = use_services(context, request, app_context, **function.params)
             except TypeError:
                 context.services = app_context.container
 
-            # Retrieve module handler
-            module_path = 'app.modules.{}.{}'.format(module.subdomain, module.module)
-            try:
-                handler = import_module(module_path)
-            except ModuleNotFoundError as ex:
-                raise AppError(ENDPOINT_NOT_FOUND.format_message(module.subdomain, module.module))
+            # Format function module path.
+            module_path = 'app.modules.{}'.format(function.function_path)
 
-            # Execute handler function
-            if debug: print('Executing module: {}.{}'.format(module.subdomain, module.module))
+            # Import function module.
+            if debug: print('Importing function: {}'.format(module_path))
+            handler = import_module(module_path)
+
+            # Execute function handler.
+            if debug: print('Executing function: {}'.format(module_path))
             result = handler.handle(context)
             # For those who do now wish to assign the results to the context in the handler
             if result:
                 context.result = result
 
             # Log activity
-            if module.log_activity:
-                if debug: print('Logging activity for module: {}.{}'.format(module.subdomain, module.module))
+            if function.log_activity:
+                if debug: print('Logging activity for function: {}'.format(module_path))
                 activity.handle(context)
 
-            if debug: print('Finishing module: {}.{}'.format(module.subdomain, module.module))
+            if debug: print('Finishing function: {}'.format(module_path))
         
         context.headers['request_end'] = int(time())
 

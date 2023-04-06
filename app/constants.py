@@ -2,6 +2,7 @@
 # Environment
 APP_ENV = 'APP_ENV'
 DEFAULT_APP_ENV = 'prod'
+PROJECTS_FILE_PATH = 'PROJECTS_FILE_PATH'
 DEBUG = 'DEBUG'
 
 # Configuration file
@@ -75,9 +76,9 @@ def load_app_config(builder: AppBuilder):
     builder.set_app_config(app_config)
 
 def load_container_config(builder: AppBuilder):
-    from .core import ContainerConfig
+    from .core import ContainerConfiguration
 
-    container_config = ContainerConfig()
+    container_config = ContainerConfiguration()
     container_config.validate()
 """
 
@@ -142,12 +143,12 @@ class AppConfig():
 class AppContext():
 
     name: str = None
-    container_config: ContainerConfig = None
+    container_config: ContainerConfiguration = None
     container: Container = None
     errors: ErrorManager = ErrorManager()
     endpoints: dict = None
     
-    def __init__(self, name: str, app_config: AppConfig, container_config: ContainerConfig):
+    def __init__(self, name: str, app_config: AppConfig, container_config: ContainerConfiguration):
         self.name = name
         self._load_errors(app_config)
         self._load_endpoints(app_config)
@@ -160,7 +161,7 @@ class AppContext():
     def _load_endpoints(self, app_config: AppConfig) -> None:
         self.endpoints = app_config.endpoints
 
-    def _load_container(self, container_config: ContainerConfig) -> None:
+    def _load_container(self, container_config: ContainerConfiguration) -> None:
         self.container_config = container_config
         self.container = Container(container_config)
 
@@ -173,7 +174,7 @@ class AppBuilder():
     class Session():
         name: str = None
         app_config: AppConfig = None
-        container_config: ContainerConfig = None
+        container_config: ContainerConfiguration = None
 
     _current_session = None
 
@@ -193,7 +194,7 @@ class AppBuilder():
         self._current_session.app_config = app_config
         return self
 
-    def set_container_config(self, container_config: ContainerConfig):
+    def set_container_config(self, container_config: ContainerConfiguration):
         self._current_session.container_config = container_config
         return self
 
@@ -213,7 +214,7 @@ from schematics import types as t, Model
 from ..services import SkyWellness, ConfigurationService
 
 # Container configuration
-class ContainerConfig(Model):
+class ContainerConfiguration(Model):
     pass
 
 
@@ -223,7 +224,7 @@ class Container():
     # Custom fields below
     # ...
 
-    def __init__(self, config: ContainerConfig):
+    def __init__(self, config: ContainerConfiguration):
         # Default init
         self.config = config
 
@@ -335,7 +336,7 @@ class MessageContext():
         self.errors = ErrorManager()
 
 
-class EndpointHandler():
+class FeatureHandler():
     def __init__(self, endpoint):
         if isinstance(endpoint, EndpointConfig):
             self.endpoint = endpoint
