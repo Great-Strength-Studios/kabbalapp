@@ -12,4 +12,8 @@ modules:
         functions:
         - function_path: app_project.new_app_project
           data_mapping: new_app_project
+      sync:
+        functions:
+        - function_path: app_project.sync_app_project
+          data_mapping: sync_app_project
 services: 
