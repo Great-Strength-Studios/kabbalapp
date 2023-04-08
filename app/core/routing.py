@@ -76,7 +76,7 @@ class FeatureHandler():
                 print(ex)
             except DataError as ex:
                 print(ex)
-                raise AppError(INVALID_REQUEST_DATA.format_message(ex.messages))
+                raise AppError(app_context.errors.INVALID_REQUEST_DATA.format_message(ex.messages))
             try:
                 use_services = getattr(import_module(SERVICES_MAPPINGS_PATH), function.use_services)
                 context.services = use_services(context, request, app_context, **function.params)
