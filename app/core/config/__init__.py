@@ -34,9 +34,15 @@ class FeatureConfiguration(Model):
 class ModuleConfiguration(Model):
     features = t.DictType(t.ModelType(FeatureConfiguration), default={})
 
+class ErrorConfiguration(Model):
+    error_code = t.IntType(required=True)
+    error_name = t.StringType(required=True)
+    message = t.DictType(t.StringType(), required=True)
+    status_code = t.IntType(default=400, choices=[400, 401, 403, 404]) # Status codes include Bad Request, Unauthorized, Forbidden, and Not Found
+
 
 class AppConfiguration(Model):
-    errors = t.DictType(t.StringType, default={})
+    errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
     modules = t.DictType(t.ModelType(ModuleConfiguration), default={}, serialize_when_none=False)
 
 
