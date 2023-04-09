@@ -24,7 +24,7 @@ class Container():
             from ..domain.app_project.yaml import YamlAppProjectManager
             return YamlAppProjectManager(self.config.app_project_filepath)
         
-    def app_reader(self, app_key: str = None):
+    def app_printer(self, app_key: str = None):
         import os
         from ..domain.app_printer import AppPrinter
         if not app_key:
