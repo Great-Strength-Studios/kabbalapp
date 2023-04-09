@@ -33,7 +33,10 @@ class AppPrinter(object):
             'code_lines': code_lines
         })
         
-    def print_block(self, app_path: str, code_block: AppBlock) -> None:
-        write_path = os.path.join(self.app_path, code_block.file_path)
+    def print_block(self, code_block: AppBlock, app_path: str = None) -> None:
+        if not app_path:
+            app_path = self.app_path
+        write_path = os.path.join(app_path, code_block.file_path)
+        os.makedirs(os.path.dirname(write_path), exist_ok=True)
         with open(write_path, 'w') as stream:
             stream.write(code_block.code_block)
