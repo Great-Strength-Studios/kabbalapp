@@ -4,6 +4,7 @@ class AppProject(Model):
 
     name = t.StringType(required=True)
     app_directory = t.StringType(required=True)
+    version = t.StringType(required=True, default='0.0.1')
     
 
 class AppProjectManager():
