@@ -4,8 +4,6 @@ class CmdAppContext(AppContext):
 
     def run(self, **kwargs):
 
-        context = MessageContext()
-
         # Remove necessary arguments
         command = kwargs.pop('command')
         function = kwargs.pop('function')
@@ -16,13 +14,13 @@ class CmdAppContext(AppContext):
         try:
             endpoint_config = self.modules[command].features[function]
         except (TypeError, KeyError):
-            raise AppError(ENDPOINT_NOT_FOUND.format_message(command, function))
+            raise AppError(self.errors.ENDPOINT_NOT_FOUND.format_message(command, function))
         
         # Create endpoint handler.
         handler = FeatureHandler(endpoint_config)
         
         # Handle message context.
-        handler.handle(context, args, self, **kwargs)
+        handler.handle(args, self, **kwargs)
 
 
 class CmdAppBuilder(AppBuilder):
