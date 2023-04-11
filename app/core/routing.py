@@ -28,9 +28,12 @@ class FeatureHandler():
         self.current_step = 0
 
     
-    def handle(self, context: MessageContext, request, app_context, **kwargs):
+    def handle(self, request, app_context, **kwargs):
         from time import time
         from importlib import import_module
+
+        # Create message context.
+        context: MessageContext = MessageContext()
 
         # Pull settings first.
         debug = kwargs.get('debug', False)
