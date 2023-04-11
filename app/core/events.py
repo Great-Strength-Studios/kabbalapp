@@ -12,3 +12,6 @@ class NewAppProject(RequestEvent):
         roles = {
             'app_project.map': blacklist('app_key')
         }
+
+class SyncAppProject(RequestEvent):
+    app_key = t.StringType(required=True)

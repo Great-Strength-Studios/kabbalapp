@@ -23,6 +23,15 @@ class Container():
         if self.config.app_project_filepath and os.path.splitext(self.config.app_project_filepath)[1] in ['.yaml', '.yml']:
             from ..domain.app_project.yaml import YamlAppProjectManager
             return YamlAppProjectManager(self.config.app_project_filepath)
+        
+    def app_printer(self, app_key: str = None):
+        import os
+        from ..domain.app_printer import AppPrinter
+        if not app_key:
+            return AppPrinter(os.getcwd())
+        app_project_manager = self.app_project_manager()
+        app_project = app_project_manager.load_project(app_key)
+        return AppPrinter(app_project.app_directory)
 
 
 # Default dynamic container

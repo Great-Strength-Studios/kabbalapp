@@ -28,9 +28,12 @@ class FeatureHandler():
         self.current_step = 0
 
     
-    def handle(self, context: MessageContext, request, app_context, **kwargs):
+    def handle(self, request, app_context, **kwargs):
         from time import time
         from importlib import import_module
+
+        # Create message context.
+        context: MessageContext = MessageContext()
 
         # Pull settings first.
         debug = kwargs.get('debug', False)
@@ -76,7 +79,7 @@ class FeatureHandler():
                 print(ex)
             except DataError as ex:
                 print(ex)
-                raise AppError(INVALID_REQUEST_DATA.format_message(ex.messages))
+                raise AppError(app_context.errors.INVALID_REQUEST_DATA.format_message(ex.messages))
             try:
                 use_services = getattr(import_module(SERVICES_MAPPINGS_PATH), function.use_services)
                 context.services = use_services(context, request, app_context, **function.params)
