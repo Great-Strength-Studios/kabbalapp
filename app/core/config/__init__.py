@@ -43,6 +43,9 @@ class ErrorConfiguration(Model):
 
 class AppConfiguration(Model):
     errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
+
+class AppConfiguration(Model):
+    errors = t.DictType(t.StringType, default={})
     modules = t.DictType(t.ModelType(ModuleConfiguration), default={}, serialize_when_none=False)
 
 

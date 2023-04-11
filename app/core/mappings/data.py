@@ -10,4 +10,3 @@ def new_app_project(context, request, app_context, **kwargs):
 def sync_app_project(context, request, app_context, **kwargs):
     return SyncAppProject({
         'app_key': request.get('app_key', None)
-    })
