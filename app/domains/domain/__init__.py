@@ -5,6 +5,8 @@ class Domain(Model):
     key = t.StringType()
     name = t.StringType(required=True)
 
+class DomainModel(Model):
+    name = t.StringType(required=True)
 
 ### Section - Entities ###
 class DomainEntity(Domain):
