@@ -17,5 +17,5 @@ class SyncAppProject(RequestEvent):
     app_key = t.StringType(required=True)
 
 class AddDomain(RequestEvent):
-    domain_name = t.StringType(required=True)
-    app_key = t.StringType(required=True)
+    name = t.StringType(required=True)
+    key = t.StringType()
