@@ -1,4 +1,6 @@
 domains:
+  app_printer:
+    name: App Printer
   domain:
     name: Domain
 endpoints: null
