@@ -17,7 +17,7 @@ def handle(context: MessageContext):
 
     # Create domain key if none exists.
     if not request.key:
-        request.key = request.name.to_lower().replace(' ', '-')
+        request.key = request.name.lower().replace(' ', '_')
     
     # Add domain.
     domain = service.add_domain(**request.to_primitive())
