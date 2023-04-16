@@ -1,14 +1,17 @@
-import yaml
+import os, yaml
 
+from ...constants import APP_CONFIGURATION_FILE
+from .. import AppProject
 from . import *
 
 class YamlDomainService(DomainService):
 
-    def __init__(self, filepath: str):
-        self.filepath = filepath
+    def __init__(self, app_project: AppProject):
+        self.app_project = app_project
 
     def add_domain(self, domain_key: str, domain_name: str) -> DomainEntity:
-        with open(self.filepath, 'r') as f:
+        filepath = os.path.join(self.app_project.app_directory, APP_CONFIGURATION_FILE)
+        with open(filepath, 'r') as f:
             data = yaml.safe_load(f)
         data['domains'].append({domain_key: {'name': domain_name}})
         with open(self.filepath, 'w') as f:
