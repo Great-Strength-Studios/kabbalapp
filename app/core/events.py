@@ -19,3 +19,9 @@ class SyncAppProject(RequestEvent):
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)
     key = t.StringType()
+
+class AddDomainModel(RequestEvent):
+    domain_key = t.StringType(required=True)
+    name = t.StringType(required=True)
+    key = t.StringType()
+    
