@@ -35,12 +35,11 @@ class Container():
 
     def domain_service(self, app_key: str):
         import os
-
         app_project_manager = self.app_project_manager()
         app_project = app_project_manager.load_project(app_key)
         if os.path.splitext(app_project.app_config_filepath)[1] in ['.yaml', '.yml']:
             from ..domains.domain.yaml import YamlDomainService
-            return YamlDomainService(app_project.app_config_filepath)
+            return YamlDomainService(app_project)
 
 
 # Default dynamic container
