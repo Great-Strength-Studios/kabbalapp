@@ -31,4 +31,4 @@ modules:
         functions:
         - function_path: app_project.sync_app_project
           data_mapping: sync_app_project
-services: 
+domains:
