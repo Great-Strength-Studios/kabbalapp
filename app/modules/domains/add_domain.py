@@ -2,8 +2,6 @@ from ...core import *
 from ...domains import *
 
 def handle(context: MessageContext):
-    import os
-
     # Get request event.
     request: AddDomain = context.data
 
