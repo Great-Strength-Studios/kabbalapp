@@ -1,45 +1,43 @@
-endpoints: 
-
-errors: 
-  INVALID_REQUEST_DATA:
-    error_code: '000000001'
-    error_name: 'INVALID_REQUEST_DATA'
-    message: 
-        en_US: 'Invalid request contains the following errors: {}'  
-  ENDPOINT_NOT_FOUND:
-    error_code: '000000002'
-    error_name: 'ENDPOINT_NOT_FOUND'
-    message: 
-        en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
-    status_code: 404
+domains:
+  domain:
+    name: Domain
+endpoints: null
+errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
-    error_name: 'APP_KEY_REQUIRED'
+    error_name: APP_KEY_REQUIRED
     message:
-      en_US: 'App key is required'
-
-events: 
-
+      en_US: App key is required
+  ENDPOINT_NOT_FOUND:
+    error_code: '000000002'
+    error_name: ENDPOINT_NOT_FOUND
+    message:
+      en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
+    status_code: 404
+  INVALID_REQUEST_DATA:
+    error_code: '000000001'
+    error_name: INVALID_REQUEST_DATA
+    message:
+      en_US: 'Invalid request contains the following errors: {}'
+events: null
 mappings:
-  data: 
-  header: 
-  service: 
-
-modules: 
+  data: null
+  header: null
+  service: null
+modules:
   app_project:
     features:
       new:
         functions:
-        - function_path: app_project.new_app_project
-          data_mapping: new_app_project
+        - data_mapping: new_app_project
+          function_path: app_project.new_app_project
       sync:
         functions:
-        - function_path: app_project.sync_app_project
-          data_mapping: sync_app_project
+        - data_mapping: sync_app_project
+          function_path: app_project.sync_app_project
   domain:
     features:
       new:
-        functions: 
-        - function_path: domains.add_domain
-          data_mapping: add_domain
-domains:
+        functions:
+        - data_mapping: add_domain
+          function_path: domains.add_domain
