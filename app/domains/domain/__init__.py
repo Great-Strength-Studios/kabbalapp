@@ -2,6 +2,7 @@ from schematics import types as t, Model
 
 ### Section - Models ###
 class Domain(Model):
+    key = t.StringType()
     name = t.StringType(required=True)
 
 
@@ -14,5 +15,5 @@ class DomainEntity(Domain):
 ### Section - Services ###
 class DomainService():
 
-    def add_domain(self, domain_name: str):
+    def add_domain(self, domain_key: str, domain_name: str) -> DomainEntity:
         pass
