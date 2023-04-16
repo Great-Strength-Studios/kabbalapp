@@ -1,11 +1,14 @@
 from schematics import types as t, Model
 
+### Section - Models ###
+
 class AppProject(Model):
 
     name = t.StringType(required=True)
     app_directory = t.StringType(required=True)
     version = t.StringType(required=True, default='0.0.1')
     
+### Section - Services ###
 
 class AppProjectManager():
 

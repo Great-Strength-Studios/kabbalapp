@@ -1,7 +1,7 @@
 from ...core import *
 
 def handle(context: MessageContext):
-    from ...domain import AppProjectManager, AppPrinter
+    from ...domains import AppProjectManager, AppPrinter
     
     # Load request.
     request: SyncAppProject = context.data

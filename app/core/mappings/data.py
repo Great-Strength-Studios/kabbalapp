@@ -11,3 +11,9 @@ def sync_app_project(context, request, app_context, **kwargs):
     return SyncAppProject({
         'app_key': request.get('app_key', None)
     })
+
+def add_domain(context, request, app_context, **kwargs):
+    return AddDomain({
+        'name': request.get('domain_name', None),
+        'key': request.get('domain_key', None),
+    })
