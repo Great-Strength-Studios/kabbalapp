@@ -13,11 +13,7 @@ def sync_app_project(context, request, app_context, **kwargs):
     })
 
 def add_domain(context, request, app_context, **kwargs):
-    name = request.get('domain_name', None)
-    key = request.get('domain_key', None)
-    if name and not key:
-        key = name.lower().replace(' ', '_')
     return AddDomain({
-        'name': name,
-        'key': key,
+        'name': request.get('domain_name', None),
+        'key': request.get('domain_key', None),
     })
