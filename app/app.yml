@@ -31,4 +31,10 @@ modules:
         functions:
         - function_path: app_project.sync_app_project
           data_mapping: sync_app_project
+  domain:
+    features:
+      new:
+        functions: 
+        - function_path: domains.add_domain
+          data_mapping: add_domain
 domains:
