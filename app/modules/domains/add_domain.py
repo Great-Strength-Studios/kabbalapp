@@ -20,7 +20,12 @@ def handle(context: MessageContext):
         request.key = request.name.to_lower().replace(' ', '-')
     
     # Add domain.
-    domain = service.add_domain(request.name, request.key)
+    domain = service.add_domain(**request.to_primitive())
+
+    # Raise app error if domain already exists.
+    ## TODO - This should be a domain error.
+    if isinstance(domain, tuple):
+        raise AppError(context.errors.get(domain[0]).format_message(*domain[1:]))
 
     # Return domain.
     return domain
