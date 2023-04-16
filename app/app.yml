@@ -23,6 +23,16 @@ errors:
     error_name: INVALID_REQUEST_DATA
     message:
       en_US: 'Invalid request contains the following errors: {}'
+  DOMAIN_ALREADY_EXISTS:
+    error_code: '000010001'
+    error_name: DOMAIN_ALREADY_EXISTS
+    message:
+      en_US: 'Domain with key "{}" already exists'
+  DOMAIN_MODEL_ALREADY_EXISTS:
+    error_code: '000010002'
+    error_name: 'DOMAIN_MODEL_ALREADY_EXISTS'
+    message:
+      en_US: 'Domain model with key "{}" already exists'
 events: null
 mappings:
   data: null
