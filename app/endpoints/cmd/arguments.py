@@ -12,6 +12,7 @@ parser.add_argument('-k', '--app-key')
 parser.add_argument('-d', '--app-directory')
 
 parser.add_argument('-dn', '--domain-name')
+parser.add_argument('-dk', '--domain-key')
 
 args = parser.parse_args()
 args = vars(args)
