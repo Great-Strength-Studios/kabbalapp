@@ -12,6 +12,11 @@ errors:
     message: 
         en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
     status_code: 404
+  APP_KEY_REQUIRED:
+    error_code: '000000003'
+    error_name: 'APP_KEY_REQUIRED'
+    message:
+      en_US: 'App key is required'
 
 events: 
 
