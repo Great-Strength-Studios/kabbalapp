@@ -1,3 +1,4 @@
+from typing import List
 from schematics import types as t, Model
 
 from ...constants import *
@@ -23,4 +24,7 @@ class DomainService():
         pass
 
     def add_domain_model(self, domain_key: str, model_key: str, model_name: str, class_name: str) -> DomainModel:
+        pass
+
+    def add_domain_role(self, domain_key: str, role_key: str, role_type: str, role_fields: List[str]) -> DomainRole:
         pass
