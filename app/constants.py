@@ -35,6 +35,10 @@ CORE_ERROR_FILE = 'error.py'
 CORE_EVENTS_FILE = 'events.py'
 CORE_ROUTING_FILE = 'routing.py'
 
+# Domain constants
+DOMAINS = 'domains'
+DOMAIN_ROLE_TYPES = ['blacklist', 'whitelist']
+
 # Printing file content
 REQUIREMENTS_CONTENT = """
 schematics>=2.1.1
