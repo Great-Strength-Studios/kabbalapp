@@ -64,3 +64,28 @@ class YamlDomainService(DomainService):
             'class_name': class_name
         }
         return DomainModel(raw_data=raw_data)
+    
+    def add_domain_role(self, domain_key: str, key: str, role_type: str, role_fields: List[str]) -> DomainRole:
+        filepath = os.path.join(self.app_project.app_directory, APP_CONFIGURATION_FILE)
+        with open(filepath, 'r') as f:
+            data = yaml.safe_load(f)
+        role_data = {'type': role_type, 'fields': role_fields}
+        if data['domains'] is not None and domain_key in data['domains']:
+            try:
+                if data['domains'][domain_key]['roles'] is not None and key in data['domains'][domain_key]['roles']:
+                    return ('DOMAIN_ROLE_ALREADY_EXISTS', key)
+                if data['domains'][domain_key]['roles'] is None:
+                    data['domains'][domain_key]['roles'] = {key: role_data}
+                else:
+                    data['domains'][domain_key]['roles'][key] = role_data
+            except KeyError:
+                data['domains'][domain_key]['roles'] = {key: role_data}
+        else:
+            return ('DOMAIN_NOT_FOUND', domain_key)
+        with open(filepath, 'w') as f:
+            yaml.dump(data, f)
+        raw_data = {
+            'type': role_type,
+            'fields': role_fields
+        }
+        return DomainRole(raw_data=raw_data)
