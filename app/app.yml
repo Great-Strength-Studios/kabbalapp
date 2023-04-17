@@ -6,7 +6,7 @@ domains:
   domain:
     models:
       domain:
-        class_name: app.domains.domain.Domain
+        class_name: app.domains.domain.core.Domain
         name: Domain
     name: Domain
 endpoints: null

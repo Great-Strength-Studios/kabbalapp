@@ -22,7 +22,7 @@ def handle(context: MessageContext):
 
     # Create domain model class name if none exists.
     if not request.class_name:
-        request.class_name = 'app.domains.{}.{}'.format(request.domain_key, request.name.title().replace(' ', ''))
+        request.class_name = 'app.domains.{}.core.{}'.format(request.domain_key, request.name.title().replace(' ', ''))
     
     # Get requested domain.
     domain: dom.DomainEntity = dom.get_domain(service, request.domain_key)
