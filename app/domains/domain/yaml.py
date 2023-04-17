@@ -13,12 +13,16 @@ class YamlDomainService(DomainService):
         filepath = os.path.join(self.app_project.app_directory, APP_CONFIGURATION_FILE)
         with open(filepath, 'r') as f:
             data = yaml.safe_load(f)
-        if data['domains'] is not None and key in data['domains']:
-            return ('DOMAIN_ALREADY_EXISTS', key)
-        if data['domains'] is None:
-            data['domains'] = {key: {'name': name}}
-        else:
-            data['domains'][key] = {'name': name}
+        domain_data = { 'name': name }
+        try:
+            if data['domains'] is not None and key in data['domains']:
+                return ('DOMAIN_ALREADY_EXISTS', key)
+            if data['domains'] is None:
+                data['domains'] = {key: domain_data}
+            else:
+                data['domains'][key] = domain_data
+        except KeyError:
+            data['domains'] = {key: domain_data}
         with open(filepath, 'w') as f:
             yaml.dump(data, f)
         raw_data = {
