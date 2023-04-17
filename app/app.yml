@@ -4,6 +4,10 @@ domains:
   app_project:
     name: App Project
   domain:
+    models:
+      domain:
+        class_name: app.domains.domain.Domain
+        name: Domain
     name: Domain
 endpoints: null
 errors:
@@ -12,6 +16,16 @@ errors:
     error_name: APP_KEY_REQUIRED
     message:
       en_US: App key is required
+  DOMAIN_ALREADY_EXISTS:
+    error_code: '000010001'
+    error_name: DOMAIN_ALREADY_EXISTS
+    message:
+      en_US: Domain with key "{}" already exists
+  DOMAIN_MODEL_ALREADY_EXISTS:
+    error_code: '000010002'
+    error_name: DOMAIN_MODEL_ALREADY_EXISTS
+    message:
+      en_US: Domain model with key "{}" already exists
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     error_name: ENDPOINT_NOT_FOUND
@@ -23,16 +37,6 @@ errors:
     error_name: INVALID_REQUEST_DATA
     message:
       en_US: 'Invalid request contains the following errors: {}'
-  DOMAIN_ALREADY_EXISTS:
-    error_code: '000010001'
-    error_name: DOMAIN_ALREADY_EXISTS
-    message:
-      en_US: 'Domain with key "{}" already exists'
-  DOMAIN_MODEL_ALREADY_EXISTS:
-    error_code: '000010002'
-    error_name: 'DOMAIN_MODEL_ALREADY_EXISTS'
-    message:
-      en_US: 'Domain model with key "{}" already exists'
 events: null
 mappings:
   data: null
@@ -51,11 +55,11 @@ modules:
           function_path: app_project.sync_app_project
   domain:
     features:
-      new:
-        functions:
-        - data_mapping: add_domain
-          function_path: domains.add_domain
       add_model:
         functions:
         - data_mapping: add_domain_model
           function_path: domains.add_domain_model
+      new:
+        functions:
+        - data_mapping: add_domain
+          function_path: domains.add_domain
