@@ -22,6 +22,14 @@ parser.add_argument('-rk', '--role-key')
 parser.add_argument('-rt', '--role-type')
 parser.add_argument('-rf', '--role-fields', nargs='+')
 
+parser.add_argument('-pn', '--property-name')
+parser.add_argument('-pt', '--property-type')
+parser.add_argument('-pr', '--property-required', action='store_true')
+parser.add_argument('-psn', '--property-serialized-name')
+parser.add_argument('-pdf', '--property-deserialize-from')
+parser.add_argument('-pc', '--property-choices', nargs='+')
+parser.add_argument('-pd', '--property-default')
+
 args = parser.parse_args()
 args = vars(args)
 try:
