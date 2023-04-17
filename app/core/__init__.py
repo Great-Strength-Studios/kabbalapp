@@ -23,7 +23,7 @@ class AppContext():
         # Load app errors.
         try:
             for error in app_config.errors.values():
-                self.errors.add(error)
+                self.errors.add(Error(error.to_primitive()))
         except AttributeError:
             pass
 
