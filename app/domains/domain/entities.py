@@ -20,3 +20,9 @@ def add_domain(domain_service: DomainService, domain_key: str, domain_name: str)
     if isinstance(domain, tuple):
         return domain
     return DomainEntity(domain_service=domain_service, raw_data=domain.to_primitive())
+
+def get_domain(domain_service: DomainService, domain_key: str):
+    domain = domain_service.get_domain(domain_key)
+    if isinstance(domain, tuple):
+        return domain
+    return DomainEntity(domain_service=domain_service, raw_data=domain.to_primitive())
