@@ -25,3 +25,9 @@ class AddDomainModel(RequestEvent):
     name = t.StringType(required=True)
     class_name = t.StringType()
     key = t.StringType()
+
+class AddDomainRole(RequestEvent):
+    domain_key = t.StringType(required=True)
+    key = t.StringType(required=True)
+    type = t.StringType(required=True, choices=['blacklist', 'whitelist'])
+    fields = t.ListType(t.StringType(), required=True)
