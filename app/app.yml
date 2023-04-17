@@ -2,12 +2,19 @@ domains:
   app_printer:
     name: App Printer
   app_project:
+    models:
+      app_project:
+        class_name: app.domains.app_project.core.AppProject
+        name: App Project
     name: App Project
   domain:
     models:
       domain:
         class_name: app.domains.domain.core.Domain
         name: Domain
+      domain_model:
+        class_name: app.domains.domain.core.DomainModel
+        name: Domain Model
     name: Domain
 endpoints: null
 errors:
