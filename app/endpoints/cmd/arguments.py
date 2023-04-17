@@ -14,6 +14,10 @@ parser.add_argument('-d', '--app-directory')
 parser.add_argument('-dn', '--domain-name')
 parser.add_argument('-dk', '--domain-key')
 
+parser.add_argument('-mk', '--model-key')
+parser.add_argument('-mn', '--model-name')
+parser.add_argument('-mc', '--model-class')
+
 args = parser.parse_args()
 args = vars(args)
 try:

@@ -2,8 +2,19 @@ domains:
   app_printer:
     name: App Printer
   app_project:
+    models:
+      app_project:
+        class_name: app.domains.app_project.core.AppProject
+        name: App Project
     name: App Project
   domain:
+    models:
+      domain:
+        class_name: app.domains.domain.core.Domain
+        name: Domain
+      domain_model:
+        class_name: app.domains.domain.core.DomainModel
+        name: Domain Model
     name: Domain
 endpoints: null
 errors:
@@ -12,6 +23,16 @@ errors:
     error_name: APP_KEY_REQUIRED
     message:
       en_US: App key is required
+  DOMAIN_ALREADY_EXISTS:
+    error_code: '000010001'
+    error_name: DOMAIN_ALREADY_EXISTS
+    message:
+      en_US: Domain with key "{}" already exists
+  DOMAIN_MODEL_ALREADY_EXISTS:
+    error_code: '000010002'
+    error_name: DOMAIN_MODEL_ALREADY_EXISTS
+    message:
+      en_US: Domain model with key "{}" already exists
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     error_name: ENDPOINT_NOT_FOUND
@@ -41,6 +62,10 @@ modules:
           function_path: app_project.sync_app_project
   domain:
     features:
+      add_model:
+        functions:
+        - data_mapping: add_domain_model
+          function_path: domains.add_domain_model
       new:
         functions:
         - data_mapping: add_domain
