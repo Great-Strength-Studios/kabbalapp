@@ -19,12 +19,16 @@ def handle(context: MessageContext):
     # Create domain model key if none exists.
     if not request.key:
         request.key = request.name.lower().replace(' ', '_')
+
+    # Create domain model class name if none exists.
+    if not request.class_name:
+        request.class_name = 'app.domains.{}.{}'.format(request.domain_key, request.name.title().replace(' ', ''))
     
     # Get requested domain.
     domain: dom.DomainEntity = dom.get_domain(service, request.domain_key)
 
     # Add domain model to domain.
-    model = domain.add_model(request.key, request.name)
+    model = domain.add_model(request.key, request.name, request.class_name)
 
     # Return domain model.
     return model
