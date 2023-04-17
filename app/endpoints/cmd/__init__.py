@@ -20,7 +20,10 @@ class CmdAppContext(AppContext):
         handler = FeatureHandler(endpoint_config)
         
         # Handle message context.
-        handler.handle(args, self, **kwargs)
+        try:
+            handler.handle(args, self, **kwargs)
+        except AppError as e:
+            exit(str(e.to_dict()))
 
 
 class CmdAppBuilder(AppBuilder):
