@@ -11,8 +11,8 @@ class DomainEntity(Domain):
         self.domain_service = domain_service
         super().__init__(**kwargs)
 
-    def add_model(self, key: str, name: str) -> DomainModelEntity:
-        model = self.domain_service.add_domain_model(self.key, key, name)
+    def add_model(self, key: str, name: str, class_name: str) -> DomainModelEntity:
+        model = self.domain_service.add_domain_model(self.key, key, name, class_name)
         return DomainModelEntity(domain_service=self.domain_service, raw_data=model.to_primitive())
     
 def add_domain(domain_service: DomainService, domain_key: str, domain_name: str):
