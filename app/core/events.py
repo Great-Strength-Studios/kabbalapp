@@ -1,6 +1,8 @@
 from schematics import types as t, Model
 from schematics.transforms import blacklist
 
+from ..constants import *
+
 class RequestEvent(Model):
     pass
 
@@ -25,3 +27,9 @@ class AddDomainModel(RequestEvent):
     name = t.StringType(required=True)
     class_name = t.StringType()
     key = t.StringType()
+
+class AddDomainRole(RequestEvent):
+    domain_key = t.StringType(required=True)
+    key = t.StringType(required=True)
+    type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
+    fields = t.ListType(t.StringType(), required=True)

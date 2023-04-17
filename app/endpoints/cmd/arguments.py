@@ -18,6 +18,10 @@ parser.add_argument('-mk', '--model-key')
 parser.add_argument('-mn', '--model-name')
 parser.add_argument('-mc', '--model-class')
 
+parser.add_argument('-rk', '--role-key')
+parser.add_argument('-rt', '--role-type')
+parser.add_argument('-rf', '--role-fields', nargs='+')
+
 args = parser.parse_args()
 args = vars(args)
 try:
