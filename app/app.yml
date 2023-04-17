@@ -33,6 +33,11 @@ errors:
     error_name: DOMAIN_MODEL_ALREADY_EXISTS
     message:
       en_US: Domain model with key "{}" already exists
+  DOMAIN_ROLE_ALREADY_EXISTS:
+    error_code: '000010003'
+    error_name: DOMAIN_ROLE_ALREADY_EXISTS
+    message:
+      en_US: Domain role with key "{}" already exists
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     error_name: ENDPOINT_NOT_FOUND
