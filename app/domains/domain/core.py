@@ -1,5 +1,7 @@
 from schematics import types as t, Model
 
+from ...constants import *
+
 class Domain(Model):
     key = t.StringType()
     name = t.StringType(required=True)
@@ -7,6 +9,10 @@ class Domain(Model):
 class DomainModel(Model):
     name = t.StringType(required=True)
     class_name = t.StringType(required=True)
+
+class DomainRole(Model):
+    type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
+    fields = t.ListType(t.StringType(), required=True)
 
 class DomainService():
 
