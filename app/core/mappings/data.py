@@ -21,7 +21,7 @@ def add_domain(context, request, app_context, **kwargs):
 def add_domain_model(context, request, app_context, **kwargs):
     return AddDomainModel({
         'domain_key': request.get('domain_key', None),
-        'name': request.get('domain_name', None),
-        'key': request.get('domain_key', None),
+        'name': request.get('model_name', None),
+        'key': request.get('model_key', None),
         'class_name': request.get('class_name', None)
     })
