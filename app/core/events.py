@@ -23,4 +23,5 @@ class AddDomain(RequestEvent):
 class AddDomainModel(RequestEvent):
     domain_key = t.StringType(required=True)
     name = t.StringType(required=True)
+    class_name = t.StringType()
     key = t.StringType()
