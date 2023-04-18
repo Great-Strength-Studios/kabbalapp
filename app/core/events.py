@@ -36,3 +36,4 @@ class AddDomainRole(RequestEvent):
 
 class SyncDomain(RequestEvent):
     key = t.StringType(required=True)
+    force = t.BooleanType(default=False)
