@@ -18,9 +18,17 @@ def handle(context: MessageContext):
 
     # Get domain.
     dom: DomainEntity = domain.get_domain(domain_service, request.key)
+    if isinstance(dom, tuple):
+        raise context.errors.get(dom[0]).format_message(dom[1])
 
     # Load app printer.
     printer: AppPrinter = context.services.app_printer(app_key)
 
-    # Load app block.
-    block = printer.read_app()
+    # Load app block to printer.
+    app_block = printer.load_app()
+
+    # Add new domain block to app block.
+    domain_block = app_block.add_domain_block(dom.key)
+
+    # Print app block.
+    printer.print(domain_block, request.force)
