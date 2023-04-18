@@ -33,3 +33,9 @@ def add_domain_role(context, request, app_context, **kwargs):
         'type': request.get('role_type', None),
         'fields': request.get('role_fields', None)
     })
+
+def sync_domain(context, request, app_context, **kwargs):
+    return SyncDomain({
+        'key': request.get('domain_key', None),
+        'force': request.get('force', False)
+    })

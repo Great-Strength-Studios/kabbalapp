@@ -33,3 +33,7 @@ class AddDomainRole(RequestEvent):
     key = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
     fields = t.ListType(t.StringType(), required=True)
+
+class SyncDomain(RequestEvent):
+    key = t.StringType(required=True)
+    force = t.BooleanType(default=False)
