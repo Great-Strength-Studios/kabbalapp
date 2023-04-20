@@ -2,12 +2,56 @@ import os, shutil
 
 from schematics import types as t, Model
 
-class AppModuleBlock(Model):
+class AppImport(Model):
+
+    class ImportName(Model):
+        name = t.StringType(required=True)
+        alias = t.StringType(default=None)
+
+    names = t.ListType(t.ModelType(ImportName), required=True)
+    path = t.StringType()
+
+    def format(self):
+        formatted_names = []
+        for name in self.names:
+            if name.alias:
+                formatted_names.append(f'{name.name} as {name.alias}')
+            else:
+                formatted_names.append(name.name)
+        if self.path:
+            return f'from {self.path} import {", ".join(formatted_names)}'
+        else:
+            return f'import {", ".join(formatted_names)}'
+        
+class AppVariable(Model):
+    name = t.StringType(required=True)
+    value = t.StringType(required=True)
+
+    def format(self):
+        return f'{self.name.lower()} = {self.value}'
+    
+class AppConstant(AppVariable):
+    def format(self):
+        return f'{self.name.upper()} = {self.value}'
+    
+class KabbalappVersion(AppVariable):
+    def __init__(self, value: str):
+        super().__init__({
+            'name': '__kabbalapp_version__',
+            'value': value
+        })
+
+
+class AppModule(Model):
+
     name = t.StringType(required=True)
     key = t.StringType(required=True)
     file_path = t.StringType(required=True)
     code_block = t.StringType(default='')
-    code_lines = t.ListType(t.StringType, default=[])
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        code_lines = self.code_block.splitlines()
 
     def update_code_block(self, code_block: str) -> None:
         self.code_block = code_block
