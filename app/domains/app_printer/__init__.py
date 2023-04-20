@@ -40,7 +40,8 @@ class AppImport(Model):
     names = t.ListType(t.ModelType(ImportName), required=True)
     path = t.StringType()
 
-    def format(self):
+    @serializable
+    def formatted(self):
         formatted_names = []
         for name in self.names:
             if name.alias:
@@ -56,11 +57,13 @@ class AppVariable(Model):
     name = t.StringType(required=True)
     value = t.StringType(required=True)
 
-    def format(self):
+    @serializable
+    def formatted(self):
         return f'{self.name.lower()} = {self.value}'
-    
+
 class AppConstant(AppVariable):
-    def format(self):
+    @serializable
+    def formatted(self):
         return f'{self.name.upper()} = {self.value}'
     
 class KabbalappVersion(AppVariable):
@@ -73,23 +76,27 @@ class KabbalappVersion(AppVariable):
 class AppModule(Model):
 
     name = t.StringType(required=True)
-    file_path = t.StringType(required=True)
+    parent_path = t.StringType(required=True)
     standard_imports = t.ListType(t.ModelType(AppImport), default=[])
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        
+    def __init__(self, name: str, parent_path: str, **kwargs):
+        raw_data = {
+            'name': name,
+            'parent_path': parent_path
+        }
+        super().__init__(raw_data=raw_data, **kwargs)
+
 
     @serializable
     def full_path(self) -> str:
-        return os.path.join(self.file_path, self.name)
+        return os.path.join(self.parent_path, self.name)
     
     @serializable
     def content(self) -> str:
         with open(self.full_path, 'r') as stream:
             return stream.read()
         
-    @serializable
+    @property
     def lines(self) -> List[str]:
         return self.content.splitlines()
 
@@ -98,39 +105,30 @@ class AppModule(Model):
             stream.write(self.content)
 
 
-
 class AppPackage(Model):
-    package_name = t.StringType(required=True)
+    name = t.StringType(required=True)
     parent_path = t.StringType(required=True)
 
+    def __init__(self, name: str, parent_path: str, **kwargs):
+        raw_data = {
+            'name': name,
+            'parent_path': parent_path
+        }
+        super().__init__(raw_data=raw_data, **kwargs)
+
     def print(self, force: bool = False):
-        package_path = os.path.join(self.parent_path, self.package_name)
+        package_path = os.path.join(self.parent_path, self.name)
         os.makedirs(package_path, exists_ok=True)
         if os.path.exists(os.path.join(package_path, '__init__.py')) and not force:
             return
         with open(os.path.join(package_path, '__init__.py'), 'w') as stream:
             stream.write('')
 
+class DomainsPackage(AppPackage):
+    pass
+
 class AppDomainPackage(AppPackage):
-
-    def __init__(self, domain_key: str, **kwargs):
-        raw_data = kwargs.get('raw_data', {})
-        raw_data['package_name'] = domain_key
-        super().__init__(**kwargs)
-
-
-    def print(self, app_path: str, force: bool = False):
-        package_path = os.path.join(app_path, self.parent_path, self.package_name)
-        os.makedirs(package_path, exist_ok=True)
-        domain_modules = ['__init__.py', 'core.py', 'entities.py']
-        for module in domain_modules:
-            module_path = os.path.join(package_path, module)
-            if not os.path.exists(module_path) or force:
-                with open(module_path, 'w') as stream:
-                    stream.write('')
-
-    def read(self, app_path: str):
-        pass
+    pass
 
 class MainAppPackage(AppPackage):
 
@@ -140,41 +138,47 @@ class MainAppPackage(AppPackage):
 
         def __init__(self, **kwargs):
             super().__init__(**kwargs)
-            for line in self.lines():
+            for line in self.lines:
                 if line.startswith('from') or line.startswith('import'):
                     self.imports.append(AppImport(line))
                 elif line.startswith('__kabbalapp_version__'):
                     self.kabbalapp_version = KabbalappVersion(line.split('=')[1].strip())
-            self.validate()
 
     init_module = t.ModelType(AppInitModule, required=True)
-    domains_block = t.DictType(t.StringType(), t.ModelType(AppDomainPackage), default={})
+    constants_module = t.ModelType(AppModule, required=True)
+    domains_package = t.ModelType(DomainsPackage, required=True)
+
+    def __init__(self, name: str, parent_path: str, **kwargs):
+        raw_data = {
+            'name': name,
+            'parent_path': parent_path
+        }
+        super().__init__(name=name, parent_path=parent_path, **kwargs)
+        self.init_module = self.AppInitModule(
+            name='__init__.py',
+            parent_path=os.path.join(self.parent_path, self.name)
+        )
+        self.constants_module = AppModule(
+            name='constants.py',
+            parent_path=os.path.join(self.parent_path, self.name)
+        )
+        self.domains_package = DomainsPackage(
+            name='domains',
+            parent_path=os.path.join(self.parent_path, self.name)
+        )
 
     def add_domain_block(self, domain_key: str) -> AppDomainPackage:
         domain_block = AppDomainPackage(domain_key, raw_data={
-            'parent_path': os.path.join(self.parent_path, self.package_name, 'domains')
+            'parent_path': os.path.join(self.parent_path, self.name, 'domains')
         })
         self.domain_blocks[domain_key] = domain_block
         return domain_block
     
     def get_domain_block(self, domain_key: str) -> AppDomainPackage:
         return self.domain_blocks.get(domain_key)
-
-    def read(self, app_path: str):
-        package_files = os.listdir(os.path.join(self.parent_path, self.package_name))
-        for package_file in package_files:
-            if package_file == 'domains':
-                domains_path = os.path.join(self.parent_path, self.package_name, package_file)
-                domain_files = os.listdir(domains_path)
-                for domain_file in domain_files:
-                    if os.path.splitext(domain_file)[1] == '.py' or domain_file == '__pycache__':
-                        continue
-                    domain_block = self.add_domain_block(domain_file)
-                    domain_block.read(app_path)
-                    self.domain_blocks[domain_file] = domain_block
     
     def print(self, app_path: str, force: bool = False):
-        package_path = os.path.join(app_path, self.parent_path, self.package_name)
+        package_path = os.path.join(app_path, self.parent_path, self.name)
         os.makedirs(package_path, exists_ok=True)
         if os.path.exists(os.path.join(package_path, '__init__.py')) and not force:
             return
@@ -188,16 +192,15 @@ class AppPrinter(object):
         self.app_path = app_path
 
     def load_app(self) -> MainAppPackage:
-        app_block = MainAppPackage({
-            'package_name': 'app',
-            'parent_path': self.app_path
-        })
-        app_block.read(self.app_path)
+        app_block = MainAppPackage(
+            name='app',
+            parent_path=self.app_path
+        )
         return app_block
 
-    def add_package_block(self, package_name: str, parent_path: str = None) -> AppPackage:
+    def add_package_block(self, name: str, parent_path: str = None) -> AppPackage:
         package_block = AppPackage({
-            'package_name': package_name,
+            'name': name,
             'parent_path': parent_path,
         })
         return package_block
