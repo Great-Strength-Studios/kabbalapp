@@ -4,6 +4,32 @@ from schematics import types as t, Model
 
 class AppImport(Model):
 
+    def __init__(self, line: str, **kwargs):
+        if line.startswith('from'):
+            path, raw_names = line.split('from')[1].split('import')
+        else:
+            raw_names = line.split('import')[1]
+            path = None
+        names = []
+        for name in raw_names.split(','):
+            name = name.strip()
+            if 'as' in name:
+                name, alias = name.split('as')
+                names.append({
+                    'name': name.strip(),
+                    'alias': alias.strip()
+                })
+            else:
+                names.append({
+                    'name': name,
+                    'alias': None
+                })
+        raw_data = {
+            'names': names,
+            'path': path
+        }
+        super().__init__(raw_data=raw_data, **kwargs)
+
     class ImportName(Model):
         name = t.StringType(required=True)
         alias = t.StringType(default=None)
@@ -41,17 +67,15 @@ class KabbalappVersion(AppVariable):
             'value': value
         })
 
-
 class AppModule(Model):
+
+    __content = []
 
     name = t.StringType(required=True)
     key = t.StringType(required=True)
     file_path = t.StringType(required=True)
     code_block = t.StringType(default='')
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        code_lines = self.code_block.splitlines()
 
     def update_code_block(self, code_block: str) -> None:
         self.code_block = code_block
@@ -65,6 +89,8 @@ class AppModule(Model):
         write_path = os.path.join(app_path, self.file_path)
         with open(write_path, 'w') as stream:
             stream.write(self.code_block)
+
+
 
 class AppPackageBlock(Model):
     package_name = t.StringType(required=True)
@@ -100,6 +126,19 @@ class AppDomainBlock(AppPackageBlock):
         pass
 
 class AppBlock(AppPackageBlock):
+
+    class AppInitModule(AppModule):
+        kabbalapp_version = t.ModelType(KabbalappVersion, required=True)
+        imports = t.ListType(t.ModelType(AppImport), default=[])
+
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+            for line in self.code_block.splitlines():
+                if line.startswith('from') or line.startswith('import'):
+                    self.imports.append(AppImport(line))
+                elif line.startswith('__kabbalapp_version__'):
+                    self.kabbalapp_version = KabbalappVersion(line.split('=')[1].strip())
+            self.validate()
 
     domain_blocks = t.DictType(t.StringType(), t.ModelType(AppDomainBlock), default={})
 
@@ -155,12 +194,12 @@ class AppPrinter(object):
         })
         return package_block
         
-    def read_block(self, file_path: str) -> AppModuleBlock:
+    def read_block(self, file_path: str) -> AppModule:
         read_path = os.path.join(self.app_path, file_path)
         with open(read_path) as stream:
             code_block = stream.read()
             code_lines = code_block.splitlines()
-        return AppModuleBlock({
+        return AppModule({
             'file_path': file_path,
             'code_block': code_block,
             'code_lines': code_lines
@@ -169,7 +208,7 @@ class AppPrinter(object):
     def print(self, block, force: bool = False) -> None:
         block.print(self.app_path, force)
         
-    def print_block(self, code_block: AppModuleBlock, app_path: str = None) -> None:
+    def print_block(self, code_block: AppModule, app_path: str = None) -> None:
         if not app_path:
             app_path = self.app_path
         write_path = os.path.join(app_path, code_block.file_path)
