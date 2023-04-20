@@ -1,6 +1,9 @@
 import os, shutil
-
+from typing import List
 from schematics import types as t, Model
+from schematics.types.serializable import serializable
+
+
 
 class AppImport(Model):
 
@@ -69,30 +72,34 @@ class KabbalappVersion(AppVariable):
 
 class AppModule(Model):
 
-    __content = []
-
     name = t.StringType(required=True)
-    key = t.StringType(required=True)
     file_path = t.StringType(required=True)
-    code_block = t.StringType(default='')
+    standard_imports = t.ListType(t.ModelType(AppImport), default=[])
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        
+
+    @serializable
+    def full_path(self) -> str:
+        return os.path.join(self.file_path, self.name)
+    
+    @serializable
+    def content(self) -> str:
+        with open(self.full_path, 'r') as stream:
+            return stream.read()
+        
+    @serializable
+    def lines(self) -> List[str]:
+        return self.content.splitlines()
+
+    def print(self):
+        with open(self.full_path, 'w') as stream:
+            stream.write(self.content)
 
 
-    def update_code_block(self, code_block: str) -> None:
-        self.code_block = code_block
-        self.code_lines = code_block.splitlines()
 
-    def update_code_line(self, line_index: int, code: str) -> None:
-        self.code_lines[line_index] = code
-        self.code_block = '\n'.join(self.code_lines)
-
-    def print(self, app_path: str):
-        write_path = os.path.join(app_path, self.file_path)
-        with open(write_path, 'w') as stream:
-            stream.write(self.code_block)
-
-
-
-class AppPackageBlock(Model):
+class AppPackage(Model):
     package_name = t.StringType(required=True)
     parent_path = t.StringType(required=True)
 
@@ -104,7 +111,7 @@ class AppPackageBlock(Model):
         with open(os.path.join(package_path, '__init__.py'), 'w') as stream:
             stream.write('')
 
-class AppDomainBlock(AppPackageBlock):
+class AppDomainPackage(AppPackage):
 
     def __init__(self, domain_key: str, **kwargs):
         raw_data = kwargs.get('raw_data', {})
@@ -125,7 +132,7 @@ class AppDomainBlock(AppPackageBlock):
     def read(self, app_path: str):
         pass
 
-class AppBlock(AppPackageBlock):
+class MainAppPackage(AppPackage):
 
     class AppInitModule(AppModule):
         kabbalapp_version = t.ModelType(KabbalappVersion, required=True)
@@ -133,23 +140,24 @@ class AppBlock(AppPackageBlock):
 
         def __init__(self, **kwargs):
             super().__init__(**kwargs)
-            for line in self.code_block.splitlines():
+            for line in self.lines():
                 if line.startswith('from') or line.startswith('import'):
                     self.imports.append(AppImport(line))
                 elif line.startswith('__kabbalapp_version__'):
                     self.kabbalapp_version = KabbalappVersion(line.split('=')[1].strip())
             self.validate()
 
-    domain_blocks = t.DictType(t.StringType(), t.ModelType(AppDomainBlock), default={})
+    init_module = t.ModelType(AppInitModule, required=True)
+    domains_block = t.DictType(t.StringType(), t.ModelType(AppDomainPackage), default={})
 
-    def add_domain_block(self, domain_key: str) -> AppDomainBlock:
-        domain_block = AppDomainBlock(domain_key, raw_data={
+    def add_domain_block(self, domain_key: str) -> AppDomainPackage:
+        domain_block = AppDomainPackage(domain_key, raw_data={
             'parent_path': os.path.join(self.parent_path, self.package_name, 'domains')
         })
         self.domain_blocks[domain_key] = domain_block
         return domain_block
     
-    def get_domain_block(self, domain_key: str) -> AppDomainBlock:
+    def get_domain_block(self, domain_key: str) -> AppDomainPackage:
         return self.domain_blocks.get(domain_key)
 
     def read(self, app_path: str):
@@ -179,16 +187,16 @@ class AppPrinter(object):
     def __init__(self, app_path: str):
         self.app_path = app_path
 
-    def load_app(self) -> AppBlock:
-        app_block = AppBlock({
+    def load_app(self) -> MainAppPackage:
+        app_block = MainAppPackage({
             'package_name': 'app',
             'parent_path': self.app_path
         })
         app_block.read(self.app_path)
         return app_block
 
-    def add_package_block(self, package_name: str, parent_path: str = None) -> AppPackageBlock:
-        package_block = AppPackageBlock({
+    def add_package_block(self, package_name: str, parent_path: str = None) -> AppPackage:
+        package_block = AppPackage({
             'package_name': package_name,
             'parent_path': parent_path,
         })
