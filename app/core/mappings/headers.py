@@ -2,9 +2,9 @@ def default(request, app_context, **kwargs):
     # Get app key.
     app_key = request.get('app_key', None)
     
-    # Return if app key is null.
+    # Raise APP_KEY_REQUIRED app error if app_key is null.
     if not app_key:
-        return
+        raise(app_context.errors.APP_KEY_REQUIRED)
 
     # Get app project manager.
     from ...domains import AppProjectManager
