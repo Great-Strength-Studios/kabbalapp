@@ -21,7 +21,7 @@ class Container():
     def app_project_manager(self):
         import os
         if self.config.app_project_filepath and os.path.splitext(self.config.app_project_filepath)[1] in ['.yaml', '.yml']:
-            from ..domains.app_project.yaml import YamlAppProjectManager
+            from ..domains.app_project.impl import YamlAppProjectManager
             return YamlAppProjectManager(self.config.app_project_filepath)
         
     def app_printer(self, app_key: str = None):
@@ -35,7 +35,7 @@ class Container():
 
     def domain_service(self, app_key: str):
         import os
-        from ..domains.domain.yaml import YamlDomainService
+        from ..domains.app_domain.impl import YamlDomainService
         app_project_manager = self.app_project_manager()
         app_project = app_project_manager.load_project(app_key)      
         return YamlDomainService(app_project)
