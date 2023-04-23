@@ -1,4 +1,5 @@
 from ...core import *
+from ...domains import *
 
 def handle(context: MessageContext):
 
@@ -13,16 +14,11 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
 
     # Get domain service with app key input.
-    from ...domains import domain as dom
     service: dom.DomainService = context.services.domain_service(app_key)
 
     # Create domain model key if none exists.
     if not request.key:
         request.key = request.name.lower().replace(' ', '_')
-
-    # Create domain model class name if none exists.
-    if not request.class_name:
-        request.class_name = 'app.domains.{}.core.{}'.format(request.domain_key, request.name.title().replace(' ', ''))
     
     # Get requested domain.
     domain: dom.DomainEntity = dom.get_domain(service, request.domain_key)
