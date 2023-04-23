@@ -13,6 +13,7 @@ parser.add_argument('-d', '--app-directory')
 
 parser.add_argument('-dn', '--domain-name')
 parser.add_argument('-dk', '--domain-key')
+parser.add_argument('-da', '--domain-aliases', nargs='+')
 
 parser.add_argument('-mk', '--model-key')
 parser.add_argument('-mn', '--model-name')
@@ -24,11 +25,7 @@ parser.add_argument('-rf', '--role-fields', nargs='+')
 
 parser.add_argument('-pn', '--property-name')
 parser.add_argument('-pt', '--property-type')
-parser.add_argument('-pr', '--property-required', action='store_true')
-parser.add_argument('-psn', '--property-serialized-name')
-parser.add_argument('-pdf', '--property-deserialize-from')
-parser.add_argument('-pc', '--property-choices', nargs='+')
-parser.add_argument('-pd', '--property-default')
+parser.add_argument('-pmd', '--property-metadata')
 
 args = parser.parse_args()
 args = vars(args)
