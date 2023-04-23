@@ -29,6 +29,7 @@ class AppDomainModelProperty(Model):
 
 class AppDomainModel(Model):
     name = t.StringType(required=True)
+    class_name = t.StringType(required=True)
 
 class AppDomainRole(Model):
     type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)

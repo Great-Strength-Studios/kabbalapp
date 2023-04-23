@@ -1,20 +1,24 @@
 domains:
   app_printer:
     name: App Printer
+    class_name: AppPrinter
   app_project:
     models:
       app_project:
-        class_name: app.domains.app_project.core.AppProject
         name: App Project
+        class_name: AppProject
     name: App Project
-  domain:
+  app_domain:
+    aliases:
+    - adom
+    - d
     models:
-      domain:
-        class_name: app.domains.domain.core.Domain
-        name: Domain
-      domain_model:
-        class_name: app.domains.domain.core.DomainModel
-        name: Domain Model
+      app_domain:
+        name: App Domain
+        class_name: AppDomain
+      app_domain_model:
+        name: App Domain Model
+        class_name: AppDomainModel
     name: Domain
 endpoints: null
 errors:
