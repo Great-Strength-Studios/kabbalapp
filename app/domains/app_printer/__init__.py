@@ -3,35 +3,20 @@ from typing import List
 from schematics import types as t, Model
 from schematics.types.serializable import serializable
 
+from ....app import __kabbalapp_version__
 
+
+class AppTag(Model):
+    name = t.StringType(required=True)
+    message = t.StringType()
+
+    @serializable
+    def formatted(self):
+        if self.message:
+            return f'#{self.name} {self.message}'
+        return f'#{self.name}'
 
 class AppImport(Model):
-
-    def __init__(self, line: str, **kwargs):
-        if line.startswith('from'):
-            path, raw_names = line.split('from')[1].split('import')
-        else:
-            raw_names = line.split('import')[1]
-            path = None
-        names = []
-        for name in raw_names.split(','):
-            name = name.strip()
-            if 'as' in name:
-                name, alias = name.split('as')
-                names.append({
-                    'name': name.strip(),
-                    'alias': alias.strip()
-                })
-            else:
-                names.append({
-                    'name': name,
-                    'alias': None
-                })
-        raw_data = {
-            'names': names,
-            'path': path
-        }
-        super().__init__(raw_data=raw_data, **kwargs)
 
     class ImportName(Model):
         name = t.StringType(required=True)
@@ -39,6 +24,7 @@ class AppImport(Model):
 
     names = t.ListType(t.ModelType(ImportName), required=True)
     path = t.StringType()
+    tag = t.ModelType(AppTag, default=None)
 
     @serializable
     def formatted(self):
@@ -49,9 +35,12 @@ class AppImport(Model):
             else:
                 formatted_names.append(name.name)
         if self.path:
-            return f'from {self.path} import {", ".join(formatted_names)}'
+            code = f'from {self.path} import {", ".join(formatted_names)}'
         else:
-            return f'import {", ".join(formatted_names)}'
+            code = f'import {", ".join(formatted_names)}'
+        if self.tag:
+            code += f' {self.tag.formatted}'
+        return code
         
 class AppVariable(Model):
     name = t.StringType(required=True)
@@ -65,13 +54,14 @@ class AppConstant(AppVariable):
     @serializable
     def formatted(self):
         return f'{self.name.upper()} = {self.value}'
-    
-class KabbalappVersion(AppVariable):
-    def __init__(self, value: str):
-        super().__init__({
-            'name': '__kabbalapp_version__',
-            'value': value
-        })
+
+class AppComponent(Model):
+    name = t.StringType(required=True)
+    parent_path = t.StringType(required=True)
+
+    @serializable
+    def full_path(self) -> str:
+        return os.path.join(self.parent_path, self.name)
 
 class AppModule(Model):
 
@@ -108,6 +98,10 @@ class AppModule(Model):
 class AppPackage(Model):
     name = t.StringType(required=True)
     parent_path = t.StringType(required=True)
+    
+    @serializable
+    def full_path(self) -> str:
+        return os.path.join(self.parent_path, self.name)
 
     def __init__(self, name: str, parent_path: str, **kwargs):
         raw_data = {
@@ -125,7 +119,10 @@ class AppPackage(Model):
             stream.write('')
 
 class DomainsPackage(AppPackage):
-    pass
+    
+    def __init__(self, name: str, parent_path: str, **kwargs):
+        super().__init__(name=name, parent_path=parent_path, **kwargs)
+        
 
 class AppDomainPackage(AppPackage):
     pass
@@ -133,7 +130,7 @@ class AppDomainPackage(AppPackage):
 class MainAppPackage(AppPackage):
 
     class AppInitModule(AppModule):
-        kabbalapp_version = t.ModelType(KabbalappVersion, required=True)
+        kabbalapp_version = t.ModelType(AppVariable, required=True)
         imports = t.ListType(t.ModelType(AppImport), default=[])
 
         def __init__(self, **kwargs):
