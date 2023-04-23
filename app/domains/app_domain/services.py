@@ -2,14 +2,14 @@ from .models import *
 
 class AppDomainService():
 
-    def add_domain(self, domain_key: str, domain_name: str) -> AppDomain:
+    def add_domain(self, key: str, name: str) -> AppDomain:
         pass
 
-    def get_domain(self, domain_key: str) -> AppDomain:
+    def get_domain(self, key: str) -> AppDomain:
         pass
 
-    def add_domain_model(self, domain_key: str, model_key: str, model_name: str, class_name: str) -> AppDomainModel:
+    def add_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
         pass
 
-    def add_domain_role(self, domain_key: str, role_key: str, role_type: str, role_fields: List[str]) -> AppDomainRole:
+    def add_role(self, domain_key: str, key: str, type: str, fields: List[str]) -> AppDomainRole:
         pass
