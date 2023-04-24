@@ -87,6 +87,10 @@ modules:
         functions:
         - data_mapping: sync_app_project
           function_path: app_project.sync_app_project
+      set_default:
+        functions:
+        - data_mapping: set_default_app_project
+          function_path: app_project.set_default_app_project
   app_domain:
     features:
       add_model:
