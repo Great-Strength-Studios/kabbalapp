@@ -1,20 +1,24 @@
 domains:
   app_printer:
     name: App Printer
+    class_name: AppPrinter
   app_project:
     models:
       app_project:
-        class_name: app.domains.app_project.core.AppProject
         name: App Project
+        class_name: AppProject
     name: App Project
-  domain:
+  app_domain:
+    aliases:
+    - adom
+    - d
     models:
-      domain:
-        class_name: app.domains.domain.core.Domain
-        name: Domain
-      domain_model:
-        class_name: app.domains.domain.core.DomainModel
-        name: Domain Model
+      app_domain:
+        name: App Domain
+        class_name: AppDomain
+      app_domain_model:
+        name: App Domain Model
+        class_name: AppDomainModel
     name: Domain
 endpoints: null
 errors:
@@ -38,6 +42,14 @@ errors:
     error_name: DOMAIN_ROLE_ALREADY_EXISTS
     message:
       en_US: Domain role with key "{}" already exists
+  DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
+    error_code: '000010004'
+    error_name: DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS
+    message:
+      en_US: Domain model property with key "{}" already exists
+  DOMAIN_NOT_FOUND:
+    error_code: '000010005'
+    error_name: DOMAIN_NOT_FOUND
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     error_name: ENDPOINT_NOT_FOUND
@@ -65,21 +77,21 @@ modules:
         functions:
         - data_mapping: sync_app_project
           function_path: app_project.sync_app_project
-  domain:
+  app_domain:
     features:
       add_model:
         functions:
         - data_mapping: add_domain_model
-          function_path: domains.add_domain_model
+          function_path: app_domain.add_domain_model
       new:
         functions:
         - data_mapping: add_domain
-          function_path: domains.add_domain
+          function_path: app_domain.add_domain
       add_role:
         functions:
         - data_mapping: add_domain_role
-          function_path: domains.add_role
-      sync:
+          function_path: app_domain.add_role
+      add_model_property:
         functions:
-        - data_mapping: sync_domain
-          function_path: domains.sync_domain
+        - data_mapping: add_domain_model_property
+          function_path: app_domain.add_domain_model_property

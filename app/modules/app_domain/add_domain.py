@@ -13,7 +13,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
 
     # Get domain service.
-    service: DomainService = context.services.domain_service(app_key)
+    service: d.AppDomainService = context.services.domain_service(app_key)
 
     # Create domain key if none exists.
     if not request.key:

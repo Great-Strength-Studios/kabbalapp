@@ -14,25 +14,41 @@ def sync_app_project(context, request, app_context, **kwargs):
 
 def add_domain(context, request, app_context, **kwargs):
     return AddDomain({
-        'name': request.get('domain_name', None),
-        'key': request.get('domain_key', None),
+        'name': request.get('name', None),
+        'key': request.get('key', None),
+        'aliases': request.get('aliases', None),
     })
 
 def add_domain_model(context, request, app_context, **kwargs):
     return AddDomainModel({
         'domain_key': request.get('domain_key', None),
-        'name': request.get('model_name', None),
-        'key': request.get('model_key', None),
+        'name': request.get('name', None),
+        'key': request.get('key', None),
         'class_name': request.get('class_name', None)
     })
 
 def add_domain_role(context, request, app_context, **kwargs):
     return AddDomainRole({
         'domain_key': request.get('domain_key', None),
-        'key': request.get('role_key', None),
-        'type': request.get('role_type', None),
-        'fields': request.get('role_fields', None)
+        'key': request.get('key', None),
+        'type': request.get('type', None),
+        'fields': request.get('fields', None)
     })
+
+def add_domain_model_property(context, request, app_context, **kwargs):
+    import json
+    event = AddDomainModelProperty({
+        'domain_key': request.get('domain_key', None),
+        'model_key': request.get('model_key', None),
+        'name': request.get('name', None),
+        'key': request.get('key', None),
+        'type': request.get('type', None)
+    })
+    try:
+        event.metadata = json.loads(request.get('metadata', None))
+    except:
+        pass
+    return event
 
 def sync_domain(context, request, app_context, **kwargs):
     return SyncDomain({
