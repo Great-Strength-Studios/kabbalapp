@@ -7,6 +7,11 @@ def new_app_project(context, request, app_context, **kwargs):
         'app_directory': request.get('app_directory', None)
     })
 
+def set_default_app_project(context, request, app_context, **kwargs):
+    return SetDefaultAppProject({
+        'app_key': request.get('app_key', None)
+    })
+
 def sync_app_project(context, request, app_context, **kwargs):
     return SyncAppProject({
         'app_key': request.get('app_key', None)
