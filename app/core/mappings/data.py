@@ -34,3 +34,18 @@ def add_domain_role(context, request, app_context, **kwargs):
         'type': request.get('type', None),
         'fields': request.get('fields', None)
     })
+
+def add_domain_model_property(context, request, app_context, **kwargs):
+    import json
+    event = AddDomainModelProperty({
+        'domain_key': request.get('domain_key', None),
+        'model_key': request.get('model_key', None),
+        'name': request.get('name', None),
+        'key': request.get('key', None),
+        'type': request.get('type', None)
+    })
+    try:
+        event.metadata = json.loads(request.get('metadata', None))
+    except:
+        pass
+    return event
