@@ -49,7 +49,7 @@ class AddDomainModelProperty(RequestEvent):
     key = t.StringType(required=True)
     type = t.StringType(required=True, choices=d.DOMAIN_PROPERTY_TYPES)
     metadata = t.ModelType(AddMetadata, default={})
-    type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
+    type = t.StringType(required=True, choices=d.DOMAIN_ROLE_TYPES)
     fields = t.ListType(t.StringType(), required=True)
 
 class SyncDomain(RequestEvent):
