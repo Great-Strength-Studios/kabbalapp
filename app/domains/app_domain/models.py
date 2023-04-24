@@ -21,19 +21,23 @@ DOMAIN_PROPERTY_TYPES = [
 class AppDomainModelProperty(Model):
     
     class Metadata(Model):
-        required: t.BooleanType(default=False)
-        default: t.StringType()
-        choices: t.ListType(t.StringType())
+        required = t.BooleanType(default=False)
+        default = t.StringType()
+        choices = t.ListType(t.StringType())
         serialized_name = t.StringType()
         deserialize_from = t.ListType(t.StringType(), default=[])
+
+        class Options():
+            serialize_when_none = False
     
-    name: t.StringType(required=True)
-    type: t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
+    name = t.StringType(required=True)
+    type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
     metadata = t.ModelType(Metadata, default=None)
 
 class AppDomainModel(Model):
     name = t.StringType(required=True)
     class_name = t.StringType(required=True)
+    properties = t.DictType(t.ModelType(AppDomainModelProperty), default={})
 
 class AppDomainRole(Model):
     type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)

@@ -37,9 +37,12 @@ class YamlAppDomainService(AppDomainService):
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         if data['domains'] is not None and key in data['domains']:
+            domain_data = data['domains'][key]
             raw_data = {
                 'key': key,
-                'name': data['domains'][key]['name']
+                'name': domain_data.get('name'),
+                'aliases': domain_data.get('aliases', []),
+                'models': domain_data.get('models', {})
             }
             return AppDomain(raw_data=raw_data)
         else:
@@ -92,3 +95,39 @@ class YamlAppDomainService(AppDomainService):
             'fields': role_fields
         }
         return AppDomainRole(raw_data=raw_data)
+    
+    def add_property(self, domain_key: str, model_key: str, key: str, name: str, type: str, metadata: dict) -> AppDomainModelProperty:
+        # Get domain.
+        domain = self.get_domain(domain_key)
+        # Check if domain is an error tuple.
+        if isinstance(domain, tuple):
+            return domain
+        try:
+            model = domain.models[model_key]
+        except KeyError:
+            return ('DOMAIN_MODEL_NOT_FOUND', model_key)
+        # Format property data.
+        property_data = {'name': name, 'type': type, 'metadata': metadata}
+        # Add property data to model if properties is None.
+        if model.properties is None:
+            model.properties = {key: property_data}
+        # Check if property already exists.
+        elif key in model.properties:
+            return ('DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS', key)
+        # Add property data to model.
+        else:
+            model.properties[key] = property_data  
+        # Read schema file.
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
+        # Update schema file.
+        data['domains'][domain_key] = domain.to_primitive()
+        # Write updates to schema file.
+        with open(self.schema_file_path, 'w') as f:
+            yaml.dump(data, f)
+        # Return property.
+        return AppDomainModelProperty({
+            'name': name,
+            'type': type,
+            'metadata': metadata
+        })

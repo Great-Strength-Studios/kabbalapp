@@ -42,6 +42,14 @@ errors:
     error_name: DOMAIN_ROLE_ALREADY_EXISTS
     message:
       en_US: Domain role with key "{}" already exists
+  DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
+    error_code: '000010004'
+    error_name: DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS
+    message:
+      en_US: Domain model property with key "{}" already exists
+  DOMAIN_NOT_FOUND:
+    error_code: '000010005'
+    error_name: DOMAIN_NOT_FOUND
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     error_name: ENDPOINT_NOT_FOUND
