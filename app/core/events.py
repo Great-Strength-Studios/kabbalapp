@@ -15,6 +15,9 @@ class NewAppProject(RequestEvent):
             'app_project.map': blacklist('app_key')
         }
 
+class SetDefaultAppProject(RequestEvent):
+    app_key = t.StringType(required=True)
+
 class SyncAppProject(RequestEvent):
     key = t.StringType(required=True)
 
