@@ -10,7 +10,7 @@ def handle(context: MessageContext):
     app_printer: AppPrinter = context.services.app_printer()
 
     # Load target app printer.
-    target_app_printer: AppPrinter = context.services.app_printer(request.app_key)
+    target_app_printer: AppPrinter = context.services.app_printer(request.key)
 
     # Arrange packages/modules to be read.
     modules = [
@@ -33,7 +33,7 @@ def handle(context: MessageContext):
     # Update project app config.
     import os, yaml
     app_project_manager: AppProjectManager = context.services.app_project_manager()
-    app_project = app_project_manager.load_project(request.app_key)
+    app_project = app_project_manager.load_project(request.key)
 
     app_config = os.path.join(app_project.app_directory, 'app/app.yml')
     with open(app_config) as stream:

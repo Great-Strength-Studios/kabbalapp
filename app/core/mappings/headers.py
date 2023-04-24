@@ -7,8 +7,8 @@ def default(request, app_context, **kwargs):
         return
 
     # Get app project manager.
-    from ...domains import AppProjectManager
-    manager: AppProjectManager = app_context.container.app_project_manager()
+    from ...domains import p
+    manager: p.AppProjectManager = app_context.container.app_project_manager()
 
     # Get app project.
     app_project = manager.load_project(app_key)
@@ -21,4 +21,5 @@ def default(request, app_context, **kwargs):
         'app_version': app_project.version
     }
 
-    
+def app_project_headers(request, app_context, **kwargs):
+    return {}

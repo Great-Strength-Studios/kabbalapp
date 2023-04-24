@@ -3,6 +3,9 @@ domains:
     name: App Printer
     class_name: AppPrinter
   app_project:
+    aliases:
+    - aproj
+    - p
     models:
       app_project:
         name: App Project
@@ -27,29 +30,36 @@ errors:
     error_name: APP_KEY_REQUIRED
     message:
       en_US: App key is required
-  DOMAIN_ALREADY_EXISTS:
+  APP_PROJECT_NOT_FOUND:
     error_code: '000010001'
+    error_name: APP_PROJECT_NOT_FOUND
+    message:
+      en_US: App Project with key "{}" not found
+  DOMAIN_ALREADY_EXISTS:
+    error_code: '00002001'
     error_name: DOMAIN_ALREADY_EXISTS
     message:
       en_US: Domain with key "{}" already exists
   DOMAIN_MODEL_ALREADY_EXISTS:
-    error_code: '000010002'
+    error_code: '000020002'
     error_name: DOMAIN_MODEL_ALREADY_EXISTS
     message:
       en_US: Domain model with key "{}" already exists
   DOMAIN_ROLE_ALREADY_EXISTS:
-    error_code: '000010003'
+    error_code: '000020003'
     error_name: DOMAIN_ROLE_ALREADY_EXISTS
     message:
       en_US: Domain role with key "{}" already exists
   DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
-    error_code: '000010004'
+    error_code: '000020004'
     error_name: DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS
     message:
       en_US: Domain model property with key "{}" already exists
   DOMAIN_NOT_FOUND:
-    error_code: '000010005'
+    error_code: '000020005'
     error_name: DOMAIN_NOT_FOUND
+    message:
+      en_US: Domain with key "{}" not found
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     error_name: ENDPOINT_NOT_FOUND
@@ -70,13 +80,20 @@ modules:
   app_project:
     features:
       new:
+        header_mapping: app_project_headers
         functions:
         - data_mapping: new_app_project
           function_path: app_project.new_app_project
       sync:
+        header_mapping: app_project_headers
         functions:
         - data_mapping: sync_app_project
           function_path: app_project.sync_app_project
+      set_default:
+        header_mapping: app_project_headers
+        functions:
+        - data_mapping: set_default_app_project
+          function_path: app_project.set_default_app_project
   app_domain:
     features:
       add_model:

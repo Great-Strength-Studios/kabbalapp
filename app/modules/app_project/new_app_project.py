@@ -7,13 +7,10 @@ def handle(context: MessageContext):
     request: NewAppProject = context.data
 
     # Get app project manager.
-    manager: AppProjectManager = context.services.app_project_manager()
-
-    # Create app project.
-    app_project = AppProject(request.to_primitive('app_project.map'))
+    manager: p.AppProjectManager = context.services.app_project_manager()
 
     # Save app project.
-    manager.save_project(request.app_key, app_project)
+    manager.save_project(request.app_key, **request.to_primitive('app_project.map'))
 
     # Return app project.
     return app_project

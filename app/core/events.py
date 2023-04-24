@@ -12,8 +12,11 @@ class NewAppProject(RequestEvent):
     app_directory = t.StringType(required=True)
     class Options():
         roles = {
-            'app_project.map': blacklist('app_key')
+            'app_project.map': blacklist('key')
         }
+
+class SetDefaultAppProject(RequestEvent):
+    key = t.StringType(required=True)
 
 class SyncAppProject(RequestEvent):
     key = t.StringType(required=True)
