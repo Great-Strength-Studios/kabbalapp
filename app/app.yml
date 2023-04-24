@@ -3,6 +3,9 @@ domains:
     name: App Printer
     class_name: AppPrinter
   app_project:
+    aliases:
+    - aproj
+    - p
     models:
       app_project:
         name: App Project
