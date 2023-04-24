@@ -45,7 +45,7 @@ class YamlAppDomainService(AppDomainService):
         else:
             return ('DOMAIN_NOT_FOUND', key)
     
-    def add_domain_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
+    def add_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         model_data = {'name': name, 'class_name': class_name}
@@ -69,7 +69,7 @@ class YamlAppDomainService(AppDomainService):
         }
         return AppDomainModel(raw_data=raw_data)
     
-    def add_domain_role(self, domain_key: str, key: str, role_type: str, role_fields: List[str]) -> AppDomainRole:
+    def add_role(self, domain_key: str, key: str, role_type: str, role_fields: List[str]) -> AppDomainRole:
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         role_data = {'type': role_type, 'fields': role_fields}
