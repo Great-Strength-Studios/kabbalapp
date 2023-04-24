@@ -6,6 +6,7 @@ parser.add_argument('subcommand')
 
 parser.add_argument('--env', default='prod')
 parser.add_argument('--debug', action='store_true')
+parser.add_argument('--force', action='store_true')
 
 parser.add_argument('-n', '--name')
 parser.add_argument('-k', '--key')
