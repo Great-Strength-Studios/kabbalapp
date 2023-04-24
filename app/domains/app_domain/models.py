@@ -39,5 +39,6 @@ class AppDomainRole(Model):
 class AppDomain(Model):
     key = t.StringType()
     name = t.StringType(required=True)
+    aliases = t.ListType(t.StringType(), default=[])
     roles = t.ListType(t.ModelType(AppDomainRole), default=[])
     models = t.DictType(t.ModelType(AppDomainModel), default={})

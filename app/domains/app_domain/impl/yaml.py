@@ -12,10 +12,10 @@ class YamlAppDomainService(AppDomainService):
     def schema_file_path(self) -> str:
         return os.path.join(self.app_directory, self.schema_location)
 
-    def add_domain(self, key: str, name: str) -> AppDomain:
+    def add_domain(self, key: str, name: str, aliases: List[str]) -> AppDomain:
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
-        domain_data = { 'name': name }
+        domain_data = { 'name': name, 'aliases': aliases }
         try:
             if data['domains'] is not None and key in data['domains']:
                 return ('DOMAIN_ALREADY_EXISTS', key)
