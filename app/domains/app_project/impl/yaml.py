@@ -18,7 +18,7 @@ class YamlAppProjectManager(AppProjectManager):
         try:
             return AppProject(app_projects['projects'][app_key])
         except KeyError:
-            return None
+            return ('APP_PROJECT_NOT_FOUND', app_key)
 
     def save_project(self, app_key: str, app_project: AppProject):
         with open(self.app_project_filepath) as stream:
@@ -27,5 +27,14 @@ class YamlAppProjectManager(AppProjectManager):
             app_projects['projects'][app_key] = app_project.to_primitive()
         except TypeError:
             app_projects['projects'] = {app_key: app_project.to_primitive()}
+        with open(self.app_project_filepath, 'w') as stream:
+            yaml.safe_dump(app_projects, stream)
+
+    def set_default_app_project(self, app_key: str):
+        with open(self.app_project_filepath) as stream:
+            app_projects = yaml.safe_load(stream)
+        if app_key not in app_projects['projects']:
+            return ('APP_PROJECT_NOT_FOUND', app_key)
+        app_projects['default_project'] = app_key
         with open(self.app_project_filepath, 'w') as stream:
             yaml.safe_dump(app_projects, stream)
