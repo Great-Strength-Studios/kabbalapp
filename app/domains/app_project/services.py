@@ -2,11 +2,11 @@ from .models import *
 
 class AppProjectManager():
 
-    def load_project(self, app_key: str) -> AppProject:
+    def load_project(self, key: str) -> AppProject:
         pass
 
-    def save_project(self, app_key: str, app_project: AppProject):
+    def save_project(self, key: str, app_project: AppProject):
         pass
 
-    def set_default_app_project(self, app_key: str):
+    def set_default_app_project(self, key: str):
         pass
