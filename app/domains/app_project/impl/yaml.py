@@ -12,29 +12,29 @@ class YamlAppProjectManager(AppProjectManager):
                 data = {'projects': None, 'default_project': None}
                 yaml.safe_dump(data, stream)
 
-    def load_project(self, app_key: str) -> AppProject:
+    def load_project(self, key: str) -> AppProject:
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
         try:
-            return AppProject(app_projects['projects'][app_key])
+            return AppProject(app_projects['projects'][key])
         except KeyError:
-            return ('APP_PROJECT_NOT_FOUND', app_key)
+            return ('APP_PROJECT_NOT_FOUND', key)
 
-    def save_project(self, app_key: str, app_project: AppProject):
+    def save_project(self, key: str, app_project: AppProject):
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
         try:
-            app_projects['projects'][app_key] = app_project.to_primitive()
+            app_projects['projects'][key] = app_project.to_primitive()
         except TypeError:
-            app_projects['projects'] = {app_key: app_project.to_primitive()}
+            app_projects['projects'] = {key: app_project.to_primitive()}
         with open(self.app_project_filepath, 'w') as stream:
             yaml.safe_dump(app_projects, stream)
 
-    def set_default_app_project(self, app_key: str):
+    def set_default_app_project(self, key: str):
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
-        if app_key not in app_projects['projects']:
-            return ('APP_PROJECT_NOT_FOUND', app_key)
-        app_projects['default_project'] = app_key
+        if key not in app_projects['projects']:
+            return ('APP_PROJECT_NOT_FOUND', key)
+        app_projects['default_project'] = key
         with open(self.app_project_filepath, 'w') as stream:
             yaml.safe_dump(app_projects, stream)
