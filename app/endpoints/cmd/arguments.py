@@ -9,19 +9,18 @@ parser.add_argument('--debug', action='store_true')
 parser.add_argument('--force', action='store_true')
 
 parser.add_argument('-n', '--name')
-parser.add_argument('-k', '--app-key')
+parser.add_argument('-k', '--key')
 parser.add_argument('-d', '--app-directory')
+parser.add_argument('-a', '--aliases', nargs='+')
+parser.add_argument('-t', '--type')
+parser.add_argument('-f', '--fields', nargs='+')
+parser.add_argument('-m', '--metadata')
 
-parser.add_argument('-dn', '--domain-name')
+parser.add_argument('-ak', '--app-key')
 parser.add_argument('-dk', '--domain-key')
-
 parser.add_argument('-mk', '--model-key')
-parser.add_argument('-mn', '--model-name')
-parser.add_argument('-mc', '--model-class')
+parser.add_argument('-cl', '--class-name')
 
-parser.add_argument('-rk', '--role-key')
-parser.add_argument('-rt', '--role-type')
-parser.add_argument('-rf', '--role-fields', nargs='+')
 
 args = parser.parse_args()
 args = vars(args)

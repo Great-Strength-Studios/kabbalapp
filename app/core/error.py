@@ -32,7 +32,7 @@ class ErrorManager():
 
     def add(self, error: Error):
         try:
-            self.__errors[Error.error_name] = Error
+            self.__errors[error.error_name] = error
             setattr(self, error.error_name, error)
         except:
             return

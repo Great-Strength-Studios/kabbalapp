@@ -1,3 +1,3 @@
-from .app_project import AppProject, AppProjectManager
-from .app_printer import AppPrinter
-from .domain import Domain, DomainEntity, DomainService
+from . import app_project, app_project as aproj, app_project as p
+from .app_printer import AppBlock, AppPrinter
+from . import app_domain, app_domain as adom, app_domain as d

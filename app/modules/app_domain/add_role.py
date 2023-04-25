@@ -1,4 +1,5 @@
 from ...core import *
+from ...domains import *
 
 def handle(context: MessageContext):
 
@@ -9,18 +10,12 @@ def handle(context: MessageContext):
     app_key = context.headers.get('app_key', None)
     if app_key is None:
         raise AppError(context.errors.APP_KEY_REQUIRED)
-    
-    # Import domain.
-    from ...domains import domain as dom
 
-    # Get domain service.
-    domain_service: dom.DomainService = context.services.domain_service(app_key)
-
-    # Get domain.
-    domain: dom.DomainEntity = dom.get_domain(domain_service, request.domain_key)
+    # Get app domain service.
+    domain_service: d.AppDomainService = context.services.domain_service(app_key)
 
     # Add role.
-    role = domain.add_role(request.key, request.type, request.fields)
+    role = domain_service.add_role(**request.to_primitive())
 
     # Return response.
     return role

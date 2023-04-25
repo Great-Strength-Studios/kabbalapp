@@ -10,7 +10,7 @@ def handle(context: MessageContext):
     app_printer: AppPrinter = context.services.app_printer()
 
     # Load target app printer.
-    target_app_printer: AppPrinter = context.services.app_printer(request.app_key)
+    target_app_printer: AppPrinter = context.services.app_printer(request.key)
 
     # Load app.
     target_app_printer.load_app()
