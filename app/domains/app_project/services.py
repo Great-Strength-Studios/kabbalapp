@@ -2,7 +2,7 @@ from .models import *
 
 class AppProjectManager():
 
-    def load_project(self, key: str) -> AppProject:
+    def load_project(self, key: str = None) -> AppProject:
         pass
 
     def save_project(self, key: str, app_project: AppProject):
