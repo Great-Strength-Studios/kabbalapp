@@ -94,21 +94,25 @@ modules:
         functions:
         - data_mapping: set_default_app_project
           function_path: app_project.set_default_app_project
-  app_domain:
+  domain:
     features:
       add_model:
         functions:
         - data_mapping: add_domain_model
-          function_path: app_domain.add_domain_model
+          function_path: domain.add_domain_model
       new:
         functions:
         - data_mapping: add_domain
-          function_path: app_domain.add_domain
+          function_path: domain.add_domain
+      update:
+        functions:
+        - data_mapping: update_domain
+          function_path: domain.update_domain
       add_role:
         functions:
         - data_mapping: add_domain_role
-          function_path: app_domain.add_role
+          function_path: domain.add_role
       add_model_property:
         functions:
         - data_mapping: add_domain_model_property
-          function_path: app_domain.add_domain_model_property
+          function_path: domain.add_domain_model_property

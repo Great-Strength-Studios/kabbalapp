@@ -1,5 +1,7 @@
 from typing import List
 from schematics import types as t, Model
+from schematics.transforms import blacklist, whitelist
+from schematics.types.serializable import serializable
 
 DOMAIN_ROLE_TYPES = [
     'whitelist',
@@ -49,3 +51,9 @@ class AppDomain(Model):
     aliases = t.ListType(t.StringType(), default=[])
     roles = t.ListType(t.ModelType(AppDomainRole), default=[])
     models = t.DictType(t.ModelType(AppDomainModel), default={})
+
+    class Options():
+        roles = {
+            'create': whitelist('key'),
+            'update': blacklist('key', 'roles', 'models'),
+        }
