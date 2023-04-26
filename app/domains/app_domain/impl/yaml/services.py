@@ -1,6 +1,5 @@
-import os, yaml
-
-from .. import *
+from ...services import *
+from .models import *
 
 class YamlAppDomainService(AppDomainService):
 
@@ -10,9 +9,11 @@ class YamlAppDomainService(AppDomainService):
 
     @property
     def schema_file_path(self) -> str:
+        import os
         return os.path.join(self.app_directory, self.schema_location)
 
     def add_domain(self, key: str, name: str, aliases: List[str]) -> AppDomain:
+        import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         domain_data = { 'name': name, 'aliases': aliases }
@@ -34,6 +35,7 @@ class YamlAppDomainService(AppDomainService):
         return AppDomain(raw_data=raw_data)
     
     def get_domain(self, key: str) -> AppDomain:
+        import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         if data['domains'] is not None and key in data['domains']:
@@ -49,6 +51,7 @@ class YamlAppDomainService(AppDomainService):
             return ('DOMAIN_NOT_FOUND', key)
     
     def add_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
+        import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         model_data = {'name': name, 'class_name': class_name}
@@ -73,6 +76,7 @@ class YamlAppDomainService(AppDomainService):
         return AppDomainModel(raw_data=raw_data)
     
     def add_role(self, domain_key: str, key: str, role_type: str, role_fields: List[str]) -> AppDomainRole:
+        import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         role_data = {'type': role_type, 'fields': role_fields}
@@ -97,6 +101,7 @@ class YamlAppDomainService(AppDomainService):
         return AppDomainRole(raw_data=raw_data)
     
     def add_property(self, domain_key: str, model_key: str, key: str, name: str, type: str, metadata: dict) -> AppDomainModelProperty:
+        import yaml
         # Get domain.
         domain = self.get_domain(domain_key)
         # Check if domain is an error tuple.
