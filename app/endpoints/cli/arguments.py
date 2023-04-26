@@ -54,17 +54,22 @@ class AppCommand(Model):
         }
 
 class AppCommands(Model):
+    parent_arguments = t.ListType(t.ModelType(AppArgument), default=[])
     commands = t.DictType(t.ModelType(AppCommand), default={})
 
 with open('app/app.yml', 'r') as f:
     app_config = yaml.load(f.read())
 commands = AppCommands(app_config['endpoints']['cmd'])
 
+# Create parser.
 parser = argparse.ArgumentParser()
-command_subparsers = parser.add_subparsers(dest='command')
+for argument in commands.parent_arguments:
+    parser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
 
+# Add command subparsers
+command_subparsers = parser.add_subparsers(dest='command')
 for command_name, command in commands.commands.items():
-    command_subparser = command_subparsers.add_parser(command_name, command.to_primitive('add_parser'))
+    command_subparser = command_subparsers.add_parser(command_name, command.to_primitive('add_parser'), parents=[parser])
     subcommand_subparsers = command_subparser.add_subparsers(dest='subcommand')
     for subcommand_name, subcommand in command.subcommands.items():
         subcommand_name = subcommand_name.replace('_', '-')
@@ -76,9 +81,7 @@ for command_name, command in commands.commands.items():
 parser.add_argument('command')
 parser.add_argument('subcommand')
 
-parser.add_argument('--env', default='prod')
-parser.add_argument('--debug', action='store_true')
-parser.add_argument('--force', action='store_true')
+
 
 parser.add_argument('-n', '--name')
 parser.add_argument('-k', '--key')
