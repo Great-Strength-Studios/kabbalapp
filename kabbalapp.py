@@ -6,8 +6,8 @@ from app import CliAppBuilder, CliAppContext, args, constants, ContainerConfigur
 # Pop env from args using default app env if not provided
 env = args.args.pop('env', constants.DEFAULT_APP_ENV)
 
-# Pop debug from args using false if not provided
-debug = args.args.pop('debug', False)
+# Pop verbose from args using false if not provided
+debug = args.args.pop('verbose', False)
 
 # Preprocess
 os.environ[constants.APP_ENV] = env
@@ -26,7 +26,7 @@ app_context: CliAppContext = builder.build()
 # Run app context.
 app_context.run(
     command = args.command,
-    function = args.function,
+    function = args.subcommand,
     args=args.args, 
     env=env,
     debug=debug)
