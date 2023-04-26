@@ -61,12 +61,10 @@ class AppCommands(Model):
 
 with open('app/app.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
-commands = AppCommands(app_config['endpoints']['cli'])
+commands = AppCommands(app_config['interfaces']['cli'])
 
 # Create parser.
 parser = argparse.ArgumentParser()
-for argument in commands.parent_arguments:
-    parser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
 
 # Add command subparsers
 command_subparsers = parser.add_subparsers(dest='command')
@@ -75,9 +73,11 @@ for command_name, command in commands.commands.items():
     subcommand_subparsers = command_subparser.add_subparsers(dest='subcommand')
     for subcommand_name, subcommand in command.subcommands.items():
         subcommand_name = subcommand_name.replace('_', '-')
-        subparser = subcommand_subparsers.add_parser(subcommand_name, help=subcommand.help)
+        subcommand_subparser = subcommand_subparsers.add_parser(subcommand_name, help=subcommand.help)
         for argument in subcommand.arguments:
-            subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
+            subcommand_subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
+        for argument in commands.parent_arguments:
+            subcommand_subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
 
 # Parse arguments.
 args = parser.parse_args()
