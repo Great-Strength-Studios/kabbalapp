@@ -44,8 +44,6 @@ endpoints:
       action: store_true
       help: force the command overwrite existing files when syncing
     commands:
-      cli:
-
       domain:
         subcommands:
           add:
@@ -68,13 +66,14 @@ endpoints:
               - name
               help: domain model name
             - name_or_flags:
-              - --key
-              - -k
-              help: domain model key
-            - name_or_flags:
               - --domain-key
               - -d
               help: domain key
+              required: true
+            - name_or_flags:
+              - --key
+              - -k
+              help: domain model key
             - name_or_flags:
               - --class-name
               - -c
