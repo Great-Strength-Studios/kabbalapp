@@ -1,6 +1,6 @@
 from ...core import *
 
-class CmdAppContext(AppContext):
+class CliAppContext(AppContext):
 
     def run(self, **kwargs):
 
@@ -26,10 +26,10 @@ class CmdAppContext(AppContext):
             exit(str(e.to_dict()))
 
 
-class CmdAppBuilder(AppBuilder):
+class CliAppBuilder(AppBuilder):
     
     def build(self):
-        return CmdAppContext(
+        return CliAppContext(
             self._current_session.name,
             self._current_session.app_config,
             self._current_session.container_config
