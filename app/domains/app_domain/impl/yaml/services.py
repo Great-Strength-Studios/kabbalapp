@@ -59,9 +59,9 @@ class YamlAppDomainService(AppDomainService):
             return domain
         # Update domain.
         if name is not None:
-            name = domain.name
+            domain.name = name
         if aliases is not None:
-            aliases = domain.aliases
+            domain.aliases = aliases
         # Save domain.
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
