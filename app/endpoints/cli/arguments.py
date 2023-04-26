@@ -18,6 +18,8 @@ class AppArgument(Model):
 
     @serializable
     def type(self):
+        if self.action in ['store_true', 'store_false']:
+            return None
         if self.type_str == 'str':
             return str
         elif self.type_str == 'int':
@@ -58,8 +60,8 @@ class AppCommands(Model):
     commands = t.DictType(t.ModelType(AppCommand), default={})
 
 with open('app/app.yml', 'r') as f:
-    app_config = yaml.load(f.read())
-commands = AppCommands(app_config['endpoints']['cmd'])
+    app_config = yaml.safe_load(f.read())
+commands = AppCommands(app_config['endpoints']['cli'])
 
 # Create parser.
 parser = argparse.ArgumentParser()
@@ -69,7 +71,7 @@ for argument in commands.parent_arguments:
 # Add command subparsers
 command_subparsers = parser.add_subparsers(dest='command')
 for command_name, command in commands.commands.items():
-    command_subparser = command_subparsers.add_parser(command_name, command.to_primitive('add_parser'), parents=[parser])
+    command_subparser = command_subparsers.add_parser(command_name, **command.to_primitive('add_parser'))
     subcommand_subparsers = command_subparser.add_subparsers(dest='subcommand')
     for subcommand_name, subcommand in command.subcommands.items():
         subcommand_name = subcommand_name.replace('_', '-')
@@ -77,26 +79,8 @@ for command_name, command in commands.commands.items():
         for argument in subcommand.arguments:
             subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
 
-
-parser.add_argument('command')
-parser.add_argument('subcommand')
-
-
-
-parser.add_argument('-n', '--name')
-parser.add_argument('-k', '--key')
-parser.add_argument('-d', '--app-directory')
-parser.add_argument('-a', '--aliases', nargs='+')
-parser.add_argument('-t', '--type')
-parser.add_argument('-f', '--fields', nargs='+')
-parser.add_argument('-m', '--metadata')
-
-parser.add_argument('-ak', '--app-key')
-parser.add_argument('-dk', '--domain-key')
-parser.add_argument('-mk', '--model-key')
-parser.add_argument('-cl', '--class-name')
-
+# Parse arguments.
+args = parser.parse_args()
 command = sys.argv[1]
 subcommand = sys.argv[2].replace('-', '_')
-args = parser.parse_args()
 args = vars(args)
