@@ -35,6 +35,7 @@ endpoints:
       - dev
       - prod
       help: environment to run the command in
+      default: prod
     - name_or_flags:
       - --verbose
       action: store_true
@@ -223,8 +224,8 @@ modules:
       add_model:
         functions:
         - data_mapping: add_domain_model
-          function_path: domain.add_domain_model
-      new:
+          function_path: domain.add_model
+      add:
         functions:
         - data_mapping: add_domain
           function_path: domain.add_domain
