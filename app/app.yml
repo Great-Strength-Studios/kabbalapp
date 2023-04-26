@@ -25,12 +25,77 @@ domains:
     name: Domain
 endpoints: 
   cli:
+    parent_arguments:
+    - name_or_flags:
+      - --app-key
+      help: app project key (not required when using default project)
+    - name_or_flags:
+      - --env
+      choices:
+      - dev
+      - prod
+      help: environment to run the command in
+    - name_or_flags:
+      - --verbose
+      action: store_true
+      help: run the command with verbose output
+    - name_or_flags:
+      - --force
+      action: store_true
+      help: force the command overwrite existing files when syncing
     commands:
+      cli:
+
       domain:
         subcommands:
           add:
+            arguments:
+            - name_or_flags:
+              - name
+              help: domain name
+            - name_or_flags:
+              - --key
+              - -k
+              help: domain key
+            - name_or_flags:
+              - --aliases
+              - -a
+              nargs: '+'
+              help: domain aliases
           add-model:
+            arguments:
+            - name_or_flags:
+              - name
+              help: domain model name
+            - name_or_flags:
+              - --key
+              - -k
+              help: domain model key
+            - name_or_flags:
+              - --domain-key
+              - -d
+              help: domain key
+            - name_or_flags:
+              - --class-name
+              - -c
+              help: domain model class name
           add-role:
+            arguments:
+            - name_or_flags:
+              - name
+              help: domain role name
+            - name_or_flags:
+              - --type
+              - -t
+              help: domain role type
+              choices:
+              - blacklist
+              - whitelist
+            - name_or_flags:
+              - --domain-key
+              - -d
+              help: domain key
+              required: true
           add-model-property:
 errors:
   APP_KEY_REQUIRED:
