@@ -26,7 +26,7 @@ def add_domain(context, request, app_context, **kwargs):
 
 def update_domain(context, request, app_context, **kwargs):
     return UpdateDomain({
-        'domain_key': request.get('domain_key', None),
+        'key': request.get('key', None),
         'name': request.get('name', None),
         'aliases': request.get('aliases', None),
     })
