@@ -23,7 +23,15 @@ domains:
         name: App Domain Model
         class_name: AppDomainModel
     name: Domain
-endpoints: null
+endpoints: 
+  cli:
+    commands:
+      domain:
+        subcommands:
+          add:
+          add-model:
+          add-role:
+          add-model-property:
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
