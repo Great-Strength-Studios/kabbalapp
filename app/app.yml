@@ -91,12 +91,64 @@ endpoints:
               choices:
               - blacklist
               - whitelist
+              required: true
             - name_or_flags:
               - --domain-key
               - -d
               help: domain key
               required: true
           add-model-property:
+            arguments:
+            - name_or_flags:
+              - name
+              help: domain model property name
+            - name_or_flags:
+              - -d
+              - --domain-key
+              help: domain key
+              required: true
+            - name_or_flags:
+              - -m
+              - --model-key
+              help: domain model key
+              required: true
+            - name_or_flags:
+              - -k
+              - --key
+              help: domain model property key
+            - name_or_flags:
+              - -t
+              - --type
+              help: domain model property type
+              choices:
+              - str
+              - int
+              - float
+              - bool
+              - datetime
+              - date
+              - time
+              - list
+              - dict
+              - model
+            - name_or_flags:
+              - --required
+              help: require value for domain model property
+              action: store_true
+            - name_or_flags:
+              - --default
+              help: default domain model property value
+            - name_or_flags:
+              - --choices
+              help: available value choices for domain model property value
+              nargs: +
+            - name_or_flags:
+              - --serialized_name
+              help: the domain model property key when serialized
+            - name_or_flags:
+              - --deserialize_from
+              help: the domain model property keys available to deserialize from
+              nargs: +
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
