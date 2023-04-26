@@ -52,22 +52,23 @@ class YamlAppDomainService(AppDomainService):
         
     def update_domain(self, key: str, name: str = None, aliases: List[str] = None) -> AppDomain:
         import yaml
+        # Retrieve existing domain.
+        domain = self.get_domain(key)
+        # Return error if domain not found.
+        if isinstance(domain, tuple):
+            return domain
+        # Update domain.
+        if name is not None:
+            name = domain.name
+        if aliases is not None:
+            aliases = domain.aliases
+        # Save domain.
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
-        if data['domains'] is None or key not in data['domains']:
-            return ('DOMAIN_NOT_FOUND', key)
-        if name is not None:
-            data['domains'][key]['name'] = name
-        if aliases is not None:
-            data['domains'][key]['aliases'] = aliases
+        data['domains'][key] = domain.to_primitive('update')
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
-        raw_data = {
-            'key': key,
-            'name': name,
-            'aliases': aliases
-        }
-        return AppDomain(raw_data=raw_data)
+        return domain
     
     def add_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
         import yaml
