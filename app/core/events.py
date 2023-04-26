@@ -26,6 +26,11 @@ class AddDomain(RequestEvent):
     key = t.StringType()
     aliases = t.ListType(t.StringType(), default=[])
 
+class UpdateDomain(RequestEvent):
+    domain_key = t.StringType(required=True)
+    name = t.StringType()
+    aliases = t.ListType(t.StringType())
+
 class AddDomainModel(RequestEvent):
     domain_key = t.StringType(required=True)
     name = t.StringType(required=True)
