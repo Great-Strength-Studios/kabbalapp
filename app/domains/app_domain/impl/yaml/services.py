@@ -49,6 +49,25 @@ class YamlAppDomainService(AppDomainService):
             return AppDomain(raw_data=raw_data)
         else:
             return ('DOMAIN_NOT_FOUND', key)
+        
+    def update_domain(self, key: str, name: str = None, aliases: List[str] = None) -> AppDomain:
+        import yaml
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
+        if data['domains'] is None or key not in data['domains']:
+            return ('DOMAIN_NOT_FOUND', key)
+        if name is not None:
+            data['domains'][key]['name'] = name
+        if aliases is not None:
+            data['domains'][key]['aliases'] = aliases
+        with open(self.schema_file_path, 'w') as f:
+            yaml.dump(data, f)
+        raw_data = {
+            'key': key,
+            'name': name,
+            'aliases': aliases
+        }
+        return AppDomain(raw_data=raw_data)
     
     def add_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
         import yaml
