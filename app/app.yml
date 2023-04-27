@@ -102,7 +102,21 @@ interfaces:
               - --aliases
               - -a
               nargs: +
-          add-model:
+          add_implementation:
+            arguments:
+            - help: domain key
+              name_or_flags:
+              - --domain-key
+              - -d
+              required: true
+            - help: domain implementation key
+              name_or_flags:
+              - --key
+              - -k
+            - help: domain implementation name
+              name_or_flags:
+              - name
+          add_model:
             arguments:
             - help: domain model name
               name_or_flags:
@@ -120,7 +134,7 @@ interfaces:
               name_or_flags:
               - --class-name
               - -c
-          add-model-property:
+          add_model_property:
             arguments:
             - help: domain model property name
               name_or_flags:
@@ -172,7 +186,7 @@ interfaces:
               name_or_flags:
               - --deserialize_from
               nargs: +
-          add-role:
+          add_role:
             arguments:
             - help: domain role name
               name_or_flags:
