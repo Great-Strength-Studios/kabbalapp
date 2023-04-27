@@ -114,6 +114,61 @@ interfaces:
                 - --key
                 required: true
             name: Add CLI Command
+          add_parent_argument:
+            arguments:
+              key:
+                help: argument key
+                name_or_flags:
+                - -k
+                - --key
+                required: true
+              name_or_flags:
+                help: argument name or flags
+                name_or_flags:
+                - -n
+                - --name-or-flags
+                nargs: +
+                required: true
+              help:
+                help: argument help
+                name_or_flags:
+                - -h
+                - --help
+                required: true
+              type:
+                choices:
+                - str
+                - int
+                - float
+                - bool
+                - list
+                - dict
+                help: argument type
+                - --type
+                default: str
+              default:
+                help: argument default
+                name_or_flags:
+                - --default
+              required:
+                help: argument required
+                name_or_flags:
+                - --required
+                action: store_true
+              choices:
+                help: argument choices
+                name_or_flags:
+                - --choices
+                nargs: +
+              nargs:
+                help: available number of arguments
+                name_or_flags:
+                - --nargs
+              action:
+                help: argument action
+                name_or_flags:
+                - --action
+            name: Add CLI Parent Argument
       domain:
         subcommands:
           add:
