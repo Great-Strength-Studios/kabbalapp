@@ -58,6 +58,11 @@ errors:
     error_name: CLI_PARENT_ARGUMENT_ALREADY_EXISTS
     message:
       en_US: CLI parent argument with key "{}" already exists
+  CLI_SUBCOMMAND_ALREADY_EXISTS:
+    error_code: '000000006'
+    error_name: CLI_SUBCOMMAND_ALREADY_EXISTS
+    message:
+      en_US: CLI subcommand with key "{}" already exists
   DOMAIN_ALREADY_EXISTS:
     error_code: '00002001'
     error_name: DOMAIN_ALREADY_EXISTS
