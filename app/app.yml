@@ -122,18 +122,29 @@ interfaces:
                 - -k
                 - --key
                 required: true
-              name_or_flags:
-                help: argument name or flags
+              name:
+                help: argument name
                 name_or_flags:
                 - -n
-                - --name-or-flags
-                nargs: +
+                - --name
                 required: true
+              flags:
+                help: argument flags
+                name_or_flags:
+                - -f
+                - --flags
+                nargs: +
+              postional:
+                help: argument is positional
+                name_or_flags:
+                - -p
+                - --positional
+                action: store_true
               help:
                 help: argument help
                 name_or_flags:
-                - -h
-                - --help
+                - -ah
+                - --argument-help
                 required: true
               type:
                 choices:
@@ -144,6 +155,7 @@ interfaces:
                 - list
                 - dict
                 help: argument type
+                name_or_flags:
                 - --type
                 default: str
               default:
@@ -342,14 +354,15 @@ interfaces:
         subcommands:
           add:
             arguments:
-            - choices:
-              - cli
-              - flask
-              help: interface key
-              name_or_flags:
-              - -k
-              - --key
-              required: true
+              key:
+                help: interface key
+                name_or_flags:
+                - --key
+                - -k
+                required: true
+                choices:
+                - cli
+                - flask
             name: Add App Interface
       module: {}
     parent_arguments:
