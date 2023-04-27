@@ -225,6 +225,82 @@ interfaces:
                 - -sh
                 - --subcommand-help
                 required: true
+          add_argument:
+            arguments:
+              command_key:
+                help: command key
+                name_or_flags:
+                - -c
+                - --command-key
+                required: true
+              subcommand_key:
+                help: subcommand key
+                name_or_flags:
+                - -s
+                - --subcommand-key
+                required: true
+              key:
+                help: argument key
+                name_or_flags:
+                - -k
+                - --key
+              name:
+                help: argument name
+                name_or_flags:
+                - -n
+                - --name
+                required: true
+              flags:
+                help: argument flags
+                name_or_flags:
+                - -f
+                - --flags
+                nargs: +
+              postional: 
+                help: argument is positional
+                name_or_flags:
+                - -p
+                - --positional
+                action: store_true
+              help:
+                help: argument help
+                name_or_flags:
+                - -ah
+                - --argument-help
+              required: true
+              type:
+                choices:
+                - str
+                - int
+                - float
+                help: argument type
+                name_or_flags:
+                - -t
+                - --type
+                default: str
+              default:
+                help: argument default
+                name_or_flags:
+                - --default
+              required:
+                help: argument required
+                name_or_flags:
+                - --required
+                action: store_true
+              choices:
+                help: argument choices
+                name_or_flags:
+                - --choices
+                nargs: +
+              nargs:
+                help: available number of arguments
+                name_or_flags:
+                - --nargs
+              action:
+                help: argument action
+                name_or_flags:
+                - --action
+            name: Add CLI Argument
       domain:
         subcommands:
           add:
