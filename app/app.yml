@@ -195,6 +195,31 @@ interfaces:
                 name_or_flags:
                 - --action
             name: Add CLI Parent Argument
+          add_subcommand:
+            arguments:
+              command_key:
+                help: command key
+                name_or_flags:
+                - -c
+                - --command-key
+                required: true
+              key:
+                help: subcommand key
+                name_or_flags:
+                - -k
+                - --key
+              name:
+                help: subcommand name
+                name_or_flags:
+                - -n
+                - --name
+                required: true
+              help:
+                help: subcommand help
+                name_or_flags:
+                - -sh
+                - --subcommand-help
+                required: true
       domain:
         subcommands:
           add:
