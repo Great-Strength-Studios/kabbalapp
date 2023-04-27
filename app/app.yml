@@ -78,6 +78,18 @@ events: null
 interfaces:
   cli:
     commands:
+      interface:
+        subcommands:
+          add:
+            arguments:
+            - help: interface key
+              name_or_flags:
+              - -k
+              - --key
+              choices: 
+              - cli
+              - flask
+              required: true
       domain:
         subcommands:
           add:
@@ -223,6 +235,12 @@ modules:
         - data_mapping: sync_app_project
           function_path: app_project.sync_app_project
         header_mapping: app_project_headers
+  interface:
+    features:
+      add:
+        functions:
+        - data_mapping: add_interface
+          function_path: interface.add_interface
   domain:
     features:
       add:

@@ -12,7 +12,7 @@ def default(request, app_context, **kwargs):
 
     # Return header data.
     return {
-        'app_key': app_key,
+        'app_key':  app_key if app_key else app_project.key,
         'app_directory': app_project.app_directory,
         'app_name': app_project.name,
         'app_version': app_project.version
