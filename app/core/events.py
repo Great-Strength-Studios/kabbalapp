@@ -67,5 +67,5 @@ class AddDomainModelProperty(RequestEvent):
     metadata = t.ModelType(AddMetadata, default={})
 
 class SyncDomain(RequestEvent):
-    key = t.StringType(required=True)
+    domain_key = t.StringType(required=True)
     force = t.BooleanType(default=False)

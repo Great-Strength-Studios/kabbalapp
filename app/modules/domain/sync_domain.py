@@ -1,34 +1,58 @@
-# from ...core import *
-# from ...domains import *
+from ...core import *
+from ...domains import *
 
-# def handle(context: MessageContext):
+def handle(context: MessageContext):
+    import os
 
-#     # Unpack request.
-#     request: SyncDomain = context.data
+    # Unpack request.
+    request: SyncDomain = context.data
 
-#     # Retreive app key from headers.
-#     app_key = context.headers.get('app_key', None)
+    # Retreive app key from headers.
+    app_key = context.headers.get('app_key', None)
 
-#     # Raise error if app key is not provided.
-#     if app_key is None:
-#         raise AppError(context.errors.APP_KEY_REQUIRED)
+    # Raise error if app key is not provided.
+    if app_key is None:
+        raise AppError(context.errors.APP_KEY_REQUIRED)
     
-#     # Get domain service.
-#     domain_service: DomainService = context.services.domain_service(app_key)
+    # Get domain service.
+    domain_service: d.AppDomainService = context.services.domain_service(app_key)
 
-#     # Get domain.
-#     dom: DomainEntity = app_domain.get_domain(domain_service, request.key)
-#     if isinstance(dom, tuple):
-#         raise context.errors.get(dom[0]).format_message(dom[1])
+    # Get domain.
+    domain = domain_service.get_domain(request.domain_key)
+    if isinstance(domain, tuple):
+        raise context.errors.get(domain[0]).format_message(domain[1])
 
-#     # Load app printer.
-#     printer: AppPrinter = context.services.app_printer(app_key)
+    # File lines
+    init_file = [
+        'from .services import *',
+    ]
+    services_file = [
+        'from .models import *',
+    ]
+    models_file = [
+        'from typing import List',
+        'from schematics import types as t, Model',
+        'from schematics.transforms import whitelist, blacklist',
+        'from schematics.types.serializable import serializable',
+    ]
+    files = {
+        '__init__.py': init_file,
+        'services.py': services_file,
+        'models.py': models_file
+    }
 
-#     # Load app block to printer.
-#     app_block = printer.load_app()
+    # Get app directory from headers.
+    app_directory = context.headers.get('app_directory')
 
-#     # Add new domain block to app block.
-#     domain_block = app_block.add_domain_block(dom.key)
+    # Format domain directory.
+    domain_directory = os.path.join(app_directory, 'app', 'domains', domain.key)
 
-#     # Print app block.
-#     printer.print(domain_block, request.force)
+    # Make directories even if they exist.
+    os.makedirs(domain_directory, exist_ok=True)
+
+    # Write files.
+    for file_name, file_lines in files.items():
+        file_path = os.path.join(domain_directory, file_name)
+        if not os.path.exists(file_path) or request.force:
+            with open(file_path, 'w') as f:
+                f.write('\n'.join(file_lines))
