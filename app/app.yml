@@ -48,6 +48,11 @@ errors:
     error_name: APP_PROJECT_NOT_FOUND
     message:
       en_US: App Project with key "{}" not found
+  CLI_COMMAND_NOT_FOUND:
+    error_code: '000000003'
+    error_name: CLI_COMMAND_NOT_FOUND
+    message:
+      en_US: CLI command with key "{}" not found
   CLI_COMMAND_ALREADY_EXISTS:
     error_code: '000000004'
     error_name: CLI_COMMAND_ALREADY_EXISTS
