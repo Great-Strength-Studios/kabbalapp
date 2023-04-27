@@ -58,6 +58,11 @@ errors:
     error_name: DOMAIN_IMPLEMENTATION_ALREADY_EXISTS
     message:
       en_US: Domain implementation with key "{}" already exists
+  DOMAIN_IMPLEMENTATION_NOT_FOUND:
+    error_code: '000020007'
+    error_name: DOMAIN_IMPLEMENTATION_NOT_FOUND
+    message:
+      en_US: Domain implementation with key "{}" not found
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020002'
     error_name: DOMAIN_MODEL_ALREADY_EXISTS
