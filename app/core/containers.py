@@ -47,6 +47,12 @@ class Container():
             from ..domains.app_interface.impl import YamlAppInterfaceService
             return YamlAppInterfaceService(app_project.app_directory, app_project.schema_location)
 
+    def cli_interface_service(self, app_key: str):
+        app_project_manager = self.app_project_manager()
+        app_project = app_project_manager.load_project(app_key)
+        if app_project.schema_storage_type == 'yaml':
+            from ..domains.cli.impl import YamlCliInterfaceService
+            return YamlCliInterfaceService(app_project.app_directory, app_project.schema_location)
 
 # Default dynamic container
 class DynamicContainer():

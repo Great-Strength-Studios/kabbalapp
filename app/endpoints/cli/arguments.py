@@ -36,6 +36,7 @@ class AppArgument(Model):
         }
 
 class AppSubcommand(Model):
+    name = t.StringType(required=True)
     help = t.StringType(required=True)
     arguments = t.ListType(t.ModelType(AppArgument), default=[])
 
@@ -47,7 +48,7 @@ class AppSubcommand(Model):
 
 class AppCommand(Model):
     help = t.StringType(required=True)
-    subcommands = t.DictType(t.ModelType(AppSubcommand), default=[])
+    subcommands = t.DictType(t.ModelType(AppSubcommand), default={})
 
     class Options():
         serialize_when_none = False

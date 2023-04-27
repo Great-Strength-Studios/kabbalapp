@@ -22,6 +22,11 @@ def add_interface(context, request, app_context, **kwargs):
         'key': request.get('key', None)
     })
 
+def add_cli_command(context, request, app_context, **kwargs):
+    return AddCliCommand({
+        'key': request.get('key', None)
+    })
+
 def add_domain(context, request, app_context, **kwargs):
     return AddDomain({
         'name': request.get('name', None),

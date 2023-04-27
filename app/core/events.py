@@ -24,6 +24,9 @@ class SyncAppProject(RequestEvent):
 class AddInterface(RequestEvent):
     key = t.StringType(required=True, choices=['cli', 'flask'])
 
+class AddCliCommand(RequestEvent):
+    key = t.StringType()
+
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)
     key = t.StringType()
