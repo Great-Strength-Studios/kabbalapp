@@ -348,3 +348,9 @@ modules:
         functions:
         - data_mapping: add_interface
           function_path: interface.add_interface
+  cli:
+    features:
+      add_command:
+        functions:
+        - data_mapping: add_command
+          function_path: cli.add_command

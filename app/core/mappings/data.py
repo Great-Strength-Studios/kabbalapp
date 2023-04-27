@@ -24,6 +24,7 @@ def add_interface(context, request, app_context, **kwargs):
 
 def add_cli_command(context, request, app_context, **kwargs):
     return AddCliCommand({
+        'name': request.get('name', None),
         'key': request.get('key', None)
     })
 
