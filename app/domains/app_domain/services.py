@@ -11,6 +11,9 @@ class AppDomainService():
     def update_domain(self, key: str, name: str, aliases: List[str]) -> AppDomain:
         pass 
 
+    def add_implementation(self, domain_key: str, name: str, key: str) -> AppDomainImplementation:
+        pass
+
     def add_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
         pass
 
