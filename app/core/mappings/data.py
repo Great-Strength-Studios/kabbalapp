@@ -38,7 +38,7 @@ def add_cli_parent_argument(context, request, app_context, **kwargs):
         'choices': request.get('choices', None),
         'nargs': request.get('nargs', None),
         'action': request.get('action', None),
-        'argument_help': request.get('argument_help', None),
+        'description': request.get('description', None),
     })
 
 def add_cli_subcommand(context, request, app_context, **kwargs):
@@ -46,7 +46,7 @@ def add_cli_subcommand(context, request, app_context, **kwargs):
         'command_key': request.get('command_key', None),
         'key': request.get('key', None),
         'name': request.get('name', None),
-        'subcommand_help': request.get('subcommand_help', None),
+        'description': request.get('description', None),
     })
 
 def add_cli_argument(context, request, app_context, **kwargs):
@@ -62,7 +62,7 @@ def add_cli_argument(context, request, app_context, **kwargs):
         'choices': request.get('choices', None),
         'nargs': request.get('nargs', None),
         'action': request.get('action', None),
-        'argument_help': request.get('argument_help', None),
+        'description': request.get('description', None),
     })
 
 def add_domain(context, request, app_context, **kwargs):
