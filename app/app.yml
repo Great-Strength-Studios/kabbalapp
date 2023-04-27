@@ -176,7 +176,6 @@ interfaces:
                 help: argument type
                 name_or_flags:
                 - --type
-                default: str
               default:
                 help: argument default
                 name_or_flags:
@@ -267,7 +266,7 @@ interfaces:
                 name_or_flags:
                 - -d
                 - --description
-              required: true
+                required: true
               type:
                 choices:
                 - str
@@ -277,7 +276,6 @@ interfaces:
                 name_or_flags:
                 - -t
                 - --type
-                default: str
               default:
                 help: argument default
                 name_or_flags:
