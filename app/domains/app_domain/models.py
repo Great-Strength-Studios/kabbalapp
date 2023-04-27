@@ -45,15 +45,28 @@ class AppDomainRole(Model):
     type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
     fields = t.ListType(t.StringType(), required=True)
 
+class AppDomainImplementation(Model):
+    key = t.StringType(required=True)
+    name = t.StringType(required=True)
+    models = t.DictType(t.ModelType(AppDomainModel), default={})
+    roles = t.ListType(t.ModelType(AppDomainRole), default=[])
+
+    class Options():
+        roles = {
+            'create': blacklist('key', 'models', 'roles'),
+            'update': blacklist('key', 'models', 'roles'),
+        }
+
 class AppDomain(Model):
     key = t.StringType()
     name = t.StringType(required=True)
     aliases = t.ListType(t.StringType(), default=[])
     roles = t.ListType(t.ModelType(AppDomainRole), default=[])
     models = t.DictType(t.ModelType(AppDomainModel), default={})
+    impl = t.DictType(t.ModelType(AppDomainImplementation), default={})
 
     class Options():
         roles = {
-            'create': whitelist('key'),
-            'update': blacklist('key', 'roles', 'models'),
+            'create': blacklist('key', 'roles', 'models', 'impl'),
+            'update': blacklist('key', 'roles', 'models', 'impl'),
         }
