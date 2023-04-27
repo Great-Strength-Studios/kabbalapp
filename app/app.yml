@@ -48,6 +48,11 @@ errors:
     error_name: APP_PROJECT_NOT_FOUND
     message:
       en_US: App Project with key "{}" not found
+  CLI_COMMAND_NOT_FOUND:
+    error_code: '000000003'
+    error_name: CLI_COMMAND_NOT_FOUND
+    message:
+      en_US: CLI command with key "{}" not found
   CLI_COMMAND_ALREADY_EXISTS:
     error_code: '000000004'
     error_name: CLI_COMMAND_ALREADY_EXISTS
@@ -58,6 +63,11 @@ errors:
     error_name: CLI_PARENT_ARGUMENT_ALREADY_EXISTS
     message:
       en_US: CLI parent argument with key "{}" already exists
+  CLI_SUBCOMMAND_ALREADY_EXISTS:
+    error_code: '000000006'
+    error_name: CLI_SUBCOMMAND_ALREADY_EXISTS
+    message:
+      en_US: CLI subcommand with key "{}" already exists
   DOMAIN_ALREADY_EXISTS:
     error_code: '00002001'
     error_name: DOMAIN_ALREADY_EXISTS
@@ -185,6 +195,31 @@ interfaces:
                 name_or_flags:
                 - --action
             name: Add CLI Parent Argument
+          add_subcommand:
+            arguments:
+              command_key:
+                help: command key
+                name_or_flags:
+                - -c
+                - --command-key
+                required: true
+              key:
+                help: subcommand key
+                name_or_flags:
+                - -k
+                - --key
+              name:
+                help: subcommand name
+                name_or_flags:
+                - -n
+                - --name
+                required: true
+              help:
+                help: subcommand help
+                name_or_flags:
+                - -sh
+                - --subcommand-help
+                required: true
       domain:
         subcommands:
           add:
@@ -424,6 +459,10 @@ modules:
         functions:
         - data_mapping: add_cli_parent_argument
           function_path: cli.add_parent_argument
+      add_subcommand:
+        functions:
+        - data_mapping: add_cli_subcommand
+          function_path: cli.add_subcommand
   domain:
     features:
       add:

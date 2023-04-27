@@ -46,6 +46,12 @@ class AddCliParentArgument(RequestEvent):
             'cli.add_parent_argument': blacklist('name', 'flags', 'positional'),
         }
 
+class AddCliSubcommand(RequestEvent):
+    command_key = t.StringType(required=True)
+    key = t.StringType()
+    name = t.StringType(required=True)
+    help = t.StringType(required=True, deserialize_from=['help', 'subcommand_help'])
+
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)
     key = t.StringType()

@@ -7,3 +7,6 @@ class CliInterfaceService():
 
     def add_parent_argument(self, key: str, name_or_flags: List[str], help: str, **kwargs) -> AppArgument:
         pass
+
+    def add_subcommand(self, key: str, name: str, help: str) -> AppSubcommand:
+        pass

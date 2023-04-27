@@ -22,13 +22,15 @@ class AppArgument(Model):
         }
 
 class AppSubcommand(Model):
+    key = t.StringType()
+    name = t.StringType(required=True)
     help = t.StringType(required=True)
     arguments = t.DictType(t.ModelType(AppArgument), default={})
 
     class Options():
         serialize_when_none = False
         roles = {
-            'add_subparser': blacklist('arguments')
+            'cli.add_subcommand': blacklist('key', 'arguments')
         }
 
 class AppCommand(Model):
