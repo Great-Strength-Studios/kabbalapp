@@ -109,6 +109,13 @@ interfaces:
               - --aliases
               - -a
               nargs: +
+          sync:
+            arguments:
+            - help: domain key
+              name_or_flags:
+              - --domain-key
+              - -d
+              required: true
           add_implementation:
             arguments:
             - help: domain key
@@ -286,6 +293,10 @@ modules:
         functions:
         - data_mapping: add_domain_role
           function_path: domain.add_role
+      sync:
+        functions:
+        - data_mapping: sync_domain
+          function_path: domain.sync_domain
       update:
         functions:
         - data_mapping: update_domain
