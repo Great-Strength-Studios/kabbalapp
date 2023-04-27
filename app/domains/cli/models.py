@@ -4,6 +4,7 @@ from schematics.transforms import whitelist, blacklist
 from schematics.types.serializable import serializable
 
 class AppArgument(Model):
+    key = t.StringType(required=True)
     name_or_flags = t.ListType(t.StringType(), required=True)
     help = t.StringType(required=True)
     type = t.StringType(default='str', choices=['str', 'int', 'float'])
@@ -13,9 +14,16 @@ class AppArgument(Model):
     choices = t.ListType(t.StringType())
     action = t.StringType()
 
+    class Options():
+        serialize_when_none = False
+        roles = {
+            'cli.add_argument': blacklist('key'),
+            'cli.add_parent_argument': blacklist('key'),
+        }
+
 class AppSubcommand(Model):
     help = t.StringType(required=True)
-    arguments = t.ListType(t.ModelType(AppArgument), default=[])
+    arguments = t.DictType(t.ModelType(AppArgument), default={})
 
     class Options():
         serialize_when_none = False
@@ -34,5 +42,5 @@ class AppCommand(Model):
         }
 
 class AppCommands(Model):
-    parent_arguments = t.ListType(t.ModelType(AppArgument), default=[])
+    parent_arguments = t.DictType(t.ModelType(AppArgument), default={})
     commands = t.DictType(t.ModelType(AppCommand), default={})

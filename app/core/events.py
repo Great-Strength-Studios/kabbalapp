@@ -27,6 +27,25 @@ class AddInterface(RequestEvent):
 class AddCliCommand(RequestEvent):
     key = t.StringType()
 
+class AddCliParentArgument(RequestEvent):
+    key = t.StringType()
+    name = t.StringType(required=True)
+    help = t.StringType(required=True, deserialize_from=['help', 'argument_help'])
+    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'datetime', 'date', 'time', 'list', 'dict'])
+    flags = t.ListType(t.StringType(), default=[])
+    positional = t.BooleanType(default=False)
+    default = t.StringType()
+    required = t.BooleanType()
+    choices = t.ListType(t.StringType(), default=[])
+    nargs = t.StringType()
+    action = t.StringType()
+
+    class Options():
+        serialize_when_none = False
+        roles = {
+            'cli.add_parent_argument': blacklist('name', 'flags', 'positional'),
+        }
+
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)
     key = t.StringType()

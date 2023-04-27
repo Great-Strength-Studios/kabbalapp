@@ -38,7 +38,7 @@ class AppArgument(Model):
 class AppSubcommand(Model):
     name = t.StringType(required=True)
     help = t.StringType(required=True)
-    arguments = t.ListType(t.ModelType(AppArgument), default=[])
+    arguments = t.DictType(t.ModelType(AppArgument), default={})
 
     class Options():
         serialize_when_none = False
@@ -57,7 +57,7 @@ class AppCommand(Model):
         }
 
 class AppCommands(Model):
-    parent_arguments = t.ListType(t.ModelType(AppArgument), default=[])
+    parent_arguments = t.DictType(t.ModelType(AppArgument), default={})
     commands = t.DictType(t.ModelType(AppCommand), default={})
 
 with open('app/app.yml', 'r') as f:
@@ -75,9 +75,9 @@ for command_name, command in commands.commands.items():
     for subcommand_name, subcommand in command.subcommands.items():
         subcommand_name = subcommand_name.replace('_', '-')
         subcommand_subparser = subcommand_subparsers.add_parser(subcommand_name, help=subcommand.help)
-        for argument in subcommand.arguments:
+        for _, argument in subcommand.arguments.items():
             subcommand_subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
-        for argument in commands.parent_arguments:
+        for _, argument in commands.parent_arguments.items():
             subcommand_subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
 
 # Parse arguments.

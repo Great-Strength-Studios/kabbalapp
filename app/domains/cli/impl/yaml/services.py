@@ -32,3 +32,18 @@ class YamlCliInterfaceService(CliInterfaceService):
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
         return command
+    
+    def add_parent_argument(self, key: str, name_or_flags: str, help: str, **kwargs) -> AppArgument:
+        import yaml
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
+        argument = AppArgument({'key': key, 'name_or_flags': name_or_flags, 'help': help, **kwargs})
+        commands = AppCommands(data['interfaces']['cli'])
+        if key in commands.parent_arguments:
+            return ('CLI_PARENT_ARGUMENT_ALREADY_EXISTS', key)
+        commands.parent_arguments[key] = argument.to_primitive('cli.add_parent_argument')
+        data['interfaces']['cli'] = commands.to_primitive()
+        with open(self.schema_file_path, 'w') as f:
+            yaml.dump(data, f)
+        return argument
+        
