@@ -11,6 +11,10 @@ domains:
         class_name: AppDomainModel
         name: App Domain Model
     name: Domain
+  app_interface:
+    aliases:
+    - i
+    name: App Interface
   app_printer:
     class_name: AppPrinter
     name: App Printer
@@ -23,10 +27,9 @@ domains:
         class_name: AppProject
         name: App Project
     name: App Project
-  app_interface:
-    aliases:
-    - i
-    name: App Interface
+  cli:
+    aliases: null
+    name: cli
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
@@ -43,6 +46,11 @@ errors:
     error_name: DOMAIN_ALREADY_EXISTS
     message:
       en_US: Domain with key "{}" already exists
+  DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
+    error_code: '000020006'
+    error_name: DOMAIN_IMPLEMENTATION_ALREADY_EXISTS
+    message:
+      en_US: Domain implementation with key "{}" already exists
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020002'
     error_name: DOMAIN_MODEL_ALREADY_EXISTS
@@ -78,18 +86,6 @@ events: null
 interfaces:
   cli:
     commands:
-      interface:
-        subcommands:
-          add:
-            arguments:
-            - help: interface key
-              name_or_flags:
-              - -k
-              - --key
-              choices: 
-              - cli
-              - flask
-              required: true
       domain:
         subcommands:
           add:
@@ -194,6 +190,18 @@ interfaces:
               - --domain-key
               - -d
               required: true
+      interface:
+        subcommands:
+          add:
+            arguments:
+            - choices:
+              - cli
+              - flask
+              help: interface key
+              name_or_flags:
+              - -k
+              - --key
+              required: true
     parent_arguments:
     - help: app project key (not required when using default project)
       name_or_flags:
@@ -235,12 +243,6 @@ modules:
         - data_mapping: sync_app_project
           function_path: app_project.sync_app_project
         header_mapping: app_project_headers
-  interface:
-    features:
-      add:
-        functions:
-        - data_mapping: add_interface
-          function_path: interface.add_interface
   domain:
     features:
       add:
@@ -263,3 +265,9 @@ modules:
         functions:
         - data_mapping: update_domain
           function_path: domain.update_domain
+  interface:
+    features:
+      add:
+        functions:
+        - data_mapping: add_interface
+          function_path: interface.add_interface
