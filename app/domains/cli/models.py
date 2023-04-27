@@ -22,6 +22,7 @@ class AppArgument(Model):
         }
 
 class AppSubcommand(Model):
+    name = t.StringType(required=True)
     help = t.StringType(required=True)
     arguments = t.DictType(t.ModelType(AppArgument), default={})
 
