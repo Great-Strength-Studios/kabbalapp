@@ -34,12 +34,18 @@ class Container():
         return AppPrinter(app_project.app_directory)
 
     def domain_service(self, app_key: str):
-        import os
         app_project_manager = self.app_project_manager()
         app_project = app_project_manager.load_project(app_key)
         if app_project.schema_storage_type == 'yaml':
             from ..domains.app_domain.impl import YamlAppDomainService
             return YamlAppDomainService(app_project.app_directory, app_project.schema_location)
+        
+    def interface_service(self, app_key: str):
+        app_project_manager = self.app_project_manager()
+        app_project = app_project_manager.load_project(app_key)
+        if app_project.schema_storage_type == 'yaml':
+            from ..domains.app_interface.impl import YamlAppInterfaceService
+            return YamlAppInterfaceService(app_project.app_directory, app_project.schema_location)
 
 
 # Default dynamic container
