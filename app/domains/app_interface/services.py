@@ -1,6 +1,6 @@
 from .models import *
 
-class AppIntefaceService():
+class AppInterfaceService():
 
     def add_interface(self, key: str) -> AppInterface:
         pass
