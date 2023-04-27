@@ -77,7 +77,7 @@ for command_name, command in commands.commands.items():
         subcommand_subparser = subcommand_subparsers.add_parser(subcommand_name, help=subcommand.help)
         for _, argument in subcommand.arguments.items():
             subcommand_subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
-        for argument in commands.parent_arguments:
+        for _, argument in commands.parent_arguments.items():
             subcommand_subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
 
 # Parse arguments.
