@@ -54,7 +54,7 @@ class AppDomainImplementation(Model):
     class Options():
         roles = {
             'create': blacklist('key', 'models', 'roles'),
-            'update': blacklist('key', 'models', 'roles'),
+            'update': blacklist('key'),
         }
 
 class AppDomain(Model):

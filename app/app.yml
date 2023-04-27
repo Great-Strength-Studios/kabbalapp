@@ -29,7 +29,14 @@ domains:
     name: App Project
   cli:
     aliases: null
+    impl:
+      yaml:
+        models: {}
+        name: yaml
+        roles: []
+    models: {}
     name: cli
+    roles: []
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'

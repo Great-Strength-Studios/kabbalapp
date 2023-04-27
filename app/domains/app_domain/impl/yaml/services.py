@@ -71,12 +71,12 @@ class YamlAppDomainService(AppDomainService):
             yaml.dump(data, f)
         return domain
     
-    def add_implementation(self, domain_key: str, key: str) -> AppDomainImplementation:
+    def add_implementation(self, domain_key: str, name: str, key: str) -> AppDomainImplementation:
         import yaml
         domain = self.get_domain(domain_key)
         if isinstance(domain, tuple):
             return domain
-        impl = AppDomainImplementation
+        impl = AppDomainImplementation(raw_data={'name': name, 'key': key})
         if key in domain.impl:
             return ('DOMAIN_IMPLEMENTATION_ALREADY_EXISTS', key) 
         domain.impl[key] = impl
