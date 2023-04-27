@@ -266,7 +266,7 @@ modules:
       add_implementation:
         functions:
         - data_mapping: add_domain_implementation
-          function_path: domain.add_domain_implementation
+          function_path: domain.add_implementation
       add_model:
         functions:
         - data_mapping: add_domain_model
@@ -274,7 +274,7 @@ modules:
       add_model_property:
         functions:
         - data_mapping: add_domain_model_property
-          function_path: domain.add_domain_model_property
+          function_path: domain.add_model_property
       add_role:
         functions:
         - data_mapping: add_domain_role
