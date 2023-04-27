@@ -48,6 +48,11 @@ errors:
     error_name: APP_PROJECT_NOT_FOUND
     message:
       en_US: App Project with key "{}" not found
+  CLI_COMMAND_ALREADY_EXISTS:
+    error_code: '000000004'
+    error_name: CLI_COMMAND_ALREADY_EXISTS
+    message:
+      en_US: CLI command with key "{}" already exists
   DOMAIN_ALREADY_EXISTS:
     error_code: '00002001'
     error_name: DOMAIN_ALREADY_EXISTS
@@ -98,10 +103,19 @@ events: null
 interfaces:
   cli:
     commands:
+      cli:
+        subcommands:
+          add_command:
+            arguments:
+            - help: command key
+              name_or_flags:
+              - -k
+              - --key
+              required: true
+            name: Add CLI Command
       domain:
         subcommands:
           add:
-            name: Add Domain
             arguments:
             - help: domain name
               name_or_flags:
@@ -115,16 +129,8 @@ interfaces:
               - --aliases
               - -a
               nargs: +
-          sync:
-            name: Sync Domain
-            arguments:
-            - help: domain key
-              name_or_flags:
-              - --domain-key
-              - -d
-              required: true
+            name: Add Domain
           add_implementation:
-            name: Add Domain Implementation
             arguments:
             - help: domain key
               name_or_flags:
@@ -138,21 +144,8 @@ interfaces:
             - help: domain implementation name
               name_or_flags:
               - name
-          sync_implementation:
-            name: Sync Domain Implementation
-            arguments:
-            - help: domain key
-              name_or_flags:
-              - --domain-key
-              - -d
-              required: true
-            - help: domain implementation key
-              name_or_flags:
-              - --implementation-key
-              - -i
-              required: true
+            name: Add Domain Implementation
           add_model:
-            name: Add Domain Model
             arguments:
             - help: domain model name
               name_or_flags:
@@ -170,8 +163,8 @@ interfaces:
               name_or_flags:
               - --class-name
               - -c
+            name: Add Domain Model
           add_model_property:
-            name: Add Domain Model Property
             arguments:
             - help: domain model property name
               name_or_flags:
@@ -223,8 +216,8 @@ interfaces:
               name_or_flags:
               - --deserialize_from
               nargs: +
+            name: Add Domain Model Property
           add_role:
-            name: Add Domain Role
             arguments:
             - help: domain role name
               name_or_flags:
@@ -242,10 +235,31 @@ interfaces:
               - --domain-key
               - -d
               required: true
+            name: Add Domain Role
+          sync:
+            arguments:
+            - help: domain key
+              name_or_flags:
+              - --domain-key
+              - -d
+              required: true
+            name: Sync Domain
+          sync_implementation:
+            arguments:
+            - help: domain key
+              name_or_flags:
+              - --domain-key
+              - -d
+              required: true
+            - help: domain implementation key
+              name_or_flags:
+              - --implementation-key
+              - -i
+              required: true
+            name: Sync Domain Implementation
       interface:
         subcommands:
           add:
-            name: Add App Interface
             arguments:
             - choices:
               - cli
@@ -255,18 +269,8 @@ interfaces:
               - -k
               - --key
               required: true
-      cli:
-        subcommands:
-          add_command:
-            name: Add CLI Command
-            arguments:
-            - help: command name
-              name_or_flags:
-              - name
-            - help: command key
-              name_or_flags:
-              - -k
-              - --key
+            name: Add App Interface
+      module: {}
     parent_arguments:
     - help: app project key (not required when using default project)
       name_or_flags:
@@ -308,6 +312,12 @@ modules:
         - data_mapping: sync_app_project
           function_path: app_project.sync_app_project
         header_mapping: app_project_headers
+  cli:
+    features:
+      add_command:
+        functions:
+        - data_mapping: add_cli_command
+          function_path: cli.add_command
   domain:
     features:
       add:
@@ -318,10 +328,6 @@ modules:
         functions:
         - data_mapping: add_domain_implementation
           function_path: domain.add_implementation
-      sync_implementation:
-        functions:
-        - data_mapping: sync_domain_implementation
-          function_path: domain.sync_implementation
       add_model:
         functions:
         - data_mapping: add_domain_model
@@ -338,6 +344,10 @@ modules:
         functions:
         - data_mapping: sync_domain
           function_path: domain.sync_domain
+      sync_implementation:
+        functions:
+        - data_mapping: sync_domain_implementation
+          function_path: domain.sync_implementation
       update:
         functions:
         - data_mapping: update_domain
@@ -348,9 +358,3 @@ modules:
         functions:
         - data_mapping: add_interface
           function_path: interface.add_interface
-  cli:
-    features:
-      add_command:
-        functions:
-        - data_mapping: add_command
-          function_path: cli.add_command
