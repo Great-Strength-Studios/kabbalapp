@@ -66,7 +66,6 @@ def handle(context: MessageContext):
         data = f.readlines()
     import_format = 'from . import {}'.format(domain.key)
     if domain.aliases:
-        alias_imports = ', '.join(['{} as {}'.format(domain.key, alias) for alias in domain.aliases])
         import_format += ', ' + ', '.join(['{} as {}'.format(domain.key, alias) for alias in domain.aliases])
     domain_import_found = False
     for i in range(len(data)):
