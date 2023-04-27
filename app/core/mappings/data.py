@@ -43,6 +43,7 @@ def add_cli_parent_argument(context, request, app_context, **kwargs):
 
 def add_cli_subcommand(context, request, app_context, **kwargs):
     return AddCliSubcommand({
+        'command_key': request.get('command_key', None),
         'key': request.get('key', None),
         'name': request.get('name', None),
         'help': request.get('help', None),

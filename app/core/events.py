@@ -47,15 +47,10 @@ class AddCliParentArgument(RequestEvent):
         }
 
 class AddCliSubcommand(RequestEvent):
+    command_key = t.StringType(required=True)
     key = t.StringType()
     name = t.StringType(required=True)
     help = t.StringType(required=True)
-
-    class Options():
-        serialize_when_none = False
-        roles = {
-            'cli.add_subcommand': blacklist('key')
-        }
 
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)
