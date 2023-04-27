@@ -46,6 +46,17 @@ class AddCliParentArgument(RequestEvent):
             'cli.add_parent_argument': blacklist('name', 'flags', 'positional'),
         }
 
+class AddCliSubcommand(RequestEvent):
+    key = t.StringType()
+    name = t.StringType(required=True)
+    help = t.StringType(required=True)
+
+    class Options():
+        serialize_when_none = False
+        roles = {
+            'cli.add_subcommand': blacklist('key')
+        }
+
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)
     key = t.StringType()
