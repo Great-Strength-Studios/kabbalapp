@@ -101,6 +101,7 @@ interfaces:
       domain:
         subcommands:
           add:
+            name: Add Domain
             arguments:
             - help: domain name
               name_or_flags:
@@ -115,6 +116,7 @@ interfaces:
               - -a
               nargs: +
           sync:
+            name: Sync Domain
             arguments:
             - help: domain key
               name_or_flags:
@@ -122,6 +124,7 @@ interfaces:
               - -d
               required: true
           add_implementation:
+            name: Add Domain Implementation
             arguments:
             - help: domain key
               name_or_flags:
@@ -136,6 +139,7 @@ interfaces:
               name_or_flags:
               - name
           sync_implementation:
+            name: Sync Domain Implementation
             arguments:
             - help: domain key
               name_or_flags:
@@ -148,6 +152,7 @@ interfaces:
               - -i
               required: true
           add_model:
+            name: Add Domain Model
             arguments:
             - help: domain model name
               name_or_flags:
@@ -166,6 +171,7 @@ interfaces:
               - --class-name
               - -c
           add_model_property:
+            name: Add Domain Model Property
             arguments:
             - help: domain model property name
               name_or_flags:
@@ -218,6 +224,7 @@ interfaces:
               - --deserialize_from
               nargs: +
           add_role:
+            name: Add Domain Role
             arguments:
             - help: domain role name
               name_or_flags:
@@ -238,6 +245,7 @@ interfaces:
       interface:
         subcommands:
           add:
+            name: Add App Interface
             arguments:
             - choices:
               - cli
@@ -247,6 +255,18 @@ interfaces:
               - -k
               - --key
               required: true
+      cli:
+        subcommands:
+          add_command:
+            name: Add CLI Command
+            arguments:
+            - help: command name
+              name_or_flags:
+              - name
+            - help: command key
+              name_or_flags:
+              - -k
+              - --key
     parent_arguments:
     - help: app project key (not required when using default project)
       name_or_flags:
