@@ -293,6 +293,10 @@ modules:
         functions:
         - data_mapping: add_domain_implementation
           function_path: domain.add_implementation
+      sync_implementation:
+        functions:
+        - data_mapping: sync_domain_implementation
+          function_path: domain.sync_implementation
       add_model:
         functions:
         - data_mapping: add_domain_model
