@@ -49,6 +49,22 @@ def add_cli_subcommand(context, request, app_context, **kwargs):
         'subcommand_help': request.get('subcommand_help', None),
     })
 
+def add_cli_argument(context, request, app_context, **kwargs):
+    return AddCliArgument({
+        'command_key': request.get('command_key', None),
+        'subcommand_key': request.get('subcommand_key', None),
+        'key': request.get('key', None),
+        'name': request.get('name', None),
+        'flags': request.get('flags', None),
+        'positional': request.get('positional', False),
+        'type': request.get('type', None),
+        'default': request.get('default', None),
+        'choices': request.get('choices', None),
+        'nargs': request.get('nargs', None),
+        'action': request.get('action', None),
+        'argument_help': request.get('argument_help', None),
+    })
+
 def add_domain(context, request, app_context, **kwargs):
     return AddDomain({
         'name': request.get('name', None),
