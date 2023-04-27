@@ -36,6 +36,7 @@ class AppArgument(Model):
         }
 
 class AppSubcommand(Model):
+    name = t.StringType(required=True)
     help = t.StringType(required=True)
     arguments = t.ListType(t.ModelType(AppArgument), default=[])
 
