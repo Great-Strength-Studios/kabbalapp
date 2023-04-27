@@ -25,7 +25,7 @@ class AppSubcommand(Model):
 
 class AppCommand(Model):
     key = t.StringType(required=True)
-    subcommands = t.DictType(t.ModelType(AppSubcommand), default=[])
+    subcommands = t.DictType(t.ModelType(AppSubcommand), default={})
 
     class Options():
         serialize_when_none = False
