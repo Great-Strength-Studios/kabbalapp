@@ -130,6 +130,18 @@ interfaces:
             - help: domain implementation name
               name_or_flags:
               - name
+          sync_implementation:
+            arguments:
+            - help: domain key
+              name_or_flags:
+              - --domain-key
+              - -d
+              required: true
+            - help: domain implementation key
+              name_or_flags:
+              - --implementation-key
+              - -i
+              required: true
           add_model:
             arguments:
             - help: domain model name
