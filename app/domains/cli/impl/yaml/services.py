@@ -46,4 +46,22 @@ class YamlCliInterfaceService(CliInterfaceService):
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
         return argument
+    
+    def add_subcommand(self, command_key: str, key: str, name: str, help: str) -> AppSubcommand:
+        import yaml
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
+        subcommand = AppSubcommand({'key': key, 'name': name, 'help': help})
+        commands = AppCommands(data['interfaces']['cli'])
+        try:
+            command = commands.commands[command_key]
+        except KeyError:
+            return ('CLI_COMMAND_NOT_FOUND', command_key)
+        if key in command.subcommands:
+            return ('CLI_SUBCOMMAND_ALREADY_EXISTS', key)
+        command.subcommands[key] = subcommand.to_primitive('cli.add_subcommand')
+        data['interfaces']['cli'] = commands.to_primitive()
+        with open(self.schema_file_path, 'w') as f:
+            yaml.dump(data, f)
+        return subcommand
         
