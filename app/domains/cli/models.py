@@ -29,7 +29,7 @@ class AppSubcommand(Model):
     class Options():
         serialize_when_none = False
         roles = {
-            'add_subparser': blacklist('arguments')
+            'cli.add_subcommand': blacklist('arguments')
         }
 
 class AppCommand(Model):
