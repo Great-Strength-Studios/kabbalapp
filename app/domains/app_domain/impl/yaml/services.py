@@ -44,7 +44,8 @@ class YamlAppDomainService(AppDomainService):
                 'key': key,
                 'name': domain_data.get('name'),
                 'aliases': domain_data.get('aliases', []),
-                'models': domain_data.get('models', {})
+                'models': domain_data.get('models', {}),
+                'impl': domain_data.get('impl', {})
             }
             return AppDomain(raw_data=raw_data)
         else:
@@ -69,6 +70,23 @@ class YamlAppDomainService(AppDomainService):
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
         return domain
+    
+    def add_implementation(self, domain_key: str, key: str) -> AppDomainImplementation:
+        import yaml
+        domain = self.get_domain(domain_key)
+        if isinstance(domain, tuple):
+            return domain
+        impl = AppDomainImplementation
+        if key in domain.impl:
+            return ('DOMAIN_IMPLEMENTATION_ALREADY_EXISTS', key) 
+        domain.impl[key] = impl
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
+        data['domains'][domain_key] = domain.to_primitive('update')
+        with open(self.schema_file_path, 'w') as f:
+            yaml.safe_dump(data, f)
+        return impl
+
     
     def add_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
         import yaml
