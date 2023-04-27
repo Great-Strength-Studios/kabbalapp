@@ -30,7 +30,7 @@ class AddCliCommand(RequestEvent):
 class AddCliParentArgument(RequestEvent):
     key = t.StringType()
     name = t.StringType(required=True)
-    help = t.StringType(required=True, deserialize_from=['help', 'argument_help'])
+    help = t.StringType(required=True, deserialize_from=['help', 'description'])
     type = t.StringType(required=True, choices=['str', 'int', 'float'])
     flags = t.ListType(t.StringType(), default=[])
     positional = t.BooleanType(default=False)
@@ -51,7 +51,7 @@ class AddCliArgument(RequestEvent):
     subcommand_key = t.StringType(required=True)
     key = t.StringType()
     name = t.StringType(required=True)
-    help = t.StringType(required=True, deserialize_from=['help', 'argument_help'])
+    help = t.StringType(required=True, deserialize_from=['help', 'description'])
     type = t.StringType(required=True, choices=['str', 'int', 'float'])
     flags = t.ListType(t.StringType(), default=[])
     positional = t.BooleanType(default=False)
@@ -71,7 +71,7 @@ class AddCliSubcommand(RequestEvent):
     command_key = t.StringType(required=True)
     key = t.StringType()
     name = t.StringType(required=True)
-    help = t.StringType(required=True, deserialize_from=['help', 'subcommand_help'])
+    help = t.StringType(required=True, deserialize_from=['help', 'description'])
 
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)

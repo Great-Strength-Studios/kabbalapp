@@ -7,7 +7,7 @@ class AppArgument(Model):
     key = t.StringType(required=True)
     name_or_flags = t.ListType(t.StringType(), required=True)
     help = t.StringType(required=True)
-    type = t.StringType(default='str', choices=['str', 'int', 'float'])
+    type = t.StringType(choices=['str', 'int', 'float'])
     default = t.StringType()
     required = t.BooleanType()
     nargs = t.StringType()

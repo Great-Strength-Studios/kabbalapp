@@ -160,10 +160,10 @@ interfaces:
                 - --positional
                 action: store_true
               help:
-                help: argument help
+                help: argument description
                 name_or_flags:
-                - -ah
-                - --argument-help
+                - -d
+                - --description
                 required: true
               type:
                 choices:
@@ -220,10 +220,10 @@ interfaces:
                 - --name
                 required: true
               help:
-                help: subcommand help
+                help: subcommand description
                 name_or_flags:
-                - -sh
-                - --subcommand-help
+                - -d
+                - --description
                 required: true
           add_argument:
             arguments:
@@ -263,10 +263,10 @@ interfaces:
                 - --positional
                 action: store_true
               help:
-                help: argument help
+                help: argument description
                 name_or_flags:
-                - -ah
-                - --argument-help
+                - -d
+                - --description
               required: true
               type:
                 choices:
@@ -544,6 +544,10 @@ modules:
         functions:
         - data_mapping: add_cli_subcommand
           function_path: cli.add_subcommand
+      add_argument:
+        functions:
+        - data_mapping: add_cli_argument
+          function_path: cli.add_argument
   domain:
     features:
       add:
