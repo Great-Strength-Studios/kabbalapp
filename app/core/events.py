@@ -34,6 +34,15 @@ class AddDomainImplementation(RequestEvent):
     key = t.StringType()
     name = t.StringType(required=True)
 
+class SyncDomain(RequestEvent):
+    domain_key = t.StringType(required=True)
+    force = t.BooleanType(default=False)
+
+class SyncDomainImplementation(RequestEvent):
+    domain_key = t.StringType(required=True)
+    implementation_key = t.StringType(required=True)
+    force = t.BooleanType(default=False)
+
 class UpdateDomain(RequestEvent):
     key = t.StringType(required=True)
     name = t.StringType()
@@ -65,7 +74,3 @@ class AddDomainModelProperty(RequestEvent):
     key = t.StringType(required=True)
     type = t.StringType(required=True, choices=d.DOMAIN_PROPERTY_TYPES)
     metadata = t.ModelType(AddMetadata, default={})
-
-class SyncDomain(RequestEvent):
-    domain_key = t.StringType(required=True)
-    force = t.BooleanType(default=False)

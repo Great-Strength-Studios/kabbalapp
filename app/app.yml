@@ -58,6 +58,11 @@ errors:
     error_name: DOMAIN_IMPLEMENTATION_ALREADY_EXISTS
     message:
       en_US: Domain implementation with key "{}" already exists
+  DOMAIN_IMPLEMENTATION_NOT_FOUND:
+    error_code: '000020007'
+    error_name: DOMAIN_IMPLEMENTATION_NOT_FOUND
+    message:
+      en_US: Domain implementation with key "{}" not found
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020002'
     error_name: DOMAIN_MODEL_ALREADY_EXISTS
@@ -130,6 +135,18 @@ interfaces:
             - help: domain implementation name
               name_or_flags:
               - name
+          sync_implementation:
+            arguments:
+            - help: domain key
+              name_or_flags:
+              - --domain-key
+              - -d
+              required: true
+            - help: domain implementation key
+              name_or_flags:
+              - --implementation-key
+              - -i
+              required: true
           add_model:
             arguments:
             - help: domain model name
@@ -281,6 +298,10 @@ modules:
         functions:
         - data_mapping: add_domain_implementation
           function_path: domain.add_implementation
+      sync_implementation:
+        functions:
+        - data_mapping: sync_domain_implementation
+          function_path: domain.sync_implementation
       add_model:
         functions:
         - data_mapping: add_domain_model

@@ -29,11 +29,24 @@ def add_domain(context, request, app_context, **kwargs):
         'aliases': request.get('aliases', None),
     })
 
+def sync_domain(context, request, app_context, **kwargs):
+    return SyncDomain({
+        'domain_key': request.get('domain_key', None),
+        'force': request.get('force', False)
+    })
+
 def add_domain_implementation(context, request, app_context, **kwargs):
     return AddDomainImplementation({
         'domain_key': request.get('domain_key', None),
         'key': request.get('key', None),
         'name': request.get('name', None),
+    })
+
+def sync_domain_implementation(context, request, app_context, **kwargs):
+    return SyncDomainImplementation({
+        'domain_key': request.get('domain_key', None),
+        'implementation_key': request.get('implementation_key', None),
+        'force': request.get('force', False)
     })
 
 def update_domain(context, request, app_context, **kwargs):
@@ -73,9 +86,3 @@ def add_domain_model_property(context, request, app_context, **kwargs):
     except:
         pass
     return event
-
-def sync_domain(context, request, app_context, **kwargs):
-    return SyncDomain({
-        'domain_key': request.get('domain_key', None),
-        'force': request.get('force', False)
-    })
