@@ -52,7 +52,12 @@ errors:
     error_code: '000000004'
     error_name: CLI_COMMAND_ALREADY_EXISTS
     message:
-      en_US: CLI command with key "{}" already exists
+      en_US: CLI command with key "{}" already exists 
+  CLI_PARENT_ARGUMENT_ALREADY_EXISTS:
+    error_code: '000000005'
+    error_name: CLI_PARENT_ARGUMENT_ALREADY_EXISTS
+    message:
+      en_US: CLI parent argument with key "{}" already exists
   DOMAIN_ALREADY_EXISTS:
     error_code: '00002001'
     error_name: DOMAIN_ALREADY_EXISTS
@@ -121,7 +126,6 @@ interfaces:
                 name_or_flags:
                 - -k
                 - --key
-                required: true
               name:
                 help: argument name
                 name_or_flags:

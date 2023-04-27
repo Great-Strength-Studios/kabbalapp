@@ -16,11 +16,16 @@ def handle(context: MessageContext):
     # Get cli inteface service.
     service: cli.CliInterfaceService = context.services.cli_interface_service(app_key)
 
+    # Format key if none is provided.
+    if not request.key:
+        request.key = request.name.lower().replace(' ', '_')
+
     # Get cli parent command argument name or flags.
     name_or_flags = []
     if not request.positional:
-        request.name = '--{}'.format(request.name.replace('_', '-'))
-        request.flags = ['-{}'.format(flag.replace('_', '-')) for flag in request.flags]
+        request.name = '--{}'.format(request.name.lower().replace('_', '-').replace(' ', '-'))
+        if request.flags:
+            request.flags = ['-{}'.format(flag.replace('_', '-')) for flag in request.flags]
     name_or_flags.append(request.name)
     if request.flags:
         name_or_flags.extend(request.flags)
