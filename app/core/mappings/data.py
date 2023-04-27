@@ -29,6 +29,13 @@ def add_domain(context, request, app_context, **kwargs):
         'aliases': request.get('aliases', None),
     })
 
+def add_domain_implementation(context, request, app_context, **kwargs):
+    return AddDomainImplementation({
+        'domain_key': request.get('domain_key', None),
+        'key': request.get('key', None),
+        'name': request.get('name', None),
+    })
+
 def update_domain(context, request, app_context, **kwargs):
     return UpdateDomain({
         'key': request.get('key', None),
