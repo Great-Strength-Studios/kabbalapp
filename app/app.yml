@@ -53,18 +53,23 @@ errors:
     error_name: CLI_COMMAND_NOT_FOUND
     message:
       en_US: CLI command with key "{}" not found
-  CLI_COMMAND_ALREADY_EXISTS:
+  CLI_SUBCOMMAND_NOT_FOUND:
     error_code: '000000004'
+    error_name: CLI_SUBCOMMAND_NOT_FOUND
+    message:
+      en_US: CLI subcommand with key "{}" not found
+  CLI_COMMAND_ALREADY_EXISTS:
+    error_code: '000000005'
     error_name: CLI_COMMAND_ALREADY_EXISTS
     message:
       en_US: CLI command with key "{}" already exists 
-  CLI_PARENT_ARGUMENT_ALREADY_EXISTS:
-    error_code: '000000005'
+  CLI_ARGUMENT_ALREADY_EXISTS:
+    error_code: '000000006'
     error_name: CLI_PARENT_ARGUMENT_ALREADY_EXISTS
     message:
       en_US: CLI parent argument with key "{}" already exists
   CLI_SUBCOMMAND_ALREADY_EXISTS:
-    error_code: '000000006'
+    error_code: '000000007'
     error_name: CLI_SUBCOMMAND_ALREADY_EXISTS
     message:
       en_US: CLI subcommand with key "{}" already exists
@@ -155,10 +160,10 @@ interfaces:
                 - --positional
                 action: store_true
               help:
-                help: argument help
+                help: argument description
                 name_or_flags:
-                - -ah
-                - --argument-help
+                - -d
+                - --description
                 required: true
               type:
                 choices:
@@ -171,7 +176,6 @@ interfaces:
                 help: argument type
                 name_or_flags:
                 - --type
-                default: str
               default:
                 help: argument default
                 name_or_flags:
@@ -215,11 +219,86 @@ interfaces:
                 - --name
                 required: true
               help:
-                help: subcommand help
+                help: subcommand description
                 name_or_flags:
-                - -sh
-                - --subcommand-help
+                - -d
+                - --description
                 required: true
+          add_argument:
+            arguments:
+              command_key:
+                help: command key
+                name_or_flags:
+                - -c
+                - --command-key
+                required: true
+              subcommand_key:
+                help: subcommand key
+                name_or_flags:
+                - -s
+                - --subcommand-key
+                required: true
+              key:
+                help: argument key
+                name_or_flags:
+                - -k
+                - --key
+              name:
+                help: argument name
+                name_or_flags:
+                - -n
+                - --name
+                required: true
+              flags:
+                help: argument flags
+                name_or_flags:
+                - -f
+                - --flags
+                nargs: +
+              postional: 
+                help: argument is positional
+                name_or_flags:
+                - -p
+                - --positional
+                action: store_true
+              help:
+                help: argument description
+                name_or_flags:
+                - -d
+                - --description
+                required: true
+              type:
+                choices:
+                - str
+                - int
+                - float
+                help: argument type
+                name_or_flags:
+                - -t
+                - --type
+              default:
+                help: argument default
+                name_or_flags:
+                - --default
+              required:
+                help: argument required
+                name_or_flags:
+                - --required
+                action: store_true
+              choices:
+                help: argument choices
+                name_or_flags:
+                - --choices
+                nargs: +
+              nargs:
+                help: available number of arguments
+                name_or_flags:
+                - --nargs
+              action:
+                help: argument action
+                name_or_flags:
+                - --action
+            name: Add CLI Argument
       domain:
         subcommands:
           add:
@@ -463,6 +542,10 @@ modules:
         functions:
         - data_mapping: add_cli_subcommand
           function_path: cli.add_subcommand
+      add_argument:
+        functions:
+        - data_mapping: add_cli_argument
+          function_path: cli.add_argument
   domain:
     features:
       add:

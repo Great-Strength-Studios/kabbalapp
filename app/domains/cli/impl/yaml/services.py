@@ -40,7 +40,7 @@ class YamlCliInterfaceService(CliInterfaceService):
         argument = AppArgument({'key': key, 'name_or_flags': name_or_flags, 'help': help, **kwargs})
         commands = AppCommands(data['interfaces']['cli'])
         if key in commands.parent_arguments:
-            return ('CLI_PARENT_ARGUMENT_ALREADY_EXISTS', key)
+            return ('CLI_ARGUMENT_ALREADY_EXISTS', key)
         commands.parent_arguments[key] = argument.to_primitive('cli.add_parent_argument')
         data['interfaces']['cli'] = commands.to_primitive()
         with open(self.schema_file_path, 'w') as f:
@@ -64,4 +64,26 @@ class YamlCliInterfaceService(CliInterfaceService):
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
         return subcommand
+    
+    def add_argument(self, command_key: str, subcommand_key: str, key: str, name_or_flags: str, help: str, **kwargs) -> AppArgument:
+        import yaml
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
+        argument = AppArgument({'key': key, 'name_or_flags': name_or_flags, 'help': help, **kwargs})
+        commands = AppCommands(data['interfaces']['cli'])
+        try:
+            command = commands.commands[command_key]
+        except KeyError:
+            return ('CLI_COMMAND_NOT_FOUND', command_key)
+        try:
+            subcommand = command.subcommands[subcommand_key]
+        except KeyError:
+            return ('CLI_SUBCOMMAND_NOT_FOUND', subcommand_key)
+        if key in subcommand.arguments:
+            return ('CLI_ARGUMENT_ALREADY_EXISTS', key)
+        subcommand.arguments[key] = argument.to_primitive('cli.add_argument')
+        data['interfaces']['cli'] = commands.to_primitive()
+        with open(self.schema_file_path, 'w') as f:
+            yaml.dump(data, f)
+        return argument
         
