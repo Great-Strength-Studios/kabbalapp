@@ -403,6 +403,10 @@ modules:
         functions:
         - data_mapping: add_cli_command
           function_path: cli.add_command
+      add_parent_argument:
+        functions:
+        - data_mapping: add_cli_parent_argument
+          function_path: cli.add_parent_argument
   domain:
     features:
       add:
