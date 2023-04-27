@@ -30,13 +30,13 @@ class AddCliCommand(RequestEvent):
 class AddCliParentArgument(RequestEvent):
     key = t.StringType(required=True)
     name_or_flags = t.StringType(required=True)
+    help = t.StringType(required=True)
     type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'datetime', 'date', 'time', 'list', 'dict'])
     default = t.StringType()
+    required = t.BooleanType()
     choices = t.ListType(t.StringType(), default=[])
     nargs = t.StringType()
     action = t.StringType()
-    help = t.StringType(required=True)
-
 
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)
