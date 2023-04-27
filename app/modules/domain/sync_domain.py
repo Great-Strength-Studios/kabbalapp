@@ -44,15 +44,38 @@ def handle(context: MessageContext):
     # Get app directory from headers.
     app_directory = context.headers.get('app_directory')
 
+    # Format domain package directory.
+    domain_package_dir = os.path.join(app_directory, 'app', 'domains')
+
     # Format domain directory.
-    domain_directory = os.path.join(app_directory, 'app', 'domains', domain.key)
+    domain_dir = os.path.join(domain_package_dir, domain.key)
 
     # Make directories even if they exist.
-    os.makedirs(domain_directory, exist_ok=True)
+    os.makedirs(domain_dir, exist_ok=True)
 
     # Write files.
     for file_name, file_lines in files.items():
-        file_path = os.path.join(domain_directory, file_name)
+        file_path = os.path.join(domain_dir, file_name)
         if not os.path.exists(file_path) or request.force:
             with open(file_path, 'w') as f:
                 f.write('\n'.join(file_lines))
+
+    # Add domain import to app domains __init__.py file.
+    app_domains_init_file_path = os.path.join(domain_package_dir, '__init__.py')
+    with open(app_domains_init_file_path, 'r') as f:
+        data = f.readlines()
+    import_format = 'from . import {}'.format(domain.key)
+    if domain.aliases:
+        alias_imports = ', '.join(['{} as {}'.format(domain.key, alias) for alias in domain.aliases])
+        import_format += ', ' + ', '.join(['{} as {}'.format(domain.key, alias) for alias in domain.aliases])
+    domain_import_found = False
+    for i in range(len(data)):
+        line = data[i]
+        if domain.key in line:
+            data[i] = import_format
+            domain_import_found = True
+            break
+    if not domain_import_found:
+        data.append(import_format)
+    with open(app_domains_init_file_path, 'w') as f:
+        f.writelines(data)
