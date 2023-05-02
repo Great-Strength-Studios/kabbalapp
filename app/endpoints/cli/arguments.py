@@ -70,6 +70,7 @@ parser = argparse.ArgumentParser()
 # Add command subparsers
 command_subparsers = parser.add_subparsers(dest='command')
 for command_name, command in commands.commands.items():
+    command_name = command_name.replace('_', '-')
     command_subparser = command_subparsers.add_parser(command_name, **command.to_primitive('add_parser'))
     subcommand_subparsers = command_subparser.add_subparsers(dest='subcommand')
     for subcommand_name, subcommand in command.subcommands.items():
@@ -82,6 +83,6 @@ for command_name, command in commands.commands.items():
 
 # Parse arguments.
 args = parser.parse_args()
-command = sys.argv[1]
+command = sys.argv[1].replace('-', '_')
 subcommand = sys.argv[2].replace('-', '_')
 args = vars(args)
