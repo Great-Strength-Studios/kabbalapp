@@ -77,4 +77,5 @@ def handle(context: MessageContext):
     if not domain_import_found:
         data.append(import_format)
     with open(app_domains_init_file_path, 'w') as f:
+        data = '\n'.join(data)
         f.writelines(data)
