@@ -62,9 +62,9 @@ def handle(context: MessageContext):
 
     # Add implementation import to domain implementation __init__.py file.
     init_file_path = os.path.join(implementation_root_dir, '__init__.py')
-    with open(init_file_path, 'a+') as f:
+    with open(init_file_path, 'r') as f:
         data = f.read()
-        if 'from .{} import *'.format(implementation.key) not in data:
-            if data:
-                f.write('\n')
-            f.write('from .{} import *'.format(implementation.key))
+    if 'from .{} import *'.format(implementation.key) in data:
+        return
+    with open(init_file_path, '+a') as f:
+        f.write('\nfrom .{} import *'.format(implementation.key))
