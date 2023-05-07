@@ -110,16 +110,19 @@ class AddDomainRole(RequestEvent):
 
 class AddDomainModelProperty(RequestEvent):
 
-    class AddMetadata(Model):
-        required = t.BooleanType(default=False)
-        default = t.StringType()
-        choices = t.ListType(t.StringType())
-        serialized_name = t.StringType()
-        deserialize_from = t.ListType(t.StringType(), default=[])
-
     domain_key = t.StringType(required=True)
     model_key = t.StringType(required=True)
     name = t.StringType(required=True)
     key = t.StringType(required=True)
-    type = t.StringType(required=True, choices=d.DOMAIN_PROPERTY_TYPES)
-    metadata = t.ModelType(AddMetadata, default={})
+    type = t.StringType(default=d.STR_TYPE, choices=d.DOMAIN_PROPERTY_TYPES)
+    required = t.BooleanType()
+    default = t.StringType()
+    choices = t.ListType(t.StringType())
+    serialized_name = t.StringType()
+    deserialize_from = t.ListType(t.StringType(), default=[])
+
+    class Options(): 
+        serialize_when_none = False
+        roles = {
+            'domain.add_model_property': blacklist('key')
+        }

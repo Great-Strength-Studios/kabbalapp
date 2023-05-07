@@ -150,7 +150,7 @@ class YamlAppDomainService(AppDomainService):
         }
         return AppDomainRole(raw_data=raw_data)
     
-    def add_property(self, domain_key: str, model_key: str, key: str, name: str, type: str, metadata: dict) -> AppDomainModelProperty:
+    def add_property(self, domain_key: str, model_key: str, key: str, name: str, type: str, **kwargs) -> AppDomainModelProperty:
         import yaml
         # Get domain.
         domain = self.get_domain(domain_key)
@@ -162,7 +162,7 @@ class YamlAppDomainService(AppDomainService):
         except KeyError:
             return ('DOMAIN_MODEL_NOT_FOUND', model_key)
         # Format property data.
-        property_data = {'name': name, 'type': type, 'metadata': metadata}
+        property_data = {'name': name, 'type': type, **kwargs}
         # Add property data to model if properties is None.
         if model.properties is None:
             model.properties = {key: property_data}
@@ -184,5 +184,5 @@ class YamlAppDomainService(AppDomainService):
         return AppDomainModelProperty({
             'name': name,
             'type': type,
-            'metadata': metadata
+            **kwargs
         })
