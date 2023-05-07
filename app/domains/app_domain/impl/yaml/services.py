@@ -125,6 +125,20 @@ class YamlAppDomainService(AppDomainService):
         }
         return AppDomainModel(raw_data=raw_data)
     
+    def get_model(self, domain_key: str, key: str) -> AppDomainModel:
+        # Get domain.
+        domain = self.get_domain(domain_key)
+        # Return error if domain not found.
+        if isinstance(domain, tuple):
+            return domain
+        # Return error if model not found.
+        if key not in domain.models:
+            return ('DOMAIN_MODEL_NOT_FOUND', key)
+        # Return model.
+        model = domain.models[key]
+        model.key = key
+        return model
+    
     def add_role(self, domain_key: str, key: str, role_type: str, role_fields: List[str]) -> AppDomainRole:
         import yaml
         with open(self.schema_file_path, 'r') as f:
@@ -162,10 +176,10 @@ class YamlAppDomainService(AppDomainService):
         except KeyError:
             return ('DOMAIN_MODEL_NOT_FOUND', model_key)
         # Format property data.
-        property_data = {'name': name, 'type': type, **kwargs}
+        property = AppDomainModelProperty({'key': key, 'name': name, 'type': type, **kwargs})
         # Add property data to model if properties is None.
         if model.properties is None:
-            model.properties = {key: property_data}
+            model.properties = {}
         # Check if property already exists.
         elif key in model.properties:
             return ('DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS', key)
