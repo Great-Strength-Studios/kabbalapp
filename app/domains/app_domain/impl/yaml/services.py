@@ -167,7 +167,7 @@ class YamlAppDomainService(AppDomainService):
     def add_property(self, domain_key: str, model_key: str, key: str, name: str, type: str, **kwargs) -> AppDomainModelProperty:
         import yaml
         # Get domain model.
-        model = self.get_domain(domain_key, model_key)
+        model = self.get_model(domain_key, model_key)
         # Return error if domain or model not found.
         if isinstance(model, tuple):
             return model
@@ -175,7 +175,7 @@ class YamlAppDomainService(AppDomainService):
         if key in model.properties:
             return ('DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS', key)
         # Format property data.
-        property = AppDomainModelProperty({'key': key, 'name': name, 'type': type, **kwargs})
+        property = YamlAppDomainModelProperty({'key': key, 'name': name, 'type': type, **kwargs})
         # Add property data to model if properties is None.
         if model.properties is None:
             model.properties = {}
@@ -185,7 +185,7 @@ class YamlAppDomainService(AppDomainService):
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         # Update schema file.
-        data['domains'][domain_key]['models'][model_key] = model.to_primitive()
+        data['domains'][domain_key]['models'][model_key] = model.to_primitive('domain.add_property')
         # Write updates to schema file.
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
