@@ -396,7 +396,6 @@ interfaces:
                 - bool
                 - datetime
                 - date
-                - time
                 - list
                 - dict
                 - model
