@@ -40,11 +40,13 @@ class AppDomainModelProperty(Model):
     choices = t.ListType(t.StringType())
     serialized_name = t.StringType()
     deserialize_from = t.ListType(t.StringType(), default=[])
+    description = t.StringType()
 
     class Options():
         serialize_when_none = False
 
 class AppDomainModel(Model):
+    key = t.StringType(required=True)
     name = t.StringType(required=True)
     class_name = t.StringType(required=True)
     properties = t.DictType(t.ModelType(AppDomainModelProperty), default={})
