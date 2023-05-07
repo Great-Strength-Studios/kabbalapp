@@ -166,37 +166,28 @@ class YamlAppDomainService(AppDomainService):
     
     def add_property(self, domain_key: str, model_key: str, key: str, name: str, type: str, **kwargs) -> AppDomainModelProperty:
         import yaml
-        # Get domain.
-        domain = self.get_domain(domain_key)
-        # Check if domain is an error tuple.
-        if isinstance(domain, tuple):
-            return domain
-        try:
-            model = domain.models[model_key]
-        except KeyError:
-            return ('DOMAIN_MODEL_NOT_FOUND', model_key)
+        # Get domain model.
+        model = self.get_domain(domain_key, model_key)
+        # Return error if domain or model not found.
+        if isinstance(model, tuple):
+            return model
+        # Return error if property already exists.
+        if key in model.properties:
+            return ('DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS', key)
         # Format property data.
         property = AppDomainModelProperty({'key': key, 'name': name, 'type': type, **kwargs})
         # Add property data to model if properties is None.
         if model.properties is None:
             model.properties = {}
-        # Check if property already exists.
-        elif key in model.properties:
-            return ('DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS', key)
-        # Add property data to model.
-        else:
-            model.properties[key] = property_data  
+        # Add property to model.
+        model.properties[key] = property  
         # Read schema file.
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         # Update schema file.
-        data['domains'][domain_key] = domain.to_primitive()
+        data['domains'][domain_key]['models'][model_key] = model.to_primitive()
         # Write updates to schema file.
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
         # Return property.
-        return AppDomainModelProperty({
-            'name': name,
-            'type': type,
-            **kwargs
-        })
+        return property
