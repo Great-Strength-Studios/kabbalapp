@@ -51,6 +51,13 @@ class AppDomainModel(Model):
     class_name = t.StringType(required=True)
     properties = t.DictType(t.ModelType(AppDomainModelProperty), default={})
 
+    class Options():
+        serialize_when_none = False
+        roles = {
+            'domain.add_model': blacklist('key', 'properties'),
+            'domain.add_property': blacklist('key'),
+        }
+
 class AppDomainRole(Model):
     type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
     fields = t.ListType(t.StringType(), required=True)
@@ -68,7 +75,7 @@ class AppDomainImplementation(Model):
         }
 
 class AppDomain(Model):
-    key = t.StringType()
+    key = t.StringType(required=True)
     name = t.StringType(required=True)
     aliases = t.ListType(t.StringType(), default=[])
     roles = t.ListType(t.ModelType(AppDomainRole), default=[])
