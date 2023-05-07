@@ -74,7 +74,7 @@ errors:
     message:
       en_US: CLI subcommand with key "{}" already exists
   DOMAIN_ALREADY_EXISTS:
-    error_code: '00002001'
+    error_code: '000020001'
     error_name: DOMAIN_ALREADY_EXISTS
     message:
       en_US: Domain with key "{}" already exists
@@ -93,6 +93,11 @@ errors:
     error_name: DOMAIN_MODEL_ALREADY_EXISTS
     message:
       en_US: Domain model with key "{}" already exists
+  DOMAIN_MODEL_NOT_FOUND:
+    error_code: '000020003'
+    error_name: DOMAIN_MODEL_NOT_FOUND
+    message:
+      en_US: Domain model with key "{}" not found
   DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
     error_code: '000020004'
     error_name: DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS
@@ -104,7 +109,7 @@ errors:
     message:
       en_US: Domain with key "{}" not found
   DOMAIN_ROLE_ALREADY_EXISTS:
-    error_code: '000020003'
+    error_code: '000020004'
     error_name: DOMAIN_ROLE_ALREADY_EXISTS
     message:
       en_US: Domain role with key "{}" already exists
