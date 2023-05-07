@@ -377,6 +377,10 @@ interfaces:
                 - --domain-key
                 - -d
                 required: true
+              description:
+                help: domain model property description
+                name_or_flags:
+                - --description
               model_key:
                 help: domain model key
                 name_or_flags:
