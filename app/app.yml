@@ -8,24 +8,35 @@ domains:
         class_name: AppDomain
         name: App Domain
         properties:
-          class_name:
-            name: Class name
-            required: true
-            type: str
-            description: domain model class name
           key:
+            description: domain key
             name: Key
             required: true
             type: str
-            description: domain model property key
           name:
+            description: domain name
             name: Name
             required: true
             type: str
-            description: domain model property name
       app_domain_model:
         class_name: AppDomainModel
         name: App Domain Model
+        properties:
+          class_name:
+            description: domain model class name
+            name: Class name
+            required: true
+            type: str
+          key:
+            description: domain model key
+            name: Key
+            required: true
+            type: str
+          name:
+            description: domain model name
+            name: Name
+            required: true
+            type: str
     name: Domain
   app_interface:
     aliases:
