@@ -4,7 +4,7 @@ domains:
     - adom
     - d
     models:
-      app_domain:
+      domain:
         class_name: AppDomain
         name: App Domain
         properties:
@@ -18,7 +18,7 @@ domains:
             name: Name
             required: true
             type: str
-      app_domain_model:
+      domain_model:
         class_name: AppDomainModel
         name: App Domain Model
         properties:
