@@ -120,6 +120,7 @@ class AddDomainModelProperty(RequestEvent):
     choices = t.ListType(t.StringType())
     serialized_name = t.StringType()
     deserialize_from = t.ListType(t.StringType(), default=[])
+    description = t.StringType()
 
     class Options(): 
         serialize_when_none = False

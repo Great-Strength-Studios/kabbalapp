@@ -44,6 +44,9 @@ class AppDomainModelProperty(Model):
 
     class Options():
         serialize_when_none = False
+        roles = {
+            'domain.add_property': blacklist('key'),
+        }
 
 class AppDomainModel(Model):
     key = t.StringType(required=True)

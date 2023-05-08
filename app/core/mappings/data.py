@@ -127,4 +127,5 @@ def add_domain_model_property(context, request, app_context, **kwargs):
         'choices': request.get('choices', None),
         'serialized_name': request.get('serialized_name', None),
         'deserialize_from': request.get('deserialize_from', None),
+        'description': request.get('description', None),
     })
