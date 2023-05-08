@@ -37,6 +37,20 @@ domains:
             name: Name
             required: true
             type: str
+      domain_model_property:
+        class_name: AppDomainModelProperty
+        name: Domain model property
+        properties:
+          key:
+            description: domain model property key
+            name: Key
+            required: true
+            type: str
+          name:
+            description: domain model property name
+            name: Name
+            required: true
+            type: str
     name: Domain
   app_interface:
     aliases:
