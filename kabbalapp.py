@@ -17,7 +17,7 @@ builder = CliAppBuilder().create_new_app('kabbalapp')
 
 # Set container configuration to builder
 container_config = ContainerConfiguration()
-container_config.app_project_filepath = os.getenv(constants.PROJECTS_FILE_PATH, None)
+container_config.app_project_filepath = os.getenv(constants.PROJECTS_FILE_PATH, os.path.join(os.getcwd(), 'projects.yml'))
 builder.set_container_config(container_config)
 
 # Build app context.
