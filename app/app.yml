@@ -18,6 +18,20 @@ domains:
             name: Name
             required: true
             type: str
+      domain_implementation:
+        class_name: AppDomainImplementation
+        name: App Domain Implementation
+        properties:
+          key:
+            description: domain implementation key
+            name: Key
+            required: true
+            type: str
+          name:
+            description: domain implementation name
+            name: Name
+            required: true
+            type: str
       domain_model:
         class_name: AppDomainModel
         name: App Domain Model
@@ -41,6 +55,16 @@ domains:
         class_name: AppDomainModelProperty
         name: Domain model property
         properties:
+          default:
+            description: domain model property default value
+            name: Default
+            required: false
+            type: str
+          description:
+            description: domain model property description
+            name: Description
+            required: false
+            type: str
           key:
             description: domain model property key
             name: Key
@@ -50,6 +74,16 @@ domains:
             description: domain model property name
             name: Name
             required: true
+            type: str
+          required:
+            description: domain model property required
+            name: Required
+            required: false
+            type: bool
+          serialized_name:
+            description: domain model property serialized name
+            name: Serialized name
+            required: false
             type: str
           type:
             choices:
@@ -66,6 +100,18 @@ domains:
             description: domain model property type
             name: Type
             required: false
+            type: str
+      domain_role:
+        class_name: AppDomainRole
+        name: App Domain Role
+        properties:
+          type:
+            choices:
+            - blacklist
+            - whitelist
+            description: domain role type
+            name: Type
+            required: true
             type: str
     name: Domain
   app_interface:
