@@ -96,6 +96,15 @@ domains:
         class_name: AppArgument
         name: App Argument
         properties:
+          action:
+            description: argument action
+            name: Action
+            required: false
+            type: str
+          default:
+            description: default argument value
+            name: default
+            type: str
           help:
             description: app argument help
             name: Help
@@ -105,6 +114,11 @@ domains:
             name: Key
             required: true
             type: str
+          nargs:
+            description: number of arguments
+            name: Number of arguments
+            required: false
+            type: str
           type:
             choices:
             - str
@@ -112,7 +126,6 @@ domains:
             - float
             description: app arggument type
             name: Type
-            required: false
             type: str
     name: cli
     roles: []
