@@ -113,7 +113,7 @@ class AddDomainModelProperty(RequestEvent):
     domain_key = t.StringType(required=True)
     model_key = t.StringType(required=True)
     name = t.StringType(required=True)
-    key = t.StringType(required=True)
+    key = t.StringType()
     type = t.StringType(default=d.STR_TYPE, choices=d.DOMAIN_PROPERTY_TYPES)
     required = t.BooleanType()
     default = t.StringType()
