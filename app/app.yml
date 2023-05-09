@@ -51,6 +51,22 @@ domains:
             name: Name
             required: true
             type: str
+          type:
+            choices:
+            - str
+            - int
+            - float
+            - bool
+            - datetime
+            - date
+            - list
+            - dict
+            - model
+            default: str
+            description: domain model property type
+            name: Type
+            required: false
+            type: str
     name: Domain
   app_interface:
     aliases:
