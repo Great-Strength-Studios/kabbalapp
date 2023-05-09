@@ -127,6 +127,15 @@ domains:
             description: app arggument type
             name: Type
             type: str
+      app_command:
+        class_name: AppCommand
+        name: App CLI Command
+      app_commands:
+        class_name: AppCommands
+        name: App CLI Commands
+      app_subcommand:
+        class_name: AppSubcommand
+        name: App CLI Subcommand
     name: cli
     roles: []
 errors:
