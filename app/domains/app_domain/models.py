@@ -7,39 +7,59 @@ DOMAIN_ROLE_TYPES = [
     'whitelist',
     'blacklist'
 ]
+
+# Types constants
+STR_TYPE =  'str'
+INT_TYPE = 'int'
+FLOAT_TYPE = 'float'
+BOOL_TYPE = 'bool'
+DATETIME_TYPE = 'datetime'
+DATE_TYPE = 'date'
+LIST_TYPE = 'list'
+DICT_TYPE = 'dict'
+MODEL_TYPE = 'model'
+
 DOMAIN_PROPERTY_TYPES = [
-    'str',
-    'int',
-    'float',
-    'bool',
-    'datetime',
-    'date',
-    'time',
-    'list',
-    'dict',
-    'model'
+    STR_TYPE,
+    INT_TYPE,
+    FLOAT_TYPE,
+    BOOL_TYPE,
+    DATETIME_TYPE,
+    DATE_TYPE,
+    LIST_TYPE,
+    DICT_TYPE,
+    MODEL_TYPE
 ]
 
 class AppDomainModelProperty(Model):
-    
-    class Metadata(Model):
-        required = t.BooleanType(default=False)
-        default = t.StringType()
-        choices = t.ListType(t.StringType())
-        serialized_name = t.StringType()
-        deserialize_from = t.ListType(t.StringType(), default=[])
-
-        class Options():
-            serialize_when_none = False
-    
+    key = t.StringType(required=True)
     name = t.StringType(required=True)
-    type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
-    metadata = t.ModelType(Metadata, default=None)
+    type = t.StringType(default=STR_TYPE, choices=DOMAIN_PROPERTY_TYPES)
+    required = t.BooleanType()
+    default = t.StringType()
+    choices = t.ListType(t.StringType())
+    serialized_name = t.StringType()
+    deserialize_from = t.ListType(t.StringType(), default=[])
+    description = t.StringType()
+
+    class Options():
+        serialize_when_none = False
+        roles = {
+            'domain.add_property': blacklist('key'),
+        }
 
 class AppDomainModel(Model):
+    key = t.StringType(required=True)
     name = t.StringType(required=True)
     class_name = t.StringType(required=True)
     properties = t.DictType(t.ModelType(AppDomainModelProperty), default={})
+
+    class Options():
+        serialize_when_none = False
+        roles = {
+            'domain.add_model': blacklist('key', 'properties'),
+            'domain.add_property': blacklist('key'),
+        }
 
 class AppDomainRole(Model):
     type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
@@ -58,7 +78,7 @@ class AppDomainImplementation(Model):
         }
 
 class AppDomain(Model):
-    key = t.StringType()
+    key = t.StringType(required=True)
     name = t.StringType(required=True)
     aliases = t.ListType(t.StringType(), default=[])
     roles = t.ListType(t.ModelType(AppDomainRole), default=[])

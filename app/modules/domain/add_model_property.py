@@ -16,6 +16,10 @@ def handle(context: MessageContext):
     # Get app domain service.
     domain_service: d.AppDomainService = context.services.domain_service(app_key)
 
+    # Format key if none is provided.
+    if not request.key:
+        request.key = request.name.lower().replace(' ', '_')
+
     # Add property.
     property = domain_service.add_property(**request.to_primitive())
 

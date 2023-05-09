@@ -68,6 +68,7 @@ class FeatureHandler():
                 if function.data_mapping:
                     if debug: print('Perform data mapping: "mapping": "{}"'.format(function.data_mapping))
                     data_mapping = getattr(import_module(DATA_MAPPINGS_PATH), function.data_mapping)
+                    if debug: print('Performing data mapping for following request: "mapping": "{}", "request": "{}", params: "{}"'.format(function.data_mapping, request, function.params))
                     context.data = data_mapping(context, request, app_context, **function.params, **kwargs)
                     if debug: print('Data mapping complete: "mapping": "{}", "data": "{}"'.format(function.data_mapping, context.data.to_primitive()))
                 # Request model state validation
