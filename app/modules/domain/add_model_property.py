@@ -20,6 +20,10 @@ def handle(context: MessageContext):
     if not request.key:
         request.key = request.name.lower().replace(' ', '_')
 
+    # Set required to None if there is a default value.
+    if request.default:
+        request.required = None
+
     # Add property.
     property = domain_service.add_property(**request.to_primitive())
 

@@ -21,14 +21,19 @@ def handle(context: MessageContext):
 		request.key = request.name.lower().replace(' ', '_')
 
 	# Format name or flags parameter
+	request.name = request.name.lower().replace('_', '-').replace(' ', '-')
 	if not request.positional:
-		request.name = '--{}'.format(request.name.lower().replace('_', '-').replace(' ', '-'))
+		request.name = '--{}'.format(request.name)
 		if request.flags:
 			request.flags = ['-{}'.format(flag.replace('_', '-')) for flag in request.flags]
 	name_or_flags = []
 	name_or_flags.append(request.name)
 	if request.flags:
 		name_or_flags.extend(request.flags)
+
+	# Format required parameter.
+	if request.positional or request.required == False:
+		request.required = None
 
 	# Add argument to cli interface.
 	argument = service.add_argument(name_or_flags=name_or_flags, **request.to_primitive('cli.add_argument'))

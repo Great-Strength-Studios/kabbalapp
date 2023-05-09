@@ -340,9 +340,7 @@ interfaces:
               name:
                 help: argument name
                 name_or_flags:
-                - -n
-                - --name
-                required: true
+                - name
               nargs:
                 help: available number of arguments
                 name_or_flags:
@@ -418,9 +416,7 @@ interfaces:
               name:
                 help: argument name
                 name_or_flags:
-                - -n
-                - --name
-                required: true
+                - name
               nargs:
                 help: available number of arguments
                 name_or_flags:
