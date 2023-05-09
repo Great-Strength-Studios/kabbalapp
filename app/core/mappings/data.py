@@ -58,6 +58,7 @@ def add_cli_argument(context, request, app_context, **kwargs):
         'flags': request.get('flags', None),
         'positional': request.get('positional', False),
         'type': request.get('type', None),
+        'required': request.get('required', None),
         'default': request.get('default', None),
         'choices': request.get('choices', None),
         'nargs': request.get('nargs', None),

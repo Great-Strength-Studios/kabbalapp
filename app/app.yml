@@ -622,6 +622,9 @@ interfaces:
                 - -t
                 required: true
             name: Add Domain Role
+          list:
+            help: list domains
+            name: List
           sync:
             arguments:
               domain_key:
