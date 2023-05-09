@@ -75,7 +75,29 @@ domains:
         models: {}
         name: yaml
         roles: []
-    models: {}
+    models:
+      app_argument:
+        class_name: AppArgument
+        name: App Argument
+        properties:
+          help:
+            description: app argument help
+            name: Help
+            required: true
+            type: str
+          key:
+            name: Key
+            required: true
+            type: str
+          type:
+            choices:
+            - str
+            - int
+            - float
+            description: app arggument type
+            name: Type
+            required: false
+            type: str
     name: cli
     roles: []
 errors:
