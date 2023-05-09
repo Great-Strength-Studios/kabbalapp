@@ -130,12 +130,34 @@ domains:
       app_command:
         class_name: AppCommand
         name: App CLI Command
+        properties:
+          key:
+            description: app command key
+            name: Key
+            required: true
+            type: str
       app_commands:
         class_name: AppCommands
         name: App CLI Commands
       app_subcommand:
         class_name: AppSubcommand
         name: App CLI Subcommand
+        properties:
+          help:
+            description: app subcommand help
+            name: Help
+            required: true
+            type: str
+          key:
+            description: app subcommand model key
+            name: Key
+            required: false
+            type: str
+          name:
+            description: app subcommand name
+            name: Name
+            required: true
+            type: str
     name: cli
     roles: []
 errors:
