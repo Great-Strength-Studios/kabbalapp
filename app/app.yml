@@ -599,7 +599,6 @@ interfaces:
                 help: domain model property type properties separated by '='
                 name_or_flags:
                 - --type-properties
-                nargs: +
             name: Add Domain Model Property
           add_role:
             arguments:

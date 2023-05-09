@@ -117,18 +117,13 @@ def add_domain_role(context, request, app_context, **kwargs):
     })
 
 def add_domain_model_property(context, request, app_context, **kwargs):
-    type_properties = {}
-    for type_property in request.get('type_properties', []):
-        key, value = type_property.split('=')
-        type_properties[key.strip()] = value.strip()
-    request['type_properties'] = type_properties
     return AddDomainModelProperty({
         'domain_key': request.get('domain_key', None),
         'model_key': request.get('model_key', None),
         'name': request.get('name', None),
         'key': request.get('key', None),
         'type': request.get('type', 'str'),
-        'type_properties': request.get('type_properties', {}),
+        'type_properties': request.get('type_properties', None),
         'required': request.get('required', None),
         'default': request.get('default', None),
         'choices': request.get('choices', None),
