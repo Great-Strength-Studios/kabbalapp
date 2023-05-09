@@ -34,6 +34,11 @@ DOMAIN_PROPERTY_TYPES = [
 class TypeProperties(Model):
     pass
 
+class StringTypeProperties(TypeProperties):
+    regex = t.StringType()
+    min_length = t.IntType()
+    max_length = t.IntType()
+
 class ListTypeProperties(TypeProperties):
     field = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
     field_properties = t.ModelType(TypeProperties)
