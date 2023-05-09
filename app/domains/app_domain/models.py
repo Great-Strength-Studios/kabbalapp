@@ -31,10 +31,27 @@ DOMAIN_PROPERTY_TYPES = [
     MODEL_TYPE
 ]
 
+class TypeProperties(Model):
+    pass
+
+class ListTypeProperties(TypeProperties):
+    field = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
+    field_properties = t.ModelType(TypeProperties)
+    min_size = t.IntType()
+    max_size = t.IntType()
+
+class DictTypeProperties(TypeProperties):
+    field = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
+    field_properties = t.ModelType(TypeProperties)
+
+class ModelTypeProperties(TypeProperties):
+    model_key = t.StringType(required=True)
+
 class AppDomainModelProperty(Model):
     key = t.StringType(required=True)
     name = t.StringType(required=True)
     type = t.StringType(default=STR_TYPE, choices=DOMAIN_PROPERTY_TYPES)
+    type_properties = t.ModelType(TypeProperties)
     required = t.BooleanType()
     default = t.StringType()
     choices = t.ListType(t.StringType())
