@@ -164,7 +164,7 @@ class YamlAppDomainService(AppDomainService):
         }
         return AppDomainRole(raw_data=raw_data)
     
-    def add_property(self, domain_key: str, model_key: str, key: str, name: str, type: str, **kwargs) -> AppDomainModelProperty:
+    def add_property(self, domain_key: str, model_key: str, key: str, name: str, type: str, type_properties: TypeProperties = None, **kwargs) -> AppDomainModelProperty:
         import yaml
         # Get domain model.
         model = self.get_model(domain_key, model_key)

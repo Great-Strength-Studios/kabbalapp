@@ -126,5 +126,5 @@ class AddDomainModelProperty(RequestEvent):
     class Options(): 
         serialize_when_none = False
         roles = {
-            'domain.add_model_property': blacklist('key')
+            'domain.add_model_property': blacklist('type_properties'),
         }
