@@ -380,6 +380,10 @@ interfaces:
                 - -k
                 - --key
                 required: true
+              name:
+                help: command name
+                name_or_flags:
+                - name
             name: Add CLI Command
           add_parent_argument:
             arguments:
@@ -466,9 +470,7 @@ interfaces:
               name:
                 help: subcommand name
                 name_or_flags:
-                - -n
-                - --name
-                required: true
+                - name
       domain:
         subcommands:
           add:
