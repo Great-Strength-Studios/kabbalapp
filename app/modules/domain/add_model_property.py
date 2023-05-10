@@ -24,8 +24,30 @@ def handle(context: MessageContext):
     if request.default:
         request.required = None
 
+    # Declare type property validation methods.
+
+    # Validate type properties if they exist.
+    type_properties = None
+    if request.type_properties:
+        from schematics.exceptions import DataError
+        try:
+            import json
+            if request.type == 'str':
+                type_properties = d.StringTypeProperties(json.loads(request.type_properties))
+            elif request.type == 'list':
+                type_properties = d.ListTypeProperties(json.loads(request.type_properties))
+            elif request.type == 'dict':
+                type_properties = d.DictTypeProperties(json.loads(request.type_properties))
+            elif request.type == 'model':
+                type_properties = d.ModelTypeProperties(json.loads(request.type_properties))
+        except DataError as e:
+            raise AppError(context.errors.INVALID_TYPE_PROPERTIES)
+        
+
+        
+
     # Add property.
-    property = domain_service.add_property(**request.to_primitive())
+    property = domain_service.add_property(type_properties=type_properties, **request.to_primitive('domain.add_model_property'))
 
     # Raise app error if property is an error tuple.
     if isinstance(property, tuple):
