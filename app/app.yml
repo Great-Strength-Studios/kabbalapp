@@ -769,14 +769,16 @@ modules:
         functions:
         - data_mapping: get_domain
           function_path: domain.get_domain
+        use_role: domain.get_domain
       list:
         functions:
         - function_path: domain.list_domains
-        use_role: list_domains
+        use_role: domain.list_domains
       list_domain_models:
         functions:
         - data_mapping: list_domain_models
           function_path: domain.list_domain_models
+        use_role: domain.list_domain_models
       sync:
         functions:
         - data_mapping: sync_domain
