@@ -115,7 +115,10 @@ class FeatureHandler():
             result = []
             for item in context.result:
                 if isinstance(item, Model):
-                    result.append(item.to_primitive())
+                    if self.feature_config.use_role:
+                        result.append(item.to_primitive(role=self.feature_config.use_role))
+                    else:
+                        result.append(item.to_primitive())
                 else:
                     result.append(item)
             return result
@@ -123,5 +126,8 @@ class FeatureHandler():
             return {}
         # Convert schematics models to primitive dicts.
         if isinstance(context.result, Model):
-            return context.result.to_primitive()
+            if self.feature_config.use_role:
+                return context.result.to_primitive(role=self.feature_config.use_role)
+            else:
+                return context.result.to_primitive()
         return context.result
