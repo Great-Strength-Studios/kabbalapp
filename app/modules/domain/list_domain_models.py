@@ -17,7 +17,7 @@ def handle(context: MessageContext):
 	domain_service: d.AppDomainService = context.services.domain_service(app_key)
 
 	# Get domain models.
-	domain_models = domain_service.list_models(**request.to_primitive())
+	domain_models = domain_service.get_models(**request.to_primitive())
 
 	# Return models.
-	return [model.to_primitive('list_domain_models') for model in domain_models]
+	return [model.to_primitive('domain.list_domain_models') for model in domain_models]
