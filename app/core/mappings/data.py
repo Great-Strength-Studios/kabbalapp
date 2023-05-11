@@ -73,6 +73,11 @@ def add_domain(context, request, app_context, **kwargs):
         'aliases': request.get('aliases', None),
     })
 
+def get_domain(context, request, app_context, **kwargs):
+    return GetDomain({
+        'key': request.get('key', None)
+    })
+
 def sync_domain(context, request, app_context, **kwargs):
     return SyncDomain({
         'domain_key': request.get('domain_key', None),

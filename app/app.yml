@@ -622,11 +622,11 @@ interfaces:
             name: Add Domain Role
           get:
             arguments:
-              domain_key:
+              key:
                 help: domain key
                 name_or_flags:
-                - --domain-key
-                - -d
+                - --key
+                - -k
                 required: true
             help: get domain
             name: Get Domain
