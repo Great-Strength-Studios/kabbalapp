@@ -89,4 +89,5 @@ class AppDomain(Model):
         roles = {
             'create': blacklist('key', 'roles', 'models', 'impl'),
             'update': blacklist('key'),
+            'list_domains': blacklist('roles', 'models', 'impl', 'aliases'),
         }

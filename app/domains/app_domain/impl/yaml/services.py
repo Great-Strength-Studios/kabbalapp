@@ -34,6 +34,23 @@ class YamlAppDomainService(AppDomainService):
         }
         return AppDomain(raw_data=raw_data)
     
+    def get_domains(self) -> List[AppDomain]:
+        import yaml
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
+        domains = []
+        if data['domains'] is None:
+            return domains
+        for key, domain_data in data['domains'].items():
+            raw_data = {
+                'key': key,
+                'name': domain_data.get('name'),
+                'aliases': domain_data.get('aliases', []),
+                'models': domain_data.get('models', {}),
+                'impl': domain_data.get('impl', {})
+            }
+            domains.append(AppDomain(raw_data=raw_data))
+    
     def get_domain(self, key: str) -> AppDomain:
         import yaml
         with open(self.schema_file_path, 'r') as f:
