@@ -639,8 +639,6 @@ interfaces:
                 help: domain key
                 name_or_flags:
                 - --domain-key
-                - -d
-                required: true
             help: list domain models
             name: List domain models
           sync:
