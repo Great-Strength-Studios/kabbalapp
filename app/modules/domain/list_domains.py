@@ -19,4 +19,3 @@ def handle(context: MessageContext):
 
     # Return response.
     return domains   
-

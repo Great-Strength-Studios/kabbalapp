@@ -50,6 +50,7 @@ class YamlAppDomainService(AppDomainService):
                 'impl': domain_data.get('impl', {})
             }
             domains.append(AppDomain(raw_data=raw_data))
+        return domains
     
     def get_domain(self, key: str) -> AppDomain:
         import yaml

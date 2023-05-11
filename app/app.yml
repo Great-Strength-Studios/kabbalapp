@@ -749,7 +749,7 @@ modules:
           function_path: domain.add_role
       list:
         functions:
-          function_path: domain.list_domains
+        - function_path: domain.list_domains
         use_role: list_domains
       sync:
         functions:
