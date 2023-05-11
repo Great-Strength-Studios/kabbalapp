@@ -773,6 +773,10 @@ modules:
         functions:
         - function_path: domain.list_domains
         use_role: list_domains
+      list_domain_models:
+        functions:
+        - data_mapping: list_domain_models
+          function_path: domain.list_domain_models
       sync:
         functions:
         - data_mapping: sync_domain
