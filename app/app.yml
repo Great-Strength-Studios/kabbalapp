@@ -113,7 +113,7 @@ domains:
             name: Type
             required: true
             type: str
-    name: Domain
+    name: App Domain
   app_interface:
     aliases:
     - i
@@ -204,7 +204,7 @@ domains:
             name: Name
             required: true
             type: str
-    name: cli
+    name: Command Line Interface
     roles: []
 errors:
   APP_KEY_REQUIRED:
@@ -747,6 +747,10 @@ modules:
         functions:
         - data_mapping: add_domain_role
           function_path: domain.add_role
+      list:
+        functions:
+        - function_path: domain.list_domains
+        use_role: list_domains
       sync:
         functions:
         - data_mapping: sync_domain

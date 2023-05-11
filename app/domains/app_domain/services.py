@@ -5,6 +5,9 @@ class AppDomainService():
     def add_domain(self, key: str, name: str, aliases: List[str]) -> AppDomain:
         pass
 
+    def get_domains(self) -> List[AppDomain]:
+        pass
+
     def get_domain(self, key: str) -> AppDomain:
         pass
 

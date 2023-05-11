@@ -21,9 +21,14 @@ class CliAppContext(AppContext):
         
         # Handle message context.
         try:
-            handler.handle(args, self, **kwargs)
+            result = handler.handle(args, self, **kwargs)
         except AppError as e:
             exit(str(e.to_dict()))
+
+        # Print result if not empty.
+        if result:
+            import json
+            print(json.dumps(result, indent=4, sort_keys=True))
 
 
 class CliAppBuilder(AppBuilder):
