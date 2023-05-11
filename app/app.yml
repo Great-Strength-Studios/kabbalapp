@@ -620,6 +620,16 @@ interfaces:
                 - -t
                 required: true
             name: Add Domain Role
+          get:
+            arguments:
+              key:
+                help: domain key
+                name_or_flags:
+                - --key
+                - -k
+                required: true
+            help: get domain
+            name: Get Domain
           list:
             help: list domains
             name: List
@@ -747,6 +757,10 @@ modules:
         functions:
         - data_mapping: add_domain_role
           function_path: domain.add_role
+      get:
+        functions:
+        - data_mapping: get_domain
+          function_path: domain.get_domain
       list:
         functions:
         - function_path: domain.list_domains

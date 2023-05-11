@@ -78,6 +78,9 @@ class AddDomain(RequestEvent):
     key = t.StringType()
     aliases = t.ListType(t.StringType(), default=[])
 
+class GetDomain(RequestEvent):
+    key = t.StringType(required=True)
+
 class AddDomainImplementation(RequestEvent):
     domain_key = t.StringType(required=True)
     key = t.StringType()
