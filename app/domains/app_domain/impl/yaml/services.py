@@ -143,6 +143,31 @@ class YamlAppDomainService(AppDomainService):
         }
         return AppDomainModel(raw_data=raw_data)
     
+    def get_models(self, domain_key: str = None) -> List[AppDomainModel]:
+        # Get domain if key is provided.
+        if domain_key is not None:
+            domain = self.get_domain(domain_key)
+            # Return error if domain not found.
+            if isinstance(domain, tuple):
+                return domain
+            # Return models.
+            models = []
+            for key, model_data in domain.models.items():
+                model = AppDomainModel(raw_data=model_data)
+                model.key = key
+                models.append(model)
+            return models
+        # Get all models.
+        domains = self.get_domains()
+        models = []
+        for domain in domains:
+            for key, model_data in domain.models.items():
+                model = AppDomainModel(raw_data=model_data)
+                model.key = key
+                models.append(model)
+        return models
+
+    
     def get_model(self, domain_key: str, key: str) -> AppDomainModel:
         # Get domain.
         domain = self.get_domain(domain_key)

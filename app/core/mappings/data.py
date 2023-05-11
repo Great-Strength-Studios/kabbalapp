@@ -113,6 +113,11 @@ def add_domain_model(context, request, app_context, **kwargs):
         'class_name': request.get('class_name', None)
     })
 
+def list_domain_models(context, request, app_context, **kwargs):
+    return ListDomainModels({
+        'domain_key': request.get('domain_key', None),
+    })
+
 def add_domain_role(context, request, app_context, **kwargs):
     return AddDomainRole({
         'domain_key': request.get('domain_key', None),

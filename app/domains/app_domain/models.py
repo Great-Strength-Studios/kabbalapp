@@ -59,6 +59,8 @@ class AppDomainModel(Model):
         roles = {
             'domain.add_model': blacklist('key', 'properties'),
             'domain.add_property': blacklist('key'),
+            'domain.get_domain': blacklist('properties'),
+            'domain.list_domain_models': blacklist('properties'),
         }
 
 class AppDomainRole(Model):
@@ -89,5 +91,6 @@ class AppDomain(Model):
         roles = {
             'create': blacklist('key', 'roles', 'models', 'impl'),
             'update': blacklist('key'),
-            'list_domains': blacklist('roles', 'models', 'impl', 'aliases'),
+            'domain.list_domains': blacklist('roles', 'models', 'impl', 'aliases'),
+            'domain.get_domain': blacklist(),
         }
