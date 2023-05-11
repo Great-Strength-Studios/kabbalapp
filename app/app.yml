@@ -633,6 +633,16 @@ interfaces:
           list:
             help: list domains
             name: List
+          list_domain_models:
+            arguments:
+              domain_key:
+                help: domain key
+                name_or_flags:
+                - --domain-key
+                - -d
+                required: true
+            help: list domain models
+            name: List domain models
           sync:
             arguments:
               domain_key:
