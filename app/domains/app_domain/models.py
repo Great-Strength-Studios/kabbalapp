@@ -39,6 +39,9 @@ class StringTypeProperties(TypeProperties):
     min_length = t.IntType()
     max_length = t.IntType()
 
+class DateTypeProperties(TypeProperties):
+    formats = t.StringType()
+
 class AppDomainModelProperty(Model):
     key = t.StringType(required=True)
     name = t.StringType(required=True)
