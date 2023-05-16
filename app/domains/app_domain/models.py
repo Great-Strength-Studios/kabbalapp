@@ -42,6 +42,14 @@ class StringTypeProperties(TypeProperties):
 class DateTypeProperties(TypeProperties):
     formats = t.StringType()
 
+class DateTimeTypeProperties(TypeProperties):
+    formats = t.StringType()
+    serialized_format = t.StringType()
+    parser = t.StringType()
+    tzd = t.StringType(default='allow', choices=['require', 'allow', 'utc', 'reject'])
+    convert_tz = t.BooleanType(default=False)
+    drop_tzinfo = t.BooleanType(default=False)
+
 class AppDomainModelProperty(Model):
     key = t.StringType(required=True)
     name = t.StringType(required=True)
