@@ -34,17 +34,12 @@ def handle(context: MessageContext):
             import json
             if request.type == 'str':
                 type_properties = d.StringTypeProperties(json.loads(request.type_properties))
-            elif request.type == 'list':
-                type_properties = d.ListTypeProperties(json.loads(request.type_properties))
-            elif request.type == 'dict':
-                type_properties = d.DictTypeProperties(json.loads(request.type_properties))
-            elif request.type == 'model':
-                type_properties = d.ModelTypeProperties(json.loads(request.type_properties))
+            elif request.type == 'date':
+                type_properties = d.DateTypeProperties(json.loads(request.type_properties))
+            elif request.type == 'datetime':
+                type_properties = d.DateTimeTypeProperties(json.loads(request.type_properties))
         except DataError as e:
-            raise AppError(context.errors.INVALID_TYPE_PROPERTIES)
-        
-
-        
+            raise AppError(context.errors.INVALID_TYPE_PROPERTIES.format_message(e.message))
 
     # Add property.
     property = domain_service.add_property(type_properties=type_properties, **request.to_primitive('domain.add_model_property'))
