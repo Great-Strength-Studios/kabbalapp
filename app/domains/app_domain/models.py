@@ -39,19 +39,6 @@ class StringTypeProperties(TypeProperties):
     min_length = t.IntType()
     max_length = t.IntType()
 
-class ListTypeProperties(TypeProperties):
-    field = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
-    field_properties = t.ModelType(TypeProperties)
-    min_size = t.IntType()
-    max_size = t.IntType()
-
-class DictTypeProperties(TypeProperties):
-    field = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
-    field_properties = t.ModelType(TypeProperties)
-
-class ModelTypeProperties(TypeProperties):
-    model_key = t.StringType(required=True)
-
 class AppDomainModelProperty(Model):
     key = t.StringType(required=True)
     name = t.StringType(required=True)
