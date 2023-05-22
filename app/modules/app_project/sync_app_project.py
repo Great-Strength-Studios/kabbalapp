@@ -39,7 +39,11 @@ def handle(context: MessageContext):
     with open(app_config) as stream:
         app_config_data = yaml.safe_load(stream)
 
-    modules_old = app_config_data.get('endpoints')
+    modules_old = app_config_data.get('endpoints', None)
+    # Exit this part if there are no endpoints (old format)
+    if not modules_old:
+        return
+    
     modules_new = {}
     for key, value in modules_old.items():
         module_name, feature = key.split('.')
