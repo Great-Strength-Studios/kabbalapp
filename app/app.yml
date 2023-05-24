@@ -209,88 +209,71 @@ domains:
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
-    error_name: APP_KEY_REQUIRED
     message:
       en_US: App key is required
   APP_PROJECT_NOT_FOUND:
     error_code: '000010001'
-    error_name: APP_PROJECT_NOT_FOUND
     message:
       en_US: App Project with key "{}" not found
   CLI_ARGUMENT_ALREADY_EXISTS:
     error_code: '000000006'
-    error_name: CLI_PARENT_ARGUMENT_ALREADY_EXISTS
     message:
       en_US: CLI parent argument with key "{}" already exists
   CLI_COMMAND_ALREADY_EXISTS:
     error_code: '000000005'
-    error_name: CLI_COMMAND_ALREADY_EXISTS
     message:
       en_US: CLI command with key "{}" already exists
   CLI_COMMAND_NOT_FOUND:
     error_code: '000000003'
-    error_name: CLI_COMMAND_NOT_FOUND
     message:
       en_US: CLI command with key "{}" not found
   CLI_SUBCOMMAND_ALREADY_EXISTS:
     error_code: '000000007'
-    error_name: CLI_SUBCOMMAND_ALREADY_EXISTS
     message:
       en_US: CLI subcommand with key "{}" already exists
   CLI_SUBCOMMAND_NOT_FOUND:
     error_code: '000000004'
-    error_name: CLI_SUBCOMMAND_NOT_FOUND
     message:
       en_US: CLI subcommand with key "{}" not found
   DOMAIN_ALREADY_EXISTS:
     error_code: '000020001'
-    error_name: DOMAIN_ALREADY_EXISTS
     message:
       en_US: Domain with key "{}" already exists
   DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
     error_code: '000020006'
-    error_name: DOMAIN_IMPLEMENTATION_ALREADY_EXISTS
     message:
       en_US: Domain implementation with key "{}" already exists
   DOMAIN_IMPLEMENTATION_NOT_FOUND:
     error_code: '000020007'
-    error_name: DOMAIN_IMPLEMENTATION_NOT_FOUND
     message:
       en_US: Domain implementation with key "{}" not found
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020002'
-    error_name: DOMAIN_MODEL_ALREADY_EXISTS
     message:
       en_US: Domain model with key "{}" already exists
   DOMAIN_MODEL_NOT_FOUND:
     error_code: '000020003'
-    error_name: DOMAIN_MODEL_NOT_FOUND
     message:
       en_US: Domain model with key "{}" not found
   DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
     error_code: '000020004'
-    error_name: DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS
     message:
       en_US: Domain model property with key "{}" already exists
   DOMAIN_NOT_FOUND:
     error_code: '000020005'
-    error_name: DOMAIN_NOT_FOUND
     message:
       en_US: Domain with key "{}" not found
   DOMAIN_ROLE_ALREADY_EXISTS:
     error_code: '000020004'
-    error_name: DOMAIN_ROLE_ALREADY_EXISTS
     message:
       en_US: Domain role with key "{}" already exists
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
-    error_name: ENDPOINT_NOT_FOUND
     message:
       en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
     status_code: 404
   INVALID_REQUEST_DATA:
     error_code: '000000001'
-    error_name: INVALID_REQUEST_DATA
     message:
       en_US: 'Invalid request contains the following errors: {}'
 events: null
@@ -702,7 +685,7 @@ mappings:
   header: null
   service: null
 modules:
-  project:
+  app_project:
     features:
       new:
         functions:
