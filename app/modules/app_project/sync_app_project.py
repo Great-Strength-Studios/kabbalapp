@@ -1,8 +1,7 @@
 from ...core import *
+from ...domains import *
 
-def handle(context: MessageContext):
-    from ...domains import AppProjectManager, AppPrinter
-    
+def handle(context: MessageContext):    
     # Load request.
     request: SyncAppProject = context.data
 
@@ -32,7 +31,7 @@ def handle(context: MessageContext):
 
     # Update project app config.
     import os, yaml
-    app_project_manager: AppProjectManager = context.services.app_project_manager()
+    app_project_manager: p.AppProjectManager = context.services.app_project_manager()
     app_project = app_project_manager.load_project(request.key)
 
     app_config = os.path.join(app_project.app_directory, 'app/app.yml')
