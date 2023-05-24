@@ -37,7 +37,6 @@ class ModuleConfiguration(Model):
 
 class ErrorConfiguration(Model):
     error_code = t.StringType(required=True)
-    error_name = t.StringType(required=True)
     message = t.DictType(t.StringType(), required=True)
     status_code = t.IntType(default=400, choices=[400, 401, 403, 404]) # Status codes include Bad Request, Unauthorized, Forbidden, and Not Found
 

@@ -1,8 +1,7 @@
 from ...core import *
+from ...domains import *
 
-def handle(context: MessageContext):
-    from ...domains import AppProjectManager, AppPrinter
-    
+def handle(context: MessageContext):    
     # Load request.
     request: SyncAppProject = context.data
 
@@ -32,14 +31,18 @@ def handle(context: MessageContext):
 
     # Update project app config.
     import os, yaml
-    app_project_manager: AppProjectManager = context.services.app_project_manager()
+    app_project_manager: p.AppProjectManager = context.services.app_project_manager()
     app_project = app_project_manager.load_project(request.key)
 
     app_config = os.path.join(app_project.app_directory, 'app/app.yml')
     with open(app_config) as stream:
         app_config_data = yaml.safe_load(stream)
 
-    modules_old = app_config_data.get('endpoints')
+    modules_old = app_config_data.get('endpoints', None)
+    # Exit this part if there are no endpoints (old format)
+    if not modules_old:
+        return
+    
     modules_new = {}
     for key, value in modules_old.items():
         module_name, feature = key.split('.')

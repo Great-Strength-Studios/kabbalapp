@@ -113,7 +113,7 @@ domains:
             name: Type
             required: true
             type: str
-    name: App Domain
+    name: Domain
   app_interface:
     aliases:
     - i
@@ -204,93 +204,76 @@ domains:
             name: Name
             required: true
             type: str
-    name: Command Line Interface
+    name: cli
     roles: []
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
-    error_name: APP_KEY_REQUIRED
     message:
       en_US: App key is required
   APP_PROJECT_NOT_FOUND:
     error_code: '000010001'
-    error_name: APP_PROJECT_NOT_FOUND
     message:
       en_US: App Project with key "{}" not found
   CLI_ARGUMENT_ALREADY_EXISTS:
     error_code: '000000006'
-    error_name: CLI_PARENT_ARGUMENT_ALREADY_EXISTS
     message:
       en_US: CLI parent argument with key "{}" already exists
   CLI_COMMAND_ALREADY_EXISTS:
     error_code: '000000005'
-    error_name: CLI_COMMAND_ALREADY_EXISTS
     message:
       en_US: CLI command with key "{}" already exists
   CLI_COMMAND_NOT_FOUND:
     error_code: '000000003'
-    error_name: CLI_COMMAND_NOT_FOUND
     message:
       en_US: CLI command with key "{}" not found
   CLI_SUBCOMMAND_ALREADY_EXISTS:
     error_code: '000000007'
-    error_name: CLI_SUBCOMMAND_ALREADY_EXISTS
     message:
       en_US: CLI subcommand with key "{}" already exists
   CLI_SUBCOMMAND_NOT_FOUND:
     error_code: '000000004'
-    error_name: CLI_SUBCOMMAND_NOT_FOUND
     message:
       en_US: CLI subcommand with key "{}" not found
   DOMAIN_ALREADY_EXISTS:
     error_code: '000020001'
-    error_name: DOMAIN_ALREADY_EXISTS
     message:
       en_US: Domain with key "{}" already exists
   DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
     error_code: '000020006'
-    error_name: DOMAIN_IMPLEMENTATION_ALREADY_EXISTS
     message:
       en_US: Domain implementation with key "{}" already exists
   DOMAIN_IMPLEMENTATION_NOT_FOUND:
     error_code: '000020007'
-    error_name: DOMAIN_IMPLEMENTATION_NOT_FOUND
     message:
       en_US: Domain implementation with key "{}" not found
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020002'
-    error_name: DOMAIN_MODEL_ALREADY_EXISTS
     message:
       en_US: Domain model with key "{}" already exists
   DOMAIN_MODEL_NOT_FOUND:
     error_code: '000020003'
-    error_name: DOMAIN_MODEL_NOT_FOUND
     message:
       en_US: Domain model with key "{}" not found
   DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
     error_code: '000020004'
-    error_name: DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS
     message:
       en_US: Domain model property with key "{}" already exists
   DOMAIN_NOT_FOUND:
     error_code: '000020005'
-    error_name: DOMAIN_NOT_FOUND
     message:
       en_US: Domain with key "{}" not found
   DOMAIN_ROLE_ALREADY_EXISTS:
     error_code: '000020004'
-    error_name: DOMAIN_ROLE_ALREADY_EXISTS
     message:
       en_US: Domain role with key "{}" already exists
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
-    error_name: ENDPOINT_NOT_FOUND
     message:
       en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
     status_code: 404
   INVALID_REQUEST_DATA:
     error_code: '000000001'
-    error_name: INVALID_REQUEST_DATA
     message:
       en_US: 'Invalid request contains the following errors: {}'
 events: null
@@ -380,10 +363,6 @@ interfaces:
                 - -k
                 - --key
                 required: true
-              name:
-                help: command name
-                name_or_flags:
-                - name
             name: Add CLI Command
           add_parent_argument:
             arguments:
@@ -470,7 +449,9 @@ interfaces:
               name:
                 help: subcommand name
                 name_or_flags:
-                - name
+                - -n
+                - --name
+                required: true
       domain:
         subcommands:
           add:
@@ -597,6 +578,10 @@ interfaces:
                 name_or_flags:
                 - --type
                 - -t
+              type_properties:
+                help: domain model property type properties separated by '='
+                name_or_flags:
+                - --type-properties
             name: Add Domain Model Property
           add_role:
             arguments:
@@ -620,27 +605,9 @@ interfaces:
                 - -t
                 required: true
             name: Add Domain Role
-          get:
-            arguments:
-              key:
-                help: domain key
-                name_or_flags:
-                - --key
-                - -k
-                required: true
-            help: get domain
-            name: Get Domain
           list:
             help: list domains
             name: List
-          list_domain_models:
-            arguments:
-              domain_key:
-                help: domain key
-                name_or_flags:
-                - --domain-key
-            help: list domain models
-            name: List domain models
           sync:
             arguments:
               domain_key:
@@ -680,6 +647,16 @@ interfaces:
                 required: true
             name: Add App Interface
       module: {}
+      app_project:
+        subcommands:
+          sync:
+            arguments:
+              key:
+                help: project key to sync
+                name_or_flags:
+                - --key
+            help: sync app project
+            name: Sync
     parent_arguments:
       app_key:
         help: app project key (not required when using default project)
@@ -765,20 +742,6 @@ modules:
         functions:
         - data_mapping: add_domain_role
           function_path: domain.add_role
-      get:
-        functions:
-        - data_mapping: get_domain
-          function_path: domain.get_domain
-        use_role: domain.get_domain
-      list:
-        functions:
-        - function_path: domain.list_domains
-        use_role: domain.list_domains
-      list_domain_models:
-        functions:
-        - data_mapping: list_domain_models
-          function_path: domain.list_domain_models
-        use_role: domain.list_domain_models
       sync:
         functions:
         - data_mapping: sync_domain
