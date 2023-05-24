@@ -664,7 +664,7 @@ interfaces:
                 required: true
             name: Add App Interface
       module: {}
-      project:
+      app_project:
         subcommands:
           sync:
             arguments:
