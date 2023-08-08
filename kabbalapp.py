@@ -1,5 +1,5 @@
 import os
-from app import CliAppBuilder, CliAppContext, args, constants, ContainerConfiguration
+from app import CliAppBuilder, CliAppContext, args, constants, ContainerConfiguration, __kabbalapp_version__
 
   
 
@@ -29,4 +29,5 @@ app_context.run(
     function = args.subcommand,
     args=args.args, 
     env=env,
-    debug=debug)
+    debug=debug,
+    version=__kabbalapp_version__)
