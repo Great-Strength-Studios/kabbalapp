@@ -4,7 +4,7 @@ from ...domain import *
 def handle(context: MessageContext):
 
     # Unpack request.
-    request: SetDefaultAppProject = context.data
+    request = context.data
     
     # Get app project manager.
     proj_manager: p.AppProjectManager = context.services.app_project_manager()

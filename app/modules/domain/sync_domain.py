@@ -5,7 +5,7 @@ def handle(context: MessageContext):
     import os
 
     # Unpack request.
-    request: SyncDomain = context.data
+    request = context.data
 
     # Retreive app key from headers.
     app_key = context.headers.get('app_key', None)

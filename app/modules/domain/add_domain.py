@@ -3,7 +3,7 @@ from ...domain import *
 
 def handle(context: MessageContext):
     # Get request event.
-    request: AddDomain = context.data
+    request = context.data
 
     # Get app project key.
     app_key = context.headers.get('app_key', None)

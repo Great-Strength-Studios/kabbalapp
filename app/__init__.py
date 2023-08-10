@@ -1,4 +1,4 @@
 __kabbalapp_version__ = '0.27.0'
 
-from .interfaces import *
+from . import interfaces as i
 from .core import *

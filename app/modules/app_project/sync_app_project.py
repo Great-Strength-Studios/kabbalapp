@@ -3,7 +3,7 @@ from ...domain import *
 
 def handle(context: MessageContext):    
     # Load request.
-    request: SyncAppProject = context.data
+    request = context.data
 
     # Load local app printer.
     app_printer: AppPrinter = context.services.app_printer()

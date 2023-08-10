@@ -4,7 +4,7 @@ from ...domain import *
 def handle(context: MessageContext):
 
     # Unpack request.
-    request: AddDomainModelProperty = context.data
+    request = context.data
 
     # Retreive app key from headers.
     app_key = context.headers.get('app_key', None)
