@@ -280,6 +280,39 @@ events: null
 interfaces:
   cli:
     commands:
+      app_project:
+        subcommands:
+          add_project:
+            arguments:
+              app_directory:
+                help: App project directory path
+                name_or_flags:
+                - --app-directory
+                type: str
+                required: true
+              key:
+                help: App project key
+                name_or_flags:
+                - --key
+                required: true
+                type: str
+              name:
+                help: App project name
+                name_or_flags:
+                - --name
+                required: true
+                type: str
+            help: Adds Kabbalapp project
+            name: Add Project
+          sync:
+            arguments:
+              key:
+                help: project key to sync
+                name_or_flags:
+                - --key
+                required: true
+            help: sync app project
+            name: Sync
       cli:
         subcommands:
           add_argument:
@@ -647,16 +680,6 @@ interfaces:
                 required: true
             name: Add App Interface
       module: {}
-      app_project:
-        subcommands:
-          sync:
-            arguments:
-              key:
-                help: project key to sync
-                name_or_flags:
-                - --key
-            help: sync app project
-            name: Sync
     parent_arguments:
       app_key:
         help: app project key (not required when using default project)
@@ -687,7 +710,7 @@ mappings:
 modules:
   app_project:
     features:
-      new:
+      add_project:
         functions:
         - data_mapping: new_app_project
           function_path: app_project.new_app_project
