@@ -1,5 +1,5 @@
 from ...core import *
-from ...domains import *
+from ...domain import *
 from . import *
 
 def handle(context: MessageContext):

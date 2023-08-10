@@ -1,7 +1,7 @@
 from schematics import types as t, Model
 from schematics.transforms import blacklist
 
-from ..domains import *
+from ..domain import *
 
 class RequestEvent(Model):
     pass

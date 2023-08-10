@@ -1,7 +1,7 @@
 def default(request, app_context, **kwargs):
 
     # Get app project manager.
-    from ...domains import p
+    from ...domain import p
     manager: p.AppProjectManager = app_context.container.app_project_manager()
 
     # Get app key.
