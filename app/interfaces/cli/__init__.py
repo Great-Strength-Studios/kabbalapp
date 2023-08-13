@@ -1,4 +1,5 @@
 from ...core import *
+from ...features import *
 
 class CliAppContext(AppContext):
 
