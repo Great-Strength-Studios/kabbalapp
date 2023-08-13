@@ -1,9 +1,9 @@
 from schematics import types as t, Model
 from schematics.exceptions import DataError
 
-from . import activity
+from ..core import activity
 from ..core.config import FeatureConfiguration
-from .error import *
+from ..core.error import *
 
 HEADERS_MAPPINGS_PATH = 'app.core.mappings.headers'
 DATA_MAPPINGS_PATH = 'app.core.mappings.data'

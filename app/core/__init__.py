@@ -4,7 +4,6 @@ from ..constants import APP_CONFIGURATION_FILE
 from .config import load_app_config_reader, AppConfigurationReader, AppConfiguration
 from .error import *
 from .containers import *
-from .routing import *
 
 
 class AppContext():
