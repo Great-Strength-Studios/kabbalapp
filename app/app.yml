@@ -1,283 +1,286 @@
-domains:
-  app_domain:
-    aliases:
-    - adom
-    - d
-    models:
-      domain:
-        class_name: AppDomain
-        name: App Domain
-        properties:
-          key:
-            description: domain key
-            name: Key
-            required: true
-            type: str
-          name:
-            description: domain name
-            name: Name
-            required: true
-            type: str
-      domain_implementation:
-        class_name: AppDomainImplementation
-        name: App Domain Implementation
-        properties:
-          key:
-            description: domain implementation key
-            name: Key
-            required: true
-            type: str
-          name:
-            description: domain implementation name
-            name: Name
-            required: true
-            type: str
-      domain_model:
-        class_name: AppDomainModel
-        name: App Domain Model
-        properties:
-          class_name:
-            description: domain model class name
-            name: Class name
-            required: true
-            type: str
-          key:
-            description: domain model key
-            name: Key
-            required: true
-            type: str
-          name:
-            description: domain model name
-            name: Name
-            required: true
-            type: str
-      domain_model_property:
-        class_name: AppDomainModelProperty
-        name: Domain model property
-        properties:
-          default:
-            description: domain model property default value
-            name: Default
-            required: false
-            type: str
-          description:
-            description: domain model property description
-            name: Description
-            required: false
-            type: str
-          key:
-            description: domain model property key
-            name: Key
-            required: true
-            type: str
-          name:
-            description: domain model property name
-            name: Name
-            required: true
-            type: str
-          required:
-            description: domain model property required
-            name: Required
-            required: false
-            type: bool
-          serialized_name:
-            description: domain model property serialized name
-            name: Serialized name
-            required: false
-            type: str
-          type:
-            choices:
-            - str
-            - int
-            - float
-            - bool
-            - datetime
-            - date
-            - list
-            - dict
-            - model
-            default: str
-            description: domain model property type
-            name: Type
-            required: false
-            type: str
-      domain_role:
-        class_name: AppDomainRole
-        name: App Domain Role
-        properties:
-          type:
-            choices:
-            - blacklist
-            - whitelist
-            description: domain role type
-            name: Type
-            required: true
-            type: str
-    name: Domain
-  app_interface:
-    aliases:
-    - i
-    name: App Interface
-  app_printer:
-    class_name: AppPrinter
-    name: App Printer
-  app_project:
-    aliases:
-    - aproj
-    - p
-    models:
-      app_project:
-        class_name: AppProject
-        name: App Project
-    name: App Project
-  cli:
-    aliases: null
-    impl:
-      yaml:
-        models: {}
-        name: yaml
-        roles: []
-    models:
-      app_argument:
-        class_name: AppArgument
-        name: App Argument
-        properties:
-          action:
-            description: argument action
-            name: Action
-            required: false
-            type: str
-          default:
-            description: default argument value
-            name: default
-            type: str
-          help:
-            description: app argument help
-            name: Help
-            required: true
-            type: str
-          key:
-            name: Key
-            required: true
-            type: str
-          nargs:
-            description: number of arguments
-            name: Number of arguments
-            required: false
-            type: str
-          type:
-            choices:
-            - str
-            - int
-            - float
-            description: app arggument type
-            name: Type
-            type: str
-      app_command:
-        class_name: AppCommand
-        name: App CLI Command
-        properties:
-          key:
-            description: app command key
-            name: Key
-            required: true
-            type: str
-      app_commands:
-        class_name: AppCommands
-        name: App CLI Commands
-      app_subcommand:
-        class_name: AppSubcommand
-        name: App CLI Subcommand
-        properties:
-          help:
-            description: app subcommand help
-            name: Help
-            required: true
-            type: str
-          key:
-            description: app subcommand model key
-            name: Key
-            required: false
-            type: str
-          name:
-            description: app subcommand name
-            name: Name
-            required: true
-            type: str
-    name: cli
-    roles: []
-errors:
-  APP_KEY_REQUIRED:
-    error_code: '000000003'
-    message:
-      en_US: App key is required
-  APP_PROJECT_NOT_FOUND:
-    error_code: '000010001'
-    message:
-      en_US: App Project with key "{}" not found
-  CLI_ARGUMENT_ALREADY_EXISTS:
-    error_code: '000000006'
-    message:
-      en_US: CLI parent argument with key "{}" already exists
-  CLI_COMMAND_ALREADY_EXISTS:
-    error_code: '000000005'
-    message:
-      en_US: CLI command with key "{}" already exists
-  CLI_COMMAND_NOT_FOUND:
-    error_code: '000000003'
-    message:
-      en_US: CLI command with key "{}" not found
-  CLI_SUBCOMMAND_ALREADY_EXISTS:
-    error_code: '000000007'
-    message:
-      en_US: CLI subcommand with key "{}" already exists
-  CLI_SUBCOMMAND_NOT_FOUND:
-    error_code: '000000004'
-    message:
-      en_US: CLI subcommand with key "{}" not found
-  DOMAIN_ALREADY_EXISTS:
-    error_code: '000020001'
-    message:
-      en_US: Domain with key "{}" already exists
-  DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
-    error_code: '000020006'
-    message:
-      en_US: Domain implementation with key "{}" already exists
-  DOMAIN_IMPLEMENTATION_NOT_FOUND:
-    error_code: '000020007'
-    message:
-      en_US: Domain implementation with key "{}" not found
-  DOMAIN_MODEL_ALREADY_EXISTS:
-    error_code: '000020002'
-    message:
-      en_US: Domain model with key "{}" already exists
-  DOMAIN_MODEL_NOT_FOUND:
-    error_code: '000020003'
-    message:
-      en_US: Domain model with key "{}" not found
-  DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
-    error_code: '000020004'
-    message:
-      en_US: Domain model property with key "{}" already exists
-  DOMAIN_NOT_FOUND:
-    error_code: '000020005'
-    message:
-      en_US: Domain with key "{}" not found
-  DOMAIN_ROLE_ALREADY_EXISTS:
-    error_code: '000020004'
-    message:
-      en_US: Domain role with key "{}" already exists
-  ENDPOINT_NOT_FOUND:
-    error_code: '000000002'
-    message:
-      en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
-    status_code: 404
-  INVALID_REQUEST_DATA:
-    error_code: '000000001'
-    message:
-      en_US: 'Invalid request contains the following errors: {}'
-events: null
+domain:
+  packages:
+    domain:
+      aliases:
+      - adom
+      - d
+      models:
+        domain:
+          class_name: AppDomain
+          name: App Domain
+          properties:
+            key:
+              description: domain key
+              name: Key
+              required: true
+              type: str
+            name:
+              description: domain name
+              name: Name
+              required: true
+              type: str
+        domain_implementation:
+          class_name: AppDomainImplementation
+          name: App Domain Implementation
+          properties:
+            key:
+              description: domain implementation key
+              name: Key
+              required: true
+              type: str
+            name:
+              description: domain implementation name
+              name: Name
+              required: true
+              type: str
+        domain_model:
+          class_name: AppDomainModel
+          name: App Domain Model
+          properties:
+            class_name:
+              description: domain model class name
+              name: Class name
+              required: true
+              type: str
+            key:
+              description: domain model key
+              name: Key
+              required: true
+              type: str
+            name:
+              description: domain model name
+              name: Name
+              required: true
+              type: str
+        domain_model_property:
+          class_name: AppDomainModelProperty
+          name: Domain model property
+          properties:
+            default:
+              description: domain model property default value
+              name: Default
+              required: false
+              type: str
+            description:
+              description: domain model property description
+              name: Description
+              required: false
+              type: str
+            key:
+              description: domain model property key
+              name: Key
+              required: true
+              type: str
+            name:
+              description: domain model property name
+              name: Name
+              required: true
+              type: str
+            required:
+              description: domain model property required
+              name: Required
+              required: false
+              type: bool
+            serialized_name:
+              description: domain model property serialized name
+              name: Serialized name
+              required: false
+              type: str
+            type:
+              choices:
+              - str
+              - int
+              - float
+              - bool
+              - datetime
+              - date
+              - list
+              - dict
+              - model
+              default: str
+              description: domain model property type
+              name: Type
+              required: false
+              type: str
+        domain_role:
+          class_name: AppDomainRole
+          name: App Domain Role
+          properties:
+            type:
+              choices:
+              - blacklist
+              - whitelist
+              description: domain role type
+              name: Type
+              required: true
+              type: str
+      name: Domain
+    interface:
+      aliases:
+      - i
+      name: App Interface
+    project:
+      aliases:
+      - proj
+      - p
+      models:
+        app_project:
+          class_name: AppProject
+          name: App Project
+      name: App Project
+    cli:
+      aliases: null
+      impl:
+        yaml:
+          models: {}
+          name: yaml
+          roles: []
+      models:
+        app_argument:
+          class_name: AppArgument
+          name: App Argument
+          properties:
+            action:
+              description: argument action
+              name: Action
+              required: false
+              type: str
+            default:
+              description: default argument value
+              name: default
+              type: str
+            help:
+              description: app argument help
+              name: Help
+              required: true
+              type: str
+            key:
+              name: Key
+              required: true
+              type: str
+            nargs:
+              description: number of arguments
+              name: Number of arguments
+              required: false
+              type: str
+            type:
+              choices:
+              - str
+              - int
+              - float
+              description: app arggument type
+              name: Type
+              type: str
+        app_command:
+          class_name: AppCommand
+          name: App CLI Command
+          properties:
+            key:
+              description: app command key
+              name: Key
+              required: true
+              type: str
+        app_commands:
+          class_name: AppCommands
+          name: App CLI Commands
+        app_subcommand:
+          class_name: AppSubcommand
+          name: App CLI Subcommand
+          properties:
+            help:
+              description: app subcommand help
+              name: Help
+              required: true
+              type: str
+            key:
+              description: app subcommand model key
+              name: Key
+              required: false
+              type: str
+            name:
+              description: app subcommand name
+              name: Name
+              required: true
+              type: str
+      name: cli
+      roles: []
+  entities:
+  factories:
+  repos:
+  aggregates:
+core:
+  errors:
+    APP_KEY_REQUIRED:
+      error_code: '000000003'
+      message:
+        en_US: App key is required
+    APP_PROJECT_NOT_FOUND:
+      error_code: '000010001'
+      message:
+        en_US: App Project with key "{}" not found
+    CLI_ARGUMENT_ALREADY_EXISTS:
+      error_code: '000000006'
+      message:
+        en_US: CLI parent argument with key "{}" already exists
+    CLI_COMMAND_ALREADY_EXISTS:
+      error_code: '000000005'
+      message:
+        en_US: CLI command with key "{}" already exists
+    CLI_COMMAND_NOT_FOUND:
+      error_code: '000000003'
+      message:
+        en_US: CLI command with key "{}" not found
+    CLI_SUBCOMMAND_ALREADY_EXISTS:
+      error_code: '000000007'
+      message:
+        en_US: CLI subcommand with key "{}" already exists
+    CLI_SUBCOMMAND_NOT_FOUND:
+      error_code: '000000004'
+      message:
+        en_US: CLI subcommand with key "{}" not found
+    DOMAIN_ALREADY_EXISTS:
+      error_code: '000020001'
+      message:
+        en_US: Domain with key "{}" already exists
+    DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
+      error_code: '000020006'
+      message:
+        en_US: Domain implementation with key "{}" already exists
+    DOMAIN_IMPLEMENTATION_NOT_FOUND:
+      error_code: '000020007'
+      message:
+        en_US: Domain implementation with key "{}" not found
+    DOMAIN_MODEL_ALREADY_EXISTS:
+      error_code: '000020002'
+      message:
+        en_US: Domain model with key "{}" already exists
+    DOMAIN_MODEL_NOT_FOUND:
+      error_code: '000020003'
+      message:
+        en_US: Domain model with key "{}" not found
+    DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
+      error_code: '000020004'
+      message:
+        en_US: Domain model property with key "{}" already exists
+    DOMAIN_NOT_FOUND:
+      error_code: '000020005'
+      message:
+        en_US: Domain with key "{}" not found
+    DOMAIN_ROLE_ALREADY_EXISTS:
+      error_code: '000020004'
+      message:
+        en_US: Domain role with key "{}" already exists
+    ENDPOINT_NOT_FOUND:
+      error_code: '000000002'
+      message:
+        en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
+      status_code: 404
+    INVALID_REQUEST_DATA:
+      error_code: '000000001'
+      message:
+        en_US: 'Invalid request contains the following errors: {}'
 interfaces:
+  events:
   cli:
     commands:
       app_project:
@@ -703,10 +706,6 @@ interfaces:
         help: run the command with verbose output
         name_or_flags:
         - --verbose
-mappings:
-  data: null
-  header: null
-  service: null
 modules:
   app_project:
     features:

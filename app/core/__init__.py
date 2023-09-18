@@ -5,20 +5,23 @@ from .config import load_app_config_reader, AppConfigurationReader, AppConfigura
 from .error import *
 from .containers import *
 from .routing import *
-from .events import *
 
 
 class AppContext():
 
     name: str = None
+    interface: str = None
     container_config: ContainerConfiguration = None
     container: Container = None
     errors: ErrorManager = ErrorManager()
     modules: dict = None
     
-    def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfiguration):
+    def __init__(self, name: str, interface: str, app_config: AppConfiguration, container_config: ContainerConfiguration):
         # Set app name.
         self.name = name
+
+        # Set interface.
+        self.interface = interface
         
         # Load app errors.
         try:

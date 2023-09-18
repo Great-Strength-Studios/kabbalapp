@@ -21,12 +21,12 @@ class Container():
     def app_project_manager(self):
         import os
         if self.config.app_project_filepath and os.path.splitext(self.config.app_project_filepath)[1] in ['.yaml', '.yml']:
-            from ..domains.app_project.impl import YamlAppProjectManager
+            from ..domain.app_project.impl import YamlAppProjectManager
             return YamlAppProjectManager(self.config.app_project_filepath)
         
     def app_printer(self, app_key: str = None):
         import os
-        from ..domains.app_printer import AppPrinter
+        from ..domain.app_printer import AppPrinter
         if not app_key:
             return AppPrinter(os.getcwd())
         app_project_manager = self.app_project_manager()
@@ -37,21 +37,21 @@ class Container():
         app_project_manager = self.app_project_manager()
         app_project = app_project_manager.load_project(app_key)
         if app_project.schema_storage_type == 'yaml':
-            from ..domains.app_domain.impl import YamlAppDomainService
+            from ..domain.app_domain.impl import YamlAppDomainService
             return YamlAppDomainService(app_project.app_directory, app_project.schema_location)
         
     def interface_service(self, app_key: str):
         app_project_manager = self.app_project_manager()
         app_project = app_project_manager.load_project(app_key)
         if app_project.schema_storage_type == 'yaml':
-            from ..domains.app_interface.impl import YamlAppInterfaceService
+            from ..domain.app_interface.impl import YamlAppInterfaceService
             return YamlAppInterfaceService(app_project.app_directory, app_project.schema_location)
 
     def cli_interface_service(self, app_key: str):
         app_project_manager = self.app_project_manager()
         app_project = app_project_manager.load_project(app_key)
         if app_project.schema_storage_type == 'yaml':
-            from ..domains.cli.impl import YamlCliInterfaceService
+            from ..domain.cli.impl import YamlCliInterfaceService
             return YamlCliInterfaceService(app_project.app_directory, app_project.schema_location)
 
 # Default dynamic container
