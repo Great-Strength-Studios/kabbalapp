@@ -1,6 +1,8 @@
 from ...core import *
 from ...features import *
 
+INTERFACE = 'cli'
+
 class CliAppContext(AppContext):
 
     def run(self, **kwargs):
@@ -37,6 +39,7 @@ class CliAppBuilder(AppBuilder):
     def build(self):
         return CliAppContext(
             self._current_session.name,
+            INTERFACE,
             self._current_session.app_config,
             self._current_session.container_config
         )
