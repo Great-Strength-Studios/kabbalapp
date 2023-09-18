@@ -1,4 +1,4 @@
-from ..commands import *
+from ...commands import *
 
 def new_app_project(context, request, app_context, **kwargs):
     return NewAppProject({
