@@ -5,9 +5,9 @@ from ..core import activity
 from ..core.config import FeatureConfiguration
 from ..core.error import *
 
-HEADERS_MAPPINGS_PATH = 'app.core.mappings.headers'
-DATA_MAPPINGS_PATH = 'app.core.mappings.data'
-SERVICES_MAPPINGS_PATH = 'app.core.mappings.services'
+HEADER_MAPPER_PATH = 'app.interfaces.{}.mappers.header'
+DATA_MAPPER_PATH = 'app.interfaces.{}.mappers.command'
+SERVICES_MAPPER_PATH = 'app.interfaces.services'
 
 class MessageContext():
 
@@ -45,7 +45,7 @@ class FeatureHandler():
         if debug: print('Perform header mapping: "mapping": "{}"'.format(self.feature_config.header_mapping))
 
         # Import header mappings module.
-        header_module = import_module(HEADERS_MAPPINGS_PATH)
+        header_module = import_module(HEADER_MAPPER_PATH.format(app_context.interface))
         
         try:
             # Retrieve header mapping function.
@@ -67,7 +67,10 @@ class FeatureHandler():
             try:
                 if function.data_mapping:
                     if debug: print('Perform data mapping: "mapping": "{}"'.format(function.data_mapping))
-                    data_mapping = getattr(import_module(DATA_MAPPINGS_PATH), function.data_mapping)
+                    data_mapping = getattr(
+                        import_module(DATA_MAPPER_PATH.format(app_context.interface)), 
+                        function.data_mapping
+                    )
                     if debug: print('Performing data mapping for following request: "mapping": "{}", "request": "{}", params: "{}"'.format(function.data_mapping, request, function.params))
                     context.data = data_mapping(context, request, app_context, **function.params, **kwargs)
                     if debug: print('Data mapping complete: "mapping": "{}", "data": "{}"'.format(function.data_mapping, context.data.to_primitive()))
@@ -81,7 +84,7 @@ class FeatureHandler():
             except DataError as ex:
                 raise AppError(app_context.errors.INVALID_REQUEST_DATA.format_message(ex.messages))
             try:
-                use_services = getattr(import_module(SERVICES_MAPPINGS_PATH), function.use_services)
+                use_services = getattr(import_module(SERVICES_MAPPER_PATH), function.use_services)
                 context.services = use_services(context, request, app_context, **function.params)
             except TypeError:
                 context.services = app_context.container
