@@ -24,23 +24,27 @@ def handle(context: MessageContext):
 
     # Arrange packages/modules to be written to the domain package if they do not already exist.
     add_modules = {
-        'modules/__init__.py': None,
-        'repo/__init__.py': None,
-        '__init__.py': """from .value_objects import *
+        'domain/modules/__init__.py': None,
+        'domain/repo/__init__.py': None,
+        'domain/__init__.py': """from .value_objects import *
             from .entities import *
             from .factory import *
             from .modules import *
             from .repo import *""",
-        'entities.py': """from schematics import types as t, Model
+        'domain/entities.py': 
+            """from schematics import types as t, Model
             from schematics.transforms import whitelist, blacklist
             from schematics.types.serializable import serializable""",
-        'factory.py': """from .entities import *
+        'domain/factory.py': 
+            """from .entities import *
             from .modules import *""",
-        'value_objects.py': """from schematics import types as t, Model
+        'domain/value_objects.py': 
+            """from schematics import types as t, Model
             from schematics.transforms import whitelist, blacklist
             from schematics.types.serializable import serializable""",
         'interfaces/__init__.py': """from .comands import *""",
-        'interfaces/commands.py': """from schematics import types as t, Model
+        'interfaces/commands.py': 
+            """from schematics import types as t, Model
             from schematics.transforms import blacklist, whitelist""",
         'interfaces/services.py': None
     }
