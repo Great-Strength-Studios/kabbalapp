@@ -279,13 +279,13 @@ errors:
       en_US: 'Invalid request contains the following errors: {}'
 commands:
 interfaces:
-  cli:
+  - type: cli
     mappers:
       command:
       header:
-    commands:
+    cli_commands:
       app_project:
-        subcommands:
+        cli_subcommands:
           add_project:
             arguments:
               app_directory:
