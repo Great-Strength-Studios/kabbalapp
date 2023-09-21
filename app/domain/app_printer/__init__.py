@@ -118,7 +118,9 @@ class AppPrinter(object):
             'code_lines': code_block.splitlines()
         })
         
-    def read_block(self, file_path: str) -> AppModuleBlock:
+    def read_block(self, file_path: str, base_path: str) -> AppModuleBlock:
+        if base_path:
+            file_path = os.path.join(base_path, file_path)
         read_path = os.path.join(self.app_path, file_path)
         with open(read_path) as stream:
             code_block = stream.read()
