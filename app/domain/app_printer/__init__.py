@@ -117,6 +117,11 @@ class AppPrinter(object):
             'code_block': code_block,
             'code_lines': code_block.splitlines()
         })
+    
+    def block_exists(self, file_path: str, base_path: str = None) -> bool:
+        if base_path:
+            file_path = os.path.join(base_path, file_path)
+        return os.path.exists(os.path.join(self.app_path, file_path))
         
     def read_block(self, file_path: str, base_path: str) -> AppModuleBlock:
         if base_path:
