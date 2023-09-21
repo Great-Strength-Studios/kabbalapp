@@ -48,6 +48,16 @@ def handle(context: MessageContext):
     # Load blocks.
     blocks = [app_printer.read_block(module, base_path='app') for module in core_modules]
 
-    # Write blocks.
+    # Load blocks from add_modules.
+    for module, content in add_modules.items():
+        # Check if module exists.
+        if target_app_printer.block_exists(module, base_path='app'):
+            continue
+        # Replace content with empty string if content is None.
+        if content is None:
+            content = ''
+        blocks.append[app_printer.new_block('app', module, content)]
+
+        # Write blocks.
     for block in blocks:
         target_app_printer.print_block(block)
