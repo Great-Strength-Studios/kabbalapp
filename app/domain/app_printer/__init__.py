@@ -111,9 +111,9 @@ class AppPrinter(object):
         })
         return package_block
     
-    def new_block(self, file_path: str, code_block: str) -> AppModuleBlock:
+    def new_block(self, base_path: str, file_path: str, code_block: str) -> AppModuleBlock:
         return AppModuleBlock({
-            'file_path': file_path,
+            'file_path': os.path.join(self.app_path, base_path, file_path),
             'code_block': code_block,
             'code_lines': code_block.splitlines()
         })
