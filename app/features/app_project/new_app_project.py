@@ -2,6 +2,90 @@ from ...core import *
 from ...domain import *
 from ...interfaces import *
 
+
+REQUIREMENTS_CONTENT = """schematics>=2.1.1
+pyyaml>= 6.0
+"""
+
+# Add content to be written to the new modules.
+CORE_ACTIVITY_CONTENT = """'''Activity Log Module'''
+def handle(context):
+    pass
+"""
+
+CORE_CONTAINERS_CONTENT = """from schematics import types as t, Model
+
+from ..services import SkyWellness, ConfigurationService
+
+# Container configuration
+class ContainerConfiguration(Model):
+    pass
+
+
+# Default container
+class Container():
+
+    # Custom fields below
+    # ...
+
+    def __init__(self, config: ContainerConfiguration):
+        # Default init
+        self.config = config
+
+        # Custom init below
+        # ...
+    
+
+# Default dynamic container
+class DynamicContainer():
+    
+    def add_service(self, service_name, factory_func):
+        setattr(self, service_name, factory_func)
+"""
+
+DOMAIN_CONTENT = """from .value_objects import *
+from .entities import *
+from .factory import *
+from .modules import *
+from .repo import *
+"""
+
+DOMAIN_ENTITIES_CONTENT = """from schematics import types as t, Model
+from schematics.transforms import whitelist, blacklist
+from schematics.types.serializable import serializable
+"""
+
+DOMAIN_VALUE_OBJECTS_CONTENT = """from schematics import types as t, Model
+from schematics.transforms import whitelist, blacklist
+from schematics.types.serializable import serializable
+"""
+
+DOMAIN_FACTORY_CONTENT = """from .value_objects import *
+from .entities import *
+from .modules import *
+"""
+
+INTERFACES_CONTENT = """from .commands import *
+"""
+
+INTERFACES_COMMANDS_CONTENT = """from schematics import types as t, Model
+from schematics.transforms import blacklist, whitelist
+"""
+
+APP_CONSTANTS_CONTENT = """# Environment
+APP_ENV = 'APP_ENV'
+DEFAULT_APP_ENV = 'prod'
+
+# Configuration file
+CONFIG_FILE_DIRECTORY = 'app/{}'
+APP_SCHEMA_FILE = 'app.yml'
+
+# Configuration
+CONFIGS = 'configs' 
+ENDPOINTS = 'endpoints'
+ERRORS = 'errors'
+"""
+
 def handle(context: MessageContext):
 
     # Get new app project request.
@@ -42,99 +126,10 @@ def handle(context: MessageContext):
         '__init__.py'
     ]
 
-    # Add content to be written to the new modules.
-    CORE_ACTIVITY_CONTENT = """
-    '''Activity Log Module'''
-    def handle(context):
-        pass
-    """
-
-    CORE_CONTAINERS_CONTENT = """
-    from schematics import types as t, Model
-
-    from ..services import SkyWellness, ConfigurationService
-
-    # Container configuration
-    class ContainerConfiguration(Model):
-        pass
-
-
-    # Default container
-    class Container():
-
-        # Custom fields below
-        # ...
-
-        def __init__(self, config: ContainerConfiguration):
-            # Default init
-            self.config = config
-
-            # Custom init below
-            # ...
-        
-
-    # Default dynamic container
-    class DynamicContainer():
-        
-        def add_service(self, service_name, factory_func):
-            setattr(self, service_name, factory_func)
-    """
-
-    
-
-    DOMAIN_CONTENT = """
-    from .value_objects import *
-    from .entities import *
-    from .factory import *
-    from .modules import *
-    from .repo import *
-    """
-
-    DOMAIN_ENTITIES_CONTENT = """
-    from schematics import types as t, Model
-    from schematics.transforms import whitelist, blacklist
-    from schematics.types.serializable import serializable
-    """
-
-    DOMAIN_VALUE_OBJECTS_CONTENT = """
-    from schematics import types as t, Model
-    from schematics.transforms import whitelist, blacklist
-    from schematics.types.serializable import serializable
-    """
-
-    DOMAIN_FACTORY_CONTENT = """
-    from .value_objects import *
-    from .entities import *
-    from .modules import *
-    """
-
-    INTERFACES_CONTENT = """
-    from .commands import *
-    """
-
-    INTERFACES_COMMANDS_CONTENT = """
-    from schematics import types as t, Model
-    from schematics.transforms import blacklist, whitelist
-    """
-
-    APP_CONSTANTS_CONTENT = """
-    # Environment
-    APP_ENV = 'APP_ENV'
-    DEFAULT_APP_ENV = 'prod'
-
-    # Configuration file
-    CONFIG_FILE_DIRECTORY = 'app/{}'
-    APP_SCHEMA_FILE = 'app.yml'
-
-    # Configuration
-    CONFIGS = 'configs' 
-    ENDPOINTS = 'endpoints'
-    ERRORS = 'errors'
-    """
-
     # Arrange packages/modules to be written to the domain package if they do not already exist.
     add_modules = {
         'core/activity.py': CORE_ACTIVITY_CONTENT,
+        'core/containers.py': CORE_CONTAINERS_CONTENT,
         'domain/modules/__init__.py': None,
         'domain/repo/__init__.py': None,
         'domain/__init__.py': DOMAIN_CONTENT,
@@ -162,10 +157,6 @@ def handle(context: MessageContext):
         blocks.append(target_app_printer.new_block('app', module, content))
 
     # Add requirements.txt block.
-    REQUIREMENTS_CONTENT = """
-    schematics>=2.1.1
-    pyyaml>= 6.0
-    """
     blocks.append(target_app_printer.new_block('', 'requirements.txt', REQUIREMENTS_CONTENT))
 
     # Add special block for app.yml.

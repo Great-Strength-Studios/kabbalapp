@@ -34,7 +34,7 @@ class FeatureConfiguration(Model):
 class FeatureGroupConfiguration(Model):
     features = t.DictType(t.ModelType(FeatureConfiguration), default={})
 
-class AppFeatureConfiguration(Model):
+class AppFeaturesConfiguration(Model):
     groups = t.DictType(t.ModelType(FeatureGroupConfiguration), default={})
 
 class ErrorConfiguration(Model):
@@ -48,7 +48,7 @@ class AppConfiguration(Model):
 
 class AppConfiguration(Model):
     errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
-    features = t.DictType(t.ModelType(AppFeatureConfiguration), default={}, serialize_when_none=False)
+    features = t.ModelType(AppFeaturesConfiguration)
 
 
 class AppConfigurationReader():
