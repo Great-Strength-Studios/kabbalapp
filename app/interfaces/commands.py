@@ -1,5 +1,5 @@
 from schematics import types as t, Model
-from schematics.transforms import blacklist
+from schematics.transforms import blacklist, whitelist
 
 from ..domain import *
 
