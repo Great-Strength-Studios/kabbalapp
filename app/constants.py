@@ -15,27 +15,3 @@ ERRORS = 'errors'
 
 # Domain constants
 DOMAIN_ROLE_TYPES = ['blacklist', 'whitelist']
-
-# Printing file content
-REQUIREMENTS_CONTENT = """
-schematics>=2.1.1
-pyyaml>= 6.0
-"""
-
-
-APP_CONFIG_CONTENT = {
-    'commands': {},
-    'interfaces': {},
-    'errors': {},
-    'features': {
-        'groups': {},
-    },
-    'domain': {
-        'modules': {},
-        'repos': {},
-        'entities': {},
-        'value_objects': {},
-        'factories': {},
-    },
-}
-
