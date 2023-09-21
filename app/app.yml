@@ -1,5 +1,5 @@
 domain:
-  packages:
+  modules:
     domain:
       aliases:
       - adom
@@ -207,81 +207,82 @@ domain:
   entities:
   factories:
   repos:
-  aggregates:
-core:
-  errors:
-    APP_KEY_REQUIRED:
-      error_code: '000000003'
-      message:
-        en_US: App key is required
-    APP_PROJECT_NOT_FOUND:
-      error_code: '000010001'
-      message:
-        en_US: App Project with key "{}" not found
-    CLI_ARGUMENT_ALREADY_EXISTS:
-      error_code: '000000006'
-      message:
-        en_US: CLI parent argument with key "{}" already exists
-    CLI_COMMAND_ALREADY_EXISTS:
-      error_code: '000000005'
-      message:
-        en_US: CLI command with key "{}" already exists
-    CLI_COMMAND_NOT_FOUND:
-      error_code: '000000003'
-      message:
-        en_US: CLI command with key "{}" not found
-    CLI_SUBCOMMAND_ALREADY_EXISTS:
-      error_code: '000000007'
-      message:
-        en_US: CLI subcommand with key "{}" already exists
-    CLI_SUBCOMMAND_NOT_FOUND:
-      error_code: '000000004'
-      message:
-        en_US: CLI subcommand with key "{}" not found
-    DOMAIN_ALREADY_EXISTS:
-      error_code: '000020001'
-      message:
-        en_US: Domain with key "{}" already exists
-    DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
-      error_code: '000020006'
-      message:
-        en_US: Domain implementation with key "{}" already exists
-    DOMAIN_IMPLEMENTATION_NOT_FOUND:
-      error_code: '000020007'
-      message:
-        en_US: Domain implementation with key "{}" not found
-    DOMAIN_MODEL_ALREADY_EXISTS:
-      error_code: '000020002'
-      message:
-        en_US: Domain model with key "{}" already exists
-    DOMAIN_MODEL_NOT_FOUND:
-      error_code: '000020003'
-      message:
-        en_US: Domain model with key "{}" not found
-    DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
-      error_code: '000020004'
-      message:
-        en_US: Domain model property with key "{}" already exists
-    DOMAIN_NOT_FOUND:
-      error_code: '000020005'
-      message:
-        en_US: Domain with key "{}" not found
-    DOMAIN_ROLE_ALREADY_EXISTS:
-      error_code: '000020004'
-      message:
-        en_US: Domain role with key "{}" already exists
-    ENDPOINT_NOT_FOUND:
-      error_code: '000000002'
-      message:
-        en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
-      status_code: 404
-    INVALID_REQUEST_DATA:
-      error_code: '000000001'
-      message:
-        en_US: 'Invalid request contains the following errors: {}'
+errors:
+  APP_KEY_REQUIRED:
+    error_code: '000000003'
+    message:
+      en_US: App key is required
+  APP_PROJECT_NOT_FOUND:
+    error_code: '000010001'
+    message:
+      en_US: App Project with key "{}" not found
+  CLI_ARGUMENT_ALREADY_EXISTS:
+    error_code: '000000006'
+    message:
+      en_US: CLI parent argument with key "{}" already exists
+  CLI_COMMAND_ALREADY_EXISTS:
+    error_code: '000000005'
+    message:
+      en_US: CLI command with key "{}" already exists
+  CLI_COMMAND_NOT_FOUND:
+    error_code: '000000003'
+    message:
+      en_US: CLI command with key "{}" not found
+  CLI_SUBCOMMAND_ALREADY_EXISTS:
+    error_code: '000000007'
+    message:
+      en_US: CLI subcommand with key "{}" already exists
+  CLI_SUBCOMMAND_NOT_FOUND:
+    error_code: '000000004'
+    message:
+      en_US: CLI subcommand with key "{}" not found
+  DOMAIN_ALREADY_EXISTS:
+    error_code: '000020001'
+    message:
+      en_US: Domain with key "{}" already exists
+  DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
+    error_code: '000020006'
+    message:
+      en_US: Domain implementation with key "{}" already exists
+  DOMAIN_IMPLEMENTATION_NOT_FOUND:
+    error_code: '000020007'
+    message:
+      en_US: Domain implementation with key "{}" not found
+  DOMAIN_MODEL_ALREADY_EXISTS:
+    error_code: '000020002'
+    message:
+      en_US: Domain model with key "{}" already exists
+  DOMAIN_MODEL_NOT_FOUND:
+    error_code: '000020003'
+    message:
+      en_US: Domain model with key "{}" not found
+  DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
+    error_code: '000020004'
+    message:
+      en_US: Domain model property with key "{}" already exists
+  DOMAIN_NOT_FOUND:
+    error_code: '000020005'
+    message:
+      en_US: Domain with key "{}" not found
+  DOMAIN_ROLE_ALREADY_EXISTS:
+    error_code: '000020004'
+    message:
+      en_US: Domain role with key "{}" already exists
+  ENDPOINT_NOT_FOUND:
+    error_code: '000000002'
+    message:
+      en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
+    status_code: 404
+  INVALID_REQUEST_DATA:
+    error_code: '000000001'
+    message:
+      en_US: 'Invalid request contains the following errors: {}'
+commands:
 interfaces:
-  events:
   cli:
+    mappers:
+      command:
+      header:
     commands:
       app_project:
         subcommands:
@@ -697,7 +698,7 @@ interfaces:
         help: run the command with verbose output
         name_or_flags:
         - --verbose
-modules:
+features:
   app_project:
     features:
       add_project:
