@@ -56,7 +56,7 @@ def handle(context: MessageContext):
         # Replace content with empty string if content is None.
         if content is None:
             content = ''
-        blocks.append[target_app_printer.new_block('app', module, content)]
+        blocks.append(target_app_printer.new_block('app', module, content))
 
         # Write blocks.
     for block in blocks:
