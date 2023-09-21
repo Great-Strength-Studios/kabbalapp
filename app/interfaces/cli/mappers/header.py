@@ -22,4 +22,6 @@ def default(request, app_context, **kwargs):
     }
 
 def app_project_headers(request, app_context, **kwargs):
-    return {}
+    return {
+        'app_version': kwargs.get('version', None)
+    }
