@@ -1,4 +1,5 @@
-import os, shutil
+import os
+import yaml
 
 from schematics import types as t, Model
 
@@ -145,4 +146,7 @@ class AppPrinter(object):
         write_path = os.path.join(app_path, code_block.file_path)
         os.makedirs(os.path.dirname(write_path), exist_ok=True)
         with open(write_path, 'w') as stream:
-            stream.write(code_block.code_block)
+            if os.path.splitext(code_block.file_path)[1] in ['.yml', '.yaml']:
+                yaml.safe_dump(code_block.code_block, stream)
+            else:
+                stream.write(code_block.code_block)
