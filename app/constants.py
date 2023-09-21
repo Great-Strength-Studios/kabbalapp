@@ -24,15 +24,18 @@ pyyaml>= 6.0
 
 
 APP_CONFIG_CONTENT = {
-    'endpoints': {},
+    'commands': {},
+    'interfaces': {},
     'errors': {},
-    'events': {},
-    'mappings': {
-        'data': {},
-        'header': {},
-        'service': {}
+    'features': {
+        'groups': {},
     },
-    'modules': {},
-    'services': {},
+    'domain': {
+        'modules': {},
+        'repos': {},
+        'entities': {},
+        'value_objects': {},
+        'factories': {},
+    },
 }
 
