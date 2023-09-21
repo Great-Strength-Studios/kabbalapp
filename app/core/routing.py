@@ -90,7 +90,7 @@ class FeatureHandler():
                 context.services = app_context.container
 
             # Format function module path.
-            module_path = 'app.modules.{}'.format(function.function_path)
+            module_path = 'app.features.{}'.format(function.function_path)
 
             # Import function module.
             if debug: print('Importing function: {}'.format(module_path))
