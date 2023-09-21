@@ -18,9 +18,6 @@ class NewAppProject(RequestEvent):
 class SetDefaultAppProject(RequestEvent):
     key = t.StringType(required=True)
 
-class SyncAppProject(RequestEvent):
-    key = t.StringType(required=True)
-
 class AddInterface(RequestEvent):
     key = t.StringType(required=True, choices=['cli', 'flask'])
 
