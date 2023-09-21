@@ -42,32 +42,110 @@ def handle(context: MessageContext):
         '__init__.py'
     ]
 
+    # Add content to be written to the new modules.
+    CORE_ACTIVITY_CONTENT = """
+    '''Activity Log Module'''
+    def handle(context):
+        pass
+    """
+
+    CORE_CONTAINERS_CONTENT = """
+    from schematics import types as t, Model
+
+    from ..services import SkyWellness, ConfigurationService
+
+    # Container configuration
+    class ContainerConfiguration(Model):
+        pass
+
+
+    # Default container
+    class Container():
+
+        # Custom fields below
+        # ...
+
+        def __init__(self, config: ContainerConfiguration):
+            # Default init
+            self.config = config
+
+            # Custom init below
+            # ...
+        
+
+    # Default dynamic container
+    class DynamicContainer():
+        
+        def add_service(self, service_name, factory_func):
+            setattr(self, service_name, factory_func)
+    """
+
+    
+
+    DOMAIN_CONTENT = """
+    from .value_objects import *
+    from .entities import *
+    from .factory import *
+    from .modules import *
+    from .repo import *
+    """
+
+    DOMAIN_ENTITIES_CONTENT = """
+    from schematics import types as t, Model
+    from schematics.transforms import whitelist, blacklist
+    from schematics.types.serializable import serializable
+    """
+
+    DOMAIN_VALUE_OBJECTS_CONTENT = """
+    from schematics import types as t, Model
+    from schematics.transforms import whitelist, blacklist
+    from schematics.types.serializable import serializable
+    """
+
+    DOMAIN_FACTORY_CONTENT = """
+    from .value_objects import *
+    from .entities import *
+    from .modules import *
+    """
+
+    INTERFACES_CONTENT = """
+    from .commands import *
+    """
+
+    INTERFACES_COMMANDS_CONTENT = """
+    from schematics import types as t, Model
+    from schematics.transforms import blacklist, whitelist
+    """
+
+    APP_CONSTANTS_CONTENT = """
+    # Environment
+    APP_ENV = 'APP_ENV'
+    DEFAULT_APP_ENV = 'prod'
+
+    # Configuration file
+    CONFIG_FILE_DIRECTORY = 'app/{}'
+    APP_SCHEMA_FILE = 'app.yml'
+
+    # Configuration
+    CONFIGS = 'configs' 
+    ENDPOINTS = 'endpoints'
+    ERRORS = 'errors'
+    """
+
     # Arrange packages/modules to be written to the domain package if they do not already exist.
     add_modules = {
+        'core/activity.py': CORE_ACTIVITY_CONTENT,
         'domain/modules/__init__.py': None,
         'domain/repo/__init__.py': None,
-        'domain/__init__.py': """from .value_objects import *
-            from .entities import *
-            from .factory import *
-            from .modules import *
-            from .repo import *""",
-        'domain/entities.py': 
-            """from schematics import types as t, Model
-            from schematics.transforms import whitelist, blacklist
-            from schematics.types.serializable import serializable""",
-        'domain/factory.py': 
-            """from .entities import *
-            from .modules import *""",
-        'domain/value_objects.py': 
-            """from schematics import types as t, Model
-            from schematics.transforms import whitelist, blacklist
-            from schematics.types.serializable import serializable""",
+        'domain/__init__.py': DOMAIN_CONTENT,
+        'domain/entities.py': DOMAIN_ENTITIES_CONTENT,
+        'domain/factory.py': DOMAIN_FACTORY_CONTENT,
+        'domain/value_objects.py': DOMAIN_VALUE_OBJECTS_CONTENT,
         'features/__init__.py': None,
-        'interfaces/__init__.py': """from .commands import *""",
-        'interfaces/commands.py': 
-            """from schematics import types as t, Model
-            from schematics.transforms import blacklist, whitelist""",
-        'interfaces/services.py': None
+        'interfaces/__init__.py': INTERFACES_CONTENT,
+        'interfaces/commands.py': INTERFACES_COMMANDS_CONTENT,
+        'interfaces/services.py': None,
+        'constants.py': APP_CONSTANTS_CONTENT
     }
 
     # Load blocks.
