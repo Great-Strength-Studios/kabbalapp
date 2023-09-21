@@ -145,7 +145,7 @@ def handle(context: MessageContext):
         'interfaces/__init__.py': INTERFACES_CONTENT,
         'interfaces/commands.py': INTERFACES_COMMANDS_CONTENT,
         'interfaces/services.py': None,
-        'constants.py': APP_CONSTANTS_CONTENT
+        'constants.py': APP_CONSTANTS_CONTENT,
     }
 
     # Load blocks.
@@ -161,7 +161,33 @@ def handle(context: MessageContext):
             content = ''
         blocks.append(target_app_printer.new_block('app', module, content))
 
-        # Write blocks.
+    # Add requirements.txt block.
+    REQUIREMENTS_CONTENT = """
+    schematics>=2.1.1
+    pyyaml>= 6.0
+    """
+    blocks.append(target_app_printer.new_block('', 'requirements.txt', REQUIREMENTS_CONTENT))
+
+    # Add special block for app.yml.
+    app_yml_block = target_app_printer.new_block('app', 'app.yml', '')
+    app_yml_block.code_block = {
+        'commands': {},
+        'interfaces': {},
+        'errors': {},
+        'features': {
+            'groups': {},
+        },
+        'domain': {
+            'modules': {},
+            'repos': {},
+            'entities': {},
+            'value_objects': {},
+            'factories': {},
+        },
+    }
+    blocks.append(app_yml_block)
+
+    # Write blocks.
     for block in blocks:
         target_app_printer.print_block(block)
 
