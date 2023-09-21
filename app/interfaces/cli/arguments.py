@@ -58,6 +58,7 @@ class AppCommand(Model):
 
 class AppCommands(Model):
     parent_arguments = t.DictType(t.ModelType(AppArgument), default={})
+    mappers = t.DictType(t.StringType())
     commands = t.DictType(t.ModelType(AppCommand), default={})
 
 with open('app/app.yml', 'r') as f:

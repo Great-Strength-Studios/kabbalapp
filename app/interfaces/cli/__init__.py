@@ -15,7 +15,7 @@ class CliAppContext(AppContext):
         
         # Load endpoint configuration.
         try:
-            endpoint_config = self.modules[command].features[function]
+            endpoint_config = self.feature_groups[command].features[function]
         except (TypeError, KeyError):
             raise AppError(self.errors.ENDPOINT_NOT_FOUND.format_message(command, function))
         

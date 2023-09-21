@@ -1,5 +1,5 @@
 from schematics import types as t, Model
-from schematics.transforms import blacklist
+from schematics.transforms import blacklist, whitelist
 
 from ..domain import *
 
@@ -16,9 +16,6 @@ class NewAppProject(RequestEvent):
         }
 
 class SetDefaultAppProject(RequestEvent):
-    key = t.StringType(required=True)
-
-class SyncAppProject(RequestEvent):
     key = t.StringType(required=True)
 
 class AddInterface(RequestEvent):

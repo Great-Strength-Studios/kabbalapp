@@ -1,4 +1,5 @@
-import os, shutil
+import os
+import yaml
 
 from schematics import types as t, Model
 
@@ -110,8 +111,22 @@ class AppPrinter(object):
             'parent_path': parent_path,
         })
         return package_block
+    
+    def new_block(self, base_path: str, file_path: str, code_block: str) -> AppModuleBlock:
+        return AppModuleBlock({
+            'file_path': os.path.join(self.app_path, base_path, file_path),
+            'code_block': code_block,
+            'code_lines': code_block.splitlines()
+        })
+    
+    def block_exists(self, file_path: str, base_path: str = None) -> bool:
+        if base_path:
+            file_path = os.path.join(base_path, file_path)
+        return os.path.exists(os.path.join(self.app_path, file_path))
         
-    def read_block(self, file_path: str) -> AppModuleBlock:
+    def read_block(self, file_path: str, base_path: str) -> AppModuleBlock:
+        if base_path:
+            file_path = os.path.join(base_path, file_path)
         read_path = os.path.join(self.app_path, file_path)
         with open(read_path) as stream:
             code_block = stream.read()
@@ -131,4 +146,7 @@ class AppPrinter(object):
         write_path = os.path.join(app_path, code_block.file_path)
         os.makedirs(os.path.dirname(write_path), exist_ok=True)
         with open(write_path, 'w') as stream:
-            stream.write(code_block.code_block)
+            if os.path.splitext(code_block.file_path)[1] in ['.yml', '.yaml']:
+                yaml.safe_dump(code_block.code_block, stream)
+            else:
+                stream.write(code_block.code_block)

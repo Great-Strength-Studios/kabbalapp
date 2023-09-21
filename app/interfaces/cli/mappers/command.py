@@ -12,11 +12,6 @@ def set_default_app_project(context, request, app_context, **kwargs):
         'key': request.get('key', None)
     })
 
-def sync_app_project(context, request, app_context, **kwargs):
-    return SyncAppProject({
-        'key': request.get('key', None)
-    })
-
 def add_interface(context, request, app_context, **kwargs):
     return AddInterface({
         'key': request.get('key', None)

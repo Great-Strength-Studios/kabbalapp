@@ -14,7 +14,7 @@ class AppContext():
     container_config: ContainerConfiguration = None
     container: Container = None
     errors: ErrorManager = ErrorManager()
-    modules: dict = None
+    feature_groups: dict = None
     
     def __init__(self, name: str, interface: str, app_config: AppConfiguration, container_config: ContainerConfiguration):
         # Set app name.
@@ -30,7 +30,7 @@ class AppContext():
         except AttributeError:
             pass
 
-        self.modules = app_config.modules
+        self.feature_groups = app_config.features.groups
 
         # Load container config and container.
         self.container_config = container_config
