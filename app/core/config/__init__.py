@@ -31,9 +31,11 @@ class FeatureConfiguration(Model):
         functions = t.ListType(t.ModelType(FunctionConfiguration), default=[])
         log_params = t.DictType(t.StringType(), default={})
 
-
-class ModuleConfiguration(Model):
+class FeatureGroupConfiguration(Model):
     features = t.DictType(t.ModelType(FeatureConfiguration), default={})
+
+class AppFeatureConfiguration(Model):
+    groups = t.DictType(t.ModelType(FeatureGroupConfiguration), default={})
 
 class ErrorConfiguration(Model):
     error_code = t.StringType(required=True)
@@ -46,7 +48,7 @@ class AppConfiguration(Model):
 
 class AppConfiguration(Model):
     errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
-    modules = t.DictType(t.ModelType(ModuleConfiguration), default={}, serialize_when_none=False)
+    features = t.DictType(t.ModelType(AppFeatureConfiguration), default={}, serialize_when_none=False)
 
 
 class AppConfigurationReader():
