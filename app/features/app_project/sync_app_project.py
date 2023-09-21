@@ -12,14 +12,14 @@ def handle(context: MessageContext):
     target_app_printer: AppPrinter = context.services.app_printer(request.key)
 
     # Arrange packages/modules to be read.
-    modules = [
-        'app/core/config/__init__.py',
-        'app/core/config/json.py',
-        'app/core/config/yaml.py',
-        'app/core/error.py',
-        'app/core/routing.py',
-        'app/core/__init__.py',
-        'app/__init__.py'
+    core_modules = [
+        'core/config/__init__.py',
+        'core/config/json.py',
+        'core/config/yaml.py',
+        'core/error.py',
+        'core/routing.py',
+        'core/__init__.py',
+        '__init__.py'
     ]
 
     # Arrange packages/modules to be written to the domain package if they do not already exist.
@@ -40,7 +40,7 @@ def handle(context: MessageContext):
     ]
 
     # Load blocks.
-    blocks = [app_printer.read_block(module) for module in modules]
+    blocks = [app_printer.read_block(module, base_path='app') for module in core_modules]
 
     # Write blocks.
     for block in blocks:
