@@ -42,6 +42,7 @@ def handle(context: MessageContext):
             """from schematics import types as t, Model
             from schematics.transforms import whitelist, blacklist
             from schematics.types.serializable import serializable""",
+        'features/__init__.py': None,
         'interfaces/__init__.py': """from .commands import *""",
         'interfaces/commands.py': 
             """from schematics import types as t, Model
