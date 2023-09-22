@@ -119,6 +119,25 @@ domain:
       aliases:
       - i
       name: App Interface
+      components:
+      - name: AppInterface
+        class_name: AppInterface
+        type: entity
+        properties:
+          type:
+            description: interface type
+            name: type
+            required: true
+            type: str
+            choices:
+            - cli
+            - rest_flask
+          mappers:
+            description: interface mapper functions
+            name: mappers
+            type: dict
+            key_type: str
+            inner_type: str
     project:
       aliases:
       - proj
@@ -216,6 +235,14 @@ errors:
     error_code: '000010001'
     message:
       en_US: App Project with key "{}" not found
+  INTERFACE_ALREADY_EXISTS:
+    error_code: '000010002'
+    message:
+      en_US: Interface with type "{}" already exists
+  INVALID_INTERFACE_TYPE:
+    error_code: '000010003'
+    message:
+      en_US: Invalid interface type "{}"
   CLI_ARGUMENT_ALREADY_EXISTS:
     error_code: '000000006'
     message:
@@ -279,13 +306,13 @@ errors:
       en_US: 'Invalid request contains the following errors: {}'
 commands:
 interfaces:
-  cli:
+  - type: cli
     mappers:
       command:
       header:
-    commands:
+    cli_commands:
       app_project:
-        subcommands:
+        cli_subcommands:
           add_project:
             arguments:
               app_directory:
@@ -309,7 +336,7 @@ interfaces:
             help: Adds Kabbalapp project
             name: Add Project
       cli:
-        subcommands:
+        cli_subcommands:
           add_argument:
             arguments:
               action:
@@ -481,7 +508,7 @@ interfaces:
                 - --name
                 required: true
       domain:
-        subcommands:
+        cli_subcommands:
           add:
             arguments:
               aliases:
@@ -661,17 +688,17 @@ interfaces:
                 required: true
             name: Sync Domain Implementation
       interface:
-        subcommands:
+        cli_subcommands:
           add:
             arguments:
-              key:
+              type:
                 choices:
                 - cli
-                - flask
-                help: interface key
+                - rest_flask
+                help: interface type
                 name_or_flags:
-                - --key
-                - -k
+                - --type
+                - -t
                 required: true
             name: Add App Interface
       module: {}

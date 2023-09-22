@@ -4,7 +4,7 @@ from ...interfaces import *
 
 
 REQUIREMENTS_CONTENT = """schematics>=2.1.1
-pyyaml>= 6.0
+pyyaml>=6.0.0
 """
 
 # Add content to be written to the new modules.
@@ -70,6 +70,8 @@ INTERFACES_CONTENT = """from .commands import *
 
 INTERFACES_COMMANDS_CONTENT = """from schematics import types as t, Model
 from schematics.transforms import blacklist, whitelist
+
+from ..constants import *
 """
 
 APP_CONSTANTS_CONTENT = """# Environment
@@ -130,16 +132,16 @@ def handle(context: MessageContext):
     add_modules = {
         'core/activity.py': CORE_ACTIVITY_CONTENT,
         'core/containers.py': CORE_CONTAINERS_CONTENT,
-        'domain/modules/__init__.py': None,
-        'domain/repo/__init__.py': None,
+        'domain/modules/__init__.py': '',
+        'domain/repo/__init__.py': '',
         'domain/__init__.py': DOMAIN_CONTENT,
         'domain/entities.py': DOMAIN_ENTITIES_CONTENT,
         'domain/factory.py': DOMAIN_FACTORY_CONTENT,
         'domain/value_objects.py': DOMAIN_VALUE_OBJECTS_CONTENT,
-        'features/__init__.py': None,
+        'features/__init__.py': '',
         'interfaces/__init__.py': INTERFACES_CONTENT,
         'interfaces/commands.py': INTERFACES_COMMANDS_CONTENT,
-        'interfaces/services.py': None,
+        'interfaces/services.py': '',
         'constants.py': APP_CONSTANTS_CONTENT,
     }
 
@@ -151,9 +153,6 @@ def handle(context: MessageContext):
         # Check if module exists.
         if target_app_printer.block_exists(module, base_path='app'):
             continue
-        # Replace content with empty string if content is None.
-        if content is None:
-            content = ''
         blocks.append(target_app_printer.new_block('app', module, content))
 
     # Add requirements.txt block.

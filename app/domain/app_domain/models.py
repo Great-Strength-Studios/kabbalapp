@@ -3,33 +3,7 @@ from schematics import types as t, Model
 from schematics.transforms import blacklist, whitelist
 from schematics.types.serializable import serializable
 
-DOMAIN_ROLE_TYPES = [
-    'whitelist',
-    'blacklist'
-]
-
-# Types constants
-STR_TYPE =  'str'
-INT_TYPE = 'int'
-FLOAT_TYPE = 'float'
-BOOL_TYPE = 'bool'
-DATETIME_TYPE = 'datetime'
-DATE_TYPE = 'date'
-LIST_TYPE = 'list'
-DICT_TYPE = 'dict'
-MODEL_TYPE = 'model'
-
-DOMAIN_PROPERTY_TYPES = [
-    STR_TYPE,
-    INT_TYPE,
-    FLOAT_TYPE,
-    BOOL_TYPE,
-    DATETIME_TYPE,
-    DATE_TYPE,
-    LIST_TYPE,
-    DICT_TYPE,
-    MODEL_TYPE
-]
+from ...constants import *
 
 class AppDomainModelProperty(Model):
     key = t.StringType(required=True)

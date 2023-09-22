@@ -46,9 +46,13 @@ class ErrorConfiguration(Model):
 class AppConfiguration(Model):
     errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
 
+class InterfaceConfiguration(Model):
+    type = t.StringType(required=True, choices=['cli', 'rest_flask'])
+
 class AppConfiguration(Model):
     errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
     features = t.ModelType(AppFeaturesConfiguration)
+    interfaces = t.ListType(t.ModelType(InterfaceConfiguration), default=[])
 
 
 class AppConfigurationReader():

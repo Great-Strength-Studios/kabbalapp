@@ -14,7 +14,7 @@ def set_default_app_project(context, request, app_context, **kwargs):
 
 def add_interface(context, request, app_context, **kwargs):
     return AddInterface({
-        'key': request.get('key', None)
+        'type': request.get('type', None)
     })
 
 def add_cli_command(context, request, app_context, **kwargs):
