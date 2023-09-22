@@ -22,7 +22,10 @@ class AddInterface(RequestEvent):
     type = t.StringType(required=True, choices=['cli', 'rest_flask'])
 
 class AddCliCommand(RequestEvent):
-    key = t.StringType()
+    command_key = t.StringType(required=True)
+    subcommand_key = t.StringType()
+    name = t.StringType(required=True)
+    help = t.StringType(required=True, deserialize_from=['help', 'description'])
 
 class AddCliParentArgument(RequestEvent):
     key = t.StringType()
