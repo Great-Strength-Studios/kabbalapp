@@ -5,7 +5,8 @@ from . import i
 
 
 class CliArgument(Model):
-    key = t.StringType(required=True)
+    id = t.StringType(required=True)
+    cli_subcommand_id = t.StringType(required=True)
     name_or_flags = t.ListType(t.StringType(), required=True)
     help = t.StringType(required=True)
     type = t.StringType(choices=['str', 'int', 'float'])
@@ -15,48 +16,25 @@ class CliArgument(Model):
     choices = t.ListType(t.StringType())
     action = t.StringType()
 
-    class Options():
-        serialize_when_none = False
-        roles = {
-            'cli.add_argument': blacklist('key'),
-            'cli.add_parent_argument': blacklist('key'),
-        }
-
 class CliSubcommand(Model):
-    key = t.StringType()
+    id = t.StringType()
+    cli_command_id = t.StringType(required=True)
     name = t.StringType(required=True)
     help = t.StringType(required=True)
-    arguments = t.DictType(t.ModelType(CliArgument), default={})
-
-    class Options():
-        serialize_when_none = False
-        roles = {
-            'cli.add_subcommand': blacklist('key', 'arguments')
-        }
 
 class AppCommand(Model):
-    key = t.StringType(required=True)
-    subcommands = t.DictType(t.ModelType(CliSubcommand), default={})
-
-    class Options():
-        serialize_when_none = False
-        roles = {
-            'cli.add_command': blacklist('key', 'commands', 'parent_arguments')
-        }
-
-class AppCommands(Model):
-    parent_arguments = t.DictType(t.ModelType(CliArgument), default={})
-    commands = t.DictType(t.ModelType(AppCommand), default={})
+    id = t.StringType(required=True)
+    interface_id = t.StringType(required=True)
+    name = t.StringType(required=True)
 
 
 class CliAppInterface(i.AppInterface):
+    id = t.StringType(required=True)
     type = t.StringType(required=True, choices=['cli'])
-    cli_commands = t.DictType(t.StringType())
 
     @staticmethod
-    def create(type: str, cli_commands: dict = None):
+    def create(type: str):
         interface = CliAppInterface()
         interface.type = type
-        interface.cli_commands = cli_commands
 
         return interface
