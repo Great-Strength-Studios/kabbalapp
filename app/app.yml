@@ -1,5 +1,91 @@
+commands: null
 domain:
+  entities: null
+  factories: null
   modules:
+    cli:
+      aliases: null
+      components:
+      - class_name: CliArgument
+        name: App CLI Argument
+        properties:
+          action:
+            description: argument action
+            name: Action
+            required: false
+            type: str
+          default:
+            description: default argument value
+            name: default
+            type: str
+          help:
+            description: app argument help
+            name: Help
+            required: true
+            type: str
+          key:
+            name: Key
+            required: true
+            type: str
+          nargs:
+            description: number of arguments
+            name: Number of arguments
+            required: false
+            type: str
+          type:
+            choices:
+            - str
+            - int
+            - float
+            description: app arggument type
+            name: Type
+            type: str
+        type: value_object
+      - class_name: CliCommand
+        name: App CLI Command
+        properties:
+          arguments:
+            description: app command arguments list
+            inner_type: CliArgument
+            name: Arguments
+            required: false
+            type: list
+          command_key:
+            description: app command model key
+            name: Command key
+            required: true
+            type: str
+          help:
+            description: app subcommand help
+            name: Help
+            required: true
+            type: str
+          name:
+            description: app subcommand name
+            name: Name
+            required: true
+            type: str
+          subcommand_key:
+            description: app sub-command key
+            name: Sub-command key
+            required: false
+            type: str
+      - class_name: CliInterface
+        factory_method:
+          method_name: create
+        name: App CLI Interface
+        properties:
+          type:
+            choices:
+            - cli
+            - rest_flask
+            description: interface type
+            name: type
+            required: true
+            type: str
+      dependencies:
+      - i
+      name: cli
     domain:
       aliases:
       - adom
@@ -118,26 +204,26 @@ domain:
     interface:
       aliases:
       - i
-      name: App Interface
       components:
-      - name: App Interface
-        class_name: AppInterface
-        type: entity
+      - class_name: AppInterface
+        name: App Interface
         properties:
+          mappers:
+            description: interface mapper functions
+            inner_type: str
+            key_type: str
+            name: mappers
+            type: dict
           type:
+            choices:
+            - cli
+            - rest_flask
             description: interface type
             name: type
             required: true
             type: str
-            choices:
-            - cli
-            - rest_flask
-          mappers:
-            description: interface mapper functions
-            name: mappers
-            type: dict
-            key_type: str
-            inner_type: str
+        type: entity
+      name: App Interface
     project:
       aliases:
       - proj
@@ -147,93 +233,7 @@ domain:
           class_name: AppProject
           name: App Project
       name: App Project
-    cli:
-      aliases: null
-      dependencies:
-      - i
-      components:
-      - class_name: CliArgument
-        name: App CLI Argument
-        type: value_object
-        properties:
-          action:
-            description: argument action
-            name: Action
-            required: false
-            type: str
-          default:
-            description: default argument value
-            name: default
-            type: str
-          help:
-            description: app argument help
-            name: Help
-            required: true
-            type: str
-          key:
-            name: Key
-            required: true
-            type: str
-          nargs:
-            description: number of arguments
-            name: Number of arguments
-            required: false
-            type: str
-          type:
-            choices:
-            - str
-            - int
-            - float
-            description: app arggument type
-            name: Type
-            type: str
-      - class_name: CliCommand
-        name: App CLI Command
-        properties:
-          help:
-            description: app subcommand help
-            name: Help
-            required: true
-            type: str
-          command_key:
-            description: app command model key
-            name: Command key
-            required: true
-            type: str
-          subcommand_key:
-            description: app sub-command key
-            name: Sub-command key
-            required: false
-            type: str
-          name:
-            description: app subcommand name
-            name: Name
-            required: true
-            type: str
-          arguments:
-            description: app command arguments list
-            name: Arguments
-            required: false
-            type: list
-            inner_type: CliArgument
-      - class_name: CliInterface
-        name: App CLI Interface
-        properties:
-          type: 
-            description: interface type
-            name: type
-            required: true
-            type: str
-            choices:
-            - cli
-            - rest_flask
-        factory_method:
-          method_name: create
-
-      name: cli
-  entities:
-  factories:
-  repos:
+  repos: null
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
@@ -243,14 +243,6 @@ errors:
     error_code: '000010001'
     message:
       en_US: App Project with key "{}" not found
-  INTERFACE_ALREADY_EXISTS:
-    error_code: '000010002'
-    message:
-      en_US: Interface with type "{}" already exists
-  INVALID_INTERFACE_TYPE:
-    error_code: '000010003'
-    message:
-      en_US: Invalid interface type "{}"
   CLI_ARGUMENT_ALREADY_EXISTS:
     error_code: '000000006'
     message:
@@ -308,431 +300,18 @@ errors:
     message:
       en_US: 'Unable to find the requested endpoint. Subdomain: {}, Module: {}'
     status_code: 404
+  INTERFACE_ALREADY_EXISTS:
+    error_code: '000010002'
+    message:
+      en_US: Interface with type "{}" already exists
+  INVALID_INTERFACE_TYPE:
+    error_code: '000010003'
+    message:
+      en_US: Invalid interface type "{}"
   INVALID_REQUEST_DATA:
     error_code: '000000001'
     message:
       en_US: 'Invalid request contains the following errors: {}'
-commands:
-interfaces:
-  - type: cli
-    mappers:
-      command:
-      header:
-    cli_commands:
-      app_project:
-        cli_subcommands:
-          add_project:
-            arguments:
-              app_directory:
-                help: App project directory path
-                name_or_flags:
-                - --app-directory
-                type: str
-                required: true
-              key:
-                help: App project key
-                name_or_flags:
-                - --key
-                required: true
-                type: str
-              name:
-                help: App project name
-                name_or_flags:
-                - --name
-                required: true
-                type: str
-            help: Adds Kabbalapp project
-            name: Add Project
-      cli:
-        cli_subcommands:
-          add_argument:
-            arguments:
-              action:
-                help: argument action
-                name_or_flags:
-                - --action
-              choices:
-                help: argument choices
-                name_or_flags:
-                - --choices
-                nargs: +
-              command_key:
-                help: command key
-                name_or_flags:
-                - -c
-                - --command-key
-                required: true
-              default:
-                help: argument default
-                name_or_flags:
-                - --default
-              flags:
-                help: argument flags
-                name_or_flags:
-                - -f
-                - --flags
-                nargs: +
-              help:
-                help: argument description
-                name_or_flags:
-                - -d
-                - --description
-                required: true
-              key:
-                help: argument key
-                name_or_flags:
-                - -k
-                - --key
-              name:
-                help: argument name
-                name_or_flags:
-                - name
-              nargs:
-                help: available number of arguments
-                name_or_flags:
-                - --nargs
-              postional:
-                action: store_true
-                help: argument is positional
-                name_or_flags:
-                - -p
-                - --positional
-              required:
-                action: store_true
-                help: argument required
-                name_or_flags:
-                - --required
-              subcommand_key:
-                help: subcommand key
-                name_or_flags:
-                - -s
-                - --subcommand-key
-                required: true
-              type:
-                choices:
-                - str
-                - int
-                - float
-                help: argument type
-                name_or_flags:
-                - -t
-                - --type
-            name: Add CLI Argument
-          add_command:
-            arguments:
-              key:
-                help: command key
-                name_or_flags:
-                - -k
-                - --key
-                required: true
-            name: Add CLI Command
-          add_parent_argument:
-            arguments:
-              action:
-                help: argument action
-                name_or_flags:
-                - --action
-              choices:
-                help: argument choices
-                name_or_flags:
-                - --choices
-                nargs: +
-              default:
-                help: argument default
-                name_or_flags:
-                - --default
-              flags:
-                help: argument flags
-                name_or_flags:
-                - -f
-                - --flags
-                nargs: +
-              help:
-                help: argument description
-                name_or_flags:
-                - -d
-                - --description
-                required: true
-              key:
-                help: argument key
-                name_or_flags:
-                - -k
-                - --key
-              name:
-                help: argument name
-                name_or_flags:
-                - name
-              nargs:
-                help: available number of arguments
-                name_or_flags:
-                - --nargs
-              postional:
-                action: store_true
-                help: argument is positional
-                name_or_flags:
-                - -p
-                - --positional
-              required:
-                action: store_true
-                help: argument required
-                name_or_flags:
-                - --required
-              type:
-                choices:
-                - str
-                - int
-                - float
-                - bool
-                - list
-                - dict
-                help: argument type
-                name_or_flags:
-                - --type
-            name: Add CLI Parent Argument
-          add_subcommand:
-            arguments:
-              command_key:
-                help: command key
-                name_or_flags:
-                - -c
-                - --command-key
-                required: true
-              help:
-                help: subcommand description
-                name_or_flags:
-                - -d
-                - --description
-                required: true
-              key:
-                help: subcommand key
-                name_or_flags:
-                - -k
-                - --key
-              name:
-                help: subcommand name
-                name_or_flags:
-                - -n
-                - --name
-                required: true
-      domain:
-        cli_subcommands:
-          add:
-            arguments:
-              aliases:
-                help: domain aliases
-                name_or_flags:
-                - --aliases
-                - -a
-                nargs: +
-              key:
-                help: domain key
-                name_or_flags:
-                - --key
-                - -k
-              name:
-                help: domain name
-                name_or_flags:
-                - name
-            name: Add Domain
-          add_implementation:
-            arguments:
-              domain_key:
-                help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              key:
-                help: domain implementation key
-                name_or_flags:
-                - --key
-                - -k
-              name:
-                help: domain implementation name
-                name_or_flags:
-                - name
-            name: Add Domain Implementation
-          add_model:
-            arguments:
-              class_name:
-                help: domain model class name
-                name_or_flags:
-                - --class-name
-                - -c
-              domain_key:
-                help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              key:
-                help: domain model key
-                name_or_flags:
-                - --key
-                - -k
-              name:
-                help: domain model name
-                name_or_flags:
-                - name
-            name: Add Domain Model
-          add_model_property:
-            arguments:
-              choices:
-                help: domain model property choices
-                name_or_flags:
-                - --choices
-                nargs: +
-              default:
-                help: default domain model property value
-                name_or_flags:
-                - --default
-              description:
-                help: domain model property description
-                name_or_flags:
-                - --description
-              deserialize_from:
-                help: domain model property name as it appears deserialized
-                name_or_flags:
-                - --deserialize-from
-              domain_key:
-                help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              key:
-                help: domain model property key
-                name_or_flags:
-                - --key
-                - -k
-              model_key:
-                help: domain model key
-                name_or_flags:
-                - --model-key
-                - -m
-                required: true
-              name:
-                help: domain model property name
-                name_or_flags:
-                - name
-              required:
-                action: store_true
-                help: require value for domain model property
-                name_or_flags:
-                - --required
-              serialized_name:
-                help: domain model property name when serialized
-                name_or_flags:
-                - --serialized-name
-              type:
-                choices:
-                - str
-                - int
-                - float
-                - bool
-                - datetime
-                - date
-                - list
-                - dict
-                - model
-                default: str
-                help: domain model property type
-                name_or_flags:
-                - --type
-                - -t
-              type_properties:
-                help: domain model property type properties separated by '='
-                name_or_flags:
-                - --type-properties
-            name: Add Domain Model Property
-          add_role:
-            arguments:
-              domain_key:
-                help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              name:
-                help: domain role name
-                name_or_flags:
-                - name
-              type:
-                choices:
-                - blacklist
-                - whitelist
-                help: domain role type
-                name_or_flags:
-                - --type
-                - -t
-                required: true
-            name: Add Domain Role
-          list:
-            help: list domains
-            name: List
-          sync:
-            arguments:
-              domain_key:
-                help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-            name: Sync Domain
-          sync_implementation:
-            arguments:
-              domain_key:
-                help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              implementation_key:
-                help: domain implementation key
-                name_or_flags:
-                - --implementation-key
-                - -i
-                required: true
-            name: Sync Domain Implementation
-      interface:
-        cli_subcommands:
-          add:
-            arguments:
-              type:
-                choices:
-                - cli
-                - rest_flask
-                help: interface type
-                name_or_flags:
-                - --type
-                - -t
-                required: true
-            name: Add App Interface
-      module: {}
-    parent_arguments:
-      app_key:
-        help: app project key (not required when using default project)
-        name_or_flags:
-        - --app-key
-      env:
-        choices:
-        - dev
-        - prod
-        default: prod
-        help: environment to run the command in
-        name_or_flags:
-        - --env
-      force:
-        action: store_true
-        help: force the command overwrite existing files when syncing
-        name_or_flags:
-        - --force
-      verbose:
-        action: store_true
-        help: run the command with verbose output
-        name_or_flags:
-        - --verbose
 features:
   groups:
     app_project:
@@ -805,3 +384,363 @@ features:
           functions:
           - data_mapping: add_interface
             function_path: interface.add_interface
+interfaces:
+- cli_commands:
+    app_project:
+      cli_subcommands:
+        add_project:
+          arguments:
+          - help: App project directory path
+            name_or_flags:
+            - --app-directory
+            required: true
+            type: str
+          - help: App project key
+            name_or_flags:
+            - --key
+            required: true
+            type: str
+          - help: App project name
+            name_or_flags:
+            - --name
+            required: true
+            type: str
+          help: Adds Kabbalapp project
+          name: Add Project
+    cli:
+      cli_subcommands:
+        add_argument:
+          arguments:
+          - help: argument action
+            name_or_flags:
+            - --action
+          - help: argument choices
+            name_or_flags:
+            - --choices
+            nargs: +
+          - help: command key
+            name_or_flags:
+            - -c
+            - --command-key
+            required: true
+          - help: argument default
+            name_or_flags:
+            - --default
+          - help: argument flags
+            name_or_flags:
+            - -f
+            - --flags
+            nargs: +
+          - help: argument description
+            name_or_flags:
+            - -d
+            - --description
+            required: true
+          - help: argument key
+            name_or_flags:
+            - -k
+            - --key
+          - help: argument name
+            name_or_flags:
+            - name
+          - help: available number of arguments
+            name_or_flags:
+            - --nargs
+          - action: store_true
+            help: argument is positional
+            name_or_flags:
+            - -p
+            - --positional
+          - action: store_true
+            help: argument required
+            name_or_flags:
+            - --required
+          - help: subcommand key
+            name_or_flags:
+            - -s
+            - --subcommand-key
+            required: true
+          - choices:
+            - str
+            - int
+            - float
+            help: argument type
+            name_or_flags:
+            - -t
+            - --type
+          name: Add CLI Argument
+        add_command:
+          arguments:
+          - help: command key
+            name_or_flags:
+            - -k
+            - --key
+            required: true
+          name: Add CLI Command
+        add_parent_argument:
+          arguments:
+          - help: argument action
+            name_or_flags:
+            - --action
+          - help: argument choices
+            name_or_flags:
+            - --choices
+            nargs: +
+          - help: argument default
+            name_or_flags:
+            - --default
+          - help: argument flags
+            name_or_flags:
+            - -f
+            - --flags
+            nargs: +
+          - help: argument description
+            name_or_flags:
+            - -d
+            - --description
+            required: true
+          - help: argument key
+            name_or_flags:
+            - -k
+            - --key
+          - help: argument name
+            name_or_flags:
+            - name
+          - help: available number of arguments
+            name_or_flags:
+            - --nargs
+          - action: store_true
+            help: argument is positional
+            name_or_flags:
+            - -p
+            - --positional
+          - action: store_true
+            help: argument required
+            name_or_flags:
+            - --required
+          - choices:
+            - str
+            - int
+            - float
+            - bool
+            - list
+            - dict
+            help: argument type
+            name_or_flags:
+            - --type
+          name: Add CLI Parent Argument
+        add_subcommand:
+          arguments:
+          - help: command key
+            name_or_flags:
+            - -c
+            - --command-key
+            required: true
+          - help: subcommand description
+            name_or_flags:
+            - -d
+            - --description
+            required: true
+          - help: subcommand key
+            name_or_flags:
+            - -k
+            - --key
+          - help: subcommand name
+            name_or_flags:
+            - -n
+            - --name
+            required: true
+    domain:
+      cli_subcommands:
+        add:
+          arguments:
+          - help: domain aliases
+            name_or_flags:
+            - --aliases
+            - -a
+            nargs: +
+          - help: domain key
+            name_or_flags:
+            - --key
+            - -k
+          - help: domain name
+            name_or_flags:
+            - name
+          name: Add Domain
+        add_implementation:
+          arguments:
+          - help: domain key
+            name_or_flags:
+            - --domain-key
+            - -d
+            required: true
+          - help: domain implementation key
+            name_or_flags:
+            - --key
+            - -k
+          - help: domain implementation name
+            name_or_flags:
+            - name
+          name: Add Domain Implementation
+        add_model:
+          arguments:
+          - help: domain model class name
+            name_or_flags:
+            - --class-name
+            - -c
+          - help: domain key
+            name_or_flags:
+            - --domain-key
+            - -d
+            required: true
+          - help: domain model key
+            name_or_flags:
+            - --key
+            - -k
+          - help: domain model name
+            name_or_flags:
+            - name
+          name: Add Domain Model
+        add_model_property:
+          arguments:
+          - help: domain model property choices
+            name_or_flags:
+            - --choices
+            nargs: +
+          - help: default domain model property value
+            name_or_flags:
+            - --default
+          - help: domain model property description
+            name_or_flags:
+            - --description
+          - help: domain model property name as it appears deserialized
+            name_or_flags:
+            - --deserialize-from
+          - help: domain key
+            name_or_flags:
+            - --domain-key
+            - -d
+            required: true
+          - help: domain model property key
+            name_or_flags:
+            - --key
+            - -k
+          - help: domain model key
+            name_or_flags:
+            - --model-key
+            - -m
+            required: true
+          - help: domain model property name
+            name_or_flags:
+            - name
+          - action: store_true
+            help: require value for domain model property
+            name_or_flags:
+            - --required
+          - help: domain model property name when serialized
+            name_or_flags:
+            - --serialized-name
+          - choices:
+            - str
+            - int
+            - float
+            - bool
+            - datetime
+            - date
+            - list
+            - dict
+            - model
+            default: str
+            help: domain model property type
+            name_or_flags:
+            - --type
+            - -t
+          - help: domain model property type properties separated by '='
+            name_or_flags:
+            - --type-properties
+          name: Add Domain Model Property
+        add_role:
+          arguments:
+          - help: domain key
+            name_or_flags:
+            - --domain-key
+            - -d
+            required: true
+          - help: domain role name
+            name_or_flags:
+            - name
+          - choices:
+            - blacklist
+            - whitelist
+            help: domain role type
+            name_or_flags:
+            - --type
+            - -t
+            required: true
+          name: Add Domain Role
+        list:
+          arguments: []
+          help: list domains
+          name: List
+        sync:
+          arguments:
+          - help: domain key
+            name_or_flags:
+            - --domain-key
+            - -d
+            required: true
+          name: Sync Domain
+        sync_implementation:
+          arguments:
+          - help: domain key
+            name_or_flags:
+            - --domain-key
+            - -d
+            required: true
+          - help: domain implementation key
+            name_or_flags:
+            - --implementation-key
+            - -i
+            required: true
+          name: Sync Domain Implementation
+    interface:
+      cli_subcommands:
+        add:
+          arguments:
+          - choices:
+            - cli
+            - rest_flask
+            help: interface type
+            name_or_flags:
+            - --type
+            - -t
+            required: true
+          name: Add App Interface
+    module: {}
+  mappers:
+    command: null
+    header: null
+  parent_arguments:
+    app_key:
+      help: app project key (not required when using default project)
+      name_or_flags:
+      - --app-key
+    env:
+      choices:
+      - dev
+      - prod
+      default: prod
+      help: environment to run the command in
+      name_or_flags:
+      - --env
+    force:
+      action: store_true
+      help: force the command overwrite existing files when syncing
+      name_or_flags:
+      - --force
+    verbose:
+      action: store_true
+      help: run the command with verbose output
+      name_or_flags:
+      - --verbose
+  type: cli
