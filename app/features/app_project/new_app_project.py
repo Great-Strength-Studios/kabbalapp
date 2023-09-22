@@ -70,6 +70,8 @@ INTERFACES_CONTENT = """from .commands import *
 
 INTERFACES_COMMANDS_CONTENT = """from schematics import types as t, Model
 from schematics.transforms import blacklist, whitelist
+
+from ..constants import *
 """
 
 APP_CONSTANTS_CONTENT = """# Environment
