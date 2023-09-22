@@ -152,8 +152,9 @@ domain:
       dependencies:
       - i
       components:
-      - class_name: AppArgument
-        name: App Argument
+      - class_name: CliArgument
+        name: App CLI Argument
+        type: value_object
         properties:
           action:
             description: argument action
@@ -186,27 +187,22 @@ domain:
             description: app arggument type
             name: Type
             type: str
-      - class_name: AppCommand
+      - class_name: CliCommand
         name: App CLI Command
-        properties:
-          key:
-            description: app command key
-            name: Key
-            required: true
-            type: str
-      - class_name: AppCommands
-        name: App CLI Commands
-      - class_name: AppSubcommand
-        name: App CLI Subcommand
         properties:
           help:
             description: app subcommand help
             name: Help
             required: true
             type: str
-          key:
-            description: app subcommand model key
-            name: Key
+          command_key:
+            description: app command model key
+            name: Command key
+            required: true
+            type: str
+          subcommand_key:
+            description: app sub-command key
+            name: Sub-command key
             required: false
             type: str
           name:
@@ -214,6 +210,26 @@ domain:
             name: Name
             required: true
             type: str
+          arguments:
+            description: app command arguments list
+            name: Arguments
+            required: false
+            type: list
+            inner_type: CliArgument
+      - class_name: CliInterface
+        name: App CLI Interface
+        properties:
+          type: 
+            description: interface type
+            name: type
+            required: true
+            type: str
+            choices:
+            - cli
+            - rest_flask
+        factory_method:
+          method_name: create
+
       name: cli
   entities:
   factories:
