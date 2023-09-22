@@ -4,7 +4,7 @@ from ...interfaces import *
 
 
 REQUIREMENTS_CONTENT = """schematics>=2.1.1
-pyyaml>= 6.0
+pyyaml>=6.0.0
 """
 
 # Add content to be written to the new modules.
