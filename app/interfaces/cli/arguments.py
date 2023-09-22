@@ -48,33 +48,34 @@ class AppSubcommand(Model):
 
 class AppCommand(Model):
     help = t.StringType(required=True)
-    subcommands = t.DictType(t.ModelType(AppSubcommand), default={})
+    cli_subcommands = t.DictType(t.ModelType(AppSubcommand), default={})
 
     class Options():
         serialize_when_none = False
         roles = {
-            'add_parser': blacklist('subcommands')
+            'add_parser': blacklist('cli_subcommands')
         }
 
 class AppCommands(Model):
+    type = t.StringType(required=True)
     parent_arguments = t.DictType(t.ModelType(AppArgument), default={})
     mappers = t.DictType(t.StringType())
-    commands = t.DictType(t.ModelType(AppCommand), default={})
+    cli_commands = t.DictType(t.ModelType(AppCommand), default={})
 
 with open('app/app.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
-commands = AppCommands(app_config['interfaces']['cli'])
+commands = AppCommands([i for i in app_config['interfaces'] if i['type'] == 'cli'][0])
 
 # Create parser.
 parser = argparse.ArgumentParser()
 
 # Add command subparsers
 command_subparsers = parser.add_subparsers(dest='command')
-for command_name, command in commands.commands.items():
+for command_name, command in commands.cli_commands.items():
     command_name = command_name.replace('_', '-')
     command_subparser = command_subparsers.add_parser(command_name, **command.to_primitive('add_parser'))
     subcommand_subparsers = command_subparser.add_subparsers(dest='subcommand')
-    for subcommand_name, subcommand in command.subcommands.items():
+    for subcommand_name, subcommand in command.cli_subcommands.items():
         subcommand_name = subcommand_name.replace('_', '-')
         subcommand_subparser = subcommand_subparsers.add_parser(subcommand_name, help=subcommand.help)
         for _, argument in subcommand.arguments.items():
