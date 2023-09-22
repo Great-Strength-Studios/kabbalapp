@@ -8,7 +8,7 @@ class CliAppInterface(i.AppInterface):
     cli_commands = t.DictType(t.StringType())
 
     @staticmethod
-    def create(type: str, cli_commands: dict):
+    def create(type: str, cli_commands: dict = None):
         interface = CliAppInterface()
         interface.type = type
         interface.cli_commands = cli_commands
