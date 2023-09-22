@@ -4,8 +4,8 @@ from ...modules import *
 
 class AppInterfaceRepository():
 
-    def add_interface(self, interface: i.AppInterface) -> None:
+    def get_interface(self, type: str) -> i.AppInterface:
         pass
 
-    def get_interface(self, type: str) -> i.AppInterface:
+    def save_interface(self, interface: i.AppInterface) -> None:
         pass
