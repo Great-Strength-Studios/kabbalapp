@@ -255,14 +255,6 @@ errors:
     error_code: '000000003'
     message:
       en_US: CLI command with key "{}" not found
-  CLI_SUBCOMMAND_ALREADY_EXISTS:
-    error_code: '000000007'
-    message:
-      en_US: CLI subcommand with key "{}" already exists
-  CLI_SUBCOMMAND_NOT_FOUND:
-    error_code: '000000004'
-    message:
-      en_US: CLI subcommand with key "{}" not found
   DOMAIN_ALREADY_EXISTS:
     error_code: '000020001'
     message:
