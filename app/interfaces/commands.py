@@ -19,7 +19,7 @@ class SetDefaultAppProject(RequestEvent):
     key = t.StringType(required=True)
 
 class AddInterface(RequestEvent):
-    key = t.StringType(required=True, choices=['cli', 'flask'])
+    type = t.StringType(required=True, choices=['cli', 'rest_flask'])
 
 class AddCliCommand(RequestEvent):
     key = t.StringType()
