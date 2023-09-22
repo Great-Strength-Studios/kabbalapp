@@ -5,7 +5,6 @@ from . import i
 
 
 class CliArgument(Model):
-    id = t.StringType(required=True)
     name_or_flags = t.ListType(t.StringType(), required=True)
     help = t.StringType(required=True)
     type = t.StringType(choices=['str', 'int', 'float'])
