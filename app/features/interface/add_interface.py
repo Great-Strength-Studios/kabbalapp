@@ -42,7 +42,7 @@ def handle(context: MessageContext):
         cli_files = {
             'mappers/__init__.py': CLI_MAPPERS_CONTENT,
             'mappers/command.py': CLI_COMMAND_MAPPER_CONTENT,
-            'mappers/header.py': None
+            'mappers/header.py': ''
         }
 
         # For each file in cli_files, create a new block and append it to the block list
@@ -51,7 +51,8 @@ def handle(context: MessageContext):
         
         # Print blocks to target app printer.
         for block in blocks:
-            target_app_printer.print_block(block)
+            if not target_app_printer.block_exists(block.file_path):
+                target_app_printer.print_block(block)
 
 
     def save_interface_config():

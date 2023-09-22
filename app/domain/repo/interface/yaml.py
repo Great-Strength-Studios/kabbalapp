@@ -42,6 +42,9 @@ class YamlRepository(AppInterfaceRepository):
         # Add/overwrite the interface to the list.
         interfaces.append(interface.to_primitive())
 
+        # Update the interfaces in the schema.
+        data['interfaces'] = interfaces
+
         # Write the schema back to the file.
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
