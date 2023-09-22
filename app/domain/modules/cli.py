@@ -22,6 +22,17 @@ class CliCommand(Model):
     help = t.StringType(required=True)
     arguments = t.ListType(t.ModelType(CliArgument), default=[])
 
+    @staticmethod
+    def create(command_key: str, name: str, help: str, subcommand_key: str = None, arguments: List[CliArgument] = []):
+        command = CliCommand()
+        command.command_key = command_key
+        command.name = name
+        command.help = help
+        command.subcommand_key = subcommand_key
+        command.arguments = arguments
+
+        return command
+
 
 class CliInterface(i.AppInterface):
     type = t.StringType(required=True, choices=['cli'])
