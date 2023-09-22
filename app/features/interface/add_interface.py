@@ -74,8 +74,9 @@ def handle(context: MessageContext):
 
         return interface
 
-    # Copy cli interface files.
-    copy_cli_interface_files()
+    # It type is 'cli', then copy cli files.
+    if type == 'cli':
+        copy_cli_interface_files()
 
     # Save interface config.
     interface = save_interface_config()
