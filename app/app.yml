@@ -336,7 +336,7 @@ interfaces:
             help: Adds Kabbalapp project
             name: Add Project
       cli:
-        subcommands:
+        cli_subcommands:
           add_argument:
             arguments:
               action:
@@ -508,7 +508,7 @@ interfaces:
                 - --name
                 required: true
       domain:
-        subcommands:
+        cli_subcommands:
           add:
             arguments:
               aliases:
@@ -688,17 +688,17 @@ interfaces:
                 required: true
             name: Sync Domain Implementation
       interface:
-        subcommands:
+        cli_subcommands:
           add:
             arguments:
-              key:
+              type:
                 choices:
                 - cli
-                - flask
-                help: interface key
+                - rest_flask
+                help: interface type
                 name_or_flags:
-                - --key
-                - -k
+                - --type
+                - -t
                 required: true
             name: Add App Interface
       module: {}
