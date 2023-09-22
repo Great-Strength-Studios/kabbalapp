@@ -1,7 +1,7 @@
 from ...entities import *
 from ...modules import *
 
-class CliInterfaceService():
+class CliInterfaceRepository():
 
     def add_command(self, command: cli.CliCommand) -> cli.CliCommand:
         pass
