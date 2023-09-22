@@ -120,7 +120,7 @@ domain:
       - i
       name: App Interface
       components:
-      - name: AppInterface
+      - name: App Interface
         class_name: AppInterface
         type: entity
         properties:
@@ -149,80 +149,72 @@ domain:
       name: App Project
     cli:
       aliases: null
-      impl:
-        yaml:
-          models: {}
-          name: yaml
-          roles: []
-      models:
-        app_argument:
-          class_name: AppArgument
-          name: App Argument
-          properties:
-            action:
-              description: argument action
-              name: Action
-              required: false
-              type: str
-            default:
-              description: default argument value
-              name: default
-              type: str
-            help:
-              description: app argument help
-              name: Help
-              required: true
-              type: str
-            key:
-              name: Key
-              required: true
-              type: str
-            nargs:
-              description: number of arguments
-              name: Number of arguments
-              required: false
-              type: str
-            type:
-              choices:
-              - str
-              - int
-              - float
-              description: app arggument type
-              name: Type
-              type: str
-        app_command:
-          class_name: AppCommand
-          name: App CLI Command
-          properties:
-            key:
-              description: app command key
-              name: Key
-              required: true
-              type: str
-        app_commands:
-          class_name: AppCommands
-          name: App CLI Commands
-        app_subcommand:
-          class_name: AppSubcommand
-          name: App CLI Subcommand
-          properties:
-            help:
-              description: app subcommand help
-              name: Help
-              required: true
-              type: str
-            key:
-              description: app subcommand model key
-              name: Key
-              required: false
-              type: str
-            name:
-              description: app subcommand name
-              name: Name
-              required: true
-              type: str
+      dependencies:
+      - i
+      components:
+      - class_name: AppArgument
+        name: App Argument
+        properties:
+          action:
+            description: argument action
+            name: Action
+            required: false
+            type: str
+          default:
+            description: default argument value
+            name: default
+            type: str
+          help:
+            description: app argument help
+            name: Help
+            required: true
+            type: str
+          key:
+            name: Key
+            required: true
+            type: str
+          nargs:
+            description: number of arguments
+            name: Number of arguments
+            required: false
+            type: str
+          type:
+            choices:
+            - str
+            - int
+            - float
+            description: app arggument type
+            name: Type
+            type: str
+      - class_name: AppCommand
+        name: App CLI Command
+        properties:
+          key:
+            description: app command key
+            name: Key
+            required: true
+            type: str
+      - class_name: AppCommands
+        name: App CLI Commands
+      - class_name: AppSubcommand
+        name: App CLI Subcommand
+        properties:
+          help:
+            description: app subcommand help
+            name: Help
+            required: true
+            type: str
+          key:
+            description: app subcommand model key
+            name: Key
+            required: false
+            type: str
+          name:
+            description: app subcommand name
+            name: Name
+            required: true
+            type: str
       name: cli
-      roles: []
   entities:
   factories:
   repos:
