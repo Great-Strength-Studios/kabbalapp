@@ -32,3 +32,20 @@ class YamlRepository(AppInterfaceRepository):
             yaml.dump(data, f)
 
         return
+    
+    def get_interface(self, type: str) -> i.AppInterface:
+        import yaml
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
+        
+        # Load interfaces from schema as a list.
+        interfaces = data.get('interfaces', [])
+        
+        # Check to see if the interface already exists.
+        try:
+            interface_data = [i for i in interfaces if i['type'] == type][0]
+        except IndexError:
+            return None
+        
+        # Add the interface to the list.
+        return i.AppInterface(interface_data, strict=False)
