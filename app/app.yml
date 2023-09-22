@@ -235,6 +235,14 @@ errors:
     error_code: '000010001'
     message:
       en_US: App Project with key "{}" not found
+  INTERFACE_ALREADY_EXISTS:
+    error_code: '000010002'
+    message:
+      en_US: Interface with type "{}" already exists
+  INVALID_INTERFACE_TYPE:
+    error_code: '000010003'
+    message:
+      en_US: Invalid interface type "{}"
   CLI_ARGUMENT_ALREADY_EXISTS:
     error_code: '000000006'
     message:
