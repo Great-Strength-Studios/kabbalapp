@@ -119,6 +119,25 @@ domain:
       aliases:
       - i
       name: App Interface
+      components:
+      - name: AppInterface
+        class_name: AppInterface
+        type: entity
+        properties:
+          type:
+            description: interface type
+            name: type
+            required: true
+            type: str
+            choices:
+            - cli
+            - rest_flask
+          mappers:
+            description: interface mapper functions
+            name: mappers
+            type: dict
+            key_type: str
+            inner_type: str
     project:
       aliases:
       - proj
