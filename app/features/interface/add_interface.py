@@ -66,7 +66,7 @@ def handle(context: MessageContext):
 
         # If the input interface type is 'cli', then create a new CliAppInterface instance.
         if type == 'cli':
-            interface = cli.CliAppInterface.create(type)
+            interface = cli.CliInterface.create(type)
         else:
             raise AppError(context.errors.INVALID_INTERFACE_TYPE)
 

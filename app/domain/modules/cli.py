@@ -6,7 +6,6 @@ from . import i
 
 class CliArgument(Model):
     id = t.StringType(required=True)
-    cli_subcommand_id = t.StringType(required=True)
     name_or_flags = t.ListType(t.StringType(), required=True)
     help = t.StringType(required=True)
     type = t.StringType(choices=['str', 'int', 'float'])
@@ -16,25 +15,20 @@ class CliArgument(Model):
     choices = t.ListType(t.StringType())
     action = t.StringType()
 
-class CliSubcommand(Model):
-    id = t.StringType()
-    cli_command_id = t.StringType(required=True)
+class CliCommand(Model):
+    command_key = t.StringType(required=True)
+    subcommand_key = t.StringType()
     name = t.StringType(required=True)
     help = t.StringType(required=True)
-
-class AppCommand(Model):
-    id = t.StringType(required=True)
-    interface_id = t.StringType(required=True)
-    name = t.StringType(required=True)
+    arguments = t.ListType(t.ModelType(CliArgument), default=[])
 
 
-class CliAppInterface(i.AppInterface):
-    id = t.StringType(required=True)
+class CliInterface(i.AppInterface):
     type = t.StringType(required=True, choices=['cli'])
 
     @staticmethod
     def create(type: str):
-        interface = CliAppInterface()
+        interface = CliInterface()
         interface.type = type
 
         return interface
