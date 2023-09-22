@@ -340,10 +340,6 @@ features:
           functions:
           - data_mapping: add_cli_parent_argument
             function_path: cli.add_parent_argument
-        add_subcommand:
-          functions:
-          - data_mapping: add_cli_subcommand
-            function_path: cli.add_subcommand
     domain:
       features:
         add:
