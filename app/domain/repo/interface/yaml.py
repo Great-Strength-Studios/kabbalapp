@@ -6,10 +6,20 @@ class YamlRepository(AppInterfaceRepository):
         self.app_directory = app_directory
         self.schema_location = schema_location
 
+    class AppInterfaceDataMapper(i.AppInterface):
+
+        class Options():
+            roles = {
+                'app.add_interface': blacklist('type'),
+            }
+
     @property
     def schema_file_path(self) -> str:
         import os
         return os.path.join(self.app_directory, self.schema_location)
+    
+    def _to_mapper(self, interface_data: dict) -> AppInterfaceDataMapper:
+        return self.AppInterfaceDataMapper(interface_data, strict=False)
     
     def get_interface(self, type: str) -> i.AppInterface:
         import yaml
@@ -17,12 +27,9 @@ class YamlRepository(AppInterfaceRepository):
             data = yaml.safe_load(f)
         
         # Load interfaces from schema as a list.
-        interfaces = data.get('interfaces', [])
-        
-        # Check to see if the interface already exists.
-        try:
-            interface_data = [i for i in interfaces if i['type'] == type][0]
-        except IndexError:
+        interfaces = data.get('interfaces')
+        interface_data = interfaces.get(type, None)
+        if interface_data is None:
             return None
         
         # Add the interface to the list.
@@ -34,13 +41,11 @@ class YamlRepository(AppInterfaceRepository):
             data = yaml.safe_load(f)
         
         # Load interfaces from schema as a list.
-        interfaces = data.get('interfaces', [])
+        interfaces = data.get('interfaces', {})
         
-        # Filter out the interface if it already exists.
-        interfaces = [i for i in interfaces if i['type'] != interface.type]
-        
-        # Add/overwrite the interface to the list.
-        interfaces.append(interface.to_primitive())
+        # Add new interface
+        data = self._to_mapper(interface.to_primitive())
+        interfaces['types'] = data.to_primitive()
 
         # Update the interfaces in the schema.
         data['interfaces'] = interfaces
