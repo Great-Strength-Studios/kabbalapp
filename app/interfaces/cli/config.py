@@ -34,7 +34,7 @@ class AppArgumentConfiguration(Model):
 class AppSubcommandConfiguration(Model):
     name = t.StringType(required=True)
     help = t.StringType(required=True)
-    arguments = t.DictType(t.ModelType(AppArgumentConfiguration), default={})
+    arguments = t.ListType(t.ModelType(AppArgumentConfiguration), default=[])
 
     class Options():
         serialize_when_none = False
@@ -44,7 +44,7 @@ class AppSubcommandConfiguration(Model):
 
 class AppCommandConfiguration(Model):
     help = t.StringType(required=True)
-    cli_subcommands = t.DictType(t.ModelType(AppSubcommandConfiguration), default={})
+    subcommands = t.DictType(t.ModelType(AppSubcommandConfiguration), default={})
 
     class Options():
         serialize_when_none = False
@@ -52,8 +52,7 @@ class AppCommandConfiguration(Model):
             'add_parser': blacklist('cli_subcommands')
         }
 
-class AppCommandsConfiguration(Model):
-    type = t.StringType(required=True)
+class CliInterfaceConfiguration(Model):
     parent_arguments = t.DictType(t.ModelType(AppArgumentConfiguration), default={})
     mappers = t.DictType(t.StringType())
-    cli_commands = t.DictType(t.ModelType(AppCommandConfiguration), default={})
+    commands = t.DictType(t.ModelType(AppCommandConfiguration), default={})
