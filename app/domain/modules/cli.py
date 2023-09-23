@@ -33,12 +33,13 @@ class CliCommand(Model):
         return command
 
 
-class CliInterface(i.AppInterface):
-    type = t.StringType(required=True, choices=['cli'])
+class CliInterfaceType(i.AppInterfaceType):
+    mappers = t.DictType(t.StringType())
+    commands = t.ListType(t.ModelType(CliCommand), default=[])
 
     @staticmethod
     def create(type: str):
-        interface = CliInterface()
+        interface = CliInterfaceType()
         interface.type = type
 
         return interface
