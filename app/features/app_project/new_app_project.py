@@ -43,8 +43,7 @@ class DynamicContainer():
         setattr(self, service_name, factory_func)
 """
 
-DOMAIN_CONTENT = """from .value_objects import *
-from .entities import *
+DOMAIN_CONTENT = """from .entities import *
 from .factory import *
 from .modules import *
 from .repo import *
