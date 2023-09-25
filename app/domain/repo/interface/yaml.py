@@ -6,22 +6,25 @@ class YamlRepository(AppInterfaceRepository):
         self.app_directory = app_directory
         self.schema_location = schema_location
 
-    class AppInterfaceDataMapper(i.AppInterface):
+    class AppInterfaceTypeDataMapper(i.AppInterfaceType):
 
         class Options():
             roles = {
-                'app.add_interface': blacklist('type'),
+                'write': blacklist('type'),
             }
+
+        def map(self):
+            return i.AppInterfaceType(self.to_primitive())
 
     @property
     def schema_file_path(self) -> str:
         import os
         return os.path.join(self.app_directory, self.schema_location)
     
-    def _to_mapper(self, interface_data: dict) -> AppInterfaceDataMapper:
-        return self.AppInterfaceDataMapper(interface_data, strict=False)
+    def _to_mapper(self, **data) -> AppInterfaceTypeDataMapper:
+        return self.AppInterfaceTypeDataMapper(data, strict=False)
     
-    def get_interface(self, type: str) -> i.AppInterface:
+    def get_interfaces(self, type: str) -> i.AppInterfaceType:
         import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
@@ -32,10 +35,10 @@ class YamlRepository(AppInterfaceRepository):
         if interface_data is None:
             return None
         
-        # Add the interface to the list.
-        return i.AppInterface(interface_data, strict=False)
+        # Return list of mapped interface types
+        return [self._to_mapper(**i, type=type).map() for type, i in interface_data.items()]
     
-    def save_interface(self, interface: i.AppInterface) -> None:
+    def save_interface_type(self, interface: i.AppInterfaceType) -> None:
         import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
@@ -45,7 +48,7 @@ class YamlRepository(AppInterfaceRepository):
         
         # Add new interface
         data = self._to_mapper(interface.to_primitive())
-        interfaces['types'] = data.to_primitive()
+        interfaces['types'][data.type] = data.to_primitive('write')
 
         # Update the interfaces in the schema.
         data['interfaces'] = interfaces
