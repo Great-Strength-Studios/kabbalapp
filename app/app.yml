@@ -691,25 +691,21 @@ interfaces:
         command: null
         header: null
       parent_arguments:
-        app_key:
-          help: app project key (not required when using default project)
-          name_or_flags:
-          - --app-key
-        env:
-          choices:
-          - dev
-          - prod
-          default: prod
-          help: environment to run the command in
-          name_or_flags:
-          - --env
-        force:
-          action: store_true
-          help: force the command overwrite existing files when syncing
-          name_or_flags:
-          - --force
-        verbose:
-          action: store_true
-          help: run the command with verbose output
-          name_or_flags:
-          - --verbose
+      - help: app project key (not required when using default project)
+        name_or_flags:
+        - --app-key
+      - choices:
+        - dev
+        - prod
+        default: prod
+        help: environment to run the command in
+        name_or_flags:
+        - --env
+      - action: store_true
+        help: force the command overwrite existing files when syncing
+        name_or_flags:
+        - --force
+      - action: store_true
+        help: run the command with verbose output
+        name_or_flags:
+        - --verbose
