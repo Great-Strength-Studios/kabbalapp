@@ -1,7 +1,7 @@
 from ..entities import *
 
 # Module dependencies
-from . import i
+from .interface import AppInterfaceType
 
 
 class CliArgument(Model):
@@ -32,7 +32,7 @@ class CliCommand(Model):
 
         return command
 
-class CliInterfaceType(i.AppInterfaceType):
+class CliInterfaceType(AppInterfaceType):
     mappers = t.DictType(t.StringType())
     commands = t.ListType(t.ModelType(CliCommand), default=[])
     parent_arguments = t.ListType(t.ModelType(CliArgument), default=[])

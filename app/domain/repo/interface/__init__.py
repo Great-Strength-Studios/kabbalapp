@@ -3,8 +3,8 @@ from ...modules import *
 
 class AppInterfaceRepository():
 
-    def get_interfaces(self) -> i.AppInterfaceType:
+    def get_interfaces(self) -> AppInterfaceType:
         pass
 
-    def save_interface(self, interface: i.AppInterfaceType) -> None:
+    def save_interface_type(self, interface: AppInterfaceType) -> None:
         pass

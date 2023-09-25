@@ -6,7 +6,7 @@ class YamlRepository(AppInterfaceRepository):
         self.app_directory = app_directory
         self.schema_location = schema_location
 
-    class AppInterfaceTypeDataMapper(i.AppInterfaceType):
+    class AppInterfaceTypeDataMapper(AppInterfaceType):
 
         class Options():
             roles = {
@@ -14,7 +14,7 @@ class YamlRepository(AppInterfaceRepository):
             }
 
         def map(self):
-            return i.AppInterfaceType(self.to_primitive())
+            return AppInterfaceType(self.to_primitive())
 
     @property
     def schema_file_path(self) -> str:
@@ -24,7 +24,7 @@ class YamlRepository(AppInterfaceRepository):
     def _to_mapper(self, **data) -> AppInterfaceTypeDataMapper:
         return self.AppInterfaceTypeDataMapper(data, strict=False)
     
-    def get_interfaces(self) -> i.AppInterfaceType:
+    def get_interfaces(self) -> AppInterfaceType:
         import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
@@ -36,7 +36,7 @@ class YamlRepository(AppInterfaceRepository):
         # Return list of mapped interface types
         return [self._to_mapper(**i, type=type).map() for type, i in interface_data.items()]
     
-    def save_interface_type(self, interface: i.AppInterfaceType) -> None:
+    def save_interface_type(self, interface: AppInterfaceType) -> None:
         import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
@@ -45,8 +45,8 @@ class YamlRepository(AppInterfaceRepository):
         interfaces = data.get('interfaces', {})
         
         # Add new interface
-        data = self._to_mapper(interface.to_primitive())
-        interfaces['types'][data.type] = data.to_primitive('write')
+        mapper = self._to_mapper(**interface.to_primitive())
+        interfaces['types'][mapper.type] = mapper.to_primitive('write')
 
         # Update the interfaces in the schema.
         data['interfaces'] = interfaces
