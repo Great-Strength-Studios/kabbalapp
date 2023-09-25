@@ -49,10 +49,10 @@ class AppCommandConfiguration(Model):
     class Options():
         serialize_when_none = False
         roles = {
-            'add_parser': blacklist('cli_subcommands')
+            'add_parser': blacklist('subcommands')
         }
 
 class CliInterfaceConfiguration(Model):
-    parent_arguments = t.DictType(t.ModelType(AppArgumentConfiguration), default={})
+    parent_arguments = t.ListType(t.ModelType(AppArgumentConfiguration), default={})
     mappers = t.DictType(t.StringType())
     commands = t.DictType(t.ModelType(AppCommandConfiguration), default={})

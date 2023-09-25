@@ -9,10 +9,10 @@ with open('app/app.yml', 'r') as f:
 
 # Get app interface types
 interfaces = app_config.get('interfaces', None)
-types = app_config.get('types', None)
+types = interfaces.get('types', None)
 
 # Print a message if no interface types are configured
-if interfaces is None:
+if types is None:
     print('No interfaces configured.')
     sys.exit(0)
 # Get cli interface
@@ -38,7 +38,7 @@ for command_name, command in cli_interface.commands.items():
         subcommand_subparser = subcommand_subparsers.add_parser(subcommand_name, help=subcommand.help)
         for argument in subcommand.arguments:
             subcommand_subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
-        for _, argument in cli_interface.parent_arguments.items():
+        for argument in cli_interface.parent_arguments:
             subcommand_subparser.add_argument(*argument.name_or_flags, **argument.to_primitive('add_argument'))
 
 # Parse arguments.
