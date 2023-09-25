@@ -1,2 +1,2 @@
-from . import interface, interface as i
-from . import cli
+from .interface import AppInterfaceType
+from .cli import CliInterfaceType, CliCommand, CliArgument

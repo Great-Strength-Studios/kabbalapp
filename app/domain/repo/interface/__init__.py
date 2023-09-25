@@ -1,11 +1,10 @@
-from ...value_objects import *
 from ...entities import *
 from ...modules import *
 
 class AppInterfaceRepository():
 
-    def get_interface(self, type: str) -> i.AppInterface:
+    def get_interfaces(self) -> AppInterfaceType:
         pass
 
-    def save_interface(self, interface: i.AppInterface) -> None:
+    def save_interface_type(self, interface: AppInterfaceType) -> None:
         pass

@@ -52,7 +52,7 @@ class InterfaceConfiguration(Model):
 class AppConfiguration(Model):
     errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
     features = t.ModelType(AppFeaturesConfiguration)
-    interfaces = t.ListType(t.ModelType(InterfaceConfiguration), default=[])
+    interfaces = t.DictType(t.ModelType(InterfaceConfiguration), default=[])
 
 
 class AppConfigurationReader():

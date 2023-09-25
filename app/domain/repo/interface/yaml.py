@@ -6,41 +6,47 @@ class YamlRepository(AppInterfaceRepository):
         self.app_directory = app_directory
         self.schema_location = schema_location
 
+    class AppInterfaceTypeDataMapper(AppInterfaceType):
+
+        class Options():
+            roles = {
+                'write': blacklist('type'),
+            }
+
+        def map(self):
+            return AppInterfaceType(self.to_primitive())
+
     @property
     def schema_file_path(self) -> str:
         import os
         return os.path.join(self.app_directory, self.schema_location)
     
-    def get_interface(self, type: str) -> i.AppInterface:
-        import yaml
-        with open(self.schema_file_path, 'r') as f:
-            data = yaml.safe_load(f)
-        
-        # Load interfaces from schema as a list.
-        interfaces = data.get('interfaces', [])
-        
-        # Check to see if the interface already exists.
-        try:
-            interface_data = [i for i in interfaces if i['type'] == type][0]
-        except IndexError:
-            return None
-        
-        # Add the interface to the list.
-        return i.AppInterface(interface_data, strict=False)
+    def _to_mapper(self, **data) -> AppInterfaceTypeDataMapper:
+        return self.AppInterfaceTypeDataMapper(data, strict=False)
     
-    def save_interface(self, interface: i.AppInterface) -> None:
+    def get_interfaces(self) -> AppInterfaceType:
         import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
         
         # Load interfaces from schema as a list.
-        interfaces = data.get('interfaces', [])
+        interfaces = data.get('interfaces')
+        interface_data = interfaces.get('types', {})
         
-        # Filter out the interface if it already exists.
-        interfaces = [i for i in interfaces if i['type'] != interface.type]
+        # Return list of mapped interface types
+        return [self._to_mapper(**i, type=type).map() for type, i in interface_data.items()]
+    
+    def save_interface_type(self, interface: AppInterfaceType) -> None:
+        import yaml
+        with open(self.schema_file_path, 'r') as f:
+            data = yaml.safe_load(f)
         
-        # Add/overwrite the interface to the list.
-        interfaces.append(interface.to_primitive())
+        # Load interfaces from schema as a list.
+        interfaces = data.get('interfaces', {})
+        
+        # Add new interface
+        mapper = self._to_mapper(**interface.to_primitive())
+        interfaces['types'][mapper.type] = mapper.to_primitive('write')
 
         # Update the interfaces in the schema.
         data['interfaces'] = interfaces

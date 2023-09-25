@@ -1,7 +1,13 @@
-from .models import *
-from ...services import *
+from . import *
 
-class YamlCliInterfaceService(CliInterfaceService):
+class YamlRepository(CliInterfaceRepository):
+
+    class CliCommandDataMapper(cli.CliCommand):
+
+        class Options():
+            roles = {
+                'cli.add_command': blacklist('command_key', 'subcommand_key'),
+            }
 
     def __init__(self, app_directory: str, schema_location: str):
         self.app_directory = app_directory
@@ -12,7 +18,7 @@ class YamlCliInterfaceService(CliInterfaceService):
         import os
         return os.path.join(self.app_directory, self.schema_location)
 
-    def add_command(self, key: str) -> AppCommand:
+    def add_command(self, command: cli.CliCommand) -> cli.CliCommand:
         import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
@@ -86,4 +92,3 @@ class YamlCliInterfaceService(CliInterfaceService):
         with open(self.schema_file_path, 'w') as f:
             yaml.dump(data, f)
         return argument
-        

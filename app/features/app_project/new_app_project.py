@@ -43,8 +43,7 @@ class DynamicContainer():
         setattr(self, service_name, factory_func)
 """
 
-DOMAIN_CONTENT = """from .value_objects import *
-from .entities import *
+DOMAIN_CONTENT = """from .entities import *
 from .factory import *
 from .modules import *
 from .repo import *
@@ -162,7 +161,9 @@ def handle(context: MessageContext):
     app_yml_block = target_app_printer.new_block('app', 'app.yml', '')
     app_yml_block.code_block = {
         'commands': {},
-        'interfaces': {},
+        'interfaces': {
+            'types': {}
+        },
         'errors': {},
         'features': {
             'groups': {},
