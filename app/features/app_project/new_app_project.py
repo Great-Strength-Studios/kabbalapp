@@ -162,7 +162,9 @@ def handle(context: MessageContext):
     app_yml_block = target_app_printer.new_block('app', 'app.yml', '')
     app_yml_block.code_block = {
         'commands': {},
-        'interfaces': {},
+        'interfaces': {
+            'types': {}
+        },
         'errors': {},
         'features': {
             'groups': {},
