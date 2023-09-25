@@ -24,7 +24,7 @@ class YamlRepository(AppInterfaceRepository):
     def _to_mapper(self, **data) -> AppInterfaceTypeDataMapper:
         return self.AppInterfaceTypeDataMapper(data, strict=False)
     
-    def get_interfaces(self, type: str) -> i.AppInterfaceType:
+    def get_interfaces(self) -> i.AppInterfaceType:
         import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
