@@ -31,9 +31,7 @@ class YamlRepository(AppInterfaceRepository):
         
         # Load interfaces from schema as a list.
         interfaces = data.get('interfaces')
-        interface_data = interfaces.get(type, None)
-        if interface_data is None:
-            return None
+        interface_data = interfaces.get('types', {})
         
         # Return list of mapped interface types
         return [self._to_mapper(**i, type=type).map() for type, i in interface_data.items()]
