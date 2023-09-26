@@ -43,3 +43,18 @@ class CliInterfaceType(AppInterfaceType):
         interface.type = type
 
         return interface
+    
+    def command_exists(self, command_key: str, subcommand_key: str = None):
+        return any([command for command in self.commands if command.command_key == command_key and command.subcommand_key == subcommand_key])
+    
+    def add_command(self, command: CliCommand):
+        self.commands.append(command)
+
+    def parent_argument_exists(self, flags: List[str]):
+        for flag in flags:
+            if any([argument for argument in self.parent_arguments if flag in argument.name_or_flags]):
+                return True
+        return False
+    
+    def add_parent_argument(self, argument: CliArgument):
+        self.parent_arguments.append(argument)
