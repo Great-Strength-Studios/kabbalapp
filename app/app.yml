@@ -246,7 +246,7 @@ errors:
   CLI_ARGUMENT_ALREADY_EXISTS:
     error_code: '000000006'
     message:
-      en_US: CLI parent argument with key "{}" already exists
+      en_US: A CLI argument with one of the following keys "{}" already exists
   CLI_COMMAND_ALREADY_EXISTS:
     error_code: '000000005'
     message:
