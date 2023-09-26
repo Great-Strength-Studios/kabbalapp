@@ -457,7 +457,7 @@ interfaces:
                 - --type
               name: Add CLI Argument
             add_command:
-              arguments:
+              arguments: []
               name: Add CLI Command
             add_parent_argument:
               arguments:

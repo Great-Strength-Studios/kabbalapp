@@ -24,7 +24,6 @@ def add_cli_command(context, request, app_context, **kwargs):
 
 def add_cli_parent_argument(context, request, app_context, **kwargs):
     return AddCliParentArgument({
-        'key': request.get('key', None),
         'name': request.get('name', None),
         'flags': request.get('flags', None),
         'positional': request.get('positional', False),
@@ -40,7 +39,6 @@ def add_cli_argument(context, request, app_context, **kwargs):
     return AddCliArgument({
         'command_key': request.get('command_key', None),
         'subcommand_key': request.get('subcommand_key', None),
-        'key': request.get('key', None),
         'name': request.get('name', None),
         'flags': request.get('flags', None),
         'positional': request.get('positional', False),
