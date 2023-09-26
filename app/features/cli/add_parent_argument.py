@@ -48,9 +48,11 @@ def handle(context: MessageContext):
     
     # Create new argument instance.
     argument = CliArgument.create(
-        name_or_flags=name_or_flags,
+        name=name,
         help=help,
         type=type,
+        flags=flags,
+        positional=positional,
         default=default,
         required=required,
         choices=choices,
