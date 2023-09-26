@@ -15,8 +15,25 @@ class CliArgument(Model):
     action = t.StringType()
 
     @staticmethod
-    def create(name_or_flags: List[str], help: str, type: str = None, default: str = None, required: bool = False, nargs: str = None, choices: List[str] = None, action: str = None):
+    def create(name: str, help: str, type: str = None, flags: List[str] = [], positional: bool = False, default: str = None, required: bool = False, nargs: str = None, choices: List[str] = None, action: str = None):
         argument = CliArgument()
+
+        # Format name or flags parameter
+        name = name.lower().replace('_', '-').replace(' ', '-')
+        if not positional:
+            name = '--{}'.format(name)
+            if flags:
+                flags = ['-{}'.format(flag.replace('_', '-')) for flag in flags]
+        name_or_flags = []
+        name_or_flags.append(name)
+        if flags:
+            name_or_flags.extend(flags)
+
+        # Format required parameter.
+        if positional or required == False:
+            required = None
+
+        # Set argument properties
         argument.name_or_flags = name_or_flags
         argument.help = help
         argument.type = type
@@ -26,6 +43,7 @@ class CliArgument(Model):
         argument.choices = choices
         argument.action = action
 
+        # Return argument
         return argument
 
 
@@ -76,6 +94,16 @@ class CliInterfaceType(AppInterfaceType):
     
     def add_command(self, command: CliCommand) -> None:
         self.commands.append(command)
+
+    def get_command(self, command_key: str, subcommand_key: str = None) -> CliCommand:
+        return next(
+            (
+                command for command in self.commands 
+                if command.command_key == command_key 
+                and command.subcommand_key == subcommand_key
+            ), 
+            None
+        )
 
     def parent_argument_exists(self, flags: List[str]) -> bool:
         # Loop through the flags and check if any of them match the flags of an existing parent argument
