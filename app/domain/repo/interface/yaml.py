@@ -1,20 +1,22 @@
 from . import *
 
+
+class AppInterfaceTypeDataMapper(AppInterfaceType):
+
+    class Options():
+        roles = {
+            'write': blacklist('type'),
+        }
+
+    def map(self):
+        return AppInterfaceType(self.to_primitive())
+    
+
 class YamlRepository(AppInterfaceRepository):
 
     def __init__(self, app_directory: str, schema_location: str):
         self.app_directory = app_directory
         self.schema_location = schema_location
-
-    class AppInterfaceTypeDataMapper(AppInterfaceType):
-
-        class Options():
-            roles = {
-                'write': blacklist('type'),
-            }
-
-        def map(self):
-            return AppInterfaceType(self.to_primitive())
 
     @property
     def schema_file_path(self) -> str:
@@ -22,7 +24,7 @@ class YamlRepository(AppInterfaceRepository):
         return os.path.join(self.app_directory, self.schema_location)
     
     def _to_mapper(self, **data) -> AppInterfaceTypeDataMapper:
-        return self.AppInterfaceTypeDataMapper(data, strict=False)
+        return AppInterfaceTypeDataMapper(data, strict=False)
     
     def get_interfaces(self) -> AppInterfaceType:
         import yaml
