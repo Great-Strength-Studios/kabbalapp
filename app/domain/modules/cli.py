@@ -51,10 +51,10 @@ class CliInterfaceType(AppInterfaceType):
         self.commands.append(command)
 
     def parent_argument_exists(self, flags: List[str]):
+        # Loop through the flags and check if any of them match the flags of an existing parent argument
         for flag in flags:
             if any([argument for argument in self.parent_arguments if flag in argument.name_or_flags]):
                 return True
-        return False
     
     def add_parent_argument(self, argument: CliArgument):
         self.parent_arguments.append(argument)
