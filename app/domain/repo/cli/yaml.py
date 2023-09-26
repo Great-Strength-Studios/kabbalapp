@@ -8,7 +8,7 @@ class CliCommandDataMapper(CliCommand):
             'write': blacklist('command_key', 'subcommand_key'),
         }
 
-    def map(self):
+    def map(self) -> CliCommand:
         return CliCommand(self.to_primitive())
     
     @staticmethod
@@ -20,11 +20,14 @@ class CliInterfaceTypeDataMapper(CliInterfaceType):
     commands = t.ListType(t.ModelType(CliCommandDataMapper), default=[])
     class Options():
         roles = {
-            'write': blacklist('commands')
+            'write': blacklist('commands'),
+            'read': blacklist('commands'),
         }
 
-    def map(self):
-        return CliInterfaceType(self.to_primitive())
+    def map(self) -> CliInterfaceType:
+        result = CliInterfaceType(self.to_primitive())
+        result.commands = [command.map() for command in self.commands]
+        return result
     
     @staticmethod
     def to_mapper(**data) -> 'CliInterfaceTypeDataMapper':
