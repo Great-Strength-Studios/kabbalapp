@@ -427,10 +427,6 @@ interfaces:
                 - -d
                 - --description
                 required: true
-              - help: argument key
-                name_or_flags:
-                - -k
-                - --key
               - help: argument name
                 name_or_flags:
                 - name
@@ -462,11 +458,6 @@ interfaces:
               name: Add CLI Argument
             add_command:
               arguments:
-              - help: command key
-                name_or_flags:
-                - -k
-                - --key
-                required: true
               name: Add CLI Command
             add_parent_argument:
               arguments:
@@ -490,10 +481,6 @@ interfaces:
                 - -d
                 - --description
                 required: true
-              - help: argument key
-                name_or_flags:
-                - -k
-                - --key
               - help: argument name
                 name_or_flags:
                 - name
