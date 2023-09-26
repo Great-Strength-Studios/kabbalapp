@@ -446,7 +446,6 @@ interfaces:
                 name_or_flags:
                 - -s
                 - --subcommand-key
-                required: true
               - choices:
                 - str
                 - int
@@ -457,6 +456,23 @@ interfaces:
                 - --type
               name: Add CLI Argument
             add_command:
+              arguments:
+              - help: cli command key
+                name_or_flags:
+                - --command-key
+                - -c
+                required: true
+              - help: cli subcommand key
+                name_or_flags:
+                - --subcommand-key
+                - -s
+              - help: cli command name
+                name_or_flags:
+                - name
+              - help: cli command description
+                name_or_flags:
+                - --description
+                - -d
               name: Add CLI Command
             add_parent_argument:
               arguments:
