@@ -1,29 +1,48 @@
 from . import *
 
+class CliArgumentDataMapper(CliArgument):
+    
+        class Options():
+            roles = {
+                'write': blacklist(),
+                'map': blacklist(),
+            }
+            serialize_when_none = False
+    
+        def map(self) -> CliArgument:
+            return CliArgument(self.to_primitive('map'))
 
 class CliCommandDataMapper(CliCommand):
+
+    arguments = t.ListType(t.ModelType(CliArgumentDataMapper), default=[])
 
     class Options():
         roles = {
             'write': blacklist('command_key', 'subcommand_key'),
+            'map': blacklist()
         }
+        serialize_when_none = False
 
     def map(self) -> CliCommand:
-        return CliCommand(self.to_primitive())
+        return CliCommand(self.to_primitive('map'))
     
 
 class CliInterfaceTypeDataMapper(CliInterfaceType):
 
     commands = t.ListType(t.ModelType(CliCommandDataMapper), default=[])
+    parent_arguments = t.ListType(t.ModelType(CliArgumentDataMapper), default=[])
+
     class Options():
         roles = {
-            'write': blacklist('commands'),
-            'read': blacklist('commands'),
+            'write': blacklist('commands', 'type'),
+            'map': blacklist('commands', 'parent_arguments'),
         }
+        serialize_when_none = False
 
     def map(self) -> CliInterfaceType:
-        result = CliInterfaceType(self.to_primitive())
+        result = CliInterfaceType(self.to_primitive('map'))
         result.commands = [command.map() for command in self.commands]
+        result.parent_arguments = [argument.map() for argument in self.parent_arguments]
         return result
 
 
@@ -38,8 +57,8 @@ class YamlRepository(CliInterfaceRepository):
         import os
         return os.path.join(self.app_directory, self.schema_location)
     
-    def _to_mapper(self, type: type, **data):
-        return type(data, strict=False)
+    def _to_mapper(self, mapper_type: type, **data):
+        return mapper_type(data, strict=False)
 
     def get_inteface(self) -> CliInterfaceType:
         
@@ -95,6 +114,10 @@ class YamlRepository(CliInterfaceRepository):
                 **interface.to_primitive())
             interface_types['cli'] = mapper.to_primitive('write')
 
+            # Add commands if they do not exist
+            if 'commands' not in interface_types['cli']:
+                interface_types['cli']['commands'] = {}
+
             # Add commands to interface.
             for command in mapper.commands:
                 command_data = self._to_mapper(
@@ -103,6 +126,9 @@ class YamlRepository(CliInterfaceRepository):
                 if not command.subcommand_key:
                     interface_types['cli']['commands'][command.command_key] = command_data
                 else:
+                    interface_types['cli']['commands'][command.command_key] = interface_types['cli']['commands'].get(command.command_key, {})
+                    if 'subcommands' not in interface_types['cli']['commands'][command.command_key]:
+                        interface_types['cli']['commands'][command.command_key]['subcommands'] = {}
                     interface_types['cli']['commands'][command.command_key]['subcommands'][command.subcommand_key] = command_data
     
             # Update the interfaces in the schema.

@@ -373,7 +373,7 @@ features:
           - data_mapping: add_interface
             function_path: interface.add_interface
 interfaces:
-  commands:
+  commands: null
   types:
     cli:
       commands:
@@ -457,7 +457,6 @@ interfaces:
                 - --type
               name: Add CLI Argument
             add_command:
-              arguments: []
               name: Add CLI Command
             add_parent_argument:
               arguments:
@@ -636,7 +635,6 @@ interfaces:
                 required: true
               name: Add Domain Role
             list:
-              arguments: []
               help: list domains
               name: List
             sync:
@@ -673,10 +671,6 @@ interfaces:
                 - -t
                 required: true
               name: Add App Interface
-        module: {}
-      mappers:
-        command: null
-        header: null
       parent_arguments:
       - help: app project key (not required when using default project)
         name_or_flags:
