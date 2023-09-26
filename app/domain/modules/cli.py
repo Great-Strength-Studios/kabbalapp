@@ -14,6 +14,20 @@ class CliArgument(Model):
     choices = t.ListType(t.StringType())
     action = t.StringType()
 
+    @staticmethod
+    def create(name_or_flags: List[str], help: str, type: str = None, default: str = None, required: bool = False, nargs: str = None, choices: List[str] = None, action: str = None):
+        argument = CliArgument()
+        argument.name_or_flags = name_or_flags
+        argument.help = help
+        argument.type = type
+        argument.default = default
+        argument.required = required
+        argument.nargs = nargs
+        argument.choices = choices
+        argument.action = action
+
+        return argument
+
 
 class CliCommand(Model):
     command_key = t.StringType(required=True)
