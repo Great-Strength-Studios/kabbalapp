@@ -28,7 +28,6 @@ class AddCliCommand(RequestEvent):
     help = t.StringType(required=True, deserialize_from=['help', 'description'])
 
 class AddCliParentArgument(RequestEvent):
-    key = t.StringType()
     name = t.StringType(required=True)
     help = t.StringType(required=True, deserialize_from=['help', 'description'])
     type = t.StringType(choices=['str', 'int', 'float'])
