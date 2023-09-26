@@ -50,7 +50,7 @@ class YamlRepository(CliInterfaceRepository):
         
         # Load interfaces from schema as a list.
         interfaces = data.get('interfaces')
-        interface_data = interfaces.get('cli', None)
+        interface_data = interfaces['types'].get('cli', None)
 
         # Return None if no interface is configured
         if interface_data is None:
@@ -62,7 +62,7 @@ class YamlRepository(CliInterfaceRepository):
         for command_key, command in commands.items():
             subcommands = command.get('subcommands', {})
             for subcommand_key, subcommand in subcommands.items():
-                command_list.append(self.to_mapper(
+                command_list.append(self._to_mapper(
                     CliCommandDataMapper,
                     **subcommand,
                     command_key=command_key,
@@ -87,12 +87,13 @@ class YamlRepository(CliInterfaceRepository):
             
             # Load interfaces from schema as a list.
             interfaces = data.get('interfaces', {})
+            interface_types = interfaces.get('types', {})
             
             # Add new interface
             mapper = self._to_mapper(
                 CliInterfaceTypeDataMapper,
                 **interface.to_primitive())
-            interfaces['cli'] = mapper.to_primitive('write')
+            interface_types['cli'] = mapper.to_primitive('write')
 
             # Add commands to interface.
             for command in mapper.commands:
@@ -100,12 +101,12 @@ class YamlRepository(CliInterfaceRepository):
                     CliCommandDataMapper,
                     **command.to_primitive()).to_primitive('write')
                 if not command.subcommand_key:
-                    interfaces['cli']['commands'][command.command_key] = command_data
+                    interface_types['cli']['commands'][command.command_key] = command_data
                 else:
-                    interfaces['cli']['commands'][command.command_key]['subcommands'][command.subcommand_key] = command_data
+                    interface_types['cli']['commands'][command.command_key]['subcommands'][command.subcommand_key] = command_data
     
             # Update the interfaces in the schema.
-            data['interfaces'] = interfaces
+            data['interfaces']['types'] = interface_types
     
             # Write the schema back to the file.
             with open(self.schema_file_path, 'w') as f:
