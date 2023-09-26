@@ -50,7 +50,11 @@ class YamlRepository(CliInterfaceRepository):
         
         # Load interfaces from schema as a list.
         interfaces = data.get('interfaces')
-        interface_data = interfaces.get('cli', {})
+        interface_data = interfaces.get('cli', None)
+
+        # Return None if no interface is configured
+        if interface_data is None:
+            return None
 
         # Parse out commands
         command_list = []
