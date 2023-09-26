@@ -1,5 +1,5 @@
-from app.domain.modules import CliInterfaceType
 from . import *
+
 
 class CliCommandDataMapper(CliCommand):
 
@@ -11,9 +11,6 @@ class CliCommandDataMapper(CliCommand):
     def map(self) -> CliCommand:
         return CliCommand(self.to_primitive())
     
-    @staticmethod
-    def to_mapper(**data) -> 'CliCommandDataMapper':
-        return CliCommandDataMapper(data, strict=False)
 
 class CliInterfaceTypeDataMapper(CliInterfaceType):
 
@@ -28,10 +25,7 @@ class CliInterfaceTypeDataMapper(CliInterfaceType):
         result = CliInterfaceType(self.to_primitive())
         result.commands = [command.map() for command in self.commands]
         return result
-    
-    @staticmethod
-    def to_mapper(**data) -> 'CliInterfaceTypeDataMapper':
-        return CliInterfaceTypeDataMapper(data, strict=False)
+
 
 class YamlRepository(CliInterfaceRepository):
 
@@ -70,7 +64,8 @@ class YamlRepository(CliInterfaceRepository):
                     command_key=command_key,
                     subcommand_key=subcommand_key))
 
-        mapper = self.CliInterfaceTypeDataMapper(
+        mapper = self._to_mapper(
+            CliInterfaceTypeDataMapper,
             name=interface_data.get('name', None),
             parent_arguments=interface_data.get('parent_arguments', []),
             commands=command_list
