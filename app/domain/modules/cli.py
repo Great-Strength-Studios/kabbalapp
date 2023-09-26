@@ -105,9 +105,9 @@ class CliInterfaceType(AppInterfaceType):
             None
         )
 
-    def parent_argument_exists(self, flags: List[str]) -> bool:
+    def parent_argument_exists(self, argument: CliArgument) -> bool:
         # Loop through the flags and check if any of them match the flags of an existing parent argument
-        for flag in flags:
+        for flag in argument.name_or_flags:
             if any([argument for argument in self.parent_arguments if flag in argument.name_or_flags]):
                 return True
         # Return False if no argument was found
