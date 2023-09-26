@@ -28,7 +28,6 @@ class AddCliCommand(RequestEvent):
     help = t.StringType(required=True, deserialize_from=['help', 'description'])
 
 class AddCliParentArgument(RequestEvent):
-    key = t.StringType()
     name = t.StringType(required=True)
     help = t.StringType(required=True, deserialize_from=['help', 'description'])
     type = t.StringType(choices=['str', 'int', 'float'])
@@ -48,8 +47,7 @@ class AddCliParentArgument(RequestEvent):
 
 class AddCliArgument(RequestEvent):
     command_key = t.StringType(required=True)
-    subcommand_key = t.StringType(required=True)
-    key = t.StringType()
+    subcommand_key = t.StringType()
     name = t.StringType(required=True)
     help = t.StringType(required=True, deserialize_from=['help', 'description'])
     type = t.StringType(choices=['str', 'int', 'float'])

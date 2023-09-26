@@ -246,7 +246,7 @@ errors:
   CLI_ARGUMENT_ALREADY_EXISTS:
     error_code: '000000006'
     message:
-      en_US: CLI parent argument with key "{}" already exists
+      en_US: A CLI argument with one of the following keys "{}" already exists
   CLI_COMMAND_ALREADY_EXISTS:
     error_code: '000000005'
     message:
@@ -296,10 +296,10 @@ errors:
     error_code: '000010002'
     message:
       en_US: Interface with type "{}" already exists
-  INVALID_INTERFACE_TYPE:
+  INTERFACE_TYPE_NOT_FOUND:
     error_code: '000010003'
     message:
-      en_US: Invalid interface type "{}"
+      en_US: Interface with type "{}" not found
   INVALID_REQUEST_DATA:
     error_code: '000000001'
     message:
@@ -373,7 +373,7 @@ features:
           - data_mapping: add_interface
             function_path: interface.add_interface
 interfaces:
-  commands:
+  commands: null
   types:
     cli:
       commands:
@@ -427,10 +427,6 @@ interfaces:
                 - -d
                 - --description
                 required: true
-              - help: argument key
-                name_or_flags:
-                - -k
-                - --key
               - help: argument name
                 name_or_flags:
                 - name
@@ -450,7 +446,6 @@ interfaces:
                 name_or_flags:
                 - -s
                 - --subcommand-key
-                required: true
               - choices:
                 - str
                 - int
@@ -462,11 +457,22 @@ interfaces:
               name: Add CLI Argument
             add_command:
               arguments:
-              - help: command key
+              - help: cli command key
                 name_or_flags:
-                - -k
-                - --key
+                - --command-key
+                - -c
                 required: true
+              - help: cli subcommand key
+                name_or_flags:
+                - --subcommand-key
+                - -s
+              - help: cli command name
+                name_or_flags:
+                - name
+              - help: cli command description
+                name_or_flags:
+                - --description
+                - -d
               name: Add CLI Command
             add_parent_argument:
               arguments:
@@ -490,10 +496,6 @@ interfaces:
                 - -d
                 - --description
                 required: true
-              - help: argument key
-                name_or_flags:
-                - -k
-                - --key
               - help: argument name
                 name_or_flags:
                 - name
@@ -649,7 +651,6 @@ interfaces:
                 required: true
               name: Add Domain Role
             list:
-              arguments: []
               help: list domains
               name: List
             sync:
@@ -686,10 +687,6 @@ interfaces:
                 - -t
                 required: true
               name: Add App Interface
-        module: {}
-      mappers:
-        command: null
-        header: null
       parent_arguments:
       - help: app project key (not required when using default project)
         name_or_flags:

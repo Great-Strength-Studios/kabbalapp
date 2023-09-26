@@ -69,7 +69,7 @@ def handle(context: MessageContext):
         if type == 'cli':
             interface = CliInterfaceType.create(type)
         else:
-            raise AppError(context.errors.INVALID_INTERFACE_TYPE)
+            raise AppError(context.errors.INTERFACE_TYPE_NOT_FOUND)
 
         # Add interface.
         interface_repo.save_interface_type(interface)

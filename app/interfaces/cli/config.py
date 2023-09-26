@@ -53,6 +53,7 @@ class AppCommandConfiguration(Model):
         }
 
 class CliInterfaceConfiguration(Model):
+    name = t.StringType()
     parent_arguments = t.ListType(t.ModelType(AppArgumentConfiguration), default={})
     mappers = t.DictType(t.StringType())
     commands = t.DictType(t.ModelType(AppCommandConfiguration), default={})

@@ -1,13 +1,52 @@
 from . import *
 
-class YamlRepository(CliInterfaceRepository):
-
-    class CliCommandDataMapper(cli.CliCommand):
-
+class CliArgumentDataMapper(CliArgument):
+    
         class Options():
             roles = {
-                'cli.add_command': blacklist('command_key', 'subcommand_key'),
+                'write': blacklist(),
+                'map': blacklist(),
             }
+            serialize_when_none = False
+    
+        def map(self) -> CliArgument:
+            return CliArgument(self.to_primitive('map'))
+
+class CliCommandDataMapper(CliCommand):
+
+    arguments = t.ListType(t.ModelType(CliArgumentDataMapper), default=[])
+
+    class Options():
+        roles = {
+            'write': blacklist('command_key', 'subcommand_key'),
+            'map': blacklist()
+        }
+        serialize_when_none = False
+
+    def map(self) -> CliCommand:
+        return CliCommand(self.to_primitive('map'))
+    
+
+class CliInterfaceTypeDataMapper(CliInterfaceType):
+
+    commands = t.ListType(t.ModelType(CliCommandDataMapper), default=[])
+    parent_arguments = t.ListType(t.ModelType(CliArgumentDataMapper), default=[])
+
+    class Options():
+        roles = {
+            'write': blacklist('commands', 'type'),
+            'map': blacklist('commands', 'parent_arguments'),
+        }
+        serialize_when_none = False
+
+    def map(self) -> CliInterfaceType:
+        result = CliInterfaceType(self.to_primitive('map'))
+        result.commands = [command.map() for command in self.commands]
+        result.parent_arguments = [argument.map() for argument in self.parent_arguments]
+        return result
+
+
+class YamlRepository(CliInterfaceRepository):
 
     def __init__(self, app_directory: str, schema_location: str):
         self.app_directory = app_directory
@@ -17,78 +56,86 @@ class YamlRepository(CliInterfaceRepository):
     def schema_file_path(self) -> str:
         import os
         return os.path.join(self.app_directory, self.schema_location)
+    
+    def _to_mapper(self, mapper_type: type, **data):
+        return mapper_type(data, strict=False)
 
-    def add_command(self, command: cli.CliCommand) -> cli.CliCommand:
+    def get_inteface(self) -> CliInterfaceType:
+        
+        # Load interfaces from schema as a list.
         import yaml
         with open(self.schema_file_path, 'r') as f:
             data = yaml.safe_load(f)
-        command = AppCommand({'key': key})
-        command_data = command.to_primitive('cli.add_command')
-        cli_interface_data = data['interfaces']['cli']
-        try:
-            if cli_interface_data['commands'] is not None and key in cli_interface_data['commands']:
-                return ('CLI_COMMAND_ALREADY_EXISTS', key)
-            if cli_interface_data['commands'] is None:
-                cli_interface_data['commands'] = {key: command_data}
-            else:
-                cli_interface_data['commands'][key] = command_data
-        except KeyError:
-            cli_interface_data['commands'] = {key: command_data}
-        data['interfaces']['cli'] = cli_interface_data
-        with open(self.schema_file_path, 'w') as f:
-            yaml.dump(data, f)
-        return command
+        
+        # Load interfaces from schema as a list.
+        interfaces = data.get('interfaces')
+        interface_data = interfaces['types'].get('cli', None)
+
+        # Return None if no interface is configured
+        if interface_data is None:
+            return None
+
+        # Parse out commands
+        command_list = []
+        commands = interface_data.get('commands', {})
+        for command_key, command in commands.items():
+            subcommands = command.get('subcommands', {})
+            for subcommand_key, subcommand in subcommands.items():
+                command_list.append(self._to_mapper(
+                    CliCommandDataMapper,
+                    **subcommand,
+                    command_key=command_key,
+                    subcommand_key=subcommand_key))
+
+        mapper = self._to_mapper(
+            CliInterfaceTypeDataMapper,
+            name=interface_data.get('name', None),
+            parent_arguments=interface_data.get('parent_arguments', []),
+            commands=command_list
+        )
+        
+        # Return CLI interface type
+        return mapper.map()
     
-    def add_parent_argument(self, key: str, name_or_flags: str, help: str, **kwargs) -> AppArgument:
-        import yaml
-        with open(self.schema_file_path, 'r') as f:
-            data = yaml.safe_load(f)
-        argument = AppArgument({'key': key, 'name_or_flags': name_or_flags, 'help': help, **kwargs})
-        commands = AppCommands(data['interfaces']['cli'])
-        if key in commands.parent_arguments:
-            return ('CLI_ARGUMENT_ALREADY_EXISTS', key)
-        commands.parent_arguments[key] = argument.to_primitive('cli.add_parent_argument')
-        data['interfaces']['cli'] = commands.to_primitive()
-        with open(self.schema_file_path, 'w') as f:
-            yaml.dump(data, f)
-        return argument
+    def save_interface(self, interface: CliInterfaceType) -> CliInterfaceType:
+            
+            # Load interfaces from schema as a list.
+            import yaml
+            with open(self.schema_file_path, 'r') as f:
+                data = yaml.safe_load(f)
+            
+            # Load interfaces from schema as a list.
+            interfaces = data.get('interfaces', {})
+            interface_types = interfaces.get('types', {})
+            
+            # Add new interface
+            mapper = self._to_mapper(
+                CliInterfaceTypeDataMapper,
+                **interface.to_primitive())
+            interface_types['cli'] = mapper.to_primitive('write')
+
+            # Add commands if they do not exist
+            if 'commands' not in interface_types['cli']:
+                interface_types['cli']['commands'] = {}
+
+            # Add commands to interface.
+            for command in mapper.commands:
+                command_data = self._to_mapper(
+                    CliCommandDataMapper,
+                    **command.to_primitive()).to_primitive('write')
+                if not command.subcommand_key:
+                    interface_types['cli']['commands'][command.command_key] = command_data
+                else:
+                    interface_types['cli']['commands'][command.command_key] = interface_types['cli']['commands'].get(command.command_key, {})
+                    if 'subcommands' not in interface_types['cli']['commands'][command.command_key]:
+                        interface_types['cli']['commands'][command.command_key]['subcommands'] = {}
+                    interface_types['cli']['commands'][command.command_key]['subcommands'][command.subcommand_key] = command_data
     
-    def add_subcommand(self, command_key: str, key: str, name: str, help: str) -> AppSubcommand:
-        import yaml
-        with open(self.schema_file_path, 'r') as f:
-            data = yaml.safe_load(f)
-        subcommand = AppSubcommand({'key': key, 'name': name, 'help': help})
-        commands = AppCommands(data['interfaces']['cli'])
-        try:
-            command = commands.commands[command_key]
-        except KeyError:
-            return ('CLI_COMMAND_NOT_FOUND', command_key)
-        if key in command.subcommands:
-            return ('CLI_SUBCOMMAND_ALREADY_EXISTS', key)
-        command.subcommands[key] = subcommand.to_primitive('cli.add_subcommand')
-        data['interfaces']['cli'] = commands.to_primitive()
-        with open(self.schema_file_path, 'w') as f:
-            yaml.dump(data, f)
-        return subcommand
+            # Update the interfaces in the schema.
+            data['interfaces']['types'] = interface_types
     
-    def add_argument(self, command_key: str, subcommand_key: str, key: str, name_or_flags: str, help: str, **kwargs) -> AppArgument:
-        import yaml
-        with open(self.schema_file_path, 'r') as f:
-            data = yaml.safe_load(f)
-        argument = AppArgument({'key': key, 'name_or_flags': name_or_flags, 'help': help, **kwargs})
-        commands = AppCommands(data['interfaces']['cli'])
-        try:
-            command = commands.commands[command_key]
-        except KeyError:
-            return ('CLI_COMMAND_NOT_FOUND', command_key)
-        try:
-            subcommand = command.subcommands[subcommand_key]
-        except KeyError:
-            return ('CLI_SUBCOMMAND_NOT_FOUND', subcommand_key)
-        if key in subcommand.arguments:
-            return ('CLI_ARGUMENT_ALREADY_EXISTS', key)
-        subcommand.arguments[key] = argument.to_primitive('cli.add_argument')
-        data['interfaces']['cli'] = commands.to_primitive()
-        with open(self.schema_file_path, 'w') as f:
-            yaml.dump(data, f)
-        return argument
+            # Write the schema back to the file.
+            with open(self.schema_file_path, 'w') as f:
+                yaml.dump(data, f)
+    
+            return interface

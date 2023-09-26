@@ -4,7 +4,18 @@ from ...domain import *
 def handle(context: MessageContext):
 	
 	# Unpack request.
-	request = context.data
+	command_key = context.data.command_key
+	subcommand_key = context.data.subcommand_key
+	name = context.data.name
+	help = context.data.help
+	type = context.data.type
+	flags = context.data.flags
+	positional = context.data.positional
+	default = context.data.default
+	required = context.data.required
+	choices = context.data.choices
+	nargs = context.data.nargs
+	action = context.data.action
 
 	# Get app key from headers.
 	app_key = context.headers.get('app_key', None)
@@ -13,34 +24,51 @@ def handle(context: MessageContext):
 	if not app_key:
 		raise AppError(context.errors.APP_KEY_REQUIRED)
 	
-	# Get cli inteface service.
-	service: cli.CliInterfaceService = context.services.cli_interface_service(app_key)
+	# Get cli inteface repo.
+	cli_interface_repo: CliInterfaceRepository = context.services.cli_interface_repo(app_key)
 
-	# Format key if none is provided.
-	if not request.key:
-		request.key = request.name.lower().replace(' ', '_')
+	# Retrieve cli interface
+	interface = cli_interface_repo.get_inteface()
 
-	# Format name or flags parameter
-	request.name = request.name.lower().replace('_', '-').replace(' ', '-')
-	if not request.positional:
-		request.name = '--{}'.format(request.name)
-		if request.flags:
-			request.flags = ['-{}'.format(flag.replace('_', '-')) for flag in request.flags]
-	name_or_flags = []
-	name_or_flags.append(request.name)
-	if request.flags:
-		name_or_flags.extend(request.flags)
-
-	# Format required parameter.
-	if request.positional or request.required == False:
-		request.required = None
-
-	# Add argument to cli interface.
-	argument = service.add_argument(name_or_flags=name_or_flags, **request.to_primitive('cli.add_argument'))
-
-	# If cli argument already exists, raise exception.
-	if isinstance(argument, tuple):
-		raise AppError(context.errors.get(argument[0]).format_message(*argument[1:]))
+	# Raise interface type not found error if cli interface is not configured.
+	if not interface:
+		raise AppError(context.errors.INTERFACE_TYPE_NOT_FOUND.format_message('cli'))
 	
-	# Return cli argument.
+	# Check to see if command exists.
+	exists = interface.command_exists(command_key=command_key, subcommand_key=subcommand_key)
+
+	# Raise command not found error if command does not exist.
+	if not exists:
+		raise AppError(context.errors.CLI_COMMAND_NOT_FOUND.format_message(command_key, subcommand_key))
+	
+	# Get cli command.
+	command = interface.get_command(command_key=command_key, subcommand_key=subcommand_key)
+
+	# Create new argument instance.
+	argument = CliArgument.create(
+		name=name,
+		help=help,
+		type=type,
+		flags=flags,
+		positional=positional,
+		default=default,
+		required=required,
+		choices=choices,
+		nargs=nargs,
+		action=action)
+
+	# Check to see if argument already exists.
+	exists = command.argument_exists(argument.name_or_flags)
+
+	# Raise argument already exists error if argument already exists.
+	if exists:
+		raise AppError(context.errors.CLI_ARGUMENT_ALREADY_EXISTS.format_message(str(argument.name_or_flags)))
+	
+	# Add argument to command.
+	command.add_argument(argument)
+
+	# Save cli interface.
+	cli_interface_repo.save_interface(interface)
+
+	# Return added argument.
 	return argument
