@@ -65,6 +65,10 @@ class AddCliArgument(RequestEvent):
             'cli.add_argument': blacklist('name', 'flags', 'positional'),
         }
 
+class AddValueObject(RequestEvent):
+    name = t.StringType(required=True)
+    class_name = t.StringType()
+
 class AddDomain(RequestEvent):
     name = t.StringType(required=True)
     key = t.StringType()
