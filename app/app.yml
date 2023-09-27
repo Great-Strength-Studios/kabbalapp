@@ -650,6 +650,17 @@ interfaces:
                 - -t
                 required: true
               name: Add Domain Role
+            add_value_object:
+              arguments:
+              - help: value object name
+                name_or_flags:
+                - name
+              - help: value object class name
+                name_or_flags:
+                - --class-name
+                required: true
+              help: add value object
+              name: Add Value Object
             list:
               help: list domains
               name: List
