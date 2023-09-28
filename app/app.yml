@@ -1,7 +1,7 @@
 commands: null
 domain:
-  entities: null
-  factories: null
+  entities: {}
+  factories: {}
   modules:
     cli:
       aliases: null
@@ -233,7 +233,8 @@ domain:
           class_name: AppProject
           name: App Project
       name: App Project
-  repos: null
+  repos: {}
+  value_objects: {}
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
@@ -255,10 +256,6 @@ errors:
     error_code: '000000003'
     message:
       en_US: CLI command with key "{}" not found
-  VALUE_OBJECT_ALREADY_EXISTS:
-    error_code: '000020001'
-    message:
-      en_US: Value object with class name "{}" already exists
   DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
     error_code: '000020006'
     message:
@@ -304,6 +301,10 @@ errors:
     error_code: '000000001'
     message:
       en_US: 'Invalid request contains the following errors: {}'
+  VALUE_OBJECT_ALREADY_EXISTS:
+    error_code: '000020001'
+    message:
+      en_US: Value object with class name "{}" already exists
 features:
   groups:
     app_project:
