@@ -74,13 +74,6 @@ def sync_domain_implementation(context, request, app_context, **kwargs):
         'force': request.get('force', False)
     })
 
-def update_domain(context, request, app_context, **kwargs):
-    return UpdateDomain({
-        'key': request.get('key', None),
-        'name': request.get('name', None),
-        'aliases': request.get('aliases', None),
-    })
-
 def add_domain_model(context, request, app_context, **kwargs):
     return AddDomainModel({
         'domain_key': request.get('domain_key', None),
