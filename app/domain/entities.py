@@ -4,13 +4,14 @@ class ValueObject(Model):
     id = t.StringType(required=True)
     name = t.StringType(required=True)
     class_name = t.StringType(required=True)
-    properties = t.ListType(t.StringType(), default=[])
+    properties = t.ListType(ModelProperty, default=[])
 
     @staticmethod
-    def create(name: str, class_name: str, id: str = None) -> 'ValueObject':
+    def create(name: str, class_name: str, id: str = None, properties: List[ModelProperty] = []) -> 'ValueObject':
         result = ValueObject()
         result.name = name
         result.class_name = class_name
+        result.properties = properties
 
         # Convert python camel case to snake case if ID is not provided
         if id is None:
