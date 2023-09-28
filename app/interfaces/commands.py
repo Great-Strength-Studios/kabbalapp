@@ -93,7 +93,7 @@ class AddDomainRole(RequestEvent):
     type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
     fields = t.ListType(t.StringType(), required=True)
 
-class AddProperty(RequestEvent):
+class AddModelProperty(RequestEvent):
 
     model_id = t.StringType(required=True)
     name = t.StringType(required=True)
