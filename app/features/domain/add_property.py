@@ -27,7 +27,6 @@ def handle(context: MessageContext):
     # Add property.
     property = domain_service.add_property(**request.to_primitive())
 
-    # Raise app error if property is an error tuple.
     if isinstance(property, tuple):
         raise AppError(context.errors.get(property[0]).format_message(property[1]))
 
