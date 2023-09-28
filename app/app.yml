@@ -334,10 +334,6 @@ features:
             function_path: cli.add_parent_argument
     domain:
       features:
-        add:
-          functions:
-          - data_mapping: add_domain
-            function_path: domain.add_domain
         add_implementation:
           functions:
           - data_mapping: add_domain_implementation
@@ -358,18 +354,10 @@ features:
           functions:
           - data_mapping: add_value_object
             function_path: domain.add_value_object
-        sync:
-          functions:
-          - data_mapping: sync_domain
-            function_path: domain.sync_domain
         sync_implementation:
           functions:
           - data_mapping: sync_domain_implementation
             function_path: domain.sync_implementation
-        update:
-          functions:
-          - data_mapping: update_domain
-            function_path: domain.update_domain
     interface:
       features:
         add:
@@ -528,21 +516,6 @@ interfaces:
               name: Add CLI Parent Argument
         domain:
           subcommands:
-            add:
-              arguments:
-              - help: domain aliases
-                name_or_flags:
-                - --aliases
-                - -a
-                nargs: +
-              - help: domain key
-                name_or_flags:
-                - --key
-                - -k
-              - help: domain name
-                name_or_flags:
-                - name
-              name: Add Domain
             add_implementation:
               arguments:
               - help: domain key
@@ -665,17 +638,6 @@ interfaces:
                 required: true
               help: add value object
               name: Add Value Object
-            list:
-              help: list domains
-              name: List
-            sync:
-              arguments:
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              name: Sync Domain
             sync_implementation:
               arguments:
               - help: domain key

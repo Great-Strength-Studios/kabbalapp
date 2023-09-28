@@ -69,32 +69,15 @@ class AddValueObject(RequestEvent):
     name = t.StringType(required=True)
     class_name = t.StringType()
 
-class AddDomain(RequestEvent):
-    name = t.StringType(required=True)
-    key = t.StringType()
-    aliases = t.ListType(t.StringType(), default=[])
-
-class GetDomain(RequestEvent):
-    key = t.StringType(required=True)
-
 class AddDomainImplementation(RequestEvent):
     domain_key = t.StringType(required=True)
     key = t.StringType()
     name = t.StringType(required=True)
 
-class SyncDomain(RequestEvent):
-    domain_key = t.StringType(required=True)
-    force = t.BooleanType(default=False)
-
 class SyncDomainImplementation(RequestEvent):
     domain_key = t.StringType(required=True)
     implementation_key = t.StringType(required=True)
     force = t.BooleanType(default=False)
-
-class UpdateDomain(RequestEvent):
-    key = t.StringType(required=True)
-    name = t.StringType()
-    aliases = t.ListType(t.StringType())
 
 class AddDomainModel(RequestEvent):
     domain_key = t.StringType(required=True)

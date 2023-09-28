@@ -2,18 +2,6 @@ from .models import *
 
 class AppDomainService():
 
-    def add_domain(self, key: str, name: str, aliases: List[str]) -> AppDomain:
-        pass
-
-    def get_domains(self) -> List[AppDomain]:
-        pass
-
-    def get_domain(self, key: str) -> AppDomain:
-        pass
-
-    def update_domain(self, key: str, name: str, aliases: List[str]) -> AppDomain:
-        pass 
-
     def add_implementation(self, domain_key: str, name: str, key: str) -> AppDomainImplementation:
         pass
 
