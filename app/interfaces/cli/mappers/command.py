@@ -120,12 +120,10 @@ def add_domain_role(context, request, app_context, **kwargs):
         'fields': request.get('fields', None)
     })
 
-def add_domain_model_property(context, request, app_context, **kwargs):
-    return AddDomainModelProperty({
-        'domain_key': request.get('domain_key', None),
-        'model_key': request.get('model_key', None),
+def add_property(context, request, app_context, **kwargs):
+    return AddProperty({
+        'model_id': request.get('model_key', None),
         'name': request.get('name', None),
-        'key': request.get('key', None),
         'type': request.get('type', 'str'),
         'required': request.get('required', None),
         'default': request.get('default', None),
