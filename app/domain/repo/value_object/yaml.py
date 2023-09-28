@@ -28,7 +28,7 @@ class YamlRepository(ValueObjectRepository):
     def _to_mapper(self, mapper_type: type, **data):
         return mapper_type(data, strict=False)
     
-    def get_value_object(self, id: str) -> ValueObject:
+    def get_value_objects(self) -> List[ValueObject]:
 
         # Load the schema file data
         import yaml
@@ -38,13 +38,9 @@ class YamlRepository(ValueObjectRepository):
         # Get the value objects data
         value_object_data = data['domain'].get('value_objects', {})
 
-        # Loop through the value objects data and return the value object if found
-        for object_id, value_object in value_object_data.items():
-            if id == object_id:
-                return self._to_mapper(ValueObjectDataMapper, id=object_id, **value_object).map()
-        
-        # If no value object was found, return None
-        return None
+        # Return the value objects
+        return [self._to_mapper(ValueObjectDataMapper, id=id, **value_object).map() for id, value_object in value_object_data.items()]
+
 
     def save_value_object(self, value_object: ValueObject) -> None:
 
