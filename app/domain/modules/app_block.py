@@ -1,5 +1,17 @@
 from ..entities import *
 
+class ModelPropertyBlock(Model):
+
+    property = t.ModelType(ModelProperty, required=True)
+
+    @staticmethod
+    def create(property: ModelProperty) -> 'ModelPropertyBlock':
+        result = ModelPropertyBlock()
+        result.property = property
+
+        return result
+
+
 class ValueObjectBlock(Model):
 
     file_path = t.StringType(required=True)
@@ -19,7 +31,7 @@ class ValueObjectBlock(Model):
     def add_value_object(self, value_object: ValueObject):
         self.value_objects.append(value_object)
 
-    def print(self):
+    def print_lines(self):
         # Create empty list representing print lines
         print_lines = []
 
@@ -53,4 +65,7 @@ class ValueObjectBlock(Model):
             i += 1
 
         # Return list joined by newlines
-        return '\n'.join(print_lines)
+        return print_lines
+    
+    def print(self):
+        return '\n'.join(self.print_lines())
