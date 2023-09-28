@@ -25,4 +25,6 @@ class ModelProperty(Model):
 		result.choices = choices
 		result.description = description
 
+		result.validate()
+
 		return result

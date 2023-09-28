@@ -20,6 +20,8 @@ class ValueObject(Model):
         else:
             result.id = id
 
+        result.validate()
+
         return result
     
     def has_property(self, property: ModelProperty) -> bool:
