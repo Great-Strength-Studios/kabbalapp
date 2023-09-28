@@ -255,10 +255,10 @@ errors:
     error_code: '000000003'
     message:
       en_US: CLI command with key "{}" not found
-  DOMAIN_ALREADY_EXISTS:
+  VALUE_OBJECT_ALREADY_EXISTS:
     error_code: '000020001'
     message:
-      en_US: Domain with key "{}" already exists
+      en_US: Value object with class name "{}" already exists
   DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
     error_code: '000020006'
     message:
