@@ -22,5 +22,8 @@ class ValueObject(Model):
 
         return result
     
+    def has_property(self, property: ModelProperty) -> bool:
+        return any((p.name == property.name for p in self.properties))
+
     def add_property(self, property: ModelProperty) -> None:
         self.properties.append(property)
