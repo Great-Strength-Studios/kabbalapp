@@ -638,17 +638,6 @@ interfaces:
                 required: true
               help: add value object
               name: Add Value Object
-            list:
-              help: list domains
-              name: List
-            sync:
-              arguments:
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              name: Sync Domain
             sync_implementation:
               arguments:
               - help: domain key
