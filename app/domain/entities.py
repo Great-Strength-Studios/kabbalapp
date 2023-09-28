@@ -21,3 +21,6 @@ class ValueObject(Model):
             result.id = id
 
         return result
+    
+    def add_property(self, property: ModelProperty) -> None:
+        self.properties.append(property)
