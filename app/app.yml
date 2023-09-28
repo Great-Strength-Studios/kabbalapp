@@ -234,7 +234,11 @@ domain:
           name: App Project
       name: App Project
   repos: {}
-  value_objects: {}
+  value_objects:
+    model_property:
+      class_name: ModelProperty
+      name: Model Property
+      properties: []
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
