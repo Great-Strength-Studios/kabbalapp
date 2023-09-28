@@ -1,3 +1,4 @@
+from app.domain.entities import ValueObject
 from . import *
 
 
@@ -26,6 +27,22 @@ class YamlRepository(DomainRepository):
     
     def _to_mapper(self, mapper_type: type, **data):
         return mapper_type(data, strict=False)
+    
+    def get_domain_model(self, id: str) -> ValueObject:
+        
+        # Load the schema file data
+        import yaml
+        with open(self.schema_file_path, 'r') as stream:
+            data = yaml.safe_load(stream)
+
+        # First check the value objects
+        value_object_data = data['domain'].get('value_objects', {})
+        if id in value_object_data:
+            mapper = self._to_mapper(ValueObjectDataMapper, id=id, **value_object_data.get(id))
+            return mapper.map()
+        
+        # Otherwise return None if no domain models are found.
+        return None
     
     def get_value_objects(self) -> List[ValueObject]:
 
