@@ -275,7 +275,7 @@ errors:
   DOMAIN_MODEL_NOT_FOUND:
     error_code: '000020003'
     message:
-      en_US: Domain model with key "{}" not found
+      en_US: Domain model with id "{}" not found
   DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
     error_code: '000020004'
     message:
