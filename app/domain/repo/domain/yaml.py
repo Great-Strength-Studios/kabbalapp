@@ -14,7 +14,7 @@ class ValueObjectDataMapper(ValueObject):
         return ValueObject(self.to_primitive('map'))
     
 
-class YamlRepository(ValueObjectRepository):
+class YamlRepository(DomainRepository):
 
     def __init__(self, app_directory: str, schema_location: str):
         self.app_directory = app_directory

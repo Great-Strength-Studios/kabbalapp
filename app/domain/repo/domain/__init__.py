@@ -1,7 +1,7 @@
 from ...entities import *
 from ...modules import *
 
-class ValueObjectRepository():
+class DomainRepository():
 
     def get_value_objects(self) -> List[ValueObject]:
         pass
