@@ -60,7 +60,7 @@ def add_value_object(context, request, app_context, **kwargs):
         'class_name': request.get('class_name', None),
     })
 
-def add_model_property(context, request, app_context, **kwargs):
+def add_domain_model_property(context, request, app_context, **kwargs):
     return AddModelProperty({
         'model_id': request.get('model_key', None),
         'name': request.get('name', None),

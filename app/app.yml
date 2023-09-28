@@ -279,7 +279,7 @@ errors:
   DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
     error_code: '000020004'
     message:
-      en_US: Domain model property with key "{}" already exists
+      en_US: Domain model property with name "{}" already exists
   DOMAIN_NOT_FOUND:
     error_code: '000020005'
     message:
