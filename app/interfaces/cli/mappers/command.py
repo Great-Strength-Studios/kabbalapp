@@ -103,7 +103,5 @@ def add_model_property(context, request, app_context, **kwargs):
         'required': request.get('required', None),
         'default': request.get('default', None),
         'choices': request.get('choices', None),
-        'serialized_name': request.get('serialized_name', None),
-        'deserialize_from': request.get('deserialize_from', None),
         'description': request.get('description', None),
     })

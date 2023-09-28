@@ -101,6 +101,4 @@ class AddModelProperty(RequestEvent):
     required = t.BooleanType()
     default = t.StringType()
     choices = t.ListType(t.StringType())
-    serialized_name = t.StringType()
-    deserialize_from = t.ListType(t.StringType(), default=[])
     description = t.StringType()
