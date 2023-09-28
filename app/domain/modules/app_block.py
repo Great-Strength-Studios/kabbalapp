@@ -41,11 +41,16 @@ class ValueObjectBlock(Model):
             value_object = self.value_objects[i]
 
             # Write out the class name and inheritance
-            print_lines.append(f'class {value_object.name}(Model):')
+            print_lines.append(f'class {value_object.class_name}(Model):')
 
             # If no properties exist, add a pass statement
             if len(value_object.properties) == 0:
                 print_lines.append('\tpass')
+            
+            # Otherwise, add the properties
+            
+            # Increment the counter
+            i += 1
 
         # Return list joined by newlines
         return '\n'.join(print_lines)

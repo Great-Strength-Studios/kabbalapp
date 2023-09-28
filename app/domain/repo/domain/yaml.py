@@ -8,7 +8,6 @@ class ValueObjectDataMapper(ValueObject):
             'write': blacklist('id'),
             'map': blacklist(),
         }
-        serialize_when_none = False
 
     def map(self) -> ValueObject:
         return ValueObject(self.to_primitive('map'))
@@ -33,7 +32,7 @@ class YamlRepository(DomainRepository):
         # Load the schema file data
         import yaml
         with open(self.schema_file_path, 'r') as stream:
-            data = yaml.load(stream)
+            data = yaml.safe_load(stream)
 
         # Get the value objects data
         value_object_data = data['domain'].get('value_objects', {})
@@ -47,7 +46,7 @@ class YamlRepository(DomainRepository):
         # Load the schema file data
         import yaml
         with open(self.schema_file_path, 'r') as stream:
-            data = yaml.load(stream)
+            data = yaml.safe_load(stream)
 
         # Get the value objects data
         value_object_data = data['domain'].get('value_objects', {})
