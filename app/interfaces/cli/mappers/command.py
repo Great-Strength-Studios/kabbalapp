@@ -60,24 +60,6 @@ def add_value_object(context, request, app_context, **kwargs):
         'class_name': request.get('class_name', None),
     })
 
-def add_domain(context, request, app_context, **kwargs):
-    return AddDomain({
-        'name': request.get('name', None),
-        'key': request.get('key', None),
-        'aliases': request.get('aliases', None),
-    })
-
-def get_domain(context, request, app_context, **kwargs):
-    return GetDomain({
-        'key': request.get('key', None)
-    })
-
-def sync_domain(context, request, app_context, **kwargs):
-    return SyncDomain({
-        'domain_key': request.get('domain_key', None),
-        'force': request.get('force', False)
-    })
-
 def add_domain_implementation(context, request, app_context, **kwargs):
     return AddDomainImplementation({
         'domain_key': request.get('domain_key', None),
