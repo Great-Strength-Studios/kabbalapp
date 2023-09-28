@@ -255,10 +255,10 @@ errors:
     error_code: '000000003'
     message:
       en_US: CLI command with key "{}" not found
-  DOMAIN_ALREADY_EXISTS:
+  VALUE_OBJECT_ALREADY_EXISTS:
     error_code: '000020001'
     message:
-      en_US: Domain with key "{}" already exists
+      en_US: Value object with class name "{}" already exists
   DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
     error_code: '000020006'
     message:
@@ -354,6 +354,10 @@ features:
           functions:
           - data_mapping: add_domain_role
             function_path: domain.add_role
+        add_value_object:
+          functions:
+          - data_mapping: add_value_object
+            function_path: domain.add_value_object
         sync:
           functions:
           - data_mapping: sync_domain
@@ -650,6 +654,17 @@ interfaces:
                 - -t
                 required: true
               name: Add Domain Role
+            add_value_object:
+              arguments:
+              - help: value object name
+                name_or_flags:
+                - name
+              - help: value object class name
+                name_or_flags:
+                - --class-name
+                required: true
+              help: add value object
+              name: Add Value Object
             list:
               help: list domains
               name: List

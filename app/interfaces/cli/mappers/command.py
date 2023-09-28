@@ -54,6 +54,12 @@ def add_cli_argument(context, request, app_context, **kwargs):
         'description': request.get('description', None),
     })
 
+def add_value_object(context, request, app_context, **kwargs):
+    return AddValueObject({
+        'name': request.get('name', None),
+        'class_name': request.get('class_name', None),
+    })
+
 def add_domain(context, request, app_context, **kwargs):
     return AddDomain({
         'name': request.get('name', None),
