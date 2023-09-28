@@ -60,6 +60,17 @@ def add_value_object(context, request, app_context, **kwargs):
         'class_name': request.get('class_name', None),
     })
 
+def add_model_property(context, request, app_context, **kwargs):
+    return AddModelProperty({
+        'model_id': request.get('model_key', None),
+        'name': request.get('name', None),
+        'type': request.get('type', 'str'),
+        'required': request.get('required', None),
+        'default': request.get('default', None),
+        'choices': request.get('choices', None),
+        'description': request.get('description', None),
+    })
+
 def add_domain_implementation(context, request, app_context, **kwargs):
     return AddDomainImplementation({
         'domain_key': request.get('domain_key', None),
@@ -93,15 +104,4 @@ def add_domain_role(context, request, app_context, **kwargs):
         'key': request.get('key', None),
         'type': request.get('type', None),
         'fields': request.get('fields', None)
-    })
-
-def add_model_property(context, request, app_context, **kwargs):
-    return AddModelProperty({
-        'model_id': request.get('model_key', None),
-        'name': request.get('name', None),
-        'type': request.get('type', 'str'),
-        'required': request.get('required', None),
-        'default': request.get('default', None),
-        'choices': request.get('choices', None),
-        'description': request.get('description', None),
     })
