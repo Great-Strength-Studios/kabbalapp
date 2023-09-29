@@ -5,7 +5,7 @@ from ...domain import *
 CLI_MAPPERS_CONTENT = """from .command import *
 from .header import *"""
 
-CLI_COMMAND_MAPPER_CONTENT = """from ..commands import *
+CLI_COMMAND_MAPPER_CONTENT = """from ...commands import *
 """
 
 def handle(context: MessageContext):
