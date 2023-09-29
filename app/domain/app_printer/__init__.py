@@ -14,6 +14,10 @@ class AppModuleBlock(Model):
         self.code_block = code_block
         self.code_lines = code_block.splitlines()
 
+    def add_line(self, code: str) -> None:
+        self.code_lines.append(code)
+        self.code_block = '\n'.join(self.code_lines)
+
     def update_code_line(self, line_index: int, code: str) -> None:
         self.code_lines[line_index] = code
         self.code_block = '\n'.join(self.code_lines)
