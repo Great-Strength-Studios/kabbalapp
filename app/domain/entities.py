@@ -4,7 +4,7 @@ class ValueObject(Model):
     id = t.StringType(required=True)
     name = t.StringType(required=True)
     class_name = t.StringType(required=True)
-    properties = t.ListType(ModelProperty, default=[])
+    properties = t.ListType(t.ModelType(ModelProperty), default=[])
 
     @staticmethod
     def create(name: str, class_name: str, id: str = None, properties: List[ModelProperty] = []) -> 'ValueObject':
