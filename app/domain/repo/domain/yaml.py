@@ -9,6 +9,7 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
             'write': blacklist(),
             'map': blacklist(),
         }
+        serialize_when_none = False
 
     def map(self) -> DomainModelProperty:
         return DomainModelProperty(self.to_primitive('map'))
