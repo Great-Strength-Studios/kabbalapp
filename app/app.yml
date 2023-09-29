@@ -138,56 +138,6 @@ domain:
               name: Name
               required: true
               type: str
-        domain_model_property:
-          class_name: AppDomainModelProperty
-          name: Domain model property
-          properties:
-            default:
-              description: domain model property default value
-              name: Default
-              required: false
-              type: str
-            description:
-              description: domain model property description
-              name: Description
-              required: false
-              type: str
-            key:
-              description: domain model property key
-              name: Key
-              required: true
-              type: str
-            name:
-              description: domain model property name
-              name: Name
-              required: true
-              type: str
-            required:
-              description: domain model property required
-              name: Required
-              required: false
-              type: bool
-            serialized_name:
-              description: domain model property serialized name
-              name: Serialized name
-              required: false
-              type: str
-            type:
-              choices:
-              - str
-              - int
-              - float
-              - bool
-              - datetime
-              - date
-              - list
-              - dict
-              - model
-              default: str
-              description: domain model property type
-              name: Type
-              required: false
-              type: str
         domain_role:
           class_name: AppDomainRole
           name: App Domain Role
