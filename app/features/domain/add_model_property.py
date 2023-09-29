@@ -4,13 +4,13 @@ from ...domain import *
 def handle(context: MessageContext):
 
     # Unpack request.
-    model_id = context.request.model_id
-    name = context.request.name
-    type = context.request.type
-    required = context.request.required
-    default = context.request.default
-    choices = context.request.choices
-    description = context.request.description
+    model_id = context.data.model_id
+    name = context.data.name
+    type = context.data.type
+    required = context.data.required
+    default = context.data.default
+    choices = context.data.choices
+    description = context.data.description
 
     # Retreive app key from headers.
     app_key = context.headers.get('app_key', None)
@@ -30,7 +30,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(model_id))
 
     # Create a new model property
-    property = ModelProperty.create(
+    property = DomainModelProperty.create(
         name=name,
         type=type,
         required=required,

@@ -6,7 +6,7 @@ from schematics.types.serializable import serializable
 from ..constants import *
 
 
-class ModelProperty(Model):
+class DomainModelProperty(Model):
 	
 	name = t.StringType(required=True)
 	type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
@@ -16,8 +16,8 @@ class ModelProperty(Model):
 	description = t.StringType()
 
 	@staticmethod
-	def create(name: str, type: str = 'str', required: bool = False, default: str = None, choices: List[str] = [], description: str = None) -> 'ModelProperty':
-		result = ModelProperty()
+	def create(name: str, type: str = 'str', required: bool = False, default: str = None, choices: List[str] = [], description: str = None) -> 'DomainModelProperty':
+		result = DomainModelProperty()
 		result.name = name
 		result.type = type
 		result.required = required

@@ -1,12 +1,12 @@
 from ..entities import *
 
-class ModelPropertyBlock(Model):
+class DomainModelPropertyBlock(Model):
 
-    property = t.ModelType(ModelProperty, required=True)
+    property = t.ModelType(DomainModelProperty, required=True)
 
     @staticmethod
-    def create(property: ModelProperty) -> 'ModelPropertyBlock':
-        result = ModelPropertyBlock()
+    def create(property: DomainModelProperty) -> 'DomainModelPropertyBlock':
+        result = DomainModelPropertyBlock()
         result.property = property
 
         return result
@@ -109,7 +109,7 @@ class ValueObjectBlock(Model):
             
             # Otherwise, add the properties
             for property in value_object.properties:
-                property_block = ModelPropertyBlock.create(property)
+                property_block = DomainModelPropertyBlock.create(property)
                 print_lines.extend(property_block.print_lines())
             
             # Increment the counter

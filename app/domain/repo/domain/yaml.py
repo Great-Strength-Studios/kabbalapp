@@ -2,6 +2,17 @@ from app.domain.entities import ValueObject
 from . import *
 
 
+class DomainModelPropertyDataMapper(DomainModelProperty):
+
+    class Options():
+        roles = {
+            'write': blacklist(),
+            'map': blacklist(),
+        }
+
+    def map(self) -> DomainModelProperty:
+        return DomainModelProperty(self.to_primitive('map'))
+
 class ValueObjectDataMapper(ValueObject):
     
     class Options():

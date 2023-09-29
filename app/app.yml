@@ -236,7 +236,7 @@ domain:
   repos: {}
   value_objects:
     model_property:
-      class_name: ModelProperty
+      class_name: DomainModelProperty
       name: Model Property
       properties: []
 errors:
