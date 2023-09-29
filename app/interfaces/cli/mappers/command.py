@@ -105,3 +105,6 @@ def add_domain_role(context, request, app_context, **kwargs):
         'type': request.get('type', None),
         'fields': request.get('fields', None)
     })
+
+def print_value_object_module(context, request, app_context, **kwargs):
+    return PrintValueObjectModule()
