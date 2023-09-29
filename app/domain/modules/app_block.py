@@ -40,7 +40,7 @@ class DomainModelPropertyBlock(Model):
             type_args.append(f'default={self.property.default}')
 
         # Add the choices flag
-        if len(self.property.choices) > 0:
+        if self.property.choices:
             type_args.append(f'choices={str(self.property.choices)}')
         
         # Add the type args to the property string
