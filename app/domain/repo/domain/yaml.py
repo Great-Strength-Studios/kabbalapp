@@ -14,15 +14,19 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
         return DomainModelProperty(self.to_primitive('map'))
 
 class ValueObjectDataMapper(ValueObject):
+
+    properties = t.ListType(t.ModelType(DomainModelPropertyDataMapper), default=[])
     
     class Options():
         roles = {
             'write': blacklist('id'),
-            'map': blacklist(),
+            'map': blacklist('properties'),
         }
 
     def map(self) -> ValueObject:
-        return ValueObject(self.to_primitive('map'))
+        result = ValueObject(self.to_primitive('map'))
+        result.properties = [property.map() for property in self.properties]
+        return result
     
 
 class YamlRepository(DomainRepository):
