@@ -15,7 +15,6 @@ def handle(context):
 
 CORE_CONTAINERS_CONTENT = """from schematics import types as t, Model
 
-from ..services import SkyWellness, ConfigurationService
 
 # Container configuration
 class ContainerConfiguration(Model):
