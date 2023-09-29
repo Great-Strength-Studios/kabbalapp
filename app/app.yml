@@ -569,22 +569,9 @@ interfaces:
               - help: domain model property description
                 name_or_flags:
                 - --description
-              - help: domain model property name as it appears deserialized
+              - help: domain model id
                 name_or_flags:
-                - --deserialize-from
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              - help: domain model property key
-                name_or_flags:
-                - --key
-                - -k
-              - help: domain model key
-                name_or_flags:
-                - --model-key
-                - -m
+                - --model-id
                 required: true
               - help: domain model property name
                 name_or_flags:
@@ -593,9 +580,6 @@ interfaces:
                 help: require value for domain model property
                 name_or_flags:
                 - --required
-              - help: domain model property name when serialized
-                name_or_flags:
-                - --serialized-name
               - choices:
                 - str
                 - int
