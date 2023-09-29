@@ -19,6 +19,3 @@ class AppDomainService():
 
     def add_role(self, domain_key: str, key: str, type: str, fields: List[str]) -> AppDomainRole:
         pass
-
-    def add_property(self, domain_key: str, model_key: str, key: str, name: str,  type: str, **kwargs) -> AppDomainModelProperty:
-        pass

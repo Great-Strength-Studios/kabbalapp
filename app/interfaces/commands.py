@@ -95,20 +95,13 @@ class AddDomainRole(RequestEvent):
 
 class AddDomainModelProperty(RequestEvent):
 
-    domain_key = t.StringType(required=True)
-    model_key = t.StringType(required=True)
+    model_id = t.StringType(required=True)
     name = t.StringType(required=True)
-    key = t.StringType()
     type = t.StringType(default=STR_TYPE, choices=DOMAIN_PROPERTY_TYPES)
     required = t.BooleanType()
     default = t.StringType()
     choices = t.ListType(t.StringType())
-    serialized_name = t.StringType()
-    deserialize_from = t.ListType(t.StringType(), default=[])
     description = t.StringType()
 
-    class Options(): 
-        serialize_when_none = False
-        roles = {
-            'domain.add_model_property': blacklist('key')
-        }
+class PrintValueObjectModule(RequestEvent):
+    pass

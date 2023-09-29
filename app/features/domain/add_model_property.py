@@ -4,7 +4,13 @@ from ...domain import *
 def handle(context: MessageContext):
 
     # Unpack request.
-    request = context.data
+    model_id = context.data.model_id
+    name = context.data.name
+    type = context.data.type
+    required = context.data.required
+    default = context.data.default
+    choices = context.data.choices
+    description = context.data.description
 
     # Retreive app key from headers.
     app_key = context.headers.get('app_key', None)
@@ -13,23 +19,39 @@ def handle(context: MessageContext):
     if not app_key:
         raise AppError(context.errors.APP_KEY_REQUIRED)
     
-    # Get app domain service.
-    domain_service: d.AppDomainService = context.services.domain_service(app_key)
+    # Get domain repository.
+    domain_repo: DomainRepository = context.services.domain_repo(app_key)
 
-    # Format key if none is provided.
-    if not request.key:
-        request.key = request.name.lower().replace(' ', '_')
+    # First check to see if the domain model exists.
+    domain_model = domain_repo.get_domain_model(model_id)
 
-    # Set required to None if there is a default value.
-    if request.default:
-        request.required = None
+    # Raise app error if domain model does not exist.
+    if not domain_model:
+        raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(model_id))
 
-    # Add property.
-    property = domain_service.add_property(**request.to_primitive())
+    # Create a new model property
+    property = DomainModelProperty.create(
+        name=name,
+        type=type,
+        required=required,
+        default=default,
+        choices=choices,
+        description=description
+    )
 
-    # Raise app error if property is an error tuple.
-    if isinstance(property, tuple):
-        raise AppError(context.errors.get(property[0]).format_message(property[1]))
+    # Check to see if property already exists on the model.
+    exists = domain_model.has_property(property)
+
+    # Raise app error if property already exists.
+    if exists:
+        raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS.format_message(property.name))
+
+    # Add property to model.
+    domain_model.add_property(property)
+
+    # Save domain model.
+    # TODO: Change this once things are in proper order
+    domain_repo.save_value_object(domain_model)
 
     # Return response.
     return property

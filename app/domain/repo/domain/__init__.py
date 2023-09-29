@@ -3,6 +3,10 @@ from ...modules import *
 
 class DomainRepository():
 
+    # TODO: Incorporate real domain model later.
+    def get_domain_model(self, id: str) -> ValueObject:
+        pass
+
     def get_value_objects(self) -> List[ValueObject]:
         pass
 

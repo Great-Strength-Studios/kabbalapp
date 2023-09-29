@@ -1,7 +1,7 @@
 commands: null
 domain:
-  entities: null
-  factories: null
+  entities: {}
+  factories: {}
   modules:
     cli:
       aliases: null
@@ -138,56 +138,6 @@ domain:
               name: Name
               required: true
               type: str
-        domain_model_property:
-          class_name: AppDomainModelProperty
-          name: Domain model property
-          properties:
-            default:
-              description: domain model property default value
-              name: Default
-              required: false
-              type: str
-            description:
-              description: domain model property description
-              name: Description
-              required: false
-              type: str
-            key:
-              description: domain model property key
-              name: Key
-              required: true
-              type: str
-            name:
-              description: domain model property name
-              name: Name
-              required: true
-              type: str
-            required:
-              description: domain model property required
-              name: Required
-              required: false
-              type: bool
-            serialized_name:
-              description: domain model property serialized name
-              name: Serialized name
-              required: false
-              type: str
-            type:
-              choices:
-              - str
-              - int
-              - float
-              - bool
-              - datetime
-              - date
-              - list
-              - dict
-              - model
-              default: str
-              description: domain model property type
-              name: Type
-              required: false
-              type: str
         domain_role:
           class_name: AppDomainRole
           name: App Domain Role
@@ -233,7 +183,12 @@ domain:
           class_name: AppProject
           name: App Project
       name: App Project
-  repos: null
+  repos: {}
+  value_objects:
+    model_property:
+      class_name: DomainModelProperty
+      name: Model Property
+      properties: []
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
@@ -255,10 +210,6 @@ errors:
     error_code: '000000003'
     message:
       en_US: CLI command with key "{}" not found
-  VALUE_OBJECT_ALREADY_EXISTS:
-    error_code: '000020001'
-    message:
-      en_US: Value object with class name "{}" already exists
   DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
     error_code: '000020006'
     message:
@@ -274,11 +225,11 @@ errors:
   DOMAIN_MODEL_NOT_FOUND:
     error_code: '000020003'
     message:
-      en_US: Domain model with key "{}" not found
+      en_US: Domain model with id "{}" not found
   DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
     error_code: '000020004'
     message:
-      en_US: Domain model property with key "{}" already exists
+      en_US: Domain model property with name "{}" already exists
   DOMAIN_NOT_FOUND:
     error_code: '000020005'
     message:
@@ -304,6 +255,10 @@ errors:
     error_code: '000000001'
     message:
       en_US: 'Invalid request contains the following errors: {}'
+  VALUE_OBJECT_ALREADY_EXISTS:
+    error_code: '000020001'
+    message:
+      en_US: Value object with class name "{}" already exists
 features:
   groups:
     app_project:
@@ -346,6 +301,8 @@ features:
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_model_property
+          - data_mapping: print_value_object_module
+            function_path: app_printer.print_value_object_module
         add_role:
           functions:
           - data_mapping: add_domain_role
@@ -562,22 +519,9 @@ interfaces:
               - help: domain model property description
                 name_or_flags:
                 - --description
-              - help: domain model property name as it appears deserialized
+              - help: domain model id
                 name_or_flags:
-                - --deserialize-from
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              - help: domain model property key
-                name_or_flags:
-                - --key
-                - -k
-              - help: domain model key
-                name_or_flags:
-                - --model-key
-                - -m
+                - --model-id
                 required: true
               - help: domain model property name
                 name_or_flags:
@@ -586,9 +530,6 @@ interfaces:
                 help: require value for domain model property
                 name_or_flags:
                 - --required
-              - help: domain model property name when serialized
-                name_or_flags:
-                - --serialized-name
               - choices:
                 - str
                 - int

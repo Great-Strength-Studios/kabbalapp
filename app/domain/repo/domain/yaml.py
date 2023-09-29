@@ -1,16 +1,33 @@
+from app.domain.entities import ValueObject
 from . import *
 
 
+class DomainModelPropertyDataMapper(DomainModelProperty):
+
+    class Options():
+        roles = {
+            'write': blacklist(),
+            'map': blacklist(),
+        }
+        serialize_when_none = False
+
+    def map(self) -> DomainModelProperty:
+        return DomainModelProperty(self.to_primitive('map'))
+
 class ValueObjectDataMapper(ValueObject):
+
+    properties = t.ListType(t.ModelType(DomainModelPropertyDataMapper), default=[])
     
     class Options():
         roles = {
             'write': blacklist('id'),
-            'map': blacklist(),
+            'map': blacklist('properties'),
         }
 
     def map(self) -> ValueObject:
-        return ValueObject(self.to_primitive('map'))
+        result = ValueObject(self.to_primitive('map'))
+        result.properties = [property.map() for property in self.properties]
+        return result
     
 
 class YamlRepository(DomainRepository):
@@ -26,6 +43,22 @@ class YamlRepository(DomainRepository):
     
     def _to_mapper(self, mapper_type: type, **data):
         return mapper_type(data, strict=False)
+    
+    def get_domain_model(self, id: str) -> ValueObject:
+        
+        # Load the schema file data
+        import yaml
+        with open(self.schema_file_path, 'r') as stream:
+            data = yaml.safe_load(stream)
+
+        # First check the value objects
+        value_object_data = data['domain'].get('value_objects', {})
+        if id in value_object_data:
+            mapper = self._to_mapper(ValueObjectDataMapper, id=id, **value_object_data.get(id))
+            return mapper.map()
+        
+        # Otherwise return None if no domain models are found.
+        return None
     
     def get_value_objects(self) -> List[ValueObject]:
 
