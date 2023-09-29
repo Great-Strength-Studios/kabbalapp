@@ -54,6 +54,16 @@ def handle(context: MessageContext):
             if not target_app_printer.block_exists(block.file_path):
                 target_app_printer.print_block(block)
 
+        # Make updates to interface package file.
+        interface_package_file = target_app_printer.read_block('app/interfaces/__init__.py')
+
+        # Add cli interface import to interface package file.
+        if len(interface_package_file.code_lines) == 1:
+            interface_package_file.add_line('')
+        
+        interface_package_file.add_line('from .cli import CliAppBuilder, CliAppContext, arguments as args')
+        target_app_printer.print_block(interface_package_file)
+
 
     def save_interface_config():
     
