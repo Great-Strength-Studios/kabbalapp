@@ -5,29 +5,32 @@ from .config import load_app_config_reader, AppConfigurationReader, AppConfigura
 from .error import *
 from .containers import *
 from .routing import *
-from .events import *
 
 
 class AppContext():
 
     name: str = None
+    interface: str = None
     container_config: ContainerConfiguration = None
     container: Container = None
     errors: ErrorManager = ErrorManager()
-    modules: dict = None
+    feature_groups: dict = None
     
-    def __init__(self, name: str, app_config: AppConfiguration, container_config: ContainerConfiguration):
+    def __init__(self, name: str, interface: str, app_config: AppConfiguration, container_config: ContainerConfiguration):
         # Set app name.
         self.name = name
+
+        # Set interface.
+        self.interface = interface
         
         # Load app errors.
         try:
-            for error in app_config.errors.values():
-                self.errors.add(Error(error.to_primitive()))
+            for error_name, error in app_config.errors.items():
+                self.errors.add(Error({'error_name': error_name, **error.to_primitive()}))
         except AttributeError:
             pass
 
-        self.modules = app_config.modules
+        self.feature_groups = app_config.features.groups
 
         # Load container config and container.
         self.container_config = container_config

@@ -2,12 +2,12 @@ from schematics import types as t, Model
 from schematics.exceptions import DataError
 
 from . import activity
-from ..core.config import FeatureConfiguration
+from .config import FeatureConfiguration
 from .error import *
 
-HEADERS_MAPPINGS_PATH = 'app.core.mappings.headers'
-DATA_MAPPINGS_PATH = 'app.core.mappings.data'
-SERVICES_MAPPINGS_PATH = 'app.core.mappings.services'
+HEADER_MAPPER_PATH = 'app.interfaces.{}.mappers.header'
+DATA_MAPPER_PATH = 'app.interfaces.{}.mappers.command'
+SERVICES_MAPPER_PATH = 'app.interfaces.services'
 
 class MessageContext():
 
@@ -45,7 +45,7 @@ class FeatureHandler():
         if debug: print('Perform header mapping: "mapping": "{}"'.format(self.feature_config.header_mapping))
 
         # Import header mappings module.
-        header_module = import_module(HEADERS_MAPPINGS_PATH)
+        header_module = import_module(HEADER_MAPPER_PATH.format(app_context.interface))
         
         try:
             # Retrieve header mapping function.
@@ -67,7 +67,10 @@ class FeatureHandler():
             try:
                 if function.data_mapping:
                     if debug: print('Perform data mapping: "mapping": "{}"'.format(function.data_mapping))
-                    data_mapping = getattr(import_module(DATA_MAPPINGS_PATH), function.data_mapping)
+                    data_mapping = getattr(
+                        import_module(DATA_MAPPER_PATH.format(app_context.interface)), 
+                        function.data_mapping
+                    )
                     if debug: print('Performing data mapping for following request: "mapping": "{}", "request": "{}", params: "{}"'.format(function.data_mapping, request, function.params))
                     context.data = data_mapping(context, request, app_context, **function.params, **kwargs)
                     if debug: print('Data mapping complete: "mapping": "{}", "data": "{}"'.format(function.data_mapping, context.data.to_primitive()))
@@ -81,13 +84,13 @@ class FeatureHandler():
             except DataError as ex:
                 raise AppError(app_context.errors.INVALID_REQUEST_DATA.format_message(ex.messages))
             try:
-                use_services = getattr(import_module(SERVICES_MAPPINGS_PATH), function.use_services)
+                use_services = getattr(import_module(SERVICES_MAPPER_PATH), function.use_services)
                 context.services = use_services(context, request, app_context, **function.params)
             except TypeError:
                 context.services = app_context.container
 
             # Format function module path.
-            module_path = 'app.modules.{}'.format(function.function_path)
+            module_path = 'app.features.{}'.format(function.function_path)
 
             # Import function module.
             if debug: print('Importing function: {}'.format(module_path))
@@ -115,7 +118,10 @@ class FeatureHandler():
             result = []
             for item in context.result:
                 if isinstance(item, Model):
-                    result.append(item.to_primitive())
+                    if self.feature_config.use_role:
+                        result.append(item.to_primitive(role=self.feature_config.use_role))
+                    else:
+                        result.append(item.to_primitive())
                 else:
                     result.append(item)
             return result
@@ -123,5 +129,8 @@ class FeatureHandler():
             return {}
         # Convert schematics models to primitive dicts.
         if isinstance(context.result, Model):
-            return context.result.to_primitive()
+            if self.feature_config.use_role:
+                return context.result.to_primitive(role=self.feature_config.use_role)
+            else:
+                return context.result.to_primitive()
         return context.result

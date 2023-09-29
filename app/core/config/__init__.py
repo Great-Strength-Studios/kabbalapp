@@ -26,17 +26,19 @@ class FeatureConfiguration(Model):
             params = t.DictType(t.StringType(), default={})
             log_activity = t.BooleanType(default=True)
 
+        use_role = t.StringType()
         header_mapping = t.StringType()
         functions = t.ListType(t.ModelType(FunctionConfiguration), default=[])
         log_params = t.DictType(t.StringType(), default={})
 
-
-class ModuleConfiguration(Model):
+class FeatureGroupConfiguration(Model):
     features = t.DictType(t.ModelType(FeatureConfiguration), default={})
+
+class AppFeaturesConfiguration(Model):
+    groups = t.DictType(t.ModelType(FeatureGroupConfiguration), default={})
 
 class ErrorConfiguration(Model):
     error_code = t.StringType(required=True)
-    error_name = t.StringType(required=True)
     message = t.DictType(t.StringType(), required=True)
     status_code = t.IntType(default=400, choices=[400, 401, 403, 404]) # Status codes include Bad Request, Unauthorized, Forbidden, and Not Found
 
@@ -44,9 +46,13 @@ class ErrorConfiguration(Model):
 class AppConfiguration(Model):
     errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
 
+class InterfaceConfiguration(Model):
+    type = t.StringType(required=True, choices=['cli', 'rest_flask'])
+
 class AppConfiguration(Model):
     errors = t.DictType(t.ModelType(ErrorConfiguration), default={})
-    modules = t.DictType(t.ModelType(ModuleConfiguration), default={}, serialize_when_none=False)
+    features = t.ModelType(AppFeaturesConfiguration)
+    interfaces = t.DictType(t.ModelType(InterfaceConfiguration), default=[])
 
 
 class AppConfigurationReader():
