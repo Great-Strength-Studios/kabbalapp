@@ -102,3 +102,6 @@ class AddModelProperty(RequestEvent):
     default = t.StringType()
     choices = t.ListType(t.StringType())
     description = t.StringType()
+
+class PrintValueObjectModule(RequestEvent):
+    pass
