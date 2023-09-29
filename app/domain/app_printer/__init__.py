@@ -14,6 +14,10 @@ class AppModuleBlock(Model):
         self.code_block = code_block
         self.code_lines = code_block.splitlines()
 
+    def add_line(self, code: str) -> None:
+        self.code_lines.append(code)
+        self.code_block = '\n'.join(self.code_lines)
+
     def update_code_line(self, line_index: int, code: str) -> None:
         self.code_lines[line_index] = code
         self.code_block = '\n'.join(self.code_lines)
@@ -124,7 +128,7 @@ class AppPrinter(object):
             file_path = os.path.join(base_path, file_path)
         return os.path.exists(os.path.join(self.app_path, file_path))
         
-    def read_block(self, file_path: str, base_path: str) -> AppModuleBlock:
+    def read_block(self, file_path: str, base_path: str = None) -> AppModuleBlock:
         if base_path:
             file_path = os.path.join(base_path, file_path)
         read_path = os.path.join(self.app_path, file_path)
