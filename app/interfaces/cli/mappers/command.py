@@ -62,6 +62,8 @@ def add_value_object(context, request, app_context, **kwargs):
 
 def add_domain_model_property(context, request, app_context, **kwargs):
     type_properties_list = request.get('type_properties', [])
+    if type_properties_list is None:
+        type_properties_list = []
     type_properties = {}
     for type_property in type_properties_list:
         key, value = type_property.split('=')

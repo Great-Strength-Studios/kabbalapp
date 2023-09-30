@@ -22,6 +22,9 @@ class TypePropertiesBlock(Model):
         for key, value in type_properties.items():
             if not value:
                 continue
+            # Stringify the value if it is a string
+            if type(value) == str:
+                value = f"'{value}'"
             properties_list.append(f'{key}={value}')
 
         # Join properties list with a comma and append to print lines
@@ -60,6 +63,8 @@ class DomainModelPropertyBlock(Model):
             type_name = 'Int'
         elif self.property.type == 'float':
             type_name = 'Float'
+        elif self.property.type == 'str':
+            type_name = 'String'
         property_str += f't.{type_name}Type('
 
         # Create empty list for type arguments
