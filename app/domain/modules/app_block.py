@@ -59,13 +59,22 @@ class DomainModelPropertyBlock(Model):
         property_str += f'{self.property.name} = '
 
         # Add the type
-        if self.property.type == 'int':
-            type_name = 'Int'
-        elif self.property.type == 'float':
-            type_name = 'Float'
-        elif self.property.type == 'str':
-            type_name = 'String'
+        def map_type(type: str) -> str:
+            if type == 'int':
+                return 'Int'
+            elif type == 'float':
+                return 'Float'
+            elif type == 'str':
+                return 'String'
+            elif type == 'list':
+                return 'List'
+
+        type_name = map_type(self.property.type)
         property_str += f't.{type_name}Type('
+
+        if self.property.inner_type is not None:
+            inner_type = map_type(self.property.inner_type)
+            property_str += f't.{inner_type}Type(), '
 
         # Create empty list for type arguments
         type_args = []

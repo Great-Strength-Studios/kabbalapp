@@ -97,6 +97,7 @@ class AddDomainModelProperty(RequestEvent):
     model_id = t.StringType(required=True)
     name = t.StringType(required=True)
     type = t.StringType(default=STR_TYPE, choices=DOMAIN_PROPERTY_TYPES)
+    inner_type = t.StringType()
     required = t.BooleanType()
     default = t.StringType()
     choices = t.ListType(t.StringType())

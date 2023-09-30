@@ -7,6 +7,7 @@ def handle(context: MessageContext):
     model_id = context.data.model_id
     name = context.data.name
     type = context.data.type
+    inner_type = context.data.inner_type
     required = context.data.required
     default = context.data.default
     choices = context.data.choices
@@ -44,6 +45,7 @@ def handle(context: MessageContext):
     property = DomainModelProperty.create(
         name=name,
         type=type,
+        inner_type=inner_type,
         required=required,
         default=default,
         choices=choices,
