@@ -49,6 +49,7 @@ class DomainModelProperty(Model):
 	
 	name = t.StringType(required=True)
 	type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
+	inner_type = t.StringType()
 	required = t.BooleanType()
 	default = t.StringType()
 	choices = t.ListType(t.StringType())
@@ -56,10 +57,11 @@ class DomainModelProperty(Model):
 	type_properties = t.ModelType(TypeProperties)
 
 	@staticmethod
-	def create(name: str, type: str = 'str', required: bool = False, default: str = None, choices: List[str] = [], description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
+	def create(name: str, type: str = 'str', inner_type: str = None, required: bool = False, default: str = None, choices: List[str] = [], description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
 		result = DomainModelProperty()
 		result.name = name
 		result.type = type
+		result.inner_type = inner_type
 		result.required = required
 		result.default = default
 		result.choices = choices
