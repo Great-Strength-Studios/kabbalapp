@@ -11,6 +11,7 @@ def handle(context: MessageContext):
     default = context.data.default
     choices = context.data.choices
     description = context.data.description
+    type_properties = context.data.type_properties
 
     # Retreive app key from headers.
     app_key = context.headers.get('app_key', None)
@@ -29,6 +30,9 @@ def handle(context: MessageContext):
     if not domain_model:
         raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(model_id))
 
+    # Create type properties
+    type_properties = create_type_properties(type, **type_properties)
+
     # Create a new model property
     property = DomainModelProperty.create(
         name=name,
@@ -36,7 +40,8 @@ def handle(context: MessageContext):
         required=required,
         default=default,
         choices=choices,
-        description=description
+        description=description,
+        type_properties=type_properties
     )
 
     # Check to see if property already exists on the model.
@@ -55,18 +60,3 @@ def handle(context: MessageContext):
 
     # Return response.
     return property
-
-    # Keep this content for now.
-    # type_properties = None
-    # if request.type_properties:
-    #     from schematics.exceptions import DataError
-    #     try:
-    #         import json
-    #         if request.type == 'str':
-    #             type_properties = d.StringTypeProperties(json.loads(request.type_properties))
-    #         elif request.type == 'date':
-    #             type_properties = d.DateTypeProperties(json.loads(request.type_properties))
-    #         elif request.type == 'datetime':
-    #             type_properties = d.DateTimeTypeProperties(json.loads(request.type_properties))
-    #     except DataError as e:
-    #         raise AppError(context.errors.INVALID_TYPE_PROPERTIES.format_message(e.message))
