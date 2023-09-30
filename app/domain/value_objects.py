@@ -44,6 +44,23 @@ class DateTimeTypeProperties(TypeProperties):
 	convert_tz = t.BooleanType(default=False)
 	drop_tzinfo = t.BooleanType(default=False)
 
+class ListTypeProperties(TypeProperties):
+
+	min_size = t.IntType()
+	max_size = t.IntType()
+
+	@staticmethod
+	def create(min_size: int = None, max_size: int = None) -> 'ListTypeProperties':
+		result = ListTypeProperties()
+		if min_size is not None:
+			result.min_size = int(min_size)
+		if max_size is not None:
+			result.max_size = int(max_size)
+
+		result.validate()
+
+		return result
+
 
 class DomainModelProperty(Model):
 	

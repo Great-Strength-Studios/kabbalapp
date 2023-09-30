@@ -5,12 +5,15 @@ class TypePropertiesDataMapper(TypeProperties):
     regex = t.StringType()
     min_length = t.IntType()
     max_length = t.IntType()
+    min_size = t.IntType()
+    max_size = t.IntType()
 
     class Options():
         roles = {
             'write': blacklist(),
             'map': blacklist(),
             'map.str': whitelist('regex', 'min_length', 'max_length'),
+            'map.list': whitelist('min_size', 'max_size'),
         }
         serialize_when_none = False
 
@@ -34,6 +37,8 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
         # Map the type properties
         if self.type == 'str':
             result.type_properties = StringTypeProperties(self.type_properties.to_primitive('map.str'))
+        elif self.type == 'list':
+            result.type_properties = ListTypeProperties(self.type_properties.to_primitive('map.list'))
         # Return the result
         return result
 
