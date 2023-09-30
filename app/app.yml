@@ -189,6 +189,10 @@ domain:
       class_name: DomainModelProperty
       name: Model Property
       properties: []
+    type_properties:
+      class_name: TypeProperties
+      name: Type Properties
+      properties: []
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
