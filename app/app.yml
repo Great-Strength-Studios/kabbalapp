@@ -189,6 +189,10 @@ domain:
       class_name: DomainModelProperty
       name: Model Property
       properties: []
+    type_properties:
+      class_name: TypeProperties
+      name: Type Properties
+      properties: []
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
@@ -235,7 +239,7 @@ errors:
     message:
       en_US: Domain with key "{}" not found
   DOMAIN_ROLE_ALREADY_EXISTS:
-    error_code: '000020004'
+    error_code: '000020006'
     message:
       en_US: Domain role with key "{}" already exists
   ENDPOINT_NOT_FOUND:
@@ -259,6 +263,10 @@ errors:
     error_code: '000020001'
     message:
       en_US: Value object with class name "{}" already exists
+  INVALID_TYPE_PROPERTY:
+    error_code: '000020007'
+    message:
+      en_US: Model property with type "{}" contains invalid type property "{}"
 features:
   groups:
     app_project:
@@ -548,6 +556,7 @@ interfaces:
               - help: domain model property type properties separated by '='
                 name_or_flags:
                 - --type-properties
+                nargs: +
               name: Add Domain Model Property
             add_role:
               arguments:

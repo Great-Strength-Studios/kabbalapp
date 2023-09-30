@@ -1,5 +1,42 @@
 from ..entities import *
 
+
+class TypePropertiesBlock(Model):
+
+    type_properties = t.ModelType(TypeProperties, required=True)
+
+    @staticmethod
+    def create(type_properties: TypeProperties) -> 'TypePropertiesBlock':
+        result = TypePropertiesBlock()
+        result.type_properties = type_properties
+
+        return result
+    
+    def print_lines(self):
+        # Create empty list representing print lines
+        print_lines = []
+
+        # Add the type properties
+        properties_list = []
+        type_properties = self.type_properties.to_primitive()
+        for key, value in type_properties.items():
+            if not value:
+                continue
+            # Stringify the value if it is a string
+            if type(value) == str:
+                value = f"'{value}'"
+            properties_list.append(f'{key}={value}')
+
+        # Join properties list with a comma and append to print lines
+        print_lines.append(', '.join(properties_list))
+
+        # Return list
+        return print_lines
+    
+    def print(self):
+        return '\n'.join(self.print_lines())
+
+
 class DomainModelPropertyBlock(Model):
 
     property = t.ModelType(DomainModelProperty, required=True)
@@ -26,6 +63,8 @@ class DomainModelPropertyBlock(Model):
             type_name = 'Int'
         elif self.property.type == 'float':
             type_name = 'Float'
+        elif self.property.type == 'str':
+            type_name = 'String'
         property_str += f't.{type_name}Type('
 
         # Create empty list for type arguments
@@ -42,6 +81,11 @@ class DomainModelPropertyBlock(Model):
         # Add the choices flag
         if self.property.choices:
             type_args.append(f'choices={str(self.property.choices)}')
+
+        # If the property has type properties, add them
+        if self.property.type_properties is not None:
+            type_properties_block = TypePropertiesBlock.create(self.property.type_properties)
+            type_args.extend(type_properties_block.print_lines())
         
         # Add the type args to the property string
         if len(type_args) > 0:

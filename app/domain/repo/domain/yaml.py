@@ -1,18 +1,42 @@
-from app.domain.entities import ValueObject
 from . import *
 
+class TypePropertiesDataMapper(TypeProperties):
 
-class DomainModelPropertyDataMapper(DomainModelProperty):
+    regex = t.StringType()
+    min_length = t.IntType()
+    max_length = t.IntType()
 
     class Options():
         roles = {
             'write': blacklist(),
             'map': blacklist(),
+            'map.str': whitelist('regex', 'min_length', 'max_length'),
+        }
+        serialize_when_none = False
+
+    def map(self) -> TypeProperties:
+        return TypeProperties(self.to_primitive('map'))
+
+class DomainModelPropertyDataMapper(DomainModelProperty):
+
+    type_properties = t.ModelType(TypePropertiesDataMapper, default=None)
+
+    class Options():
+        roles = {
+            'write': blacklist(),
+            'map': blacklist('type_properties'),
         }
         serialize_when_none = False
 
     def map(self) -> DomainModelProperty:
-        return DomainModelProperty(self.to_primitive('map'))
+        # Create the result
+        result = DomainModelProperty(self.to_primitive('map'))
+        # Map the type properties
+        if self.type == 'str':
+            result.type_properties = StringTypeProperties(self.type_properties.to_primitive('map.str'))
+        # Return the result
+        return result
+
 
 class ValueObjectDataMapper(ValueObject):
 

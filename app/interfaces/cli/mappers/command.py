@@ -61,6 +61,14 @@ def add_value_object(context, request, app_context, **kwargs):
     })
 
 def add_domain_model_property(context, request, app_context, **kwargs):
+    type_properties_list = request.get('type_properties', [])
+    if type_properties_list is None:
+        type_properties_list = []
+    type_properties = {}
+    for type_property in type_properties_list:
+        key, value = type_property.split('=')
+        type_properties[key] = value
+
     return AddDomainModelProperty({
         'model_id': request.get('model_id', None),
         'name': request.get('name', None),
@@ -69,6 +77,7 @@ def add_domain_model_property(context, request, app_context, **kwargs):
         'default': request.get('default', None),
         'choices': request.get('choices', None),
         'description': request.get('description', None),
+        'type_properties': type_properties
     })
 
 def add_domain_implementation(context, request, app_context, **kwargs):

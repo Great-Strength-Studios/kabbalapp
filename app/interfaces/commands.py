@@ -94,7 +94,6 @@ class AddDomainRole(RequestEvent):
     fields = t.ListType(t.StringType(), required=True)
 
 class AddDomainModelProperty(RequestEvent):
-
     model_id = t.StringType(required=True)
     name = t.StringType(required=True)
     type = t.StringType(default=STR_TYPE, choices=DOMAIN_PROPERTY_TYPES)
@@ -102,6 +101,7 @@ class AddDomainModelProperty(RequestEvent):
     default = t.StringType()
     choices = t.ListType(t.StringType())
     description = t.StringType()
+    type_properties = t.DictType(t.StringType(), default={})
 
 class PrintValueObjectModule(RequestEvent):
     pass

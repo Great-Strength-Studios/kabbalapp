@@ -11,6 +11,7 @@ def handle(context: MessageContext):
     default = context.data.default
     choices = context.data.choices
     description = context.data.description
+    type_properties = context.data.type_properties
 
     # Retreive app key from headers.
     app_key = context.headers.get('app_key', None)
@@ -29,6 +30,16 @@ def handle(context: MessageContext):
     if not domain_model:
         raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(model_id))
 
+    # Create type properties
+    try:
+        type_properties = create_type_properties(type, **type_properties)
+    # Raise a invalid type property error if the type property is invalid.
+    except TypeError as e:
+        import re
+        invalid_arg = re.search(r"unexpected keyword argument '(.*)'", str(e)).group(1)
+        raise AppError(context.errors.INVALID_TYPE_PROPERTY.format_message(type, invalid_arg))
+
+
     # Create a new model property
     property = DomainModelProperty.create(
         name=name,
@@ -36,7 +47,8 @@ def handle(context: MessageContext):
         required=required,
         default=default,
         choices=choices,
-        description=description
+        description=description,
+        type_properties=type_properties
     )
 
     # Check to see if property already exists on the model.
