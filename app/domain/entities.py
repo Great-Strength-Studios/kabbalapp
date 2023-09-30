@@ -29,22 +29,3 @@ class ValueObject(Model):
 
     def add_property(self, property: DomainModelProperty) -> None:
         self.properties.append(property)
-
-class TypeProperties(Model):
-    pass
-
-class StringTypeProperties(TypeProperties):
-    regex = t.StringType()
-    min_length = t.IntType()
-    max_length = t.IntType()
-
-class DateTypeProperties(TypeProperties):
-    formats = t.StringType()
-
-class DateTimeTypeProperties(TypeProperties):
-    formats = t.StringType()
-    serialized_format = t.StringType()
-    parser = t.StringType()
-    tzd = t.StringType(default='allow', choices=['require', 'allow', 'utc', 'reject'])
-    convert_tz = t.BooleanType(default=False)
-    drop_tzinfo = t.BooleanType(default=False)
