@@ -89,7 +89,11 @@ class DomainModelPropertyBlock(Model):
 
         # Add the choices flag
         if self.property.choices:
-            type_args.append(f'choices={str(self.property.choices)}')
+            if self.property.type == 'str':
+                choices = self.property.choices
+            elif self.property.type == 'int':
+                choices = [int(choice) for choice in self.property.choices]
+            type_args.append(f'choices={str(choices)}')
 
         # If the property has type properties, add them
         if self.property.type_properties is not None:
