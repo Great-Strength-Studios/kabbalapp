@@ -8,6 +8,9 @@ from .header import *"""
 CLI_COMMAND_MAPPER_CONTENT = """from ...commands import *
 """
 
+CLI_HEADER_MAPPER_CONTENT = """def default(request, app_context, **kwargs):
+    return {}"""
+
 def handle(context: MessageContext):
 
     # Unpack request.
@@ -42,7 +45,7 @@ def handle(context: MessageContext):
         cli_files = {
             'mappers/__init__.py': CLI_MAPPERS_CONTENT,
             'mappers/command.py': CLI_COMMAND_MAPPER_CONTENT,
-            'mappers/header.py': ''
+            'mappers/header.py': CLI_HEADER_MAPPER_CONTENT
         }
 
         # For each file in cli_files, create a new block and append it to the block list
