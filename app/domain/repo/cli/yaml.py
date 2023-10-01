@@ -118,6 +118,9 @@ class YamlRepository(CliInterfaceRepository):
             if 'commands' not in interface_types['cli']:
                 interface_types['cli']['commands'] = {}
 
+            if 'parent_arguments' not in interface_types['cli']:
+                interface_types['cli']['parent_arguments'] = []
+
             # Add commands to interface.
             for command in mapper.commands:
                 command_data = self._to_mapper(

@@ -37,24 +37,3 @@ class YamlRepository(AppInterfaceRepository):
         
         # Return list of mapped interface types
         return [self._to_mapper(**i, type=type).map() for type, i in interface_data.items()]
-    
-    def save_interface_type(self, interface: AppInterfaceType) -> None:
-        import yaml
-        with open(self.schema_file_path, 'r') as f:
-            data = yaml.safe_load(f)
-        
-        # Load interfaces from schema as a list.
-        interfaces = data.get('interfaces', {})
-        
-        # Add new interface
-        mapper = self._to_mapper(**interface.to_primitive())
-        interfaces['types'][mapper.type] = mapper.to_primitive('write')
-
-        # Update the interfaces in the schema.
-        data['interfaces'] = interfaces
-
-        # Write the schema back to the file.
-        with open(self.schema_file_path, 'w') as f:
-            yaml.dump(data, f)
-
-        return
