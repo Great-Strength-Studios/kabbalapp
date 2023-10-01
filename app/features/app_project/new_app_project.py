@@ -77,8 +77,7 @@ APP_ENV = 'APP_ENV'
 DEFAULT_APP_ENV = 'prod'
 
 # Configuration file
-CONFIG_FILE_DIRECTORY = 'app/{}'
-APP_SCHEMA_FILE = 'app.yml'
+APP_CONFIGURATION_FILE = '{}'
 
 # Configuration
 CONFIGS = 'configs' 
@@ -140,7 +139,7 @@ def handle(context: MessageContext):
         'interfaces/__init__.py': INTERFACES_CONTENT,
         'interfaces/commands.py': INTERFACES_COMMANDS_CONTENT,
         'interfaces/services.py': '',
-        'constants.py': APP_CONSTANTS_CONTENT,
+        'constants.py': APP_CONSTANTS_CONTENT.format(project.schema_location),
     }
 
     # Load blocks.
