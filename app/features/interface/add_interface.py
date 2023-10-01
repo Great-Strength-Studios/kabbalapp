@@ -75,14 +75,15 @@ def handle(context: MessageContext):
         if type in [interface.type for interface in interfaces]:
             raise AppError(context.errors.INTERFACE_ALREADY_EXISTS.format_message(type))
 
-        # If the input interface type is 'cli', then create a new CliAppInterface instance.
+        # If the input interface type is 'cli', then create a new CliAppInterface instance and replace the interface repo instance
         if type == 'cli':
+            interface_repo: CliInterfaceRepository = context.services.cli_interface_repo(app_key)
             interface = CliInterfaceType.create(type)
         else:
             raise AppError(context.errors.INTERFACE_TYPE_NOT_FOUND)
 
         # Add interface.
-        interface_repo.save_interface_type(interface)
+        interface_repo.save_interface(interface)
 
         return interface
 
