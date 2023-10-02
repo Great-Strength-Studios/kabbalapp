@@ -43,7 +43,7 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
         return result
 
 
-class ValueObjectDataMapper(ValueObject):
+class AppValueObjectDataMapper(AppValueObject):
 
     properties = t.ListType(t.ModelType(DomainModelPropertyDataMapper), default=[])
     
@@ -53,8 +53,8 @@ class ValueObjectDataMapper(ValueObject):
             'map': blacklist('properties'),
         }
 
-    def map(self) -> ValueObject:
-        result = ValueObject(self.to_primitive('map'))
+    def map(self) -> AppValueObject:
+        result = AppValueObject(self.to_primitive('map'))
         result.properties = [property.map() for property in self.properties]
         return result
     
@@ -73,7 +73,7 @@ class YamlRepository(DomainRepository):
     def _to_mapper(self, mapper_type: type, **data):
         return mapper_type(data, strict=False)
     
-    def get_domain_model(self, id: str) -> ValueObject:
+    def get_domain_model(self, id: str) -> AppValueObject:
         
         # Load the schema file data
         import yaml
@@ -83,13 +83,13 @@ class YamlRepository(DomainRepository):
         # First check the value objects
         value_object_data = data['domain'].get('value_objects', {})
         if id in value_object_data:
-            mapper = self._to_mapper(ValueObjectDataMapper, id=id, **value_object_data.get(id))
+            mapper = self._to_mapper(AppValueObjectDataMapper, id=id, **value_object_data.get(id))
             return mapper.map()
         
         # Otherwise return None if no domain models are found.
         return None
     
-    def get_value_objects(self) -> List[ValueObject]:
+    def get_value_objects(self) -> List[AppValueObject]:
 
         # Load the schema file data
         import yaml
@@ -100,10 +100,10 @@ class YamlRepository(DomainRepository):
         value_object_data = data['domain'].get('value_objects', {})
 
         # Return the value objects
-        return [self._to_mapper(ValueObjectDataMapper, id=id, **value_object).map() for id, value_object in value_object_data.items()]
+        return [self._to_mapper(AppValueObjectDataMapper, id=id, **value_object).map() for id, value_object in value_object_data.items()]
 
 
-    def save_value_object(self, value_object: ValueObject) -> None:
+    def save_value_object(self, value_object: AppValueObject) -> None:
 
         # Load the schema file data
         import yaml
@@ -114,7 +114,7 @@ class YamlRepository(DomainRepository):
         value_object_data = data['domain'].get('value_objects', {})
 
         # Create a data mapper from the value object
-        value_object_mapper = self._to_mapper(ValueObjectDataMapper, **value_object.to_primitive())
+        value_object_mapper = self._to_mapper(AppValueObjectDataMapper, **value_object.to_primitive())
 
         # Add the value object to the value objects data
         value_object_data[value_object.id] = value_object_mapper.to_primitive('write')
