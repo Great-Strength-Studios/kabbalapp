@@ -301,6 +301,10 @@ features:
           functions:
           - data_mapping: add_domain_implementation
             function_path: domain.add_implementation
+        add_model:
+          functions:
+          - data_mapping: add_domain_model
+            function_path: domain.add_domain_model
         add_model_property:
           functions:
           - data_mapping: add_domain_model_property
@@ -311,10 +315,6 @@ features:
           functions:
           - data_mapping: add_domain_role
             function_path: domain.add_role
-        add_model:
-          functions:
-          - data_mapping: add_domain_model
-            function_path: domain.add_domain_model
         sync_implementation:
           functions:
           - data_mapping: sync_domain_implementation
@@ -499,14 +499,14 @@ interfaces:
                 - --class-name
                 - -c
                 required: true
-              - help: domain model type
+              - choices:
+                - entity
+                - value_object
+                help: domain model type
                 name_or_flags:
                 - --type
                 - -t
                 required: true
-                choices:
-                - entity
-                - value_object
               - help: domain model name
                 name_or_flags:
                 - name
