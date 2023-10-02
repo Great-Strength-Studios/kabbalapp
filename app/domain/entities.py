@@ -9,7 +9,7 @@ class AppValueObject(Entity):
 
     @staticmethod
     def create(name: str, class_name: str, id: str = None, properties: List[DomainModelProperty] = []) -> 'AppValueObject':
-        result = ValueObject()
+        result = AppValueObject()
         result.name = name
         result.class_name = class_name
         result.properties = properties
