@@ -1,5 +1,5 @@
-from ..entities import *
+from ..models import *
 
-class AppInterfaceType(Model):
+class AppInterfaceType(ValueObject):
     type = t.StringType(required=True)
     name = t.StringType(required=True)
