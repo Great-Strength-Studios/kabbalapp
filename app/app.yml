@@ -222,16 +222,12 @@ errors:
     error_code: '000020007'
     message:
       en_US: Domain implementation with key "{}" not found
-  DOMAIN_MODEL_ALREADY_EXISTS:
-    error_code: '000020002'
-    message:
-      en_US: Domain model with key "{}" already exists
   DOMAIN_MODEL_NOT_FOUND:
-    error_code: '000020003'
+    error_code: '000020002'
     message:
       en_US: Domain model with id "{}" not found
   DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
-    error_code: '000020004'
+    error_code: '000020003'
     message:
       en_US: Domain model property with name "{}" already exists
   DOMAIN_NOT_FOUND:
@@ -263,10 +259,10 @@ errors:
     error_code: '000020007'
     message:
       en_US: Model property with type "{}" contains invalid type property "{}"
-  VALUE_OBJECT_ALREADY_EXISTS:
+  DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020001'
     message:
-      en_US: Value object with class name "{}" already exists
+      en_US: Domain model of type "{}" with class name "{}" already exists
 features:
   groups:
     app_project:
