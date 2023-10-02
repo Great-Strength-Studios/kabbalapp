@@ -40,11 +40,8 @@ def handle(context: MessageContext):
     # Get app project.
     app_project = app_project_manager.load_project(app_key)
 
-    # Run the following code if the input type is a value object.
-    if type == 'value_object':
-
-        # Create value object block.
-        block = ValueObjectBlock.create(app_project.app_directory, domain_models)
+    # Create domain models block.
+    block = AppDomainModelBlock.create(app_project.app_directory, domain_models)
 
     # Add domain model block to app project.
     with open(block.file_path, 'w') as f:

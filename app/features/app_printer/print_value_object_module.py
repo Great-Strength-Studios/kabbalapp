@@ -23,11 +23,11 @@ def handle(context: MessageContext):
     domain_repo: DomainRepository = context.services.domain_repo(app_key)
 
     # Get all value objects.
-    value_objects = domain_repo.get_value_objects()
+    domain_models = domain_repo.get_domain_models()
 
     # Create new value object block instance.
-    value_object_block = ValueObjectBlock.create(app_project.app_directory, value_objects)
+    block = AppDomainModelBlock.create(app_project.app_directory, domain_models)
 
-    # Write value object block to file.
-    with open(value_object_block.file_path, 'w') as f:
-        f.write(value_object_block.print())
+    # Write block to file.
+    with open(block.file_path, 'w') as f:
+        f.write(block.print())
