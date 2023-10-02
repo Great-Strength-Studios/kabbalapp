@@ -81,7 +81,7 @@ class YamlRepository(DomainRepository):
             data = yaml.safe_load(stream)
 
         # First check the value objects
-        value_object_data = data['domain'].get('value_objects', {})
+        value_object_data = data['domain'].get('models', {})
         if id in value_object_data:
             mapper = self._to_mapper(AppValueObjectDataMapper, id=id, **value_object_data.get(id))
             return mapper.map()
