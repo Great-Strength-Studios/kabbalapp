@@ -1,5 +1,4 @@
-from .value_objects import *
-from .entities import *
+from .models import *
 from .modules import *
 
 def create_type_properties(type: str, **properties)-> TypeProperties:

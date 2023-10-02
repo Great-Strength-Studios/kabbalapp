@@ -48,18 +48,11 @@ from .modules import *
 from .repo import *
 """
 
-DOMAIN_ENTITIES_CONTENT = """from schematics import types as t, Model
-from schematics.transforms import whitelist, blacklist
-from schematics.types.serializable import serializable
+DOMAIN_MODELS_CONTENT = """from ..core.domain import *
+from .constants import *
 """
 
-DOMAIN_VALUE_OBJECTS_CONTENT = """from schematics import types as t, Model
-from schematics.transforms import whitelist, blacklist
-from schematics.types.serializable import serializable
-"""
-
-DOMAIN_FACTORY_CONTENT = """from .value_objects import *
-from .entities import *
+DOMAIN_FACTORY_CONTENT = """from .models import *
 from .modules import *
 """
 
@@ -96,8 +89,6 @@ def handle(context: MessageContext):
     # Get app project manager.
     manager: p.AppProjectManager = context.services.app_project_manager()
 
-    
-
     project = app_project.AppProject({
         'key': request.key,
         'app_directory': request.app_directory,
@@ -132,9 +123,8 @@ def handle(context: MessageContext):
         'domain/modules/__init__.py': '',
         'domain/repo/__init__.py': '',
         'domain/__init__.py': DOMAIN_CONTENT,
-        'domain/entities.py': DOMAIN_ENTITIES_CONTENT,
         'domain/factory.py': DOMAIN_FACTORY_CONTENT,
-        'domain/value_objects.py': DOMAIN_VALUE_OBJECTS_CONTENT,
+        'domain/models.py': DOMAIN_MODELS_CONTENT,
         'features/__init__.py': '',
         'interfaces/__init__.py': INTERFACES_CONTENT,
         'interfaces/commands.py': INTERFACES_COMMANDS_CONTENT,
