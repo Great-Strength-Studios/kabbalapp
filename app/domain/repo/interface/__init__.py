@@ -1,4 +1,4 @@
-from ...entities import *
+from ...models import *
 from ...modules import *
 
 class AppInterfaceRepository():
