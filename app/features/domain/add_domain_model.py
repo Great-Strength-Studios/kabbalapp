@@ -18,26 +18,21 @@ def handle(context: MessageContext):
     # Get domain repository.
     domain_repo: DomainRepository = context.services.domain_repo(app_key)
 
-    # Execute the following if the input type is a value object
-    if type == 'value_object':
+    # Create new value object instance.
+    domain_model = AppDomainModel.create(name=name, type=type, class_name=class_name)
 
-        # Get all value objects.
-        value_objects = domain_repo.get_value_objects()
+    # Check to see if existing domain model exists.
+    existing_model = domain_repo.get_domain_model(domain_model.id)
 
-        # Create new value object instance.
-        domain_model = AppValueObject.create(name=name, class_name=class_name)
+    # Raise Value Object already exists error if value object already exists.
+    if existing_model:
+        raise AppError(context.errors.DOMAIN_MODEL_ALREADY_EXISTS.format_message(domain_model.type, domain_model.class_name))
 
-        # Check to see if value object already exists.
-        exists = next((vo for vo in value_objects if vo.id == domain_model.id), None)
-    
-        # Raise Value Object already exists error if value object already exists.
-        if exists:
-            raise AppError(context.errors.VALUE_OBJECT_ALREADY_EXISTS.format_message(domain_model.class_name))
+    # Add value object to domain and to value objects list.
+    domain_repo.save_domain_model(domain_model)
 
-        # Add value object to domain and to value objects list.
-        domain_repo.save_value_object(domain_model)
-        value_objects.append(domain_model)
-    
+    # Get all domain models.
+    domain_models = domain_repo.get_domain_models()
 
     # Get app project manager.
     app_project_manager: p.AppProjectManager = context.services.app_project_manager()
@@ -49,7 +44,7 @@ def handle(context: MessageContext):
     if type == 'value_object':
 
         # Create value object block.
-        block = ValueObjectBlock.create(app_project.app_directory, value_objects)
+        block = ValueObjectBlock.create(app_project.app_directory, domain_models)
 
     # Add domain model block to app project.
     with open(block.file_path, 'w') as f:
