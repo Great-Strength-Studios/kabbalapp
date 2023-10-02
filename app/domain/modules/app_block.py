@@ -117,24 +117,24 @@ class DomainModelPropertyBlock(Model):
         return '\n'.join(self.print_lines())
         
 
-class ValueObjectBlock(Model):
+class AppDomainModelBlock(Model):
 
     file_path = t.StringType(required=True)
-    value_objects = t.ListType(t.ModelType(ValueObject), default=[])
+    domain_models = t.ListType(t.ModelType(AppDomainModel), default=[])
 
     @staticmethod
-    def create(project_path: str, value_objects: list) -> 'ValueObjectBlock':
+    def create(project_path: str, domain_models: List[AppDomainModel]) -> 'AppDomainModelBlock':
         import os
-        file_path = os.path.join(project_path, 'app', 'domain', 'value_objects.py')
+        file_path = os.path.join(project_path, 'app', 'domain', 'domain_models.py')
 
-        result = ValueObjectBlock()
+        result = AppDomainModelBlock()
         result.file_path = file_path
-        result.value_objects = value_objects
+        result.domain_models = domain_models
 
         return result
     
-    def add_value_object(self, value_object: ValueObject):
-        self.value_objects.append(value_object)
+    def add_domain_model(self, domain_model: AppDomainModel):
+        self.domain_models.append(domain_model)
 
     def print_lines(self):
         # Create empty list representing print lines
@@ -149,23 +149,23 @@ class ValueObjectBlock(Model):
         # Add value object classes
         # This will be done with a while loop to allow for skipping lines
         i = 0
-        while i < len(self.value_objects):
+        while i < len(self.domain_models):
              # Skip two lines first for formatting
             print_lines.append('')
             print_lines.append('')
 
             # Get the value object
-            value_object = self.value_objects[i]
+            domain_model = self.domain_models[i]
 
             # Write out the class name and inheritance
-            print_lines.append(f'class {value_object.class_name}(Model):')
+            print_lines.append(f'class {domain_model.class_name}(Model):')
 
             # If no properties exist, add a pass statement
-            if len(value_object.properties) == 0:
+            if len(domain_model.properties) == 0:
                 print_lines.append('\tpass')
             
             # Otherwise, add the properties
-            for property in value_object.properties:
+            for property in domain_model.properties:
                 property_block = DomainModelPropertyBlock.create(property)
                 print_lines.extend(property_block.print_lines())
             
