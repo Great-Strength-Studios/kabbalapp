@@ -54,10 +54,11 @@ def add_cli_argument(context, request, app_context, **kwargs):
         'description': request.get('description', None),
     })
 
-def add_value_object(context, request, app_context, **kwargs):
-    return AddValueObject({
+def add_domain_model(context, request, app_context, **kwargs):
+    return AddDomainModel({
         'name': request.get('name', None),
-        'class_name': request.get('class_name', None),
+        'type': request.get('type', None),
+        'class_name': request.get('class_name', None)
     })
 
 def add_domain_model_property(context, request, app_context, **kwargs):
@@ -93,14 +94,6 @@ def sync_domain_implementation(context, request, app_context, **kwargs):
         'domain_key': request.get('domain_key', None),
         'implementation_key': request.get('implementation_key', None),
         'force': request.get('force', False)
-    })
-
-def add_domain_model(context, request, app_context, **kwargs):
-    return AddDomainModel({
-        'domain_key': request.get('domain_key', None),
-        'name': request.get('name', None),
-        'key': request.get('key', None),
-        'class_name': request.get('class_name', None)
     })
 
 def list_domain_models(context, request, app_context, **kwargs):
