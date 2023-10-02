@@ -1,10 +1,10 @@
-from ..entities import *
+from ..models import *
 
 # Module dependencies
 from .interface import AppInterfaceType
 
 
-class CliArgument(Model):
+class CliArgument(ValueObject):
     name_or_flags = t.ListType(t.StringType(), required=True)
     help = t.StringType(required=True)
     type = t.StringType(choices=['str', 'int', 'float'])
@@ -47,7 +47,7 @@ class CliArgument(Model):
         return argument
 
 
-class CliCommand(Model):
+class CliCommand(Entity):
     command_key = t.StringType(required=True)
     subcommand_key = t.StringType()
     name = t.StringType(required=True)
@@ -62,6 +62,10 @@ class CliCommand(Model):
         command.help = help
         command.subcommand_key = subcommand_key
         command.arguments = arguments
+
+        command.id = command_key
+        if subcommand_key:
+            command.id = '{}.{}'.format(command_key, subcommand_key)
 
         return command
     
