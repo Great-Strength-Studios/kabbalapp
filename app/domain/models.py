@@ -85,16 +85,18 @@ class DomainModelProperty(ValueObject):
 
 		return result
 
-class AppValueObject(Entity):
+class AppDomainModel(Entity):
     id = t.StringType(required=True)
     name = t.StringType(required=True)
+    type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
     class_name = t.StringType(required=True)
     properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
 
     @staticmethod
-    def create(name: str, class_name: str, id: str = None, properties: List[DomainModelProperty] = []) -> 'AppValueObject':
-        result = AppValueObject()
+    def create(name: str, type: str, class_name: str, id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
+        result = AppDomainModel()
         result.name = name
+        result.type = type
         result.class_name = class_name
         result.properties = properties
 
