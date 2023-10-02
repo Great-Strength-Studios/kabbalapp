@@ -1,23 +1,22 @@
-from typing import List
+from typing import List, Any
 from schematics import types as t, Model
+from schematics.transforms import blacklist, whitelist
+from schematics.types.serializable import serializable
 
 class DomainModel(Model):
-
-    name = t.StringType(required=True)
-    type = t.StringType(required=True, choices=['entity', 'value_object'])
-    class_name = t.StringType(required=True)    
+    pass
 
 
 class ValueObject(DomainModel):
+    pass
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.type = 'value_object'
 
 class Entity(DomainModel):
 
     id = t.StringType(required=True)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.type = 'entity'
+
+class DataMapper(Model):
+    
+    def map(self) -> Any:
+        pass
