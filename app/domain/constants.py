@@ -1,3 +1,9 @@
+# Domain model types
+DOMAIN_MODEL_TYPES = [
+    'entity',
+    'value_object'
+]
+
 # Type constants
 STR_TYPE =  'str'
 INT_TYPE = 'int'
