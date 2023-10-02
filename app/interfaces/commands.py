@@ -99,5 +99,5 @@ class AddDomainModelProperty(RequestEvent):
     description = t.StringType()
     type_properties = t.DictType(t.StringType(), default={})
 
-class PrintValueObjectModule(RequestEvent):
+class PrintDomainModelModule(RequestEvent):
     pass

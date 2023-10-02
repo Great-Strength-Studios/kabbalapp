@@ -109,5 +109,5 @@ def add_domain_role(context, request, app_context, **kwargs):
         'fields': request.get('fields', None)
     })
 
-def print_value_object_module(context, request, app_context, **kwargs):
-    return PrintValueObjectModule()
+def print_domain_model_module(context, request, app_context, **kwargs):
+    return PrintDomainModelModule()
