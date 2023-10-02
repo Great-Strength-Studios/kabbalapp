@@ -1,13 +1,14 @@
+from ..core.domain import *
 from .value_objects import *
 
-class ValueObject(Model):
+class AppValueObject(Entity):
     id = t.StringType(required=True)
     name = t.StringType(required=True)
     class_name = t.StringType(required=True)
     properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
 
     @staticmethod
-    def create(name: str, class_name: str, id: str = None, properties: List[DomainModelProperty] = []) -> 'ValueObject':
+    def create(name: str, class_name: str, id: str = None, properties: List[DomainModelProperty] = []) -> 'AppValueObject':
         result = ValueObject()
         result.name = name
         result.class_name = class_name
