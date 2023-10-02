@@ -14,9 +14,3 @@ class ValueObject(DomainModel):
 class Entity(DomainModel):
 
     id = t.StringType(required=True)
-
-
-class DataMapper(Model):
-    
-    def map(self) -> Any:
-        pass
