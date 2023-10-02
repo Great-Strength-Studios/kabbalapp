@@ -315,10 +315,10 @@ features:
           functions:
           - data_mapping: add_domain_role
             function_path: domain.add_role
-        add_value_object:
+        add_domain_model:
           functions:
-          - data_mapping: add_value_object
-            function_path: domain.add_value_object
+          - data_mapping: add_domain_model
+            function_path: domain.add_domain_model
         sync_implementation:
           functions:
           - data_mapping: sync_domain_implementation
