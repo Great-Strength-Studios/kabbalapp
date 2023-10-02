@@ -1,12 +1,8 @@
-from typing import List
-from schematics import types as t, Model
-from schematics.transforms import blacklist, whitelist
-from schematics.types.serializable import serializable
-
+from ..core.domain import *
 from ..constants import *
 
 
-class TypeProperties(Model):
+class TypeProperties(ValueObject):
     pass
 
 
@@ -62,7 +58,7 @@ class ListTypeProperties(TypeProperties):
 		return result
 
 
-class DomainModelProperty(Model):
+class DomainModelProperty(ValueObject):
 	
 	name = t.StringType(required=True)
 	type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)

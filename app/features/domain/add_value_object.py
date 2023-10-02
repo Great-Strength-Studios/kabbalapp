@@ -21,7 +21,7 @@ def handle(context: MessageContext):
     value_objects = domain_repo.get_value_objects()
 
     # Create new value object instance.
-    value_object = ValueObject.create(name=name, class_name=class_name)
+    value_object = AppValueObject.create(name=name, class_name=class_name)
 
     # Check to see if value object already exists.
     exists = next((vo for vo in value_objects if vo.id == value_object.id), None)

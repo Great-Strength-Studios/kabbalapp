@@ -259,14 +259,14 @@ errors:
     error_code: '000000001'
     message:
       en_US: 'Invalid request contains the following errors: {}'
-  VALUE_OBJECT_ALREADY_EXISTS:
-    error_code: '000020001'
-    message:
-      en_US: Value object with class name "{}" already exists
   INVALID_TYPE_PROPERTY:
     error_code: '000020007'
     message:
       en_US: Model property with type "{}" contains invalid type property "{}"
+  VALUE_OBJECT_ALREADY_EXISTS:
+    error_code: '000020001'
+    message:
+      en_US: Value object with class name "{}" already exists
 features:
   groups:
     app_project:
