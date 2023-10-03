@@ -184,15 +184,17 @@ domain:
           name: App Project
       name: App Project
   repos: {}
-  value_objects:
+  models:
     model_property:
       class_name: DomainModelProperty
       name: Model Property
       properties: []
+      type: value_object
     type_properties:
       class_name: TypeProperties
       name: Type Properties
       properties: []
+      type: value_object
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
