@@ -1,7 +1,3 @@
-# Import domain constants
-from .domain.constants import *
-
-
 # Environment
 APP_ENV = 'APP_ENV'
 DEFAULT_APP_ENV = 'prod'
