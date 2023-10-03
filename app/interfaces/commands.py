@@ -1,8 +1,6 @@
 from schematics import types as t, Model
 from schematics.transforms import blacklist, whitelist
 
-from ..constants import *
-
 class RequestEvent(Model):
     pass
 
@@ -85,13 +83,13 @@ class ListDomainModels(RequestEvent):
 
 class AddDomainRole(RequestEvent):
     domain_key = t.StringType(required=True)
-    type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
+    type = t.StringType(required=True)
     fields = t.ListType(t.StringType(), required=True)
 
 class AddDomainModelProperty(RequestEvent):
     model_id = t.StringType(required=True)
     name = t.StringType(required=True)
-    type = t.StringType(default=STR_TYPE, choices=DOMAIN_PROPERTY_TYPES)
+    type = t.StringType(default='str')
     inner_type = t.StringType()
     required = t.BooleanType()
     default = t.StringType()

@@ -20,7 +20,7 @@ class AppDomainModel(Model):
         }
 
 class AppDomainRole(Model):
-    type = t.StringType(required=True, choices=DOMAIN_ROLE_TYPES)
+    type = t.StringType(required=True)
     fields = t.ListType(t.StringType(), required=True)
 
 class AppDomainImplementation(Model):
