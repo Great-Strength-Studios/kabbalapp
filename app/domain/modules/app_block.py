@@ -125,7 +125,7 @@ class AppDomainModelBlock(Model):
     @staticmethod
     def create(project_path: str, domain_models: List[AppDomainModel]) -> 'AppDomainModelBlock':
         import os
-        file_path = os.path.join(project_path, 'app', 'domain', 'domain_models.py')
+        file_path = os.path.join(project_path, 'app', 'domain', 'models.py')
 
         result = AppDomainModelBlock()
         result.file_path = file_path
@@ -141,10 +141,8 @@ class AppDomainModelBlock(Model):
         print_lines = []
 
         # Add import statements
-        print_lines.append('from typing import List')
-        print_lines.append('from schematics import types as t, Model')
-        print_lines.append('from schematics.transforms import blacklist, whitelist')
-        print_lines.append('from schematics.types.serializable import serializable')
+        print_lines.append('from ..core.domain import *')
+        print_lines.append('from .constants import *')
         
         # Add value object classes
         # This will be done with a while loop to allow for skipping lines
@@ -158,7 +156,12 @@ class AppDomainModelBlock(Model):
             domain_model = self.domain_models[i]
 
             # Write out the class name and inheritance
-            print_lines.append(f'class {domain_model.class_name}(Model):')
+            # If type is entity, inherit from Entity. Else inherit from ValueObject
+            # Otherwise just create a Model
+            if domain_model.type == 'value_object':
+                print_lines.append(f'class {domain_model.class_name}(ValueObject):')
+            else:
+                print_lines.append(f'class {domain_model.class_name}(Model):')
 
             # If no properties exist, add a pass statement
             if len(domain_model.properties) == 0:
