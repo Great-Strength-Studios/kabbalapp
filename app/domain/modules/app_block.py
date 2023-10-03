@@ -143,6 +143,9 @@ class AppDomainModelBlock(Model):
         # Add import statements
         print_lines.append('from ..core.domain import *')
         print_lines.append('from .constants import *')
+
+        # Reorder domain models such that value objects are first, then entities.
+        self.domain_models.sort(key=lambda x: x.type, reverse=True)
         
         # Add value object classes
         # This will be done with a while loop to allow for skipping lines
