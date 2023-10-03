@@ -1,5 +1,6 @@
 commands: null
 domain:
+  factories: {}
   models:
     model_property:
       class_name: DomainModelProperty
@@ -11,7 +12,6 @@ domain:
       name: Type Properties
       properties: []
       type: value_object
-  factories: {}
   modules:
     cli:
       aliases: null
@@ -223,6 +223,10 @@ errors:
     error_code: '000020007'
     message:
       en_US: Domain implementation with key "{}" not found
+  DOMAIN_MODEL_ALREADY_EXISTS:
+    error_code: '000020001'
+    message:
+      en_US: Domain model of type "{}" with class name "{}" already exists
   DOMAIN_MODEL_NOT_FOUND:
     error_code: '000020002'
     message:
@@ -260,10 +264,6 @@ errors:
     error_code: '000020007'
     message:
       en_US: Model property with type "{}" contains invalid type property "{}"
-  DOMAIN_MODEL_ALREADY_EXISTS:
-    error_code: '000020001'
-    message:
-      en_US: Domain model of type "{}" with class name "{}" already exists
 features:
   groups:
     app_project:
