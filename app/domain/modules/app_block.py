@@ -160,6 +160,8 @@ class AppDomainModelBlock(Model):
             # Otherwise just create a Model
             if domain_model.type == 'value_object':
                 print_lines.append(f'class {domain_model.class_name}(ValueObject):')
+            elif domain_model.type == 'entity':
+                print_lines.append(f'class {domain_model.class_name}(Entity):')
             else:
                 print_lines.append(f'class {domain_model.class_name}(Model):')
 
