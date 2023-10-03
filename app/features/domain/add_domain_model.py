@@ -31,21 +31,5 @@ def handle(context: MessageContext):
     # Add value object to domain and to value objects list.
     domain_repo.save_domain_model(domain_model)
 
-    # Get all domain models.
-    domain_models = domain_repo.get_domain_models()
-
-    # Get app project manager.
-    app_project_manager: p.AppProjectManager = context.services.app_project_manager()
-
-    # Get app project.
-    app_project = app_project_manager.load_project(app_key)
-
-    # Create domain models block.
-    block = AppDomainModelBlock.create(app_project.app_directory, domain_models)
-
-    # Add domain model block to app project.
-    with open(block.file_path, 'w') as f:
-        f.write(block.print())
-
     # Return added value object.
     return domain_model

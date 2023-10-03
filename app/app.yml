@@ -301,6 +301,8 @@ features:
           functions:
           - data_mapping: add_domain_model
             function_path: domain.add_domain_model
+          - data_mapping: print_domain_model_module
+            function_path: app_printer.print_domain_model_module
         add_model_property:
           functions:
           - data_mapping: add_domain_model_property
