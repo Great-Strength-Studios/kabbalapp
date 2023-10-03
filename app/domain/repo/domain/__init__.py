@@ -1,14 +1,14 @@
-from ...entities import *
+from ...models import *
 from ...modules import *
 
 class DomainRepository():
 
     # TODO: Incorporate real domain model later.
-    def get_domain_model(self, id: str) -> AppValueObject:
+    def get_domain_model(self, id: str) -> AppDomainModel:
         pass
 
-    def get_value_objects(self) -> List[AppValueObject]:
+    def get_domain_models(self, type: str = None) -> List[AppDomainModel]:
         pass
 
-    def save_value_object(self, value_object: AppValueObject) -> None:
+    def save_domain_model(self, domain_model: AppDomainModel) -> None:
         pass

@@ -18,7 +18,7 @@ class CliCommandDataMapper(CliCommand):
 
     class Options():
         roles = {
-            'write': blacklist('command_key', 'subcommand_key'),
+            'write': blacklist('id', 'command_key', 'subcommand_key'),
             'map': blacklist()
         }
         serialize_when_none = False
