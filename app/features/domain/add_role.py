@@ -12,7 +12,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
 
     # Get app domain service.
-    domain_service: d.AppDomainService = context.services.domain_service(app_key)
+    domain_service: dom.AppDomainService = context.services.domain_service(app_key)
 
     # Add role.
     role = domain_service.add_role(**request.to_primitive())

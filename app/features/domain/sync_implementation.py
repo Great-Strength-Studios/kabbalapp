@@ -14,7 +14,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
     
     # Get domain service.
-    service: d.AppDomainService = context.services.domain_service(app_key)
+    service: dom.AppDomainService = context.services.domain_service(app_key)
 
     # Get domain implementation.
     implementation = service.get_implementation(request.domain_key, request.implementation_key)
