@@ -51,7 +51,7 @@ class Container():
         app_project_manager = self.app_project_manager()
         app_project = app_project_manager.load_project(app_key)
         if app_project.schema_storage_type == 'yaml':
-            from ..domain.repo.cli.yaml import YamlRepository
+            from ..domain.modules.cli.repo.yaml import YamlRepository
             return YamlRepository(app_project.app_directory, app_project.schema_location)
         
     def domain_repo(self, app_key: str):
