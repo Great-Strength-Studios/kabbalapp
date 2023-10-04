@@ -25,7 +25,7 @@ def handle(context: MessageContext):
 		raise AppError(context.errors.APP_KEY_REQUIRED)
 	
 	# Get cli inteface repo.
-	cli_interface_repo: CliInterfaceRepository = context.services.cli_interface_repo(app_key)
+	cli_interface_repo: cli.CliInterfaceRepository = context.services.cli_interface_repo(app_key)
 
 	# Retrieve cli interface
 	interface = cli_interface_repo.get_inteface()
@@ -45,7 +45,7 @@ def handle(context: MessageContext):
 	command = interface.get_command(command_key=command_key, subcommand_key=subcommand_key)
 
 	# Create new argument instance.
-	argument = CliArgument.create(
+	argument = cli.CliArgument.create(
 		name=name,
 		help=help,
 		type=type,

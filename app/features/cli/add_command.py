@@ -17,7 +17,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
     
     # Get cli inteface repo.
-    cli_interface_repo: CliInterfaceRepository = context.services.cli_interface_repo(app_key)
+    cli_interface_repo: cli.CliInterfaceRepository = context.services.cli_interface_repo(app_key)
 
     # Get cli interface.
     interface = cli_interface_repo.get_inteface()
@@ -34,7 +34,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.CLI_COMMAND_ALREADY_EXISTS.format_message(command_key, subcommand_key))
     
     # Create command.
-    command = CliCommand.create(
+    command = cli.CliCommand.create(
         command_key=command_key, 
         subcommand_key=subcommand_key, 
         name=name, 
