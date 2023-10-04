@@ -1,4 +1,4 @@
-from ..models import *
+from .. import *
 
 # Module dependencies
 from . import interface

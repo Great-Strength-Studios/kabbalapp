@@ -1,5 +1,5 @@
-from ...models import *
-from ...modules import *
+from ..models import *
+
 
 class CliInterfaceRepository():
 
