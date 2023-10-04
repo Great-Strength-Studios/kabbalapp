@@ -71,10 +71,10 @@ def handle(context: MessageContext):
     def save_interface_config():
     
         # Get interface service.
-        interface_repo: AppInterfaceRepository = context.services.interface_repo(app_key)
+        app_interface_repo: i.AppInterfaceRepository = context.services.interface_repo(app_key)
 
         # Raise INTERFACE_ALREADY_EXISTS if interface already exists.
-        interfaces: List[AppInterfaceType] = interface_repo.get_interfaces()
+        interfaces = app_interface_repo.get_interfaces()
         if type in [interface.type for interface in interfaces]:
             raise AppError(context.errors.INTERFACE_ALREADY_EXISTS.format_message(type))
 
