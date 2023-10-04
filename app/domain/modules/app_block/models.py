@@ -1,4 +1,7 @@
-from ..models import *
+from ...models import *
+
+# Import dependencies
+from .. import domain, domain as d
 
 
 class TypePropertiesBlock(Model):
@@ -39,10 +42,10 @@ class TypePropertiesBlock(Model):
 
 class DomainModelPropertyBlock(Model):
 
-    property = t.ModelType(DomainModelProperty, required=True)
+    property = t.ModelType(d.DomainModelProperty, required=True)
 
     @staticmethod
-    def create(property: DomainModelProperty) -> 'DomainModelPropertyBlock':
+    def create(property: d.DomainModelProperty) -> 'DomainModelPropertyBlock':
         result = DomainModelPropertyBlock()
         result.property = property
 
@@ -120,10 +123,10 @@ class DomainModelPropertyBlock(Model):
 class AppDomainModelBlock(Model):
 
     file_path = t.StringType(required=True)
-    domain_models = t.ListType(t.ModelType(AppDomainModel), default=[])
+    domain_models = t.ListType(t.ModelType(d.AppDomainModel), default=[])
 
     @staticmethod
-    def create(project_path: str, domain_models: List[AppDomainModel]) -> 'AppDomainModelBlock':
+    def create(project_path: str, domain_models: List[d.AppDomainModel]) -> 'AppDomainModelBlock':
         import os
         file_path = os.path.join(project_path, 'app', 'domain', 'models.py')
 
@@ -133,7 +136,7 @@ class AppDomainModelBlock(Model):
 
         return result
     
-    def add_domain_model(self, domain_model: AppDomainModel):
+    def add_domain_model(self, domain_model: d.AppDomainModel):
         self.domain_models.append(domain_model)
 
     def print_lines(self):

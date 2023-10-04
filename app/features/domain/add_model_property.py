@@ -22,7 +22,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
     
     # Get domain repository.
-    domain_repo: DomainRepository = context.services.domain_repo(app_key)
+    domain_repo: d.DomainRepository = context.services.domain_repo(app_key)
 
     # First check to see if the domain model exists.
     domain_model = domain_repo.get_domain_model(model_id)
@@ -42,7 +42,7 @@ def handle(context: MessageContext):
 
 
     # Create a new model property
-    property = DomainModelProperty.create(
+    property = d.DomainModelProperty.create(
         name=name,
         type=type,
         inner_type=inner_type,

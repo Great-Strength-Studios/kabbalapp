@@ -16,10 +16,10 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
 
     # Get domain repository.
-    domain_repo: DomainRepository = context.services.domain_repo(app_key)
+    domain_repo: d.DomainRepository = context.services.domain_repo(app_key)
 
     # Create new value object instance.
-    domain_model = AppDomainModel.create(
+    domain_model = d.AppDomainModel.create(
         name=name, 
         type=type, 
         class_name=class_name

@@ -26,8 +26,8 @@ def handle(context: MessageContext):
     domain_models = domain_repo.get_domain_models()
 
     # Create new value object block instance.
-    block = AppDomainModelBlock.create(app_project.app_directory, domain_models)
+    model_block = block.AppDomainModelBlock.create(app_project.app_directory, domain_models)
 
     # Write block to file.
-    with open(block.file_path, 'w') as f:
-        f.write(block.print())
+    with open(model_block.file_path, 'w') as f:
+        f.write(model_block.print())

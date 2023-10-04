@@ -23,13 +23,13 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
     
     # Get cli inteface repo.
-    cli_interface_repo: CliInterfaceRepository = context.services.cli_interface_repo(app_key)
+    cli_interface_repo: cli.CliInterfaceRepository = context.services.cli_interface_repo(app_key)
 
     # Get cli interface type.
     interface = cli_interface_repo.get_inteface()
     
     # Create new argument instance.
-    argument = CliArgument.create(
+    argument = cli.CliArgument.create(
         name=name,
         help=help,
         type=type,
