@@ -5,4 +5,3 @@ from . import app_domain, app_domain as adom, app_domain as d
 from .models import *
 from .modules import *
 from .factory import *
-from .repo import *
