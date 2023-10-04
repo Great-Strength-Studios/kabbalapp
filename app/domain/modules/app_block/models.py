@@ -1,4 +1,5 @@
-from ..models import *
+from ...models import *
+from .. import *
 
 
 class TypePropertiesBlock(Model):
