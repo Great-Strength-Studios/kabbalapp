@@ -40,6 +40,13 @@ def handle(context: MessageContext):
         invalid_arg = re.search(r"unexpected keyword argument '(.*)'", str(e)).group(1)
         raise AppError(context.errors.INVALID_TYPE_PROPERTY.format_message(type, invalid_arg))
 
+    # If the type is a value_object, verify that the value object exists.
+    if type == 'value_object':
+        value_object = domain_repo.get_domain_model(inner_type)
+        if not value_object:
+            raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type))
+        # Replace inner type with value object
+        inner_type = value_object.class_name
 
     # Create a new model property
     property = d.DomainModelProperty.create(
@@ -64,8 +71,7 @@ def handle(context: MessageContext):
     domain_model.add_property(property)
 
     # Save domain model.
-    # TODO: Change this once things are in proper order
-    domain_repo.save_value_object(domain_model)
+    domain_repo.save_domain_model(domain_model)
 
     # Return response.
     return property
