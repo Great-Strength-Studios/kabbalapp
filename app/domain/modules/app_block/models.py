@@ -43,11 +43,13 @@ class TypePropertiesBlock(Model):
 class DomainModelPropertyBlock(Model):
 
     property = t.ModelType(d.DomainModelProperty, required=True)
+    dependency = t.ModelType(d.DomainModelDependency, default=None)
 
     @staticmethod
-    def create(property: d.DomainModelProperty) -> 'DomainModelPropertyBlock':
+    def create(property: d.DomainModelProperty, dependency: d.DomainModelDependency = None) -> 'DomainModelPropertyBlock':
         result = DomainModelPropertyBlock()
         result.property = property
+        result.dependency = dependency
 
         return result
     
@@ -79,7 +81,9 @@ class DomainModelPropertyBlock(Model):
 
         if self.property.inner_type is not None:
             if self.property.type == 'value_object':
-                property_str += f'{self.property.inner_type}'
+                property_str += f'{self.dependency.class_name}'
+            elif self.property.inner_type == 'value_object':
+                property_str += f't.ModelType({self.dependency.class_name})'
             else:
                 property_str += f't.{map_type(self.property.inner_type)}Type()'
 
@@ -163,7 +167,7 @@ class AppDomainModelBlock(Model):
             for domain_model in unsorted_domain_models:
 
                 # If the domain model has no dependencies, add it to the sorted domain models
-                if len(domain_model.dependencies) == 0:
+                if not domain_model.dependencies or len(domain_model.dependencies) == 0:
                     sorted_domain_models.append(domain_model)
                     unsorted_domain_models.remove(domain_model)
                     continue
@@ -172,7 +176,7 @@ class AppDomainModelBlock(Model):
                 for dependency in domain_model.dependencies:
 
                     # If the dependency is not in the unsorted domain models, skip it
-                    if not any((d.id == dependency for d in unsorted_domain_models)):
+                    if not any((d.id == dependency.model_id for d in unsorted_domain_models)):
                         continue
 
                     # Otherwise, break out of the loop
@@ -228,7 +232,8 @@ class AppDomainModelBlock(Model):
             
             # Otherwise, add the properties
             for property in domain_model.properties:
-                property_block = DomainModelPropertyBlock.create(property)
+                dependency = next((d for d in domain_model.dependencies if d.model_id == property.inner_type or d.model_id == property.inner_type_model_id), None)
+                property_block = DomainModelPropertyBlock.create(property, dependency)
                 print_lines.extend(property_block.print_lines())
             
             # Increment the counter
