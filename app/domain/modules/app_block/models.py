@@ -71,13 +71,17 @@ class DomainModelPropertyBlock(Model):
                 return 'String'
             elif type == 'list':
                 return 'List'
+            elif type == 'value_object':
+                return 'Model'
 
         type_name = map_type(self.property.type)
         property_str += f't.{type_name}Type('
 
         if self.property.inner_type is not None:
-            inner_type = map_type(self.property.inner_type)
-            property_str += f't.{inner_type}Type(), '
+            if self.property.type == 'value_object':
+                property_str += f'{self.property.inner_type}, '
+            else:
+                property_str += f't.{map_type(self.property.inner_type)}Type(), '
 
         # Create empty list for type arguments
         type_args = []
