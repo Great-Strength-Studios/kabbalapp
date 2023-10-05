@@ -559,6 +559,10 @@ interfaces:
                 name_or_flags:
                 - --type-properties
                 nargs: +
+              - help: model id if inner type of compound model propery is a value
+                  object
+                name_or_flags:
+                - --inner-type-model-id
               name: Add Domain Model Property
             add_role:
               arguments:

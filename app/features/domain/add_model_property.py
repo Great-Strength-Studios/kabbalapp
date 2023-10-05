@@ -8,6 +8,7 @@ def handle(context: MessageContext):
     name = context.data.name
     type = context.data.type
     inner_type = context.data.inner_type
+    inner_type_model_id = context.data.inner_type_model_id
     required = context.data.required
     default = context.data.default
     choices = context.data.choices

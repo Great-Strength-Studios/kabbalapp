@@ -4,13 +4,15 @@ from ...models import *
 class DomainModelProperty(ModelProperty):
 
     type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
+    inner_type_model_id = t.StringType()
 
     @staticmethod
-    def create(name: str, type: str = 'str', inner_type: str = None, required: bool = False, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
+    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, required: bool = False, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
         result = DomainModelProperty()
         result.name = name
         result.type = type
         result.inner_type = inner_type
+        result.inner_type_model_id = inner_type_model_id
         result.required = required
         result.default = default
         result.choices = choices
@@ -27,6 +29,7 @@ class AppDomainModel(Entity):
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
     class_name = t.StringType(required=True)
     properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
+    dependencies = t.ListType(t.StringType())
 
     @staticmethod
     def create(name: str, type: str, class_name: str, id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
@@ -53,3 +56,5 @@ class AppDomainModel(Entity):
 
     def add_property(self, property: DomainModelProperty) -> None:
         self.properties.append(property)
+        if property.type == 'value_object':
+            self.dependencies.append(property.inner_type)

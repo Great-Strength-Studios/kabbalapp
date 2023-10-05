@@ -79,9 +79,9 @@ class DomainModelPropertyBlock(Model):
 
         if self.property.inner_type is not None:
             if self.property.type == 'value_object':
-                property_str += f'{self.property.inner_type}, '
+                property_str += f'{self.property.inner_type}'
             else:
-                property_str += f't.{map_type(self.property.inner_type)}Type(), '
+                property_str += f't.{map_type(self.property.inner_type)}Type()'
 
         # Create empty list for type arguments
         type_args = []
@@ -109,6 +109,8 @@ class DomainModelPropertyBlock(Model):
         
         # Add the type args to the property string
         if len(type_args) > 0:
+            if self.property.inner_type is not None:
+                property_str += ', '
             property_str += ', '.join(type_args)
         
         # Close the type
@@ -143,6 +145,48 @@ class AppDomainModelBlock(Model):
     def add_domain_model(self, domain_model: d.AppDomainModel):
         self.domain_models.append(domain_model)
 
+    def sort_dependencies(self):
+
+        # Create empty list for sorted domain models
+        sorted_domain_models = []
+
+        # Create empty list for domain models that have not been sorted
+        unsorted_domain_models = self.domain_models
+
+        # Create empty list for domain models that have been sorted
+        sorted_domain_models = []
+
+        # Loop through unsorted domain models
+        while len(unsorted_domain_models) > 0:
+
+            # Loop through unsorted domain models
+            for domain_model in unsorted_domain_models:
+
+                # If the domain model has no dependencies, add it to the sorted domain models
+                if len(domain_model.dependencies) == 0:
+                    sorted_domain_models.append(domain_model)
+                    unsorted_domain_models.remove(domain_model)
+                    continue
+
+                # Loop through the domain model's dependencies
+                for dependency in domain_model.dependencies:
+
+                    # If the dependency is not in the unsorted domain models, skip it
+                    if not any((d.id == dependency for d in unsorted_domain_models)):
+                        continue
+
+                    # Otherwise, break out of the loop
+                    break
+
+                # Otherwise, add the domain model to the sorted domain models
+                else:
+                    sorted_domain_models.append(domain_model)
+                    unsorted_domain_models.remove(domain_model)
+                    continue
+
+        # Set the sorted domain models
+        self.domain_models = sorted_domain_models
+
     def print_lines(self):
         # Create empty list representing print lines
         print_lines = []
@@ -153,6 +197,9 @@ class AppDomainModelBlock(Model):
 
         # Reorder domain models such that value objects are first, then entities.
         self.domain_models.sort(key=lambda x: x.type, reverse=True)
+
+        # Then sort the dependencies
+        self.sort_dependencies()
         
         # Add value object classes
         # This will be done with a while loop to allow for skipping lines
