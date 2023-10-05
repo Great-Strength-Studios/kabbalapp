@@ -68,14 +68,6 @@ class AddDomainModel(RequestEvent):
     type = t.StringType(required=True)
     class_name = t.StringType()
 
-class ListDomainModels(RequestEvent):
-    domain_key = t.StringType()
-
-class AddDomainRole(RequestEvent):
-    domain_key = t.StringType(required=True)
-    type = t.StringType(required=True)
-    fields = t.ListType(t.StringType(), required=True)
-
 class AddDomainModelProperty(RequestEvent):
     model_id = t.StringType(required=True)
     name = t.StringType(required=True)
