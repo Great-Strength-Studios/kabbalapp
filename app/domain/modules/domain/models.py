@@ -1,16 +1,9 @@
 from ...models import *
 
 
-class DomainModelProperty(ValueObject):
+class DomainModelProperty(ModelProperty):
 
-    name = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
-    inner_type = t.StringType()
-    required = t.BooleanType()
-    default = t.StringType()
-    choices = t.ListType(t.StringType())
-    description = t.StringType()
-    type_properties = t.ModelType(TypeProperties)
 
     @staticmethod
     def create(name: str, type: str = 'str', inner_type: str = None, required: bool = False, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
@@ -25,7 +18,6 @@ class DomainModelProperty(ValueObject):
         result.type_properties = type_properties
 
         result.validate()
-        
         return result
 
 
