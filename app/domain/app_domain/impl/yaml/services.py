@@ -11,34 +11,6 @@ class YamlAppDomainService(AppDomainService):
     def schema_file_path(self) -> str:
         import os
         return os.path.join(self.app_directory, self.schema_location)
-    
-    def add_implementation(self, domain_key: str, name: str, key: str) -> AppDomainImplementation:
-        import yaml
-        domain = self.get_domain(domain_key)
-        if isinstance(domain, tuple):
-            return domain
-        impl = AppDomainImplementation(raw_data={'name': name, 'key': key})
-        if key in domain.impl:
-            return ('DOMAIN_IMPLEMENTATION_ALREADY_EXISTS', key) 
-        domain.impl[key] = impl
-        with open(self.schema_file_path, 'r') as f:
-            data = yaml.safe_load(f)
-        data['domains'][domain_key] = domain.to_primitive('update')
-        with open(self.schema_file_path, 'w') as f:
-            yaml.safe_dump(data, f)
-        return impl
-    
-    def get_implementation(self, domain_key: str, implementation_key: str) -> AppDomainImplementation:
-        import yaml
-        domain = self.get_domain(domain_key)
-        if isinstance(domain, tuple):
-            return domain
-        if implementation_key in domain.impl:
-            impl = AppDomainImplementation(domain.impl[implementation_key])
-            impl.key = implementation_key
-            return impl
-        else:
-            return ('DOMAIN_IMPLEMENTATION_NOT_FOUND', implementation_key)
 
     
     def add_model(self, domain_key: str, key: str, name: str, class_name: str) -> AppDomainModel:
