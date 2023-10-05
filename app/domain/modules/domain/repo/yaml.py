@@ -44,21 +44,35 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
             result.type_properties = ListTypeProperties(self.type_properties.to_primitive('map.list'))
         # Return the result
         return result
+    
+
+class DomainModelDependencyDataMapper(DomainModelDependency):
+
+    class Options():
+        roles = {
+            'write': blacklist(),
+            'map': blacklist(),
+        }
+
+    def map(self) -> DomainModelDependency:
+        return DomainModelDependency(self.to_primitive('map'))
 
 
 class AppDomainModelDataMapper(AppDomainModel):
 
     properties = t.ListType(t.ModelType(DomainModelPropertyDataMapper), default=[])
+    dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
     
     class Options():
         roles = {
             'write': blacklist('id'),
-            'map': blacklist('properties'),
+            'map': blacklist('properties', 'dependencies'),
         }
 
     def map(self) -> AppDomainModel:
         result = AppDomainModel(self.to_primitive('map'))
         result.properties = [property.map() for property in self.properties]
+        result.dependencies = [dependency.map() for dependency in self.dependencies]
         return result
     
 
@@ -112,7 +126,7 @@ class YamlRepository(DomainRepository):
         # Return the domain models
         return domain_models
 
-    def save_domain_model(self, value_object: AppDomainModel) -> None:
+    def save_domain_model(self, domain_model: AppDomainModel) -> None:
 
         # Load the schema file data
         import yaml
@@ -120,13 +134,13 @@ class YamlRepository(DomainRepository):
             data = yaml.safe_load(stream)
 
         # Get the value objects data
-        value_object_data = data['domain'].get('models', {})
+        domain_model_data = data['domain'].get('models', {})
 
         # Create a data mapper from the value object
-        value_object_mapper = self._to_mapper(AppDomainModelDataMapper, **value_object.to_primitive())
+        domain_model_mapper = self._to_mapper(AppDomainModelDataMapper, **domain_model.to_primitive())
 
         # Add the value object to the value objects data
-        value_object_data[value_object.id] = value_object_mapper.to_primitive('write')
+        domain_model_data[domain_model.id] = domain_model_mapper.to_primitive('write')
 
         # Save the schema file data
         with open(self.schema_file_path, 'w') as stream:
