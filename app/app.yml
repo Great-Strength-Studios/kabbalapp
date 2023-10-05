@@ -173,10 +173,6 @@ errors:
     error_code: '000020004'
     message:
       en_US: Domain model property with name "{}" has invalid inner type "{}"
-  DOMAIN_ROLE_ALREADY_EXISTS:
-    error_code: '000020006'
-    message:
-      en_US: Domain role with key "{}" already exists
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
@@ -240,10 +236,6 @@ features:
             function_path: domain.add_model_property
           - data_mapping: print_domain_model_module
             function_path: app_printer.print_domain_model_module
-        add_role:
-          functions:
-          - data_mapping: add_domain_role
-            function_path: domain.add_role
     interface:
       features:
         add:
@@ -471,25 +463,6 @@ interfaces:
                 name_or_flags:
                 - --inner-type-model-id
               name: Add Domain Model Property
-            add_role:
-              arguments:
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              - help: domain role name
-                name_or_flags:
-                - name
-              - choices:
-                - blacklist
-                - whitelist
-                help: domain role type
-                name_or_flags:
-                - --type
-                - -t
-                required: true
-              name: Add Domain Role
         interface:
           subcommands:
             add:
