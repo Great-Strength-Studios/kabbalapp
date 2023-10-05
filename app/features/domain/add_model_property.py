@@ -46,14 +46,33 @@ def handle(context: MessageContext):
         value_object = domain_repo.get_domain_model(inner_type)
         if not value_object:
             raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type))
-        # Replace inner type with value object
-        inner_type = value_object.class_name
+        # Add value object as dependency
+        dependency = d.DomainModelDependency.create(
+            model_id=inner_type,
+            class_name=value_object.class_name,
+            module=None
+        )
+        domain_model.add_dependency(dependency)
+
+    # If the inner type is a value object, verify that the inner type exists.
+    elif inner_type == 'value_object':
+        value_object = domain_repo.get_domain_model(inner_type_model_id)
+        if not value_object:
+            raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type_model_id))
+        # Add value object as dependency
+        dependency = d.DomainModelDependency.create(
+            model_id=inner_type_model_id,
+            class_name=value_object.class_name,
+            module=None
+        )
+        domain_model.add_dependency(dependency)
 
     # Create a new model property
     property = d.DomainModelProperty.create(
         name=name,
         type=type,
         inner_type=inner_type,
+        inner_type_model_id=inner_type_model_id,
         required=required,
         default=default,
         choices=choices,
