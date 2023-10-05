@@ -22,15 +22,3 @@ class AppDomainModel(Model):
 class AppDomainRole(Model):
     type = t.StringType(required=True)
     fields = t.ListType(t.StringType(), required=True)
-
-class AppDomainImplementation(Model):
-    key = t.StringType(required=True)
-    name = t.StringType(required=True)
-    models = t.DictType(t.ModelType(AppDomainModel), default={})
-    roles = t.ListType(t.ModelType(AppDomainRole), default=[])
-
-    class Options():
-        roles = {
-            'create': blacklist('key', 'models', 'roles'),
-            'update': blacklist('key'),
-        }
