@@ -98,69 +98,12 @@ domain:
       name: cli
     domain:
       aliases:
-      - adom
       - d
-      models:
-        domain:
-          class_name: AppDomain
-          name: App Domain
-          properties:
-            key:
-              description: domain key
-              name: Key
-              required: true
-              type: str
-            name:
-              description: domain name
-              name: Name
-              required: true
-              type: str
-        domain_implementation:
-          class_name: AppDomainImplementation
-          name: App Domain Implementation
-          properties:
-            key:
-              description: domain implementation key
-              name: Key
-              required: true
-              type: str
-            name:
-              description: domain implementation name
-              name: Name
-              required: true
-              type: str
-        domain_model:
-          class_name: AppDomainModel
-          name: App Domain Model
-          properties:
-            class_name:
-              description: domain model class name
-              name: Class name
-              required: true
-              type: str
-            key:
-              description: domain model key
-              name: Key
-              required: true
-              type: str
-            name:
-              description: domain model name
-              name: Name
-              required: true
-              type: str
-        domain_role:
-          class_name: AppDomainRole
-          name: App Domain Role
-          properties:
-            type:
-              choices:
-              - blacklist
-              - whitelist
-              description: domain role type
-              name: Type
-              required: true
-              type: str
+      constants: {}
+      models: {}
       name: Domain
+      repos: {}
+        
     interface:
       aliases:
       - i
