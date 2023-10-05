@@ -22,7 +22,6 @@ class DomainModelProperty(ModelProperty):
 
 
 class AppDomainModel(Entity):
-    test = t.StringType()
     id = t.StringType(required=True)
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)

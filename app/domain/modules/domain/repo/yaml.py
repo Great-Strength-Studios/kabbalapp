@@ -34,6 +34,9 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
     def map(self) -> DomainModelProperty:
         # Create the result
         result = DomainModelProperty(self.to_primitive('map'))
+        # Return result if type properties is None
+        if self.type_properties is None:
+            return result
         # Map the type properties
         if self.type == 'str':
             result.type_properties = StringTypeProperties(self.type_properties.to_primitive('map.str'))
@@ -81,9 +84,9 @@ class YamlRepository(DomainRepository):
             data = yaml.safe_load(stream)
 
         # First check the value objects
-        value_object_data = data['domain'].get('models', {})
-        if id in value_object_data:
-            mapper = self._to_mapper(AppDomainModelDataMapper, id=id, **value_object_data.get(id))
+        model_data = data['domain'].get('models', {})
+        if id in model_data:
+            mapper = self._to_mapper(AppDomainModelDataMapper, id=id, **model_data.get(id))
             return mapper.map()
         
         # Otherwise return None if no domain models are found.
@@ -97,10 +100,10 @@ class YamlRepository(DomainRepository):
             data = yaml.safe_load(stream)
 
         # Get the value objects data
-        value_object_data = data['domain'].get('models', {})
+        model_data = data['domain'].get('models', {})
 
         # Return the value objects
-        domain_models = [self._to_mapper(AppDomainModelDataMapper, id=id, **value_object).map() for id, value_object in value_object_data.items()]
+        domain_models = [self._to_mapper(AppDomainModelDataMapper, id=id, **value_object).map() for id, value_object in model_data.items()]
 
         # Filter out type is specified
         if type is not None:
