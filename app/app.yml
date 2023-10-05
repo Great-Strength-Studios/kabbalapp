@@ -158,14 +158,6 @@ errors:
     error_code: '000000003'
     message:
       en_US: CLI command with key "{}" not found
-  DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
-    error_code: '000020006'
-    message:
-      en_US: Domain implementation with key "{}" already exists
-  DOMAIN_IMPLEMENTATION_NOT_FOUND:
-    error_code: '000020007'
-    message:
-      en_US: Domain implementation with key "{}" not found
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020001'
     message:
@@ -241,10 +233,6 @@ features:
             function_path: cli.add_parent_argument
     domain:
       features:
-        add_implementation:
-          functions:
-          - data_mapping: add_domain_implementation
-            function_path: domain.add_implementation
         add_model:
           functions:
           - data_mapping: add_domain_model
@@ -423,21 +411,6 @@ interfaces:
               name: Add CLI Parent Argument
         domain:
           subcommands:
-            add_implementation:
-              arguments:
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              - help: domain implementation key
-                name_or_flags:
-                - --key
-                - -k
-              - help: domain implementation name
-                name_or_flags:
-                - name
-              name: Add Domain Implementation
             add_model:
               arguments:
               - help: domain model class name
