@@ -98,69 +98,11 @@ domain:
       name: cli
     domain:
       aliases:
-      - adom
       - d
-      models:
-        domain:
-          class_name: AppDomain
-          name: App Domain
-          properties:
-            key:
-              description: domain key
-              name: Key
-              required: true
-              type: str
-            name:
-              description: domain name
-              name: Name
-              required: true
-              type: str
-        domain_implementation:
-          class_name: AppDomainImplementation
-          name: App Domain Implementation
-          properties:
-            key:
-              description: domain implementation key
-              name: Key
-              required: true
-              type: str
-            name:
-              description: domain implementation name
-              name: Name
-              required: true
-              type: str
-        domain_model:
-          class_name: AppDomainModel
-          name: App Domain Model
-          properties:
-            class_name:
-              description: domain model class name
-              name: Class name
-              required: true
-              type: str
-            key:
-              description: domain model key
-              name: Key
-              required: true
-              type: str
-            name:
-              description: domain model name
-              name: Name
-              required: true
-              type: str
-        domain_role:
-          class_name: AppDomainRole
-          name: App Domain Role
-          properties:
-            type:
-              choices:
-              - blacklist
-              - whitelist
-              description: domain role type
-              name: Type
-              required: true
-              type: str
+      constants: {}
+      models: {}
       name: Domain
+      repos: {}
     interface:
       aliases:
       - i
@@ -215,14 +157,6 @@ errors:
     error_code: '000000003'
     message:
       en_US: CLI command with key "{}" not found
-  DOMAIN_IMPLEMENTATION_ALREADY_EXISTS:
-    error_code: '000020006'
-    message:
-      en_US: Domain implementation with key "{}" already exists
-  DOMAIN_IMPLEMENTATION_NOT_FOUND:
-    error_code: '000020007'
-    message:
-      en_US: Domain implementation with key "{}" not found
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020001'
     message:
@@ -239,14 +173,6 @@ errors:
     error_code: '000020004'
     message:
       en_US: Domain model property with name "{}" has invalid inner type "{}"
-  DOMAIN_NOT_FOUND:
-    error_code: '000020005'
-    message:
-      en_US: Domain with key "{}" not found
-  DOMAIN_ROLE_ALREADY_EXISTS:
-    error_code: '000020006'
-    message:
-      en_US: Domain role with key "{}" already exists
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
@@ -298,10 +224,6 @@ features:
             function_path: cli.add_parent_argument
     domain:
       features:
-        add_implementation:
-          functions:
-          - data_mapping: add_domain_implementation
-            function_path: domain.add_implementation
         add_model:
           functions:
           - data_mapping: add_domain_model
@@ -314,14 +236,6 @@ features:
             function_path: domain.add_model_property
           - data_mapping: print_domain_model_module
             function_path: app_printer.print_domain_model_module
-        add_role:
-          functions:
-          - data_mapping: add_domain_role
-            function_path: domain.add_role
-        sync_implementation:
-          functions:
-          - data_mapping: sync_domain_implementation
-            function_path: domain.sync_implementation
     interface:
       features:
         add:
@@ -480,21 +394,6 @@ interfaces:
               name: Add CLI Parent Argument
         domain:
           subcommands:
-            add_implementation:
-              arguments:
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              - help: domain implementation key
-                name_or_flags:
-                - --key
-                - -k
-              - help: domain implementation name
-                name_or_flags:
-                - name
-              name: Add Domain Implementation
             add_model:
               arguments:
               - help: domain model class name
@@ -564,38 +463,6 @@ interfaces:
                 name_or_flags:
                 - --inner-type-model-id
               name: Add Domain Model Property
-            add_role:
-              arguments:
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              - help: domain role name
-                name_or_flags:
-                - name
-              - choices:
-                - blacklist
-                - whitelist
-                help: domain role type
-                name_or_flags:
-                - --type
-                - -t
-                required: true
-              name: Add Domain Role
-            sync_implementation:
-              arguments:
-              - help: domain key
-                name_or_flags:
-                - --domain-key
-                - -d
-                required: true
-              - help: domain implementation key
-                name_or_flags:
-                - --implementation-key
-                - -i
-                required: true
-              name: Sync Domain Implementation
         interface:
           subcommands:
             add:

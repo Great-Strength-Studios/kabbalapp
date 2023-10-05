@@ -63,28 +63,10 @@ class AddCliArgument(RequestEvent):
             'cli.add_argument': blacklist('name', 'flags', 'positional'),
         }
 
-class AddDomainImplementation(RequestEvent):
-    domain_key = t.StringType(required=True)
-    key = t.StringType()
-    name = t.StringType(required=True)
-
-class SyncDomainImplementation(RequestEvent):
-    domain_key = t.StringType(required=True)
-    implementation_key = t.StringType(required=True)
-    force = t.BooleanType(default=False)
-
 class AddDomainModel(RequestEvent):
     name = t.StringType(required=True)
     type = t.StringType(required=True)
     class_name = t.StringType()
-
-class ListDomainModels(RequestEvent):
-    domain_key = t.StringType()
-
-class AddDomainRole(RequestEvent):
-    domain_key = t.StringType(required=True)
-    type = t.StringType(required=True)
-    fields = t.ListType(t.StringType(), required=True)
 
 class AddDomainModelProperty(RequestEvent):
     model_id = t.StringType(required=True)
