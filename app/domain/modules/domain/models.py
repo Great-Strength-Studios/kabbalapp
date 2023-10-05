@@ -21,6 +21,22 @@ class DomainModelProperty(ModelProperty):
 
         result.validate()
         return result
+    
+
+class DomainModelDependency(ValueObject):
+    model_id = t.StringType(required=True)
+    class_name = t.StringType(required=True)
+    module = t.StringType()
+
+    @staticmethod
+    def create(model_id: str, class_name: str, module: str = None) -> 'DomainModelDependency':
+        result = DomainModelDependency()
+        result.model_id = model_id
+        result.class_name = class_name
+        result.module = module
+
+        result.validate()
+        return result
 
 
 class AppDomainModel(Entity):
@@ -29,7 +45,7 @@ class AppDomainModel(Entity):
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
     class_name = t.StringType(required=True)
     properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
-    dependencies = t.ListType(t.StringType())
+    dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
 
     @staticmethod
     def create(name: str, type: str, class_name: str, id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
@@ -56,5 +72,6 @@ class AppDomainModel(Entity):
 
     def add_property(self, property: DomainModelProperty) -> None:
         self.properties.append(property)
-        if property.type == 'value_object':
-            self.dependencies.append(property.inner_type)
+
+    def add_dependency(self, dependency: DomainModelDependency) -> None:
+        self.dependencies.append(dependency)
