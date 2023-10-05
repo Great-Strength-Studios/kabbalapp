@@ -14,7 +14,7 @@ DATE_TYPE = 'date'
 TIMESTAMP_TYPE = 'timestamp'
 LIST_TYPE = 'list'
 DICT_TYPE = 'dict'
-MODEL_TYPE = 'model'
+VALUE_OBJECT_TYPE = 'value_object'
 
 DOMAIN_PROPERTY_TYPES = [
     STR_TYPE,
@@ -26,5 +26,5 @@ DOMAIN_PROPERTY_TYPES = [
     TIMESTAMP_TYPE,
     LIST_TYPE,
     DICT_TYPE,
-    MODEL_TYPE
+    VALUE_OBJECT_TYPE
 ]

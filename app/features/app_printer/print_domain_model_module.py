@@ -20,7 +20,7 @@ def handle(context: MessageContext):
     app_project = app_project_manager.load_project(app_key)
 
     # Get domain repository.
-    domain_repo: DomainRepository = context.services.domain_repo(app_key)
+    domain_repo: d.DomainRepository = context.services.domain_repo(app_key)
 
     # Get all value objects.
     domain_models = domain_repo.get_domain_models()

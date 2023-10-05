@@ -235,6 +235,10 @@ errors:
     error_code: '000020003'
     message:
       en_US: Domain model property with name "{}" already exists
+  DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND:
+    error_code: '000020004'
+    message:
+      en_US: Domain model property with name "{}" has invalid inner type "{}"
   DOMAIN_NOT_FOUND:
     error_code: '000020005'
     message:
@@ -555,6 +559,10 @@ interfaces:
                 name_or_flags:
                 - --type-properties
                 nargs: +
+              - help: model id if inner type of compound model propery is a value
+                  object
+                name_or_flags:
+                - --inner-type-model-id
               name: Add Domain Model Property
             add_role:
               arguments:

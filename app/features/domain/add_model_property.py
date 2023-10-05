@@ -8,6 +8,7 @@ def handle(context: MessageContext):
     name = context.data.name
     type = context.data.type
     inner_type = context.data.inner_type
+    inner_type_model_id = context.data.inner_type_model_id
     required = context.data.required
     default = context.data.default
     choices = context.data.choices
@@ -40,12 +41,38 @@ def handle(context: MessageContext):
         invalid_arg = re.search(r"unexpected keyword argument '(.*)'", str(e)).group(1)
         raise AppError(context.errors.INVALID_TYPE_PROPERTY.format_message(type, invalid_arg))
 
+    # If the type is a value_object, verify that the value object exists.
+    if type == 'value_object':
+        value_object = domain_repo.get_domain_model(inner_type)
+        if not value_object:
+            raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type))
+        # Add value object as dependency
+        dependency = d.DomainModelDependency.create(
+            model_id=inner_type,
+            class_name=value_object.class_name,
+            module=None
+        )
+        domain_model.add_dependency(dependency)
+
+    # If the inner type is a value object, verify that the inner type exists.
+    elif inner_type == 'value_object':
+        value_object = domain_repo.get_domain_model(inner_type_model_id)
+        if not value_object:
+            raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type_model_id))
+        # Add value object as dependency
+        dependency = d.DomainModelDependency.create(
+            model_id=inner_type_model_id,
+            class_name=value_object.class_name,
+            module=None
+        )
+        domain_model.add_dependency(dependency)
 
     # Create a new model property
     property = d.DomainModelProperty.create(
         name=name,
         type=type,
         inner_type=inner_type,
+        inner_type_model_id=inner_type_model_id,
         required=required,
         default=default,
         choices=choices,
@@ -64,8 +91,7 @@ def handle(context: MessageContext):
     domain_model.add_property(property)
 
     # Save domain model.
-    # TODO: Change this once things are in proper order
-    domain_repo.save_value_object(domain_model)
+    domain_repo.save_domain_model(domain_model)
 
     # Return response.
     return property
