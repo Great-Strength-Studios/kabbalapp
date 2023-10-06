@@ -196,17 +196,17 @@ errors:
       en_US: Model property with type "{}" contains invalid type property "{}"
 features:
   groups:
-    app_project:
+    app:
       features:
-        add_project:
+        new:
           functions:
           - data_mapping: new_app_project
-            function_path: app_project.new_app_project
+            function_path: app.new_app_project
           header_mapping: app_project_headers
         set_default:
           functions:
           - data_mapping: set_default_app_project
-            function_path: app_project.set_default_app_project
+            function_path: app.set_default_app_project
           header_mapping: app_project_headers
     cli:
       features:
@@ -247,9 +247,9 @@ interfaces:
   types:
     cli:
       commands:
-        app_project:
+        app:
           subcommands:
-            add_project:
+            new:
               arguments:
               - help: App project directory path
                 name_or_flags:
@@ -266,8 +266,15 @@ interfaces:
                 - --name
                 required: true
                 type: str
-              help: Adds Kabbalapp project
+              help: create new app project
               name: Add Project
+            set_default:
+              arguments:
+              - help: app project key
+                name_or_flags:
+                - key
+              help: sets the default app project
+              name: Set Default App Project
         cli:
           subcommands:
             add_argument:

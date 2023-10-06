@@ -14,10 +14,10 @@ def handle(context: MessageContext):
         raise AppError(context.errors.APP_KEY_REQUIRED)
     
     # Get app project manager.
-    app_project_manager: p.AppProjectManager = context.services.app_project_manager()
+    app_project_repo: app.AppProjectRepository = context.services.app_project_repo()
 
     # Get app project.
-    app_project = app_project_manager.load_project(app_key)
+    app_project = app_project_repo.load_project(app_key)
 
     # Get domain repository.
     domain_repo: d.DomainRepository = context.services.domain_repo(app_key)

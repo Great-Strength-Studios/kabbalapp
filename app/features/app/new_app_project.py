@@ -98,7 +98,7 @@ def handle(context: MessageContext):
     )
 
     # Save app project.
-    manager.save_project(key, project)
+    manager.save_project(project)
 
     # Load local app printer.
     app_printer: AppPrinter = context.services.app_printer()
@@ -113,6 +113,7 @@ def handle(context: MessageContext):
         'core/config/yaml.py',
         'core/error.py',
         'core/routing.py',
+        'core/domain.py',
         'core/__init__.py',
         '__init__.py'
     ]
