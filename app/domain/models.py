@@ -66,5 +66,5 @@ class ModelProperty(ValueObject):
     default = t.StringType()
     choices = t.ListType(t.StringType())
     description = t.StringType()
-    type_properties = t.ModelType(TypeProperties)
+    type_properties = t.PolyModelType([StringTypeProperties, DateTypeProperties, DateTimeTypeProperties, ListTypeProperties])
 
