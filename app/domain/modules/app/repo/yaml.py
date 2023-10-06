@@ -1,7 +1,6 @@
-from ...services import *
-from .models import *
+from . import *
 
-class YamlAppProjectManager(AppProjectManager):
+class YamlRepository(AppProjectRepository):
 
     def __init__(self, app_project_filepath: str):
         import os, yaml
