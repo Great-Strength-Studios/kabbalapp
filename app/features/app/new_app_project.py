@@ -1,6 +1,5 @@
 from ...core import *
 from ...domain import *
-from ...interfaces import *
 
 
 REQUIREMENTS_CONTENT = """schematics>=2.1.1
@@ -80,30 +79,32 @@ ERRORS = 'errors'
 
 def handle(context: MessageContext):
 
-    # Get new app project request.
-    request: NewAppProject = context.data
+    # Unpack data from request.
+    name = context.data.name
+    app_directory = context.data.app_directory
+    key = context.data.key
 
     # Get app version from headers.
     version = context.headers.get('app_version', None)
 
     # Get app project manager.
-    manager: p.AppProjectManager = context.services.app_project_manager()
+    manager: app.AppProjectRepository = context.services.app_project_repo()
 
-    project = app_project.AppProject({
-        'key': request.key,
-        'app_directory': request.app_directory,
-        'name': request.name,
-        'version': version
-    })
+    project = app.AppProject.create(
+        name=name,
+        app_directory=app_directory,
+        version=version,
+        key=key
+    )
 
     # Save app project.
-    manager.save_project(request.key, project)
+    manager.save_project(project)
 
     # Load local app printer.
     app_printer: AppPrinter = context.services.app_printer()
 
     # Load target app printer.
-    target_app_printer: AppPrinter = context.services.app_printer(request.key)
+    target_app_printer: AppPrinter = context.services.app_printer(key)
 
     # Arrange packages/modules to be read.
     core_modules = [
@@ -112,6 +113,7 @@ def handle(context: MessageContext):
         'core/config/yaml.py',
         'core/error.py',
         'core/routing.py',
+        'core/domain.py',
         'core/__init__.py',
         '__init__.py'
     ]
@@ -159,8 +161,7 @@ def handle(context: MessageContext):
         'domain': {
             'modules': {},
             'repos': {},
-            'entities': {},
-            'value_objects': {},
+            'models': {},
             'factories': {},
         },
     }

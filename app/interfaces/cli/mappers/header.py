@@ -1,14 +1,14 @@
 def default(request, app_context, **kwargs):
 
     # Get app project manager.
-    from ....domain import p
-    manager: p.AppProjectManager = app_context.container.app_project_manager()
+    from ....domain import app
+    app_project_repo: app.AppProjectRepository = app_context.container.app_project_repo()
 
     # Get app key.
     app_key = request.get('app_key', None)
 
     # Get app project.
-    app_project = manager.load_project(app_key)
+    app_project = app_project_repo.load_project(app_key)
 
     # Get version from kwargs.
     version = kwargs.get('version', None)

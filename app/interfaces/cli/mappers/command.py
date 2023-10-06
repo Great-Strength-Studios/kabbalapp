@@ -83,18 +83,5 @@ def add_domain_model_property(context, request, app_context, **kwargs):
         'type_properties': type_properties
     })
 
-def list_domain_models(context, request, app_context, **kwargs):
-    return ListDomainModels({
-        'domain_key': request.get('domain_key', None),
-    })
-
-def add_domain_role(context, request, app_context, **kwargs):
-    return AddDomainRole({
-        'domain_key': request.get('domain_key', None),
-        'key': request.get('key', None),
-        'type': request.get('type', None),
-        'fields': request.get('fields', None)
-    })
-
 def print_domain_model_module(context, request, app_context, **kwargs):
     return PrintDomainModelModule()

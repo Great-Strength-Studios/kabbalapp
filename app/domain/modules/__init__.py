@@ -2,6 +2,7 @@
 from ...core.domain import *
 
 # Upward imports
+from . import app
 from . import interface, interface as i
 from . import cli
 from . import domain, domain as d
