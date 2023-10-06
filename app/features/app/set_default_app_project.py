@@ -4,17 +4,17 @@ from ...domain import *
 def handle(context: MessageContext):
 
     # Unpack request.
-    request = context.data
+    key = context.data.key
     
     # Get app project manager.
-    proj_manager: p.AppProjectManager = context.services.app_project_manager()
+    app_project_repo: app.AppProjectRepository = context.services.app_project_repo()
+
+    # Verify that the app project exists.
+    if not app_project_repo.project_exists(key):
+        raise AppError(context.errors.APP_PROJECT_NOT_FOUND.format_message(key))
 
     # Set default project.
-    property = proj_manager.set_default_app_project(request.key)
-
-    # Raise app error if property is an error tuple.
-    if isinstance(property, tuple):
-        raise AppError(context.errors.get(property[0]).format_message(property[1]))
+    app_project_repo.set_default_app_project(key)
 
     # Return response.
-    return request.key
+    return key
