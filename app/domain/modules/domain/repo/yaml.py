@@ -1,12 +1,6 @@
 from . import *
 
-class TypePropertiesDataMapper(TypeProperties):
-
-    regex = t.StringType()
-    min_length = t.IntType()
-    max_length = t.IntType()
-    min_size = t.IntType()
-    max_size = t.IntType()
+class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties):
 
     class Options():
         roles = {
