@@ -16,6 +16,22 @@ domain:
         type: str
       - name: serialized_format
         type: str
+      - name: parser
+        type: str
+      - choices:
+        - allow
+        - reject
+        - require
+        - utc
+        default: allow
+        name: tzd
+        type: str
+      - default: 'False'
+        name: convert_tz
+        type: bool
+      - default: 'False'
+        name: drop_tzinfo
+        type: bool
       type: value_object
     date_type_properties:
       base_type_model_id: type_properties
