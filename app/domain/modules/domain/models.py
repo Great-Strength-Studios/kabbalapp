@@ -26,13 +26,15 @@ class DomainModelProperty(ModelProperty):
 class DomainModelDependency(ValueObject):
     model_id = t.StringType(required=True)
     class_name = t.StringType(required=True)
+    dependency_type = t.StringType(required=True, choices=DOMAIN_MODEL_DEPENDENCY_TYPES)
     module = t.StringType()
 
     @staticmethod
-    def create(model_id: str, class_name: str, module: str = None) -> 'DomainModelDependency':
+    def create(model_id: str, class_name: str, dependency_type: str = 'property', module: str = None) -> 'DomainModelDependency':
         result = DomainModelDependency()
         result.model_id = model_id
         result.class_name = class_name
+        result.dependency_type = dependency_type
         result.module = module
 
         result.validate()
