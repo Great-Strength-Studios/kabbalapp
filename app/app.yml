@@ -2,6 +2,21 @@ commands: null
 domain:
   factories: {}
   models:
+    date_time_type_properties:
+      base_type_model_id: type_properties
+      class_name: DateTimeTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: Date Time Type Properties
+      properties:
+      - name: formats
+        type: str
+      - name: serialized_format
+        type: str
+      type: value_object
     date_type_properties:
       base_type_model_id: type_properties
       class_name: DateTypeProperties
