@@ -28,3 +28,10 @@ DOMAIN_PROPERTY_TYPES = [
     DICT_TYPE,
     VALUE_OBJECT_TYPE
 ]
+
+DOMAIN_MODEL_DEPENDENCY_TYPES = [
+    'property',
+    'base_type'
+]
+
+TAB = '    '

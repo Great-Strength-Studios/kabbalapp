@@ -67,6 +67,7 @@ class AddDomainModel(RequestEvent):
     name = t.StringType(required=True)
     type = t.StringType(required=True)
     class_name = t.StringType()
+    base_type_model_id = t.StringType()
 
 class AddDomainModelProperty(RequestEvent):
     model_id = t.StringType(required=True)

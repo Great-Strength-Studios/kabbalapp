@@ -58,7 +58,8 @@ def add_domain_model(context, request, app_context, **kwargs):
     return AddDomainModel({
         'name': request.get('name', None),
         'type': request.get('type', None),
-        'class_name': request.get('class_name', None)
+        'class_name': request.get('class_name', None),
+        'base_type_model_id': request.get('base_type_model_id', None),
     })
 
 def add_domain_model_property(context, request, app_context, **kwargs):

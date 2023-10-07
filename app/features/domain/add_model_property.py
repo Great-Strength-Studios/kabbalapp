@@ -63,7 +63,7 @@ def handle(context: MessageContext):
         dependency = d.DomainModelDependency.create(
             model_id=inner_type_model_id,
             class_name=value_object.class_name,
-            module=None
+            dependency_type='property'
         )
         domain_model.add_dependency(dependency)
 

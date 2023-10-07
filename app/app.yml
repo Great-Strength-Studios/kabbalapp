@@ -2,10 +2,105 @@ commands: null
 domain:
   factories: {}
   models:
+    date_time_type_properties:
+      base_type_model_id: type_properties
+      class_name: DateTimeTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: Date Time Type Properties
+      properties:
+      - name: formats
+        type: str
+      - name: serialized_format
+        type: str
+      - name: parser
+        type: str
+      - choices:
+        - allow
+        - reject
+        - require
+        - utc
+        default: allow
+        name: tzd
+        type: str
+      - default: 'False'
+        name: convert_tz
+        type: bool
+      - default: 'False'
+        name: drop_tzinfo
+        type: bool
+      type: value_object
+    date_type_properties:
+      base_type_model_id: type_properties
+      class_name: DateTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: Date Type Properties
+      properties:
+      - name: formats
+        type: str
+      type: value_object
+    list_type_properties:
+      base_type_model_id: type_properties
+      class_name: ListTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: List Type Properties
+      properties:
+      - name: min_size
+        type: int
+      - name: max_size
+        type: int
+      type: value_object
     model_property:
-      class_name: DomainModelProperty
+      base_type_model_id: null
+      class_name: ModelProperty
+      dependencies: []
       name: Model Property
-      properties: []
+      properties:
+      - name: name
+        required: true
+        type: str
+      - name: type
+        required: true
+        type: str
+      - name: inner_type
+        type: str
+      - name: required
+        type: bool
+      - name: default
+        type: str
+      - inner_type: str
+        name: choices
+        type: list
+      - name: description
+        type: str
+      type: value_object
+    string_type_properties:
+      base_type_model_id: type_properties
+      class_name: StringTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: String Type Properties
+      properties:
+      - name: regex
+        type: str
+      - name: min_length
+        type: int
+      - name: max_length
+        type: int
       type: value_object
     type_properties:
       class_name: TypeProperties
@@ -161,6 +256,14 @@ errors:
     error_code: '000020001'
     message:
       en_US: Domain model of type "{}" with class name "{}" already exists
+  DOMAIN_MODEL_BASE_TYPE_NOT_FOUND:
+    error_code: '000020005'
+    message:
+      en_US: Domain model with id "{}" not found and can not be used as base type.
+  DOMAIN_MODEL_INVALID_BASE_TYPE:
+    error_code: '000020006'
+    message:
+      en_US: Domain model with id "{}" is not a valid base type "{}".
   DOMAIN_MODEL_NOT_FOUND:
     error_code: '000020002'
     message:
@@ -419,6 +522,9 @@ interfaces:
               - help: domain model name
                 name_or_flags:
                 - name
+              - help: model id of the model base type
+                name_or_flags:
+                - --base-type-model-id
               name: Add Domain Model
             add_model_property:
               arguments:

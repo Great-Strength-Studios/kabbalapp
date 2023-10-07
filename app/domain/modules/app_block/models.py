@@ -58,7 +58,7 @@ class DomainModelPropertyBlock(Model):
         print_lines = []
 
         # Create the initial string with the tab indent.
-        property_str = '\t'
+        property_str = TAB
 
         # Add the name
         property_str += f'{self.property.name} = '
@@ -69,6 +69,8 @@ class DomainModelPropertyBlock(Model):
                 return 'Int'
             elif type == 'float':
                 return 'Float'
+            elif type == 'bool':
+                return 'Boolean'
             elif type == 'str':
                 return 'String'
             elif type == 'list':
@@ -96,7 +98,11 @@ class DomainModelPropertyBlock(Model):
         
         # Add the default flag
         if self.property.default is not None:
-            type_args.append(f'default={self.property.default}')
+            # Stringify the default if it the property type is a string
+            if self.property.type == 'str':
+                type_args.append(f"default='{self.property.default}'")
+            else:
+                type_args.append(f'default={self.property.default}')
 
         # Add the choices flag
         if self.property.choices:
@@ -217,18 +223,25 @@ class AppDomainModelBlock(Model):
             domain_model = self.domain_models[i]
 
             # Write out the class name and inheritance
+            # If the domain model has a base model type, look for it on the dependency list and add it as a base type.
             # If type is entity, inherit from Entity. Else inherit from ValueObject
             # Otherwise just create a Model
-            if domain_model.type == 'value_object':
+            if domain_model.base_type_model_id:
+                base_type = next((d for d in domain_model.dependencies if d.model_id == domain_model.base_type_model_id), None)
+                print_lines.append(f'class {domain_model.class_name}({base_type.class_name}):')
+            elif not domain_model.base_type_model_id and domain_model.type == 'value_object':
                 print_lines.append(f'class {domain_model.class_name}(ValueObject):')
-            elif domain_model.type == 'entity':
+            elif not domain_model.base_type_model_id and domain_model.type == 'entity':
                 print_lines.append(f'class {domain_model.class_name}(Entity):')
             else:
                 print_lines.append(f'class {domain_model.class_name}(Model):')
 
             # If no properties exist, add a pass statement
             if len(domain_model.properties) == 0:
-                print_lines.append('\tpass')
+                print_lines.append(TAB + 'pass')
+            else:
+                # Otherwise add an extra line
+                print_lines.append('')
             
             # Otherwise, add the properties
             for property in domain_model.properties:

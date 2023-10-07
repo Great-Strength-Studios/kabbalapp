@@ -7,7 +7,7 @@ class DomainModelProperty(ModelProperty):
     inner_type_model_id = t.StringType()
 
     @staticmethod
-    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, required: bool = False, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
+    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
         result = DomainModelProperty()
         result.name = name
         result.type = type
@@ -26,13 +26,15 @@ class DomainModelProperty(ModelProperty):
 class DomainModelDependency(ValueObject):
     model_id = t.StringType(required=True)
     class_name = t.StringType(required=True)
+    dependency_type = t.StringType(required=True, choices=DOMAIN_MODEL_DEPENDENCY_TYPES)
     module = t.StringType()
 
     @staticmethod
-    def create(model_id: str, class_name: str, module: str = None) -> 'DomainModelDependency':
+    def create(model_id: str, class_name: str, dependency_type: str = 'property', module: str = None) -> 'DomainModelDependency':
         result = DomainModelDependency()
         result.model_id = model_id
         result.class_name = class_name
+        result.dependency_type = dependency_type
         result.module = module
 
         result.validate()
@@ -44,15 +46,17 @@ class AppDomainModel(Entity):
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
     class_name = t.StringType(required=True)
+    base_type_model_id = t.StringType()
     properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
 
     @staticmethod
-    def create(name: str, type: str, class_name: str, id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
+    def create(name: str, type: str, class_name: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
         result = AppDomainModel()
         result.name = name
         result.type = type
         result.class_name = class_name
+        result.base_type_model_id = base_type_model_id
         result.properties = properties
 
         # Convert python camel case to snake case if ID is not provided
