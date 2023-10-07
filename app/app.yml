@@ -24,7 +24,11 @@ domain:
         model_id: type_properties
         module: null
       name: List Type Properties
-      properties: []
+      properties:
+      - name: min_size
+        type: int
+      - name: max_size
+        type: int
       type: value_object
     model_property:
       base_type_model_id: null
