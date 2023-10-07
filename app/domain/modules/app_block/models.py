@@ -73,6 +73,8 @@ class DomainModelPropertyBlock(Model):
                 return 'Boolean'
             elif type == 'str':
                 return 'String'
+            elif type == 'date':
+                return 'Date'
             elif type == 'list':
                 return 'List'
             elif type == 'value_object':

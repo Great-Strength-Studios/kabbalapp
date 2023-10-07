@@ -30,6 +30,15 @@ class DateTypeProperties(TypeProperties):
     
     formats = t.StringType()
 
+    @staticmethod
+    def create(formats: str = None) -> 'DateTypeProperties':
+        result = DateTypeProperties()
+        result.formats = formats
+
+        result.validate()
+
+        return result
+
 
 class DateTimeTypeProperties(TypeProperties):
 

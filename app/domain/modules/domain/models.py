@@ -20,6 +20,9 @@ class DomainModelProperty(ModelProperty):
         result.type_properties = type_properties
 
         result.validate()
+        
+        # Re-add type properties due to strange behavior with PolyType Model and validate
+        result.type_properties = type_properties
         return result
     
 
