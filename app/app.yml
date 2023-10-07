@@ -419,6 +419,9 @@ interfaces:
               - help: domain model name
                 name_or_flags:
                 - name
+              - help: model id of the model base type
+                name_or_flags:
+                - --base-type-model-id
               name: Add Domain Model
             add_model_property:
               arguments:
