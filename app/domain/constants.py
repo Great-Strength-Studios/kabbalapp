@@ -33,3 +33,5 @@ DOMAIN_MODEL_DEPENDENCY_TYPES = [
     'property',
     'base_type'
 ]
+
+TAB = '    '
