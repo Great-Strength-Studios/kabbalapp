@@ -6,5 +6,7 @@ def create_type_properties(type: str, **properties)-> TypeProperties:
         return StringTypeProperties.create(**properties)
     elif type == 'list':
         return ListTypeProperties.create(**properties)
+    elif type == 'date':
+        return DateTypeProperties.create(**properties)
     
     return None
