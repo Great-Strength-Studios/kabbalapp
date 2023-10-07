@@ -217,11 +217,15 @@ class AppDomainModelBlock(Model):
             domain_model = self.domain_models[i]
 
             # Write out the class name and inheritance
+            # If the domain model has a base model type, look for it on the dependency list and add it as a base type.
             # If type is entity, inherit from Entity. Else inherit from ValueObject
             # Otherwise just create a Model
-            if domain_model.type == 'value_object':
+            if domain_model.base_type_model_id:
+                base_type = next((d for d in domain_model.dependencies if d.model_id == domain_model.base_type_model_id), None)
+                print_lines.append(f'class {domain_model.class_name}({base_type.class_name}):')
+            elif not domain_model.base_type_model_id and domain_model.type == 'value_object':
                 print_lines.append(f'class {domain_model.class_name}(ValueObject):')
-            elif domain_model.type == 'entity':
+            elif not domain_model.base_type_model_id and domain_model.type == 'entity':
                 print_lines.append(f'class {domain_model.class_name}(Entity):')
             else:
                 print_lines.append(f'class {domain_model.class_name}(Model):')
