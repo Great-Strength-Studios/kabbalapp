@@ -15,6 +15,17 @@ domain:
       - name: formats
         type: str
       type: value_object
+    list_type_properties:
+      base_type_model_id: type_properties
+      class_name: ListTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: List Type Properties
+      properties: []
+      type: value_object
     model_property:
       base_type_model_id: null
       class_name: ModelProperty
@@ -36,6 +47,8 @@ domain:
       - inner_type: str
         name: choices
         type: list
+      - name: description
+        type: str
       type: value_object
     string_type_properties:
       base_type_model_id: type_properties
