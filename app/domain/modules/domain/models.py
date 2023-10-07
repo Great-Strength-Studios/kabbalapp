@@ -7,7 +7,7 @@ class DomainModelProperty(ModelProperty):
     inner_type_model_id = t.StringType()
 
     @staticmethod
-    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, required: bool = False, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
+    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
         result = DomainModelProperty()
         result.name = name
         result.type = type
