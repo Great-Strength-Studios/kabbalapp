@@ -133,6 +133,11 @@ class YamlRepository(DomainRepository):
         # Create a data mapper from the value object
         domain_model_mapper = self._to_mapper(AppDomainModelDataMapper, **domain_model.to_primitive())
 
+        # Set the required value of all model properties to None if they are False.
+        for property in domain_model_mapper.properties:
+            if property.required == False:
+                property.required = None
+
         # Add the value object to the value objects data
         domain_model_data[domain_model.id] = domain_model_mapper.to_primitive('write')
 
