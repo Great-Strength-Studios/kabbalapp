@@ -38,6 +38,11 @@ def handle(context: MessageContext):
         base_type = domain_repo.get_domain_model(base_type_model_id)
         if not base_type:
             raise AppError(context.errors.DOMAIN_MODEL_BASE_TYPE_NOT_FOUND.format_message(base_type_model_id))
+        
+        # Raise app error if the base type and the model type are not the same.
+        if base_type.type != type:
+            raise AppError(context.errors.DOMAIN_MODEL_INVALID_BASE_TYPE.format_message(base_type_model_id, type))
+        
         # Add base type as dependency
         dependency = d.DomainModelDependency.create(
             model_id=base_type_model_id,
