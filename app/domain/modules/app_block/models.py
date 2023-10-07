@@ -98,7 +98,11 @@ class DomainModelPropertyBlock(Model):
         
         # Add the default flag
         if self.property.default is not None:
-            type_args.append(f'default={self.property.default}')
+            # Stringify the default if it the property type is a string
+            if self.property.type == 'str':
+                type_args.append(f"default='{self.property.default}'")
+            else:
+                type_args.append(f'default={self.property.default}')
 
         # Add the choices flag
         if self.property.choices:
