@@ -64,7 +64,23 @@ domain:
     model_property:
       base_type_model_id: null
       class_name: ModelProperty
-      dependencies: []
+      dependencies:
+      - class_name: StringTypeProperties
+        dependency_type: property
+        model_id: string_type_properties
+        module: null
+      - class_name: DateTypeProperties
+        dependency_type: property
+        model_id: date_type_properties
+        module: null
+      - class_name: DateTimeTypeProperties
+        dependency_type: property
+        model_id: date_time_type_properties
+        module: null
+      - class_name: ListTypeProperties
+        dependency_type: property
+        model_id: list_type_properties
+        module: null
       name: Model Property
       properties:
       - name: name
@@ -84,6 +100,13 @@ domain:
         type: list
       - name: description
         type: str
+      - name: type_properties
+        poly_type_model_ids:
+        - string_type_properties
+        - date_type_properties
+        - date_time_type_properties
+        - list_type_properties
+        type: poly
       type: value_object
     string_type_properties:
       base_type_model_id: type_properties
@@ -558,6 +581,7 @@ interfaces:
                 - date
                 - list
                 - dict
+                - poly
                 - model
                 default: str
                 help: domain model property type
@@ -575,6 +599,10 @@ interfaces:
                   object
                 name_or_flags:
                 - --inner-type-model-id
+              - help: model ids for a poly-model property type
+                name_or_flags:
+                - --poly-type-model-ids
+                nargs: +
               name: Add Domain Model Property
         interface:
           subcommands:
