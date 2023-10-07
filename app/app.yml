@@ -3,7 +3,7 @@ domain:
   factories: {}
   models:
     model_property:
-      class_name: DomainModelProperty
+      class_name: ModelProperty
       name: Model Property
       properties: []
       type: value_object
