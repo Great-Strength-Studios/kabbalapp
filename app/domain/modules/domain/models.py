@@ -5,14 +5,16 @@ class DomainModelProperty(ModelProperty):
 
     type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
     inner_type_model_id = t.StringType()
+    poly_type_model_ids = t.ListType(t.StringType())
 
     @staticmethod
-    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
+    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, poly_type_model_ids: List[str] = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
         result = DomainModelProperty()
         result.name = name
         result.type = type
         result.inner_type = inner_type
         result.inner_type_model_id = inner_type_model_id
+        result.poly_type_model_ids = poly_type_model_ids
         result.required = required
         result.default = default
         result.choices = choices
@@ -81,4 +83,5 @@ class AppDomainModel(Entity):
         self.properties.append(property)
 
     def add_dependency(self, dependency: DomainModelDependency) -> None:
-        self.dependencies.append(dependency)
+        if not any((d.model_id == dependency.model_id for d in self.dependencies)):
+            self.dependencies.append(dependency)

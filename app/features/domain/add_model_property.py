@@ -9,6 +9,7 @@ def handle(context: MessageContext):
     type = context.data.type
     inner_type = context.data.inner_type
     inner_type_model_id = context.data.inner_type_model_id
+    poly_type_model_ids = context.data.poly_type_model_ids
     required = context.data.required
     default = context.data.default
     choices = context.data.choices
@@ -66,6 +67,20 @@ def handle(context: MessageContext):
             dependency_type='property'
         )
         domain_model.add_dependency(dependency)
+    
+    # If the type is a poly, verify that the poly types exist.
+    elif type == 'poly':
+        for poly_type_model_id in poly_type_model_ids:
+            poly_type = domain_repo.get_domain_model(poly_type_model_id)
+            if not poly_type:
+                raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(poly_type_model_id))
+            # Add poly type as dependency
+            dependency = d.DomainModelDependency.create(
+                model_id=poly_type_model_id,
+                class_name=poly_type.class_name,
+                dependency_type='property'
+            )
+            domain_model.add_dependency(dependency)
 
     # Create a new model property
     property = d.DomainModelProperty.create(
@@ -73,6 +88,7 @@ def handle(context: MessageContext):
         type=type,
         inner_type=inner_type,
         inner_type_model_id=inner_type_model_id,
+        poly_type_model_ids=poly_type_model_ids,
         required=required,
         default=default,
         choices=choices,
