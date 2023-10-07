@@ -77,6 +77,7 @@ def add_domain_model_property(context, request, app_context, **kwargs):
         'type': request.get('type', 'str'),
         'inner_type': request.get('inner_type', None),
         'inner_type_model_id': request.get('inner_type_model_id', None),
+        'poly_type_model_ids': request.get('poly_type_model_ids', None),
         'required': request.get('required', None),
         'default': request.get('default', None),
         'choices': request.get('choices', None),
