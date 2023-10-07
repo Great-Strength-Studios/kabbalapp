@@ -75,6 +75,8 @@ class DomainModelPropertyBlock(Model):
                 return 'String'
             elif type == 'date':
                 return 'Date'
+            elif type == 'datetime':
+                return 'DateTime'
             elif type == 'list':
                 return 'List'
             elif type == 'value_object':

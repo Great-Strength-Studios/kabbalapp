@@ -49,6 +49,20 @@ class DateTimeTypeProperties(TypeProperties):
     convert_tz = t.BooleanType(default=False)
     drop_tzinfo = t.BooleanType(default=False)
 
+    @staticmethod
+    def create(formats: str = None, serialized_format: str = None, parser: str = None, tzd: str = None, convert_tz: bool = None, drop_tzinfo: bool = None) -> 'DateTimeTypeProperties':
+        result = DateTimeTypeProperties()
+        result.formats = formats
+        result.serialized_format = serialized_format
+        result.parser = parser
+        result.tzd = tzd
+        result.convert_tz = convert_tz
+        result.drop_tzinfo = drop_tzinfo
+
+        result.validate()
+
+        return result
+
 class ListTypeProperties(TypeProperties):
 
     min_size = t.IntType()

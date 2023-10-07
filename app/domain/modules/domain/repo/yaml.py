@@ -1,6 +1,6 @@
 from . import *
 
-class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTypeProperties):
+class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTypeProperties, DateTimeTypeProperties):
 
     class Options():
         roles = {
@@ -9,6 +9,7 @@ class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTyp
             'map.str': whitelist('regex', 'min_length', 'max_length'),
             'map.list': whitelist('min_size', 'max_size'),
             'map.date': whitelist('formats'),
+            'map.datetime': whitelist('formats', 'serialized_format', 'parser', 'tzd', 'convert_tz', 'drop_tzinfo'),
         }
         serialize_when_none = False
 
@@ -39,6 +40,8 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
             result.type_properties = ListTypeProperties(self.type_properties.to_primitive('map.list'))
         elif self.type == 'date':
             result.type_properties = DateTypeProperties(self.type_properties.to_primitive('map.date'))
+        elif self.type == 'datetime':
+            result.type_properties = DateTimeTypeProperties(self.type_properties.to_primitive('map.datetime'))
         # Return the result
         return result
     

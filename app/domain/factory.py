@@ -8,5 +8,7 @@ def create_type_properties(type: str, **properties)-> TypeProperties:
         return ListTypeProperties.create(**properties)
     elif type == 'date':
         return DateTypeProperties.create(**properties)
+    elif type == 'datetime':
+        return DateTimeTypeProperties.create(**properties)
     
     return None
