@@ -173,6 +173,10 @@ errors:
     error_code: '000020004'
     message:
       en_US: Domain model property with name "{}" has invalid inner type "{}"
+  DOMAIN_MODEL_BASE_TYPE_NOT_FOUND:
+    error_code: '000020005'
+    message:
+      en_US: Domain model with id "{}" not found and can not be used as base type.
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
