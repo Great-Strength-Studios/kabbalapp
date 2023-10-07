@@ -58,7 +58,7 @@ class DomainModelPropertyBlock(Model):
         print_lines = []
 
         # Create the initial string with the tab indent.
-        property_str = '\t'
+        property_str = TAB
 
         # Add the name
         property_str += f'{self.property.name} = '
@@ -232,7 +232,7 @@ class AppDomainModelBlock(Model):
 
             # If no properties exist, add a pass statement
             if len(domain_model.properties) == 0:
-                print_lines.append('\tpass')
+                print_lines.append(TAB + 'pass')
             
             # Otherwise, add the properties
             for property in domain_model.properties:
