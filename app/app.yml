@@ -2,10 +2,44 @@ commands: null
 domain:
   factories: {}
   models:
+    date_type_properties:
+      base_type_model_id: type_properties
+      class_name: DateTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: Date Type Properties
+      properties:
+      - name: formats
+        required: false
+        type: str
+      type: value_object
     model_property:
       class_name: ModelProperty
       name: Model Property
       properties: []
+      type: value_object
+    string_type_properties:
+      base_type_model_id: type_properties
+      class_name: StringTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: String Type Properties
+      properties:
+      - name: regex
+        required: false
+        type: str
+      - name: min_length
+        required: false
+        type: int
+      - name: max_length
+        required: false
+        type: int
       type: value_object
     type_properties:
       class_name: TypeProperties
@@ -161,6 +195,14 @@ errors:
     error_code: '000020001'
     message:
       en_US: Domain model of type "{}" with class name "{}" already exists
+  DOMAIN_MODEL_BASE_TYPE_NOT_FOUND:
+    error_code: '000020005'
+    message:
+      en_US: Domain model with id "{}" not found and can not be used as base type.
+  DOMAIN_MODEL_INVALID_BASE_TYPE:
+    error_code: '000020006'
+    message:
+      en_US: Domain model with id "{}" is not a valid base type "{}".
   DOMAIN_MODEL_NOT_FOUND:
     error_code: '000020002'
     message:
@@ -173,14 +215,6 @@ errors:
     error_code: '000020004'
     message:
       en_US: Domain model property with name "{}" has invalid inner type "{}"
-  DOMAIN_MODEL_BASE_TYPE_NOT_FOUND:
-    error_code: '000020005'
-    message:
-      en_US: Domain model with id "{}" not found and can not be used as base type.
-  DOMAIN_MODEL_INVALID_BASE_TYPE:
-    error_code: '000020006'
-    message:
-      en_US: Domain model with id "{}" is not a valid base type "{}".
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
