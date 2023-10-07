@@ -1,6 +1,6 @@
 from . import *
 
-class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties):
+class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTypeProperties):
 
     class Options():
         roles = {
