@@ -233,6 +233,9 @@ class AppDomainModelBlock(Model):
             # If no properties exist, add a pass statement
             if len(domain_model.properties) == 0:
                 print_lines.append(TAB + 'pass')
+            else:
+                # Otherwise add an extra line
+                print_lines.append('')
             
             # Otherwise, add the properties
             for property in domain_model.properties:
