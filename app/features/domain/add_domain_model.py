@@ -23,7 +23,8 @@ def handle(context: MessageContext):
     domain_model = d.AppDomainModel.create(
         name=name, 
         type=type, 
-        class_name=class_name
+        class_name=class_name,
+        base_type_model_id=base_type_model_id
     )
 
     # Check to see if existing domain model exists.
