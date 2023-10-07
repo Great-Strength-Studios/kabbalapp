@@ -17,9 +17,21 @@ domain:
         type: str
       type: value_object
     model_property:
+      base_type_model_id: null
       class_name: ModelProperty
+      dependencies: []
       name: Model Property
-      properties: []
+      properties:
+      - name: name
+        required: true
+        type: str
+      - name: type
+        required: true
+        type: str
+      - name: inner_type
+        type: str
+      - name: required
+        type: bool
       type: value_object
     string_type_properties:
       base_type_model_id: type_properties
@@ -32,13 +44,10 @@ domain:
       name: String Type Properties
       properties:
       - name: regex
-        required: false
         type: str
       - name: min_length
-        required: false
         type: int
       - name: max_length
-        required: false
         type: int
       type: value_object
     type_properties:
