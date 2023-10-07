@@ -13,7 +13,6 @@ domain:
       name: Date Type Properties
       properties:
       - name: formats
-        required: false
         type: str
       type: value_object
     model_property:
@@ -32,6 +31,11 @@ domain:
         type: str
       - name: required
         type: bool
+      - name: default
+        type: str
+      - inner_type: str
+        name: choices
+        type: list
       type: value_object
     string_type_properties:
       base_type_model_id: type_properties
