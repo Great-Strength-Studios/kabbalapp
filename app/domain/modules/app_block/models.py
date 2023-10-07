@@ -43,13 +43,13 @@ class TypePropertiesBlock(Model):
 class DomainModelPropertyBlock(Model):
 
     property = t.ModelType(d.DomainModelProperty, required=True)
-    dependency = t.ModelType(d.DomainModelDependency, default=None)
+    dependencies = t.ListType(t.ModelType(d.DomainModelDependency))
 
     @staticmethod
-    def create(property: d.DomainModelProperty, dependency: d.DomainModelDependency = None) -> 'DomainModelPropertyBlock':
+    def create(property: d.DomainModelProperty, dependencies: List[d.DomainModelDependency] = None) -> 'DomainModelPropertyBlock':
         result = DomainModelPropertyBlock()
         result.property = property
-        result.dependency = dependency
+        result.dependencies = dependencies
 
         return result
     
@@ -79,6 +79,8 @@ class DomainModelPropertyBlock(Model):
                 return 'DateTime'
             elif type == 'list':
                 return 'List'
+            elif type == 'poly':
+                return 'PolyModel'
             elif type == 'value_object':
                 return 'Model'
 
@@ -86,12 +88,18 @@ class DomainModelPropertyBlock(Model):
         property_str += f't.{type_name}Type('
 
         if self.property.inner_type is not None:
+            dependency = self.dependencies[0] if self.dependencies else None
             if self.property.type == 'value_object':
-                property_str += f'{self.dependency.class_name}'
+                property_str += f'{dependency.class_name}'
             elif self.property.inner_type == 'value_object':
-                property_str += f't.ModelType({self.dependency.class_name})'
+                property_str += f't.ModelType({dependency.class_name})'
             else:
                 property_str += f't.{map_type(self.property.inner_type)}Type()'
+        elif self.property.type == 'poly':
+            poly_types = []
+            for dependency in self.dependencies:
+                poly_types.append(dependency.class_name)
+            property_str += f'[{", ".join(poly_types)}]'
 
         # Create empty list for type arguments
         type_args = []
@@ -249,8 +257,11 @@ class AppDomainModelBlock(Model):
             
             # Otherwise, add the properties
             for property in domain_model.properties:
-                dependency = next((d for d in domain_model.dependencies if d.model_id == property.inner_type or d.model_id == property.inner_type_model_id), None)
-                property_block = DomainModelPropertyBlock.create(property, dependency)
+                if property.type == 'poly':
+                    dependencies = [d for d in domain_model.dependencies if d.model_id in property.poly_type_model_ids]
+                else:
+                    dependencies = [d for d in domain_model.dependencies if d.model_id == property.inner_type or d.model_id == property.inner_type_model_id]
+                property_block = DomainModelPropertyBlock.create(property, dependencies)
                 print_lines.extend(property_block.print_lines())
             
             # Increment the counter

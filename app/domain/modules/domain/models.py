@@ -83,4 +83,5 @@ class AppDomainModel(Entity):
         self.properties.append(property)
 
     def add_dependency(self, dependency: DomainModelDependency) -> None:
-        self.dependencies.append(dependency)
+        if not any((d.model_id == dependency.model_id for d in self.dependencies)):
+            self.dependencies.append(dependency)
