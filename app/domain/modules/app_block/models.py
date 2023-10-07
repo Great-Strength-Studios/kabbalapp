@@ -69,6 +69,8 @@ class DomainModelPropertyBlock(Model):
                 return 'Int'
             elif type == 'float':
                 return 'Float'
+            elif type == 'bool':
+                return 'Boolean'
             elif type == 'str':
                 return 'String'
             elif type == 'list':
