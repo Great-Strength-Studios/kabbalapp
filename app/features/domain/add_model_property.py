@@ -43,7 +43,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.INVALID_TYPE_PROPERTY.format_message(type, invalid_arg))
 
     # If the type is a value_object, verify that the value object exists.
-    if type == 'value_object':
+    if type == MODEL_TYPE:
         value_object = domain_repo.get_domain_model(inner_type)
         if not value_object:
             raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type))
@@ -56,7 +56,7 @@ def handle(context: MessageContext):
         domain_model.add_dependency(dependency)
 
     # If the inner type is a value object, verify that the inner type exists.
-    elif inner_type == 'value_object':
+    elif inner_type == MODEL_TYPE:
         value_object = domain_repo.get_domain_model(inner_type_model_id)
         if not value_object:
             raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type_model_id))
@@ -69,7 +69,7 @@ def handle(context: MessageContext):
         domain_model.add_dependency(dependency)
     
     # If the type is a poly, verify that the poly types exist.
-    elif type == 'poly':
+    elif type == POLY_TYPE:
         for poly_type_model_id in poly_type_model_ids:
             poly_type = domain_repo.get_domain_model(poly_type_model_id)
             if not poly_type:

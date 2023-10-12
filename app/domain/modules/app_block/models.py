@@ -65,23 +65,23 @@ class DomainModelPropertyBlock(Model):
 
         # Add the type
         def map_type(type: str) -> str:
-            if type == 'int':
+            if type == INT_TYPE:
                 return 'Int'
-            elif type == 'float':
+            elif type == FLOAT_TYPE:
                 return 'Float'
-            elif type == 'bool':
+            elif type == BOOL_TYPE:
                 return 'Boolean'
-            elif type == 'str':
+            elif type == STR_TYPE:
                 return 'String'
-            elif type == 'date':
+            elif type == DATE_TYPE:
                 return 'Date'
-            elif type == 'datetime':
+            elif type == DATETIME_TYPE:
                 return 'DateTime'
-            elif type == 'list':
+            elif type == LIST_TYPE:
                 return 'List'
-            elif type == 'poly':
+            elif type == POLY_TYPE:
                 return 'PolyModel'
-            elif type == 'value_object':
+            elif type == MODEL_TYPE:
                 return 'Model'
 
         type_name = map_type(self.property.type)
@@ -89,13 +89,13 @@ class DomainModelPropertyBlock(Model):
 
         if self.property.inner_type is not None:
             dependency = self.dependencies[0] if self.dependencies else None
-            if self.property.type == 'value_object':
+            if self.property.type == MODEL_TYPE:
                 property_str += f'{dependency.class_name}'
-            elif self.property.inner_type == 'value_object':
+            elif self.property.inner_type == MODEL_TYPE:
                 property_str += f't.ModelType({dependency.class_name})'
             else:
                 property_str += f't.{map_type(self.property.inner_type)}Type()'
-        elif self.property.type == 'poly':
+        elif self.property.type == POLY_TYPE:
             poly_types = []
             for dependency in self.dependencies:
                 poly_types.append(dependency.class_name)
@@ -111,16 +111,16 @@ class DomainModelPropertyBlock(Model):
         # Add the default flag
         if self.property.default is not None:
             # Stringify the default if it the property type is a string
-            if self.property.type == 'str':
+            if self.property.type == STR_TYPE:
                 type_args.append(f"default='{self.property.default}'")
             else:
                 type_args.append(f'default={self.property.default}')
 
         # Add the choices flag
         if self.property.choices:
-            if self.property.type == 'str':
+            if self.property.type == STR_TYPE:
                 choices = self.property.choices
-            elif self.property.type == 'int':
+            elif self.property.type == INT_TYPE:
                 choices = [int(choice) for choice in self.property.choices]
             type_args.append(f'choices={str(choices)}')
 

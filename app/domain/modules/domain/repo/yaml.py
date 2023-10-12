@@ -2,6 +2,10 @@ from . import *
 
 class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTypeProperties, DateTimeTypeProperties):
 
+    convert_tz = t.BooleanType()
+    drop_tzinfo = t.BooleanType()
+    tzd = t.StringType()
+
     class Options():
         roles = {
             'write': blacklist(),
