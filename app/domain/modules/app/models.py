@@ -1,7 +1,7 @@
 from ...models import *
 
 class AppProject(Model):
-    key = t.StringType(required=True)
+    tag = t.StringType(required=True)
     name = t.StringType(required=True)
     app_directory = t.StringType(required=True)
     schema_storage_type = t.StringType(choices=['yaml'], default='yaml')
@@ -9,10 +9,10 @@ class AppProject(Model):
     version = t.StringType(required=True)
 
     @staticmethod
-    def create(name: str, key: str, app_directory: str, schema_storage_type: str = 'yaml', schema_location: str = 'app/app.yml', version: str = '0.0.1'):
+    def create(name: str, tag: str, app_directory: str, schema_storage_type: str = 'yaml', schema_location: str = 'app/app.yml', version: str = '0.0.1'):
         app_project = AppProject()
         app_project.name = name
-        app_project.key = key
+        app_project.tag = tag
         app_project.app_directory = app_directory
         app_project.schema_storage_type = schema_storage_type
         app_project.schema_location = schema_location

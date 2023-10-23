@@ -6,7 +6,7 @@ class AppProjectDataMapper(AppProject):
 
     class Options():
         roles = {
-            'write': blacklist('key'),
+            'write': blacklist('tag'),
             'map': blacklist(),
         }
 
@@ -21,20 +21,20 @@ class YamlRepository(AppProjectRepository):
                 data = {'projects': None, 'default_project': None}
                 yaml.safe_dump(data, stream)
 
-    def project_exists(self, key: str) -> bool:
+    def project_exists(self, tag: str) -> bool:
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
-        return key in app_projects['projects']
+        return tag in app_projects['projects']
 
-    def load_project(self, key: str = None) -> AppProject:
+    def load_project(self, tag: str = None) -> AppProject:
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
-        # If no key is provided, return the default project.
-        if key is None:
-            key = app_projects['default_project']
+        # If no tag is provided, return the default project.
+        if tag is None:
+            tag = app_projects['default_project']
 
-        project = AppProject(app_projects['projects'][key])
-        project.key = key
+        project = AppProject(app_projects['projects'][tag])
+        project.tag = tag
         return project
 
     def save_project(self, app_project: AppProject):
@@ -42,13 +42,13 @@ class YamlRepository(AppProjectRepository):
             app_projects = yaml.safe_load(stream)
         projects = app_projects.get('projects', {})
         mapper = AppProjectDataMapper(app_project.to_primitive())
-        projects[app_project.key] = mapper.to_primitive('write')
+        projects[app_project.tag] = mapper.to_primitive('write')
         with open(self.app_project_filepath, 'w') as stream:
             yaml.safe_dump(app_projects, stream)
 
-    def set_default_app_project(self, key: str):
+    def set_default_app_project(self, tag: str):
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
-        app_projects['default_project'] = key
+        app_projects['default_project'] = tag
         with open(self.app_project_filepath, 'w') as stream:
             yaml.safe_dump(app_projects, stream)
