@@ -6,15 +6,11 @@ class RequestEvent(Model):
 
 class NewAppProject(RequestEvent):
     name = t.StringType(required=True)
-    key = t.StringType(required=True)
+    tag = t.StringType(required=True)
     app_directory = t.StringType(required=True)
-    class Options():
-        roles = {
-            'app_project.map': blacklist('key')
-        }
 
 class SetDefaultAppProject(RequestEvent):
-    key = t.StringType(required=True)
+    tag = t.StringType(required=True)
 
 class AddInterface(RequestEvent):
     type = t.StringType(required=True, choices=['cli', 'rest_flask'])

@@ -3,13 +3,13 @@ from ...commands import *
 def new_app_project(context, request, app_context, **kwargs):
     return NewAppProject({
         'name': request.get('name', None),
-        'key': request.get('key', None),
+        'tag': request.get('tag', None),
         'app_directory': request.get('app_directory', None)
     })
 
 def set_default_app_project(context, request, app_context, **kwargs):
     return SetDefaultAppProject({
-        'key': request.get('key', None)
+        'tag': request.get('tag', None)
     })
 
 def add_interface(context, request, app_context, **kwargs):
