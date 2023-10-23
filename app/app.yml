@@ -379,26 +379,27 @@ interfaces:
               arguments:
               - help: App project directory path
                 name_or_flags:
+                - -d
                 - --app-directory
                 required: true
                 type: str
-              - help: App project key
+              - help: App project tag
                 name_or_flags:
-                - --key
+                - -t
+                - --tag
                 required: true
                 type: str
               - help: App project name
                 name_or_flags:
-                - --name
-                required: true
+                - name
                 type: str
               help: create new app project
               name: Add Project
             set_default:
               arguments:
-              - help: app project key
+              - help: app project tag
                 name_or_flags:
-                - key
+                - tag
               help: sets the default app project
               name: Set Default App Project
         cli:
