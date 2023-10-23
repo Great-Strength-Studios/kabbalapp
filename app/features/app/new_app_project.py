@@ -82,7 +82,7 @@ def handle(context: MessageContext):
     # Unpack data from request.
     name = context.data.name
     app_directory = context.data.app_directory
-    key = context.data.key
+    tag = context.data.tag
 
     # Get app version from headers.
     version = context.headers.get('app_version', None)
@@ -94,7 +94,7 @@ def handle(context: MessageContext):
         name=name,
         app_directory=app_directory,
         version=version,
-        key=key
+        tag=tag
     )
 
     # Save app project.
@@ -104,7 +104,7 @@ def handle(context: MessageContext):
     app_printer: AppPrinter = context.services.app_printer()
 
     # Load target app printer.
-    target_app_printer: AppPrinter = context.services.app_printer(key)
+    target_app_printer: AppPrinter = context.services.app_printer(tag)
 
     # Arrange packages/modules to be read.
     core_modules = [
