@@ -623,6 +623,9 @@ interfaces:
                 - --poly-type-model-ids
                 nargs: +
               name: Add Domain Model Property
+            remove-model-property:
+              help: remove domain model property
+              name: Remove Model Property
         interface:
           subcommands:
             add:
