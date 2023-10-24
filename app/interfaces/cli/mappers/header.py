@@ -4,7 +4,7 @@ def default(request, app_context, **kwargs):
     from ....domain import app
     app_project_repo: app.AppProjectRepository = app_context.container.app_project_repo()
 
-    # Get app key.
+    # Get app tag.
     app_key = request.get('app_key', None)
 
     # Get app project.
@@ -15,7 +15,7 @@ def default(request, app_context, **kwargs):
 
     # Return header data.
     return {
-        'app_key':  app_key if app_key else app_project.key,
+        'app_key':  app_key if app_key else app_project.tag,
         'app_directory': app_project.app_directory,
         'app_name': app_project.name,
         'app_version': app_project.version if app_project.version else version
