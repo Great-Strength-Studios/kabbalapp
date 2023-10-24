@@ -99,12 +99,6 @@ class AppDomainModel(Entity):
             for model_id in property.poly_type_model_ids:
                 self.remove_dependency(model_id, 'property')
 
-    def has_dependency(self, model_id: str, dependency_type: str = 'property') -> bool:
-        '''
-        Checks for a dependency with the given model ID and dependency type.
-        '''
-        return any(d.model_id == model_id and d.dependency_type == dependency_type for d in self.dependencies)
-
     def add_dependency(self, dependency: DomainModelDependency) -> None:
         if not any((d.model_id == dependency.model_id for d in self.dependencies)):
             self.dependencies.append(dependency)
