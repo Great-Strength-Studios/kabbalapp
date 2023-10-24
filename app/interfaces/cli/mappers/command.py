@@ -86,5 +86,11 @@ def add_domain_model_property(context, request, app_context, **kwargs):
         'type_properties': type_properties
     })
 
+def remove_domain_model_property(context, request, app_context, **kwargs):
+    return RemoveDomainModelProperty({
+        'model_id': request.get('model_id', None),
+        'property_name': request.get('property_name', None)
+    })
+
 def print_domain_model_module(context, request, app_context, **kwargs):
     return PrintDomainModelModule()
