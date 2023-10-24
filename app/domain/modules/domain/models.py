@@ -86,6 +86,19 @@ class AppDomainModel(Entity):
         # Remove the property from the list.
         self.properties = [p for p in self.properties if p.name != property.name]
 
+        # If the property is of type list or dict and has an inner type model ID, remove the dependency.
+        if property.type in [LIST_TYPE, DICT_TYPE] and property.inner_type_model_id is not None:
+            self.remove_dependency(property.inner_type_model_id, 'property')
+
+        # If the property is a model type, remove the dependency as defined by the inner type.
+        if property.type == MODEL_TYPE:
+            self.remove_dependency(property.inner_type, 'property')
+
+        # If the property is a poly type, remove the dependencies as defined by the poly type model IDs.
+        if property.type == POLY_TYPE:
+            for model_id in property.poly_type_model_ids:
+                self.remove_dependency(model_id, 'property')
+
     def has_dependency(self, model_id: str, dependency_type: str = 'property') -> bool:
         '''
         Checks for a dependency with the given model ID and dependency type.
@@ -95,3 +108,6 @@ class AppDomainModel(Entity):
     def add_dependency(self, dependency: DomainModelDependency) -> None:
         if not any((d.model_id == dependency.model_id for d in self.dependencies)):
             self.dependencies.append(dependency)
+
+    def remove_dependency(self, model_id: str, dependency_type: str = 'property') -> None:
+        self.dependencies = [d for d in self.dependencies if d.model_id != model_id or d.dependency_type != dependency_type]
