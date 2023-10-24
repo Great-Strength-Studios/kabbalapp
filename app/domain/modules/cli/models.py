@@ -87,8 +87,9 @@ class CliInterfaceType(i.AppInterfaceType):
     parent_arguments = t.ListType(t.ModelType(CliArgument), default=[])
 
     @staticmethod
-    def create(type: str):
+    def create(name: str, type: str):
         interface = CliInterfaceType()
+        interface.name = name
         interface.type = type
 
         return interface

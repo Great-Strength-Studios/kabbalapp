@@ -617,6 +617,10 @@ interfaces:
                 - --type
                 - -t
                 required: true
+              - help: name of the interface
+                name_or_flags:
+                - name
+                type: str
               name: Add App Interface
       parent_arguments:
       - help: app project key (not required when using default project)
