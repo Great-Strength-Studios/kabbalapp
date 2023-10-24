@@ -31,9 +31,13 @@ DOMAIN_PROPERTY_TYPES = [
     MODEL_TYPE
 ]
 
+# Dependency types
+PROPERTY_DEPENDENCY = 'property'
+BASE_TYPE_DEPENDENCY = 'base_type'
+
 DOMAIN_MODEL_DEPENDENCY_TYPES = [
-    'property',
-    'base_type'
+    PROPERTY_DEPENDENCY,
+    BASE_TYPE_DEPENDENCY
 ]
 
 TAB = '    '
