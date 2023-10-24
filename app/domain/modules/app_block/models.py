@@ -94,7 +94,7 @@ class DomainModelPropertyBlock(Model):
             elif self.property.inner_type == MODEL_TYPE:
                 property_str += f't.ModelType({dependency.class_name})'
             else:
-                property_str += f't.{map_type(self.property.inner_type)}Type()'
+                property_str += f't.{map_type(self.property.inner_type)}Type'
         elif self.property.type == POLY_TYPE:
             poly_types = []
             for dependency in self.dependencies:
