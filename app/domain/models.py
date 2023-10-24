@@ -40,6 +40,20 @@ class DateTypeProperties(TypeProperties):
         return result
 
 
+class DictTypeProperties(TypeProperties):
+
+    coerce_key = t.StringType()
+
+    @staticmethod
+    def create(coerce_key: str = None) -> 'DictTypeProperties':
+        result = DictTypeProperties()
+        result.coerce_key = coerce_key
+
+        result.validate()
+
+        return result
+
+
 class DateTimeTypeProperties(TypeProperties):
 
     formats = t.StringType()
@@ -87,7 +101,7 @@ class ModelProperty(ValueObject):
     inner_type = t.StringType()
     required = t.BooleanType()
     default = t.StringType()
-    choices = t.ListType(t.StringType())
+    choices = t.ListType(t.StringType)
     description = t.StringType()
-    type_properties = t.PolyModelType([StringTypeProperties, DateTypeProperties, DateTimeTypeProperties, ListTypeProperties])
+    type_properties = t.PolyModelType([StringTypeProperties, DateTypeProperties, DateTimeTypeProperties, ListTypeProperties, DictTypeProperties])
 

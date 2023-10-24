@@ -1,6 +1,6 @@
 from . import *
 
-class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTypeProperties, DateTimeTypeProperties):
+class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTypeProperties, DateTimeTypeProperties, DictTypeProperties):
 
     convert_tz = t.BooleanType()
     drop_tzinfo = t.BooleanType()
@@ -14,6 +14,7 @@ class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTyp
             'map.list': whitelist('min_size', 'max_size'),
             'map.date': whitelist('formats'),
             'map.datetime': whitelist('formats', 'serialized_format', 'parser', 'tzd', 'convert_tz', 'drop_tzinfo'),
+            'map.dict': whitelist('coerce_key'),
         }
         serialize_when_none = False
 
@@ -38,13 +39,15 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
         if self.type_properties is None:
             return result
         # Map the type properties
-        if self.type == 'str':
+        if self.type == STR_TYPE:
             result.type_properties = StringTypeProperties(self.type_properties.to_primitive('map.str'))
-        elif self.type == 'list':
+        elif self.type == LIST_TYPE:
             result.type_properties = ListTypeProperties(self.type_properties.to_primitive('map.list'))
-        elif self.type == 'date':
+        elif self.type == DICT_TYPE:
+            result.type_properties = DictTypeProperties(self.type_properties.to_primitive('map.dict'))
+        elif self.type == DATE_TYPE:
             result.type_properties = DateTypeProperties(self.type_properties.to_primitive('map.date'))
-        elif self.type == 'datetime':
+        elif self.type == DATETIME_TYPE:
             result.type_properties = DateTimeTypeProperties(self.type_properties.to_primitive('map.datetime'))
         # Return the result
         return result
