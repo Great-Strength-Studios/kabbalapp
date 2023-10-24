@@ -384,7 +384,7 @@ features:
             function_path: domain.add_model_property
           - data_mapping: print_domain_model_module
             function_path: app_printer.print_domain_model_module
-        remove-model-property:
+        remove_model_property:
           functions:
           - data_mapping: remove_domain_model_property
             function_path: domain.remove_model_property
