@@ -19,14 +19,16 @@ class TypePropertiesBlock(Model):
         # Create empty list representing print lines
         print_lines = []
 
+
         # Add the type properties
         properties_list = []
         type_properties = self.type_properties.to_primitive()
         for key, value in type_properties.items():
             if not value:
                 continue
-            # Stringify the value if it is a string
-            if type(value) == str:
+            # Stringify the value if it is a string and key not in blacklist
+            key_blacklist = ['coerce_key']
+            if type(value) == str and key not in key_blacklist:
                 value = f"'{value}'"
             properties_list.append(f'{key}={value}')
 
