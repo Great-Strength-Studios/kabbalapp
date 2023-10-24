@@ -27,6 +27,16 @@ class DomainModelProperty(ModelProperty):
         result.type_properties = type_properties
         return result
     
+    def has_dependency(self, model_id: str) -> bool:
+        if self.type == MODEL_TYPE:
+            return self.inner_type == model_id
+        elif self.type == POLY_TYPE:
+            return model_id in self.poly_type_model_ids
+        elif self.type in [LIST_TYPE, DICT_TYPE]:
+            return self.inner_type_model_id == model_id
+        else:
+            return False
+    
 
 class DomainModelDependency(ValueObject):
     model_id = t.StringType(required=True)
@@ -87,24 +97,35 @@ class AppDomainModel(Entity):
 
     def remove_property(self, property: DomainModelProperty) -> None:
         # Remove the property from the list.
-        self.properties = [p for p in self.properties if p.name != property.name]
+        properties: List[DomainModelProperty] = [p for p in self.properties if p.name != property.name]
 
-        # If the property is of type list or dict and has an inner type model ID, remove the dependency.
+        # Retrieve any potential dependencies of the property to be removed
+        # If the property is a list or dict type, retrieve the dependencies as defined by the inner type model ID.
         if property.type in [LIST_TYPE, DICT_TYPE] and property.inner_type_model_id is not None:
-            self.remove_dependency(property.inner_type_model_id, 'property')
+            dependencies = [self.get_dependency(property.inner_type_model_id, 'property')]
 
-        # If the property is a model type, remove the dependency as defined by the inner type.
+        # If the property is a model type, retrieve the dependencies as defined by the inner type.
         if property.type == MODEL_TYPE:
-            self.remove_dependency(property.inner_type, 'property')
+            dependencies = [self.get_dependency(property.inner_type, 'property')]
 
-        # If the property is a poly type, remove the dependencies as defined by the poly type model IDs.
+        # If the property is a poly type, retrieve the dependencies as defined by the poly type model IDs.
         if property.type == POLY_TYPE:
-            for model_id in property.poly_type_model_ids:
-                self.remove_dependency(model_id, 'property')
+            dependencies = [self.get_dependency(model_id, 'property') for model_id in property.poly_type_model_ids]
+
+        # Remove the dependencies only if no other properties are dependent on them.
+        for dependency in dependencies:
+            if not any((p.has_dependency(dependency.model_id) for p in properties)):
+                self.remove_dependency(dependency)
+
+        # Set the properties to the new list.
+        self.properties = properties
 
     def add_dependency(self, dependency: DomainModelDependency) -> None:
         if not any((d.model_id == dependency.model_id for d in self.dependencies)):
             self.dependencies.append(dependency)
 
-    def remove_dependency(self, model_id: str, dependency_type: str = 'property') -> None:
-        self.dependencies = [d for d in self.dependencies if d.model_id != model_id or d.dependency_type != dependency_type]
+    def get_dependency(self, model_id: str, dependency_type: str = 'property') -> DomainModelDependency:
+        return next((d for d in self.dependencies if d.model_id == model_id and d.dependency_type == dependency_type), None)
+
+    def remove_dependency(self, dependency: DomainModelDependency) -> None:
+        self.dependencies = [d for d in self.dependencies if d.model_id != dependency.model_id or d.dependency_type != dependency.dependency_type]
