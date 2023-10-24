@@ -46,6 +46,19 @@ domain:
       - name: formats
         type: str
       type: value_object
+    dict_type_properties:
+      base_type_model_id: type_properties
+      class_name: DictTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      name: Dictionary Type Properties
+      properties:
+      - name: coerce_key
+        type: str
+      type: value_object
     list_type_properties:
       base_type_model_id: type_properties
       class_name: ListTypeProperties
