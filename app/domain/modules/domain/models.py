@@ -82,6 +82,9 @@ class AppDomainModel(Entity):
     def add_property(self, property: DomainModelProperty) -> None:
         self.properties.append(property)
 
+    def get_property(self, property_name: str) -> DomainModelProperty:
+        return next((p for p in self.properties if p.name == property_name), None)
+
     def remove_property(self, property: DomainModelProperty) -> None:
         # Remove the property from the list.
         self.properties = [p for p in self.properties if p.name != property.name]
