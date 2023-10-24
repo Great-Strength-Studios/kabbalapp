@@ -81,6 +81,8 @@ class DomainModelPropertyBlock(Model):
                 return 'DateTime'
             elif type == LIST_TYPE:
                 return 'List'
+            elif type == DICT_TYPE:
+                return 'Dict'
             elif type == POLY_TYPE:
                 return 'PolyModel'
             elif type == MODEL_TYPE:
