@@ -79,5 +79,9 @@ class AddDomainModelProperty(RequestEvent):
     description = t.StringType()
     type_properties = t.DictType(t.StringType(), default={})
 
+class RemoveDomainModelProperty(RequestEvent):
+    model_id = t.StringType(required=True)
+    property_name = t.StringType(required=True)
+
 class PrintDomainModelModule(RequestEvent):
     pass

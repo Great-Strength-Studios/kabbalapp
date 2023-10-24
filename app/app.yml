@@ -317,6 +317,10 @@ errors:
     error_code: '000020004'
     message:
       en_US: Domain model property with name "{}" has invalid inner type "{}"
+  DOMAIN_MODEL_PROPERTY_NOT_FOUND:
+    error_code: '000020005'
+    message:
+      en_US: Domain model property with name "{}" not found
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
@@ -378,6 +382,12 @@ features:
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_model_property
+          - data_mapping: print_domain_model_module
+            function_path: app_printer.print_domain_model_module
+        remove_model_property:
+          functions:
+          - data_mapping: remove_domain_model_property
+            function_path: domain.remove_model_property
           - data_mapping: print_domain_model_module
             function_path: app_printer.print_domain_model_module
     interface:
@@ -623,6 +633,22 @@ interfaces:
                 - --poly-type-model-ids
                 nargs: +
               name: Add Domain Model Property
+            remove-model-property:
+              arguments:
+              - help: id of model containing property to remove
+                name_or_flags:
+                - --model-id
+                - -m
+                required: true
+                type: str
+              - help: name of property to remove
+                name_or_flags:
+                - --property-name
+                - -p
+                required: true
+                type: str
+              help: remove domain model property
+              name: Remove Model Property
         interface:
           subcommands:
             add:
