@@ -94,6 +94,10 @@ domain:
         dependency_type: property
         model_id: list_type_properties
         module: null
+      - class_name: DictTypeProperties
+        dependency_type: property
+        model_id: dict_type_properties
+        module: null
       name: Model Property
       properties:
       - name: name
@@ -119,6 +123,7 @@ domain:
         - date_type_properties
         - date_time_type_properties
         - list_type_properties
+        - dict_type_properties
         type: poly
       type: value_object
     string_type_properties:
