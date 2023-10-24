@@ -14,6 +14,7 @@ def set_default_app_project(context, request, app_context, **kwargs):
 
 def add_interface(context, request, app_context, **kwargs):
     return AddInterface({
+        'name': request.get('name', None),
         'type': request.get('type', None)
     })
 

@@ -13,6 +13,7 @@ class SetDefaultAppProject(RequestEvent):
     tag = t.StringType(required=True)
 
 class AddInterface(RequestEvent):
+    name = t.StringType(required=True)
     type = t.StringType(required=True, choices=['cli', 'rest_flask'])
 
 class AddCliCommand(RequestEvent):
