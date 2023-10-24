@@ -624,6 +624,19 @@ interfaces:
                 nargs: +
               name: Add Domain Model Property
             remove-model-property:
+              arguments:
+              - help: id of model containing property to remove
+                name_or_flags:
+                - --model-id
+                - -m
+                required: true
+                type: str
+              - help: name of property to remove
+                name_or_flags:
+                - --property-name
+                - -p
+                required: true
+                type: str
               help: remove domain model property
               name: Remove Model Property
         interface:
