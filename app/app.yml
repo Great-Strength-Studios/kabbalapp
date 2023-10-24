@@ -650,6 +650,13 @@ interfaces:
               help: remove domain model property
               name: Remove Model Property
             update-model-property:
+              arguments:
+              - help: id of model containing property to update
+                name_or_flags:
+                - --model-id
+                - -m
+                required: true
+                type: str
               help: updates model property setting
               name: Update Model Property
         interface:
