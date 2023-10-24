@@ -649,6 +649,9 @@ interfaces:
                 type: str
               help: remove domain model property
               name: Remove Model Property
+            update-model-property:
+              help: updates model property setting
+              name: Update Model Property
         interface:
           subcommands:
             add:
