@@ -14,6 +14,7 @@ CLI_HEADER_MAPPER_CONTENT = """def default(request, app_context, **kwargs):
 def handle(context: MessageContext):
 
     # Unpack request.
+    name = context.data.name
     type = context.data.type
 
     # Get app key from headers.
@@ -81,7 +82,7 @@ def handle(context: MessageContext):
         # If the input interface type is 'cli', then create a new CliAppInterface instance and replace the interface repo instance
         if type == 'cli':
             interface_repo: cli.CliInterfaceRepository = context.services.cli_interface_repo(app_key)
-            interface = cli.CliInterfaceType.create(type)
+            interface = cli.CliInterfaceType.create(name, type)
         else:
             raise AppError(context.errors.INTERFACE_TYPE_NOT_FOUND)
 
