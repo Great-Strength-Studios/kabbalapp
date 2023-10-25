@@ -108,12 +108,18 @@ class ModelProperty(ValueObject):
     def update(self, setting: str, value: str = None):
 
         # If the setting is "required", cast the value to a boolean and set to the required attribute
-        
+        if setting == 'required':
+            self.required = bool(value)
 
         # If the setting is "choices", assume that any non-null value is a string containing a comma-separated list. 
         # Split the list by ",", strip out any white spaces, and set to the choices attribute.
         # Otherwise set the choices attribute to None.
-
+        elif setting == 'choices':
+            if value is not None:
+                self.choices = [choice.strip() for choice in value.split(',')]
+            else:
+                self.choices = None
 
         # Otherwise, set the passed in value to the attribute.
-        pass
+        else:
+            setattr(self, setting, value)
