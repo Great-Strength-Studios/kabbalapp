@@ -676,6 +676,11 @@ interfaces:
                 - -s
                 required: true
                 type: str
+              - help: the value of the property setting to update
+                name_or_flags:
+                - --value
+                - -v
+                type: str
               help: updates model property setting
               name: Update Model Property
         interface:
