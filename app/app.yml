@@ -105,6 +105,9 @@ domain:
           - name: setting
             type: str
             required: true
+          - name: value
+            type: str
+            default: null
       name: Model Property
       properties:
       - name: name
