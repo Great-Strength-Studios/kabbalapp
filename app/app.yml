@@ -98,6 +98,10 @@ domain:
         dependency_type: property
         model_id: dict_type_properties
         module: null
+      methods:
+        update:
+          type: behavior
+          parameters: []
       name: Model Property
       properties:
       - name: name
