@@ -669,7 +669,6 @@ interfaces:
                 - default
                 - choices
                 - description
-                - type_properties
                 help: the model property setting to be updated
                 name_or_flags:
                 - --property-setting
