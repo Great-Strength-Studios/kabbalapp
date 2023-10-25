@@ -105,7 +105,7 @@ class ModelProperty(ValueObject):
     description = t.StringType()
     type_properties = t.PolyModelType([StringTypeProperties, DateTypeProperties, DateTimeTypeProperties, ListTypeProperties, DictTypeProperties])
 
-    def update(self):
+    def update(self, setting: str):
 
         # If the setting is "required", cast the value to a boolean and set to the required attribute
 

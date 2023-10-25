@@ -101,7 +101,10 @@ domain:
       methods:
         update:
           type: behavior
-          parameters: []
+          parameters: 
+          - name: setting
+            type: str
+            required: true
       name: Model Property
       properties:
       - name: name
