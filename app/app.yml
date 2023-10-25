@@ -663,6 +663,12 @@ interfaces:
                 - -p
                 required: true
                 type: str
+              - help: the model property setting to be updated
+                name_or_flags:
+                - --property-setting
+                - -s
+                required: true
+                type: str
               help: updates model property setting
               name: Update Model Property
         interface:
