@@ -81,6 +81,7 @@ class AddDomainModelProperty(RequestEvent):
 
 class UpdateDomainModelProperty(RequestEvent):
     model_id = t.StringType(required=True)
+    property_name = t.StringType(required=True)
 
 class RemoveDomainModelProperty(RequestEvent):
     model_id = t.StringType(required=True)

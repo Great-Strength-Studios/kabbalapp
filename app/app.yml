@@ -5,6 +5,9 @@ requests:
     - name: model_id
       required: true
       type: str
+    - name: property_name
+      required: true
+      type: str
 domain:
   factories: {}
   models:
