@@ -53,7 +53,7 @@ class AppCommandConfiguration(Model):
         }
 
 class MapperFunctionConfiguration(Model):
-    class_name = t.StringType(required=True)
+    return_type = t.StringType(required=True)
     behaviors = t.ListType(t.StringType, default=[])
 
 class CliInterfaceConfiguration(Model):
