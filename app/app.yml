@@ -427,7 +427,6 @@ features:
           - data_mapping: add_interface
             function_path: interface.add_interface
 interfaces:
-  commands: null
   types:
     cli:
       commands:
@@ -729,6 +728,12 @@ interfaces:
                 - name
                 type: str
               name: Add App Interface
+      mapper_functions:
+        update_domain_model_property:
+          return_type: update_domain_model_property
+          behaviors:
+          - Map the values of the request dict to a new UpdateDomainModelProperty object.
+          - Set the values to None by default.
       parent_arguments:
       - help: app project key (not required when using default project)
         name_or_flags:
