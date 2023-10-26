@@ -1,4 +1,3 @@
-commands: null
 domain:
   factories: {}
   models:
@@ -98,6 +97,16 @@ domain:
         dependency_type: property
         model_id: dict_type_properties
         module: null
+      methods:
+        update:
+          parameters:
+          - name: setting
+            required: true
+            type: str
+          - default: null
+            name: value
+            type: str
+          type: behavior
       name: Model Property
       properties:
       - name: name
@@ -390,6 +399,10 @@ features:
             function_path: domain.remove_model_property
           - data_mapping: print_domain_model_module
             function_path: app_printer.print_domain_model_module
+        update_model_property:
+          functions:
+          - data_mapping: update_domain_model_property
+            function_path: domain.update_model_property
     interface:
       features:
         add:
@@ -397,7 +410,6 @@ features:
           - data_mapping: add_interface
             function_path: interface.add_interface
 interfaces:
-  commands: null
   types:
     cli:
       commands:
@@ -649,6 +661,39 @@ interfaces:
                 type: str
               help: remove domain model property
               name: Remove Model Property
+            update-model-property:
+              arguments:
+              - help: id of model containing property to update
+                name_or_flags:
+                - --model-id
+                - -m
+                required: true
+                type: str
+              - help: name of property to update
+                name_or_flags:
+                - --property-name
+                - -p
+                required: true
+                type: str
+              - choices:
+                - name
+                - required
+                - default
+                - choices
+                - description
+                help: the model property setting to be updated
+                name_or_flags:
+                - --property-setting
+                - -s
+                required: true
+                type: str
+              - help: the value of the property setting to update
+                name_or_flags:
+                - --value
+                - -v
+                type: str
+              help: updates model property setting
+              name: Update Model Property
         interface:
           subcommands:
             add:
@@ -666,6 +711,13 @@ interfaces:
                 - name
                 type: str
               name: Add App Interface
+      mapper_functions:
+        update_domain_model_property:
+          behaviors:
+          - Map the values of the request dict to a new UpdateDomainModelProperty
+            object.
+          - Set the values to None by default.
+          return_type: update_domain_model_property
       parent_arguments:
       - help: app project key (not required when using default project)
         name_or_flags:
@@ -685,3 +737,24 @@ interfaces:
         help: run the command with verbose output
         name_or_flags:
         - --verbose
+requests:
+  update_domain_model_property:
+    class_name: UpdateDomainModelProperty
+    properties:
+    - name: model_id
+      required: true
+      type: str
+    - name: property_name
+      required: true
+      type: str
+    - choices:
+      - name
+      - required
+      - default
+      - choices
+      - description
+      name: property_setting
+      required: true
+      type: str
+    - name: value
+      type: str

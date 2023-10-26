@@ -86,6 +86,16 @@ def add_domain_model_property(context, request, app_context, **kwargs):
         'type_properties': type_properties
     })
 
+def update_domain_model_property(context, request, app_context, **kwargs):
+    # Map the values of the request dict to a new UpdateDomainModelProperty object.
+    # Set the values to None by default.
+    return UpdateDomainModelProperty({
+        'model_id': request.get('model_id', None),
+        'property_name': request.get('property_name', None),
+        'property_setting': request.get('property_setting', None),
+        'value': request.get('value', None)
+    })
+
 def remove_domain_model_property(context, request, app_context, **kwargs):
     return RemoveDomainModelProperty({
         'model_id': request.get('model_id', None),
