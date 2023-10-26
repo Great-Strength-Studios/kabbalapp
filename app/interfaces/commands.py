@@ -80,7 +80,7 @@ class AddDomainModelProperty(RequestEvent):
     type_properties = t.DictType(t.StringType(), default={})
 
 class UpdateDomainModelProperty(RequestEvent):
-    pass
+    model_id = t.StringType(required=True)
 
 class RemoveDomainModelProperty(RequestEvent):
     model_id = t.StringType(required=True)
