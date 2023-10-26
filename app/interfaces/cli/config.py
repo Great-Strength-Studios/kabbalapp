@@ -3,13 +3,13 @@ from schematics.transforms import blacklist, whitelist
 from schematics.types.serializable import serializable
 
 class AppArgumentConfiguration(Model):
-    name_or_flags = t.ListType(t.StringType(), required=True)
+    name_or_flags = t.ListType(t.StringType, required=True)
     help = t.StringType(required=True)
     type_str = t.StringType(default='str', choices=['str', 'int', 'float'])
     default = t.StringType()
     required = t.BooleanType()
     nargs = t.StringType()
-    choices = t.ListType(t.StringType())
+    choices = t.ListType(t.StringType)
     action = t.StringType()
 
     @serializable
@@ -52,8 +52,12 @@ class AppCommandConfiguration(Model):
             'add_parser': blacklist('subcommands')
         }
 
+class MapperFunctionConfiguration(Model):
+    class_name = t.StringType(required=True)
+    behaviors = t.ListType(t.StringType, default=[])
+
 class CliInterfaceConfiguration(Model):
     name = t.StringType()
     parent_arguments = t.ListType(t.ModelType(AppArgumentConfiguration), default={})
-    mappers = t.DictType(t.StringType())
+    mapper_functions = t.DictType(t.ModelType(MapperFunctionConfiguration), default={})
     commands = t.DictType(t.ModelType(AppCommandConfiguration), default={})
