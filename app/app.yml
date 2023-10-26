@@ -1,4 +1,6 @@
-commands: null
+requests: 
+  update_domain_model_property:
+    class_name: UpdateDomainModelProperty
 domain:
   factories: {}
   models:
