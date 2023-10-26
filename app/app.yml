@@ -8,6 +8,15 @@ requests:
     - name: property_name
       required: true
       type: str
+    - name: property_setting
+      required: true
+      type: str
+      choices:
+      - name
+      - required
+      - default
+      - choices
+      - description
 domain:
   factories: {}
   models:
