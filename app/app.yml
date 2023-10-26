@@ -17,6 +17,8 @@ requests:
       - default
       - choices
       - description
+    - name: value
+      type: str
 domain:
   factories: {}
   models:
