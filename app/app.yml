@@ -1,24 +1,3 @@
-requests: 
-  update_domain_model_property:
-    class_name: UpdateDomainModelProperty
-    properties: 
-    - name: model_id
-      required: true
-      type: str
-    - name: property_name
-      required: true
-      type: str
-    - name: property_setting
-      required: true
-      type: str
-      choices:
-      - name
-      - required
-      - default
-      - choices
-      - description
-    - name: value
-      type: str
 domain:
   factories: {}
   models:
@@ -120,14 +99,14 @@ domain:
         module: null
       methods:
         update:
-          type: behavior
-          parameters: 
+          parameters:
           - name: setting
-            type: str
             required: true
-          - name: value
             type: str
-            default: null
+          - default: null
+            name: value
+            type: str
+          type: behavior
       name: Model Property
       properties:
       - name: name
@@ -414,16 +393,16 @@ features:
             function_path: domain.add_model_property
           - data_mapping: print_domain_model_module
             function_path: app_printer.print_domain_model_module
-        update_model_property:
-          functions:
-          - data_mapping: update_domain_model_property
-            function_path: domain.update_model_property
         remove_model_property:
           functions:
           - data_mapping: remove_domain_model_property
             function_path: domain.remove_model_property
           - data_mapping: print_domain_model_module
             function_path: app_printer.print_domain_model_module
+        update_model_property:
+          functions:
+          - data_mapping: update_domain_model_property
+            function_path: domain.update_model_property
     interface:
       features:
         add:
@@ -734,10 +713,11 @@ interfaces:
               name: Add App Interface
       mapper_functions:
         update_domain_model_property:
-          return_type: update_domain_model_property
           behaviors:
-          - Map the values of the request dict to a new UpdateDomainModelProperty object.
+          - Map the values of the request dict to a new UpdateDomainModelProperty
+            object.
           - Set the values to None by default.
+          return_type: update_domain_model_property
       parent_arguments:
       - help: app project key (not required when using default project)
         name_or_flags:
@@ -757,3 +737,24 @@ interfaces:
         help: run the command with verbose output
         name_or_flags:
         - --verbose
+requests:
+  update_domain_model_property:
+    class_name: UpdateDomainModelProperty
+    properties:
+    - name: model_id
+      required: true
+      type: str
+    - name: property_name
+      required: true
+      type: str
+    - choices:
+      - name
+      - required
+      - default
+      - choices
+      - description
+      name: property_setting
+      required: true
+      type: str
+    - name: value
+      type: str
