@@ -7,6 +7,7 @@ def handle(context: MessageContext):
     name = context.data.name
     class_name = context.data.class_name
     type = context.data.type
+    description = context.data.description
     base_type_model_id = context.data.base_type_model_id
 
     # Get app project key.
@@ -24,6 +25,7 @@ def handle(context: MessageContext):
         name=name, 
         type=type, 
         class_name=class_name,
+        description=description,
         base_type_model_id=base_type_model_id
     )
 
