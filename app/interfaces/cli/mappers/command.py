@@ -60,6 +60,7 @@ def add_domain_model(context, request, app_context, **kwargs):
         'name': request.get('name', None),
         'type': request.get('type', None),
         'class_name': request.get('class_name', None),
+        'description': request.get('description', None),
         'base_type_model_id': request.get('base_type_model_id', None),
     })
 
