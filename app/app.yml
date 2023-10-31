@@ -583,6 +583,12 @@ interfaces:
               - help: model id of the model base type
                 name_or_flags:
                 - --base-type-model-id
+              - help: domain model description
+                name_or_flags:
+                - --description
+                - -d
+                required: true
+                type: str
               name: Add Domain Model
             add_model_property:
               arguments:
@@ -706,13 +712,6 @@ interfaces:
                 - name
                 type: str
               name: Add App Interface
-      mapper_functions:
-        update_domain_model_property:
-          behaviors:
-          - Map the values of the request dict to a new UpdateDomainModelProperty
-            object.
-          - Set the values to None by default.
-          return_type: update_domain_model_property
       parent_arguments:
       - help: app project key (not required when using default project)
         name_or_flags:
