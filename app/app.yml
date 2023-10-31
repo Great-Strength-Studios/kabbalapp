@@ -385,20 +385,14 @@ features:
           functions:
           - data_mapping: add_domain_model
             function_path: domain.add_domain_model
-          - data_mapping: print_domain_model_module
-            function_path: app_printer.print_domain_model_module
         add_model_property:
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_model_property
-          - data_mapping: print_domain_model_module
-            function_path: app_printer.print_domain_model_module
         remove_model_property:
           functions:
           - data_mapping: remove_domain_model_property
             function_path: domain.remove_model_property
-          - data_mapping: print_domain_model_module
-            function_path: app_printer.print_domain_model_module
         update_model_property:
           functions:
           - data_mapping: update_domain_model_property
