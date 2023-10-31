@@ -732,6 +732,27 @@ interfaces:
         name_or_flags:
         - --verbose
 requests:
+  add_domain_model:
+    class_name: AddDomainModel
+    properties:
+    - name: class_name
+      required: true
+      type: str
+      description: The unique domain model class name.
+    - name: name
+      required: true
+      type: str
+      description: The domain model name.
+    - name: type
+      required: true
+      type: str
+      choices:
+      - entity
+      - value_object
+      description: The domain model type.
+    - name: base_type_model_id
+      type: str
+      description: The domain model id of the base type.
   update_domain_model_property:
     class_name: UpdateDomainModelProperty
     properties:
