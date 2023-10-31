@@ -4,7 +4,7 @@ from ...domain import *
 def handle(context: MessageContext):
 
     # Unpack request.
-    model_id = context.data.model_id
+    parent_model_id = context.data.parent_model_id
     name = context.data.name
     type = context.data.type
     inner_type = context.data.inner_type
@@ -27,11 +27,11 @@ def handle(context: MessageContext):
     domain_repo: d.DomainRepository = context.services.domain_repo(app_key)
 
     # First check to see if the domain model exists.
-    domain_model = domain_repo.get_domain_model(model_id)
+    domain_model = domain_repo.get_domain_model(parent_model_id)
 
     # Raise app error if domain model does not exist.
     if not domain_model:
-        raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(model_id))
+        raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(parent_model_id))
 
     # Create type properties
     try:
