@@ -73,7 +73,7 @@ def add_domain_model_property(context, request, app_context, **kwargs):
         type_properties[key] = value
 
     return AddDomainModelProperty({
-        'model_id': request.get('model_id', None),
+        'parent_model_id': request.get('parent_model_id', None),
         'name': request.get('name', None),
         'type': request.get('type', 'str'),
         'inner_type': request.get('inner_type', None),
