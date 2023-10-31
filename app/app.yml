@@ -602,9 +602,10 @@ interfaces:
               - help: domain model property description
                 name_or_flags:
                 - --description
-              - help: domain model id
+              - help: parent domain model id
                 name_or_flags:
-                - --model-id
+                - -p
+                - --parent-model-id
                 required: true
               - help: domain model property name
                 name_or_flags:
