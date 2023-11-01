@@ -266,6 +266,10 @@ domain:
             choices:
             - entity
             - value_object
+          - description: The domain model description for inline documentation.
+            name: description
+            required: true
+            type: str
           - description: The domain model id of the optional base type. 
             name: base_type_model_id
             type: str
