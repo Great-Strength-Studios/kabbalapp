@@ -61,16 +61,18 @@ class AppDomainModel(Entity):
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
     class_name = t.StringType(required=True)
+    description = t.StringType(required=True)
     base_type_model_id = t.StringType()
     properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
 
     @staticmethod
-    def create(name: str, type: str, class_name: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
+    def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
         result = AppDomainModel()
         result.name = name
         result.type = type
         result.class_name = class_name
+        result.description = description
         result.base_type_model_id = base_type_model_id
         result.properties = properties
 
