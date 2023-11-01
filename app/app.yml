@@ -2,57 +2,58 @@ domain:
   factories: {}
   models:
     app_domain_model:
-      name: App Domain Model
       class_name: AppDomainModel
-      type: entity
       description: Domain Model for the application.
       methods:
-        create:
-          parameters:
-          - description: The domain model name.
-            name: name
-            required: true
-            type: str
-          - description: The unique domain model class name.
-            name: class_name
-            required: true
-            type: str
-          - description: The domain model type.
-            name: type
-            required: true
-            type: str
-          - description: The domain model description for inline documentation.
-            name: description
-            required: true
-            type: str
-          - description: The optional base type model id.
-            name: base_type_model_id
-            type: str
-          return_type: app_domain_model
-          type: factory
+      - description: Creates a new App Domain Model instance.
+        name: create
+        parameters:
+        - description: The domain model name.
+          name: name
+          required: true
+          type: str
+        - description: The unique domain model class name.
+          name: class_name
+          required: true
+          type: str
+        - description: The domain model type.
+          name: type
+          required: true
+          type: str
+        - description: The domain model description for inline documentation.
+          name: description
+          required: true
+          type: str
+        - description: The optional base type model id.
+          name: base_type_model_id
+          type: str
+        return_type: app_domain_model
+        type: factory
+      name: App Domain Model
       properties:
       - description: The unique domain model class name.
         name: class_name
         required: true
-        type: str 
+        type: str
       - description: The domain model name.
         name: name
         required: true
         type: str
-      - description: The domain model type.
+      - choices:
+        - entity
+        - value_object
+        description: The domain model type.
         name: type
         required: true
         type: str
-        choices:
-        - entity
-        - value_object
       - description: The domain model description for inline documentation.
         name: description
         required: true
         type: str
-      - description: The domain model id of the optional base type. 
+      - description: The domain model id of the optional base type.
         name: base_type_model_id
         type: str
+      type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
       class_name: DateTimeTypeProperties
@@ -109,6 +110,18 @@ domain:
       properties:
       - name: coerce_key
         type: str
+      type: value_object
+    domain_model_property:
+      base_type_model_id: model_property
+      class_name: DomainModelProperty
+      dependencies:
+      - class_name: ModelProperty
+        dependency_type: base_type
+        model_id: model_property
+        module: null
+      description: A property for a domain model.
+      name: Domain Model Property
+      properties: []
       type: value_object
     list_type_properties:
       base_type_model_id: type_properties
@@ -789,28 +802,28 @@ requests:
   add_domain_model:
     class_name: AddDomainModel
     properties:
-    - name: name
+    - description: The domain model name.
+      name: name
       required: true
       type: str
-      description: The domain model name.
-    - name: class_name
+    - description: The unique domain model class name.
+      name: class_name
       required: true
       type: str
-      description: The unique domain model class name.
-    - name: type
-      required: true
-      type: str
-      choices:
+    - choices:
       - entity
       - value_object
       description: The domain model type.
-    - name: description
+      name: type
       required: true
       type: str
-      description: The domain model description for inline documentation.
-    - name: base_type_model_id
+    - description: The domain model description for inline documentation.
+      name: description
+      required: true
       type: str
-      description: The domain model id of the base type.
+    - description: The domain model id of the base type.
+      name: base_type_model_id
+      type: str
   update_domain_model_property:
     class_name: UpdateDomainModelProperty
     properties:
