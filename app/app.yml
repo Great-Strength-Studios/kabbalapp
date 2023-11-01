@@ -251,10 +251,30 @@ domain:
           class_name: AppDomainModel
           type: entity
           description: Domain Model for the application.
+          methods:
+            create:
+              parameters:
+              - description: The domain model name.
+                name: name
+                required: true
+                type: str
+              - description: The unique domain model class name.
+                name: class_name
+                required: true
+                type: str
+              - description: The domain model type.
+                name: type
+                required: true
+                type: str
+              - description: The optional base type model id.
+                name: base_type_model_id
+                type: str
+              type: factory
           properties:
-          - description: The unique domain model class name.name: class_name
+          - description: The unique domain model class name.
+            name: class_name
             required: true
-            type: str
+            type: str 
           - description: The domain model name.
             name: name
             required: true
