@@ -245,7 +245,59 @@ domain:
       aliases:
       - d
       constants: {}
-      models: {}
+      models: 
+        app_domain_model:
+          name: App Domain Model
+          class_name: AppDomainModel
+          type: entity
+          description: Domain Model for the application.
+          methods:
+            create:
+              parameters:
+              - description: The domain model name.
+                name: name
+                required: true
+                type: str
+              - description: The unique domain model class name.
+                name: class_name
+                required: true
+                type: str
+              - description: The domain model type.
+                name: type
+                required: true
+                type: str
+              - description: The domain model description for inline documentation.
+                name: description
+                required: true
+                type: str
+              - description: The optional base type model id.
+                name: base_type_model_id
+                type: str
+              return_type: app_domain_model
+              type: factory
+          properties:
+          - description: The unique domain model class name.
+            name: class_name
+            required: true
+            type: str 
+          - description: The domain model name.
+            name: name
+            required: true
+            type: str
+          - description: The domain model type.
+            name: type
+            required: true
+            type: str
+            choices:
+            - entity
+            - value_object
+          - description: The domain model description for inline documentation.
+            name: description
+            required: true
+            type: str
+          - description: The domain model id of the optional base type. 
+            name: base_type_model_id
+            type: str
       name: Domain
       repos: {}
     interface:
@@ -385,20 +437,14 @@ features:
           functions:
           - data_mapping: add_domain_model
             function_path: domain.add_domain_model
-          - data_mapping: print_domain_model_module
-            function_path: app_printer.print_domain_model_module
         add_model_property:
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_model_property
-          - data_mapping: print_domain_model_module
-            function_path: app_printer.print_domain_model_module
         remove_model_property:
           functions:
           - data_mapping: remove_domain_model_property
             function_path: domain.remove_model_property
-          - data_mapping: print_domain_model_module
-            function_path: app_printer.print_domain_model_module
         update_model_property:
           functions:
           - data_mapping: update_domain_model_property
@@ -589,6 +635,12 @@ interfaces:
               - help: model id of the model base type
                 name_or_flags:
                 - --base-type-model-id
+              - help: domain model description
+                name_or_flags:
+                - --description
+                - -d
+                required: true
+                type: str
               name: Add Domain Model
             add_model_property:
               arguments:
@@ -712,13 +764,6 @@ interfaces:
                 - name
                 type: str
               name: Add App Interface
-      mapper_functions:
-        update_domain_model_property:
-          behaviors:
-          - Map the values of the request dict to a new UpdateDomainModelProperty
-            object.
-          - Set the values to None by default.
-          return_type: update_domain_model_property
       parent_arguments:
       - help: app project key (not required when using default project)
         name_or_flags:
@@ -739,6 +784,31 @@ interfaces:
         name_or_flags:
         - --verbose
 requests:
+  add_domain_model:
+    class_name: AddDomainModel
+    properties:
+    - name: name
+      required: true
+      type: str
+      description: The domain model name.
+    - name: class_name
+      required: true
+      type: str
+      description: The unique domain model class name.
+    - name: type
+      required: true
+      type: str
+      choices:
+      - entity
+      - value_object
+      description: The domain model type.
+    - name: description
+      required: true
+      type: str
+      description: The domain model description for inline documentation.
+    - name: base_type_model_id
+      type: str
+      description: The domain model id of the base type.
   update_domain_model_property:
     class_name: UpdateDomainModelProperty
     properties:
