@@ -273,6 +273,7 @@ domain:
               - description: The optional base type model id.
                 name: base_type_model_id
                 type: str
+              return_type: app_domain_model
               type: factory
           properties:
           - description: The unique domain model class name.
