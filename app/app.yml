@@ -2,33 +2,14 @@ domain:
   factories: {}
   models:
     app_domain_model:
+      base_type_model_id: null
       class_name: AppDomainModel
+      dependencies:
+      - class_name: DomainModelProperty
+        dependency_type: property
+        model_id: domain_model_property
+        module: null
       description: Domain Model for the application.
-      methods:
-      - description: Creates a new App Domain Model instance.
-        name: create
-        parameters:
-        - description: The domain model name.
-          name: name
-          required: true
-          type: str
-        - description: The unique domain model class name.
-          name: class_name
-          required: true
-          type: str
-        - description: The domain model type.
-          name: type
-          required: true
-          type: str
-        - description: The domain model description for inline documentation.
-          name: description
-          required: true
-          type: str
-        - description: The optional base type model id.
-          name: base_type_model_id
-          type: str
-        return_type: app_domain_model
-        type: factory
       name: App Domain Model
       properties:
       - description: The unique domain model class name.
@@ -53,6 +34,11 @@ domain:
       - description: The domain model id of the optional base type.
         name: base_type_model_id
         type: str
+      - description: Properties associated with the domain model
+        inner_type: model
+        inner_type_model_id: domain_model_property
+        name: properties
+        type: list
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
