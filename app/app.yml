@@ -653,6 +653,7 @@ interfaces:
                 - --default
               - help: domain model property description
                 name_or_flags:
+                - -d
                 - --description
               - help: parent domain model id
                 name_or_flags:
