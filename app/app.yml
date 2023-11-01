@@ -655,6 +655,7 @@ interfaces:
                 name_or_flags:
                 - -d
                 - --description
+                required: true
               - help: parent domain model id
                 name_or_flags:
                 - -p
