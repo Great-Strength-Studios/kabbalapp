@@ -127,6 +127,10 @@ domain:
       - description: The inner type domain model ID for a model-typed property.
         name: inner_type_model_id
         type: str
+      - description: The inner type domain model IDs for a poly-typed property.
+        inner_type: str
+        name: poly_type_model_ids
+        type: list
       type: value_object
     list_type_properties:
       base_type_model_id: type_properties
