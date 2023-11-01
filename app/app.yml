@@ -1,6 +1,58 @@
 domain:
   factories: {}
   models:
+    app_domain_model:
+      name: App Domain Model
+      class_name: AppDomainModel
+      type: entity
+      description: Domain Model for the application.
+      methods:
+        create:
+          parameters:
+          - description: The domain model name.
+            name: name
+            required: true
+            type: str
+          - description: The unique domain model class name.
+            name: class_name
+            required: true
+            type: str
+          - description: The domain model type.
+            name: type
+            required: true
+            type: str
+          - description: The domain model description for inline documentation.
+            name: description
+            required: true
+            type: str
+          - description: The optional base type model id.
+            name: base_type_model_id
+            type: str
+          return_type: app_domain_model
+          type: factory
+      properties:
+      - description: The unique domain model class name.
+        name: class_name
+        required: true
+        type: str 
+      - description: The domain model name.
+        name: name
+        required: true
+        type: str
+      - description: The domain model type.
+        name: type
+        required: true
+        type: str
+        choices:
+        - entity
+        - value_object
+      - description: The domain model description for inline documentation.
+        name: description
+        required: true
+        type: str
+      - description: The domain model id of the optional base type. 
+        name: base_type_model_id
+        type: str
     date_time_type_properties:
       base_type_model_id: type_properties
       class_name: DateTimeTypeProperties
@@ -245,59 +297,7 @@ domain:
       aliases:
       - d
       constants: {}
-      models: 
-        app_domain_model:
-          name: App Domain Model
-          class_name: AppDomainModel
-          type: entity
-          description: Domain Model for the application.
-          methods:
-            create:
-              parameters:
-              - description: The domain model name.
-                name: name
-                required: true
-                type: str
-              - description: The unique domain model class name.
-                name: class_name
-                required: true
-                type: str
-              - description: The domain model type.
-                name: type
-                required: true
-                type: str
-              - description: The domain model description for inline documentation.
-                name: description
-                required: true
-                type: str
-              - description: The optional base type model id.
-                name: base_type_model_id
-                type: str
-              return_type: app_domain_model
-              type: factory
-          properties:
-          - description: The unique domain model class name.
-            name: class_name
-            required: true
-            type: str 
-          - description: The domain model name.
-            name: name
-            required: true
-            type: str
-          - description: The domain model type.
-            name: type
-            required: true
-            type: str
-            choices:
-            - entity
-            - value_object
-          - description: The domain model description for inline documentation.
-            name: description
-            required: true
-            type: str
-          - description: The domain model id of the optional base type. 
-            name: base_type_model_id
-            type: str
+      models: {}
       name: Domain
       repos: {}
     interface:
@@ -653,7 +653,9 @@ interfaces:
                 - --default
               - help: domain model property description
                 name_or_flags:
+                - -d
                 - --description
+                required: true
               - help: parent domain model id
                 name_or_flags:
                 - -p
