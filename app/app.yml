@@ -787,14 +787,14 @@ requests:
   add_domain_model:
     class_name: AddDomainModel
     properties:
-    - name: class_name
-      required: true
-      type: str
-      description: The unique domain model class name.
     - name: name
       required: true
       type: str
       description: The domain model name.
+    - name: class_name
+      required: true
+      type: str
+      description: The unique domain model class name.
     - name: type
       required: true
       type: str
