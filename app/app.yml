@@ -245,7 +245,30 @@ domain:
       aliases:
       - d
       constants: {}
-      models: {}
+      models: 
+        app_domain_model:
+          name: App Domain Model
+          class_name: AppDomainModel
+          type: entity
+          description: Domain Model for the application.
+          properties:
+          - description: The unique domain model class name.name: class_name
+            required: true
+            type: str
+          - description: The domain model name.
+            name: name
+            required: true
+            type: str
+          - description: The domain model type.
+            name: type
+            required: true
+            type: str
+            choices:
+            - entity
+            - value_object
+          - description: The domain model id of the optional base type. 
+            name: base_type_model_id
+            type: str
       name: Domain
       repos: {}
     interface:
