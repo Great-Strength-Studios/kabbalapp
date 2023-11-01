@@ -124,6 +124,9 @@ domain:
         name: type
         required: true
         type: str
+      - description: The inner type domain model ID for a model-typed property.
+        name: inner_type_model_id
+        type: str
       type: value_object
     list_type_properties:
       base_type_model_id: type_properties
