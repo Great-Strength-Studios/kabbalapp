@@ -40,6 +40,14 @@ domain:
         name: properties
         type: list
       type: entity
+    app_project:
+      base_type_model_id: null
+      class_name: AppProject
+      dependencies: []
+      description: Application project configuration
+      name: App Project
+      properties: []
+      type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
       class_name: DateTimeTypeProperties
