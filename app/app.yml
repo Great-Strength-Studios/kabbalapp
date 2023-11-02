@@ -51,6 +51,10 @@ domain:
         name: tag
         required: true
         type: str
+      - description: App project name.
+        name: name
+        required: true
+        type: str
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
