@@ -46,7 +46,11 @@ domain:
       dependencies: []
       description: Application project configuration
       name: App Project
-      properties: []
+      properties:
+      - description: The app project tag.
+        name: tag
+        required: true
+        type: str
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
