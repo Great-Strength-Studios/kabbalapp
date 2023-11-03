@@ -146,6 +146,10 @@ domain:
         name: name
         required: true
         type: str
+      - description: The help text for the CLI command.
+        name: help
+        required: true
+        type: str
       type: entity
     cli_interface_type:
       base_type_model_id: app_interface_type
