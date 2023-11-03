@@ -114,6 +114,9 @@ domain:
         description: The data type of the CLI argument.
         name: type
         type: str
+      - description: Flag if the CLI argument is required.
+        name: required
+        type: bool
       type: value_object
     cli_command:
       base_type_model_id: null
