@@ -55,6 +55,10 @@ domain:
         name: name
         required: true
         type: str
+      - description: The directory containing the app project.
+        name: app_directory
+        required: true
+        type: str
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
