@@ -2,14 +2,14 @@ from ...commands import *
 
 def new_app_project(context, request, app_context, **kwargs):
     return NewAppProject({
+        'id': request.get('id', None),
         'name': request.get('name', None),
-        'tag': request.get('tag', None),
         'app_directory': request.get('app_directory', None)
     })
 
 def set_default_app_project(context, request, app_context, **kwargs):
     return SetDefaultAppProject({
-        'tag': request.get('tag', None)
+        'id': request.get('id', None)
     })
 
 def add_interface(context, request, app_context, **kwargs):
