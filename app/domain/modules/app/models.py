@@ -1,6 +1,6 @@
 from ...models import *
 
-class AppProject(Model):
+class AppProject(Entity):
     tag = t.StringType(required=True)
     name = t.StringType(required=True)
     app_directory = t.StringType(required=True)
@@ -13,6 +13,7 @@ class AppProject(Model):
         app_project = AppProject()
         app_project.name = name
         app_project.tag = tag
+        app_project.id = tag
         app_project.app_directory = app_directory
         app_project.schema_storage_type = schema_storage_type
         app_project.schema_location = schema_location

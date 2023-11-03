@@ -5,13 +5,13 @@ from .. import interface, interface as i
 
 
 class CliArgument(ValueObject):
-    name_or_flags = t.ListType(t.StringType(), required=True)
+    name_or_flags = t.ListType(t.StringType, required=True)
     help = t.StringType(required=True)
     type = t.StringType(choices=['str', 'int', 'float'])
     default = t.StringType()
     required = t.BooleanType()
     nargs = t.StringType()
-    choices = t.ListType(t.StringType())
+    choices = t.ListType(t.StringType)
     action = t.StringType()
 
     @staticmethod
@@ -82,7 +82,7 @@ class CliCommand(Entity):
 
 
 class CliInterfaceType(i.AppInterfaceType):
-    mappers = t.DictType(t.StringType())
+    mappers = t.DictType(t.StringType)
     commands = t.ListType(t.ModelType(CliCommand), default=[])
     parent_arguments = t.ListType(t.ModelType(CliArgument), default=[])
 
