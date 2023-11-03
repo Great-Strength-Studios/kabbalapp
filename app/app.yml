@@ -99,6 +99,14 @@ domain:
       name: CLI Argument
       properties: []
       type: value_object
+    cli_command:
+      base_type_model_id: null
+      class_name: CliCommand
+      dependencies: []
+      description: A command-line interface command.
+      name: CLI Command
+      properties: []
+      type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
       class_name: DateTimeTypeProperties
