@@ -132,7 +132,11 @@ domain:
     cli_command:
       base_type_model_id: null
       class_name: CliCommand
-      dependencies: []
+      dependencies:
+      - class_name: CliArgument
+        dependency_type: property
+        model_id: cli_argument
+        module: null
       description: A command-line interface command.
       name: CLI Command
       properties:
@@ -151,6 +155,12 @@ domain:
         name: help
         required: true
         type: str
+      - default: '[]'
+        description: Arguments for the CLI command.
+        inner_type: model
+        inner_type_model_id: cli_argument
+        name: arguments
+        type: list
       type: entity
     cli_interface_type:
       base_type_model_id: app_interface_type
