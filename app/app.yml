@@ -170,6 +170,10 @@ domain:
         dependency_type: base_type
         model_id: app_interface_type
         module: null
+      - class_name: CliCommand
+        dependency_type: property
+        model_id: cli_command
+        module: null
       description: CLI App interface type.
       name: CLI Interface Type
       properties:
@@ -177,6 +181,12 @@ domain:
         inner_type: str
         name: mappers
         type: dict
+      - default: '[]'
+        description: The commands of a CLI interface.
+        inner_type: model
+        inner_type_model_id: cli_command
+        name: commands
+        type: list
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
