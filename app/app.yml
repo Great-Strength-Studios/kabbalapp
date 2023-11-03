@@ -40,6 +40,14 @@ domain:
         name: properties
         type: list
       type: entity
+    app_interface_type:
+      base_type_model_id: null
+      class_name: AppInterfaceType
+      dependencies: []
+      description: The application interface type.
+      name: App Interface Type
+      properties: []
+      type: entity
     app_project:
       base_type_model_id: null
       class_name: AppProject
