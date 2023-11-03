@@ -107,6 +107,18 @@ domain:
       name: CLI Command
       properties: []
       type: entity
+    cli_interface_type:
+      base_type_model_id: app_interface_type
+      class_name: CliInterfaceType
+      dependencies:
+      - class_name: AppInterfaceType
+        dependency_type: base_type
+        model_id: app_interface_type
+        module: null
+      description: CLI App interface type.
+      name: CLI Interface Type
+      properties: []
+      type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
       class_name: DateTimeTypeProperties
