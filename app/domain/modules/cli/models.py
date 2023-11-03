@@ -11,7 +11,7 @@ class CliArgument(ValueObject):
     default = t.StringType()
     required = t.BooleanType()
     nargs = t.StringType()
-    choices = t.ListType(t.StringType())
+    choices = t.ListType(t.StringType)
     action = t.StringType()
 
     @staticmethod

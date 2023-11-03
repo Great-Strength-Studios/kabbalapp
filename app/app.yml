@@ -103,6 +103,10 @@ domain:
         name: name_or_flags
         required: true
         type: list
+      - description: The help text for the CLI argument.
+        name: help
+        required: true
+        type: str
       type: value_object
     cli_command:
       base_type_model_id: null
