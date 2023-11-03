@@ -70,6 +70,10 @@ domain:
         name: schema_location
         required: true
         type: str
+      - description: The Kabbalapp version of the project.
+        name: version
+        required: true
+        type: str
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
