@@ -97,7 +97,12 @@ domain:
       dependencies: []
       description: A command-line interface argument.
       name: CLI Argument
-      properties: []
+      properties:
+      - description: The name or flags for the CLI argument.
+        inner_type: str
+        name: name_or_flags
+        required: true
+        type: list
       type: value_object
     cli_command:
       base_type_model_id: null
