@@ -107,6 +107,13 @@ domain:
         name: help
         required: true
         type: str
+      - choices:
+        - str
+        - int
+        - float
+        description: The data type of the CLI argument.
+        name: type
+        type: str
       type: value_object
     cli_command:
       base_type_model_id: null
