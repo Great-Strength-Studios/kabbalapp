@@ -172,7 +172,11 @@ domain:
         module: null
       description: CLI App interface type.
       name: CLI Interface Type
-      properties: []
+      properties:
+      - description: CLI interface type mappers.
+        inner_type: str
+        name: mappers
+        type: dict
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
