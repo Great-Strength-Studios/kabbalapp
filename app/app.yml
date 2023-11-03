@@ -34,7 +34,8 @@ domain:
       - description: The domain model id of the optional base type.
         name: base_type_model_id
         type: str
-      - description: Properties associated with the domain model
+      - default: '[]'
+        description: Properties associated with the domain model
         inner_type: model
         inner_type_model_id: domain_model_property
         name: properties
