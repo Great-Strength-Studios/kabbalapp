@@ -124,6 +124,9 @@ domain:
         inner_type: str
         name: choices
         type: list
+      - description: The specialized action for the CLI argument.
+        name: action
+        type: str
       type: value_object
     cli_command:
       base_type_model_id: null
