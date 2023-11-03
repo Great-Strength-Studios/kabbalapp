@@ -59,6 +59,12 @@ domain:
         name: app_directory
         required: true
         type: str
+      - choices:
+        - yaml
+        default: yaml
+        description: The schema file type for the app project.
+        name: schema_storage_type
+        type: str
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
