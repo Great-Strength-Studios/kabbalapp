@@ -139,6 +139,9 @@ domain:
         name: command_key
         required: true
         type: str
+      - description: The sub-command key for a CLI command.
+        name: subcommand_key
+        type: str
       type: entity
     cli_interface_type:
       base_type_model_id: app_interface_type
