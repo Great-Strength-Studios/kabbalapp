@@ -91,6 +91,14 @@ domain:
         required: true
         type: str
       type: entity
+    cli_argument:
+      base_type_model_id: null
+      class_name: CliArgument
+      dependencies: []
+      description: A command-line interface argument.
+      name: CLI Argument
+      properties: []
+      type: value_object
     date_time_type_properties:
       base_type_model_id: type_properties
       class_name: DateTimeTypeProperties
