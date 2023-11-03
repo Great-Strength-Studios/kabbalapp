@@ -65,6 +65,11 @@ domain:
         description: The schema file type for the app project.
         name: schema_storage_type
         type: str
+      - default: app/app.yml
+        description: The location of the schema file.
+        name: schema_location
+        required: true
+        type: str
       type: entity
     date_time_type_properties:
       base_type_model_id: type_properties
