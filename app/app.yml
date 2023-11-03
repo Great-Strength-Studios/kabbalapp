@@ -46,7 +46,11 @@ domain:
       dependencies: []
       description: The application interface type.
       name: App Interface Type
-      properties: []
+      properties:
+      - description: App interface type name.
+        name: name
+        required: true
+        type: str
       type: entity
     app_project:
       base_type_model_id: null
