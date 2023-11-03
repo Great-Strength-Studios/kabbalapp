@@ -79,7 +79,6 @@ ERRORS = 'errors'
 
 def handle(context: MessageContext):
 
-
     # Get app version from headers.
     version = context.headers.get('app_version', None)
 
