@@ -134,7 +134,11 @@ domain:
       dependencies: []
       description: A command-line interface command.
       name: CLI Command
-      properties: []
+      properties:
+      - description: The command key for a CLI command.
+        name: command_key
+        required: true
+        type: str
       type: entity
     cli_interface_type:
       base_type_model_id: app_interface_type
