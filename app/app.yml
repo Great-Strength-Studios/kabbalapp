@@ -64,10 +64,6 @@ domain:
       description: Application project configuration
       name: App Project
       properties:
-      - description: The app project tag.
-        name: tag
-        required: true
-        type: str
       - description: App project name.
         name: name
         required: true
