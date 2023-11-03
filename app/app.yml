@@ -117,6 +117,9 @@ domain:
       - description: Flag if the CLI argument is required.
         name: required
         type: bool
+      - description: The number of arguments for the CLI command.
+        name: nargs
+        type: str
       type: value_object
     cli_command:
       base_type_model_id: null
