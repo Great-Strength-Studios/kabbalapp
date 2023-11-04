@@ -79,11 +79,6 @@ ERRORS = 'errors'
 
 def handle(context: MessageContext):
 
-    # Unpack data from request.
-    name = context.data.name
-    app_directory = context.data.app_directory
-    tag = context.data.tag
-
     # Get app version from headers.
     version = context.headers.get('app_version', None)
 
@@ -91,10 +86,8 @@ def handle(context: MessageContext):
     manager: app.AppProjectRepository = context.services.app_project_repo()
 
     project = app.AppProject.create(
-        name=name,
-        app_directory=app_directory,
-        version=version,
-        tag=tag
+        **context.data.to_primitive(),
+        version=version
     )
 
     # Save app project.
@@ -104,7 +97,7 @@ def handle(context: MessageContext):
     app_printer: AppPrinter = context.services.app_printer()
 
     # Load target app printer.
-    target_app_printer: AppPrinter = context.services.app_printer(tag)
+    target_app_printer: AppPrinter = context.services.app_printer(project.id)
 
     # Arrange packages/modules to be read.
     core_modules = [

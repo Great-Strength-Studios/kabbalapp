@@ -64,10 +64,6 @@ domain:
       description: Application project configuration
       name: App Project
       properties:
-      - description: The app project tag.
-        name: tag
-        required: true
-        type: str
       - description: App project name.
         name: name
         required: true
@@ -649,10 +645,10 @@ interfaces:
                 - --app-directory
                 required: true
                 type: str
-              - help: App project tag
+              - help: App project id
                 name_or_flags:
-                - -t
-                - --tag
+                - -i
+                - --id
                 required: true
                 type: str
               - help: App project name
@@ -665,7 +661,7 @@ interfaces:
               arguments:
               - help: app project tag
                 name_or_flags:
-                - tag
+                - id
               help: sets the default app project
               name: Set Default App Project
         cli:

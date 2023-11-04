@@ -102,6 +102,7 @@ class AppDomainModel(Entity):
         properties: List[DomainModelProperty] = [p for p in self.properties if p.name != property.name]
 
         # Retrieve any potential dependencies of the property to be removed
+        dependencies: List[DomainModelDependency] = []
         # If the property is a list or dict type, retrieve the dependencies as defined by the inner type model ID.
         if property.type in [LIST_TYPE, DICT_TYPE] and property.inner_type_model_id is not None:
             dependencies = [self.get_dependency(property.inner_type_model_id, PROPERTY_DEPENDENCY)]

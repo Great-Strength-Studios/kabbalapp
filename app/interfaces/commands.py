@@ -7,14 +7,14 @@ class RequestEvent(Model):
 
 class NewAppProject(RequestEvent):
     
+    id = t.StringType(required=True)
     name = t.StringType(required=True)
-    tag = t.StringType(required=True)
     app_directory = t.StringType(required=True)
 
 
 class SetDefaultAppProject(RequestEvent):
     
-    tag = t.StringType(required=True)
+    id = t.StringType(required=True)
 
 
 class AddInterface(RequestEvent):
