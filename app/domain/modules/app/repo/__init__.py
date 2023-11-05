@@ -11,5 +11,8 @@ class AppProjectRepository():
     def save_project(self, app_project: AppProject) -> AppProject:
         pass
 
+    def default_app_project_configured(self) -> bool:
+        pass
+
     def set_default_app_project(self, id: str):
         pass

@@ -46,6 +46,9 @@ class YamlRepository(AppProjectRepository):
         with open(self.app_project_filepath, 'w') as stream:
             yaml.safe_dump(app_projects, stream)
 
+    def default_app_project_configured(self) -> bool:
+        pass
+
     def set_default_app_project(self, id: str):
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
