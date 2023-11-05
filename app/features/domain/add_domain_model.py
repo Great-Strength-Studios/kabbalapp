@@ -6,10 +6,6 @@ def handle(context: MessageContext):
     # Get app project key.
     app_key = context.headers.get('app_key', None)
 
-    # Raise app error if app key is null.
-    if not app_key:
-        raise AppError(context.errors.APP_KEY_REQUIRED)
-
     # Get domain repository.
     domain_repo: d.DomainRepository = context.services.domain_repo(app_key)
 

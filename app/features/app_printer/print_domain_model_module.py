@@ -8,10 +8,6 @@ def handle(context: MessageContext):
 
     # Retreive app key from headers.
     app_key = context.headers.get('app_key', None)
-
-    # Raise app error if app key is null.
-    if not app_key:
-        raise AppError(context.errors.APP_KEY_REQUIRED)
     
     # Get app project manager.
     app_project_repo: app.AppProjectRepository = context.services.app_project_repo()

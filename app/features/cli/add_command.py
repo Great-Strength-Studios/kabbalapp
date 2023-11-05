@@ -11,10 +11,6 @@ def handle(context: MessageContext):
 
     # Get app key from headers.
     app_key = context.headers.get('app_key', None)
-
-    # If app key is not provided, raise exception.
-    if not app_key:
-        raise AppError(context.errors.APP_KEY_REQUIRED)
     
     # Get cli inteface repo.
     cli_interface_repo: cli.CliInterfaceRepository = context.services.cli_interface_repo(app_key)

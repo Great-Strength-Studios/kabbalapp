@@ -10,6 +10,7 @@ class AppProjectDataMapper(AppProject):
             'map': blacklist(),
         }
 
+
 class YamlRepository(AppProjectRepository):
 
     def __init__(self, app_project_filepath: str):
@@ -21,10 +22,12 @@ class YamlRepository(AppProjectRepository):
                 data = {'projects': None, 'default_project': None}
                 yaml.safe_dump(data, stream)
 
+
     def project_exists(self, id: str) -> bool:
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
         return id in app_projects['projects']
+
 
     def load_project(self, id: str = None) -> AppProject:
         with open(self.app_project_filepath) as stream:
@@ -37,6 +40,7 @@ class YamlRepository(AppProjectRepository):
         project.id = id
         return project
 
+
     def save_project(self, app_project: AppProject):
         with open(self.app_project_filepath) as stream:
             app_projects = yaml.safe_load(stream)
@@ -45,6 +49,16 @@ class YamlRepository(AppProjectRepository):
         projects[app_project.id] = mapper.to_primitive('write')
         with open(self.app_project_filepath, 'w') as stream:
             yaml.safe_dump(app_projects, stream)
+
+
+    def default_app_project_configured(self) -> bool:
+        # Load app project data.
+        with open(self.app_project_filepath) as stream:
+            app_projects = yaml.safe_load(stream)
+
+        # Check if default project exists and is configured.
+        return app_projects.get('default_project', None) is not None
+        
 
     def set_default_app_project(self, id: str):
         with open(self.app_project_filepath) as stream:

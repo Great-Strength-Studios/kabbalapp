@@ -19,10 +19,6 @@ def handle(context: MessageContext):
 
     # Get app key from headers.
     app_key = context.headers.get('app_key', None)
-
-    # Raise APP_KEY_REQUIRED if app key is not provided.
-    if app_key is None:
-        raise AppError(context.errors.APP_KEY_REQUIRED)
     
     def copy_cli_interface_files():
 
