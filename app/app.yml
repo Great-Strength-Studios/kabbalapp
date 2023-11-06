@@ -257,7 +257,11 @@ domain:
       dependencies: []
       description: A domain method associated with a domain model or repository.
       name: Domain Method
-      properties: []
+      properties:
+      - description: The name of the domain method.
+        name: name
+        required: true
+        type: str
       type: value_object
     domain_model_property:
       base_type_model_id: model_property
