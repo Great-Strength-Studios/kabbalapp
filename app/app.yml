@@ -272,6 +272,17 @@ domain:
         name: parent_id
         required: true
         type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - model
+        description: The domain method return type.
+        name: return_type
+        type: str
       type: value_object
     domain_model_property:
       base_type_model_id: model_property
