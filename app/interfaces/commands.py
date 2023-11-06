@@ -114,7 +114,7 @@ class RemoveDomainModelProperty(RequestEvent):
 class AddDomainMethod(RequestEvent):
 
     name = t.StringType(required=True)
-    type = t.StringType(required=True, choices=['factory'])
+    type = t.StringType(required=True, choices=['factory', 'behavior'])
     parent_id = t.StringType(required=True)
     description = t.StringType(required=True)
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
