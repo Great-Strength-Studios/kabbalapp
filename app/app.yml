@@ -14,6 +14,13 @@ domain:
         model_id: domain_method
         module: null
       description: Domain Model for the application.
+      methods:
+      - description: Factory method that returns a new AppDomainModel instance.
+        inner_return_type: app_domain_model
+        name: create
+        parent_id: app_domain_model
+        return_type: model
+        type: factory
       name: App Domain Model
       properties:
       - description: The unique domain model class name.
@@ -341,6 +348,13 @@ domain:
         model_id: model_property
         module: null
       description: A property for a domain model.
+      methods:
+      - description: Factory method that returns a new DomainModelProperty instance.
+        inner_return_type: domain_model_property
+        name: create
+        parent_id: domain_model_property
+        return_type: model
+        type: factory
       name: Domain Model Property
       properties:
       - choices:
@@ -414,16 +428,7 @@ domain:
         dependency_type: property
         model_id: dict_type_properties
         module: null
-      methods:
-        update:
-          parameters:
-          - name: setting
-            required: true
-            type: str
-          - default: null
-            name: value
-            type: str
-          type: behavior
+      methods: []
       name: Model Property
       properties:
       - name: name
