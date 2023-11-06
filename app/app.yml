@@ -212,6 +212,14 @@ domain:
         dependency_type: base_type
         model_id: type_properties
         module: null
+      description: null
+      methods:
+      - description: Factory method that returns a new DateTimeTypeProperties instance.
+        inner_return_type: date_time_type_properties
+        name: create
+        parent_id: date_time_type_properties
+        return_type: model
+        type: factory
       name: Date Time Type Properties
       properties:
       - name: formats
@@ -243,6 +251,14 @@ domain:
         dependency_type: base_type
         model_id: type_properties
         module: null
+      description: null
+      methods:
+      - description: Factory method that returns a new DateTypeProperties instance.
+        inner_return_type: date_type_properties
+        name: create
+        parent_id: date_type_properties
+        return_type: model
+        type: factory
       name: Date Type Properties
       properties:
       - name: formats
@@ -256,6 +272,14 @@ domain:
         dependency_type: base_type
         model_id: type_properties
         module: null
+      description: null
+      methods:
+      - description: Factory method that returns a new DictTypeProperties instance.
+        inner_return_type: dict_type_properties
+        name: create
+        parent_id: dict_type_properties
+        return_type: model
+        type: factory
       name: Dictionary Type Properties
       properties:
       - name: coerce_key
@@ -351,6 +375,14 @@ domain:
         dependency_type: base_type
         model_id: type_properties
         module: null
+      description: null
+      methods:
+      - description: Factory method that returns a new ListTypeProperties instance.
+        inner_return_type: list_type_properties
+        name: create
+        parent_id: list_type_properties
+        return_type: model
+        type: factory
       name: List Type Properties
       properties:
       - name: min_size
@@ -428,6 +460,14 @@ domain:
         dependency_type: base_type
         model_id: type_properties
         module: null
+      description: null
+      methods:
+      - description: Factory method that returns a new StringTypeProperties instance.
+        inner_return_type: string_type_properties
+        name: create
+        parent_id: string_type_properties
+        return_type: model
+        type: factory
       name: String Type Properties
       properties:
       - name: regex
