@@ -21,6 +21,11 @@ domain:
         parent_id: app_domain_model
         return_type: model
         type: factory
+      - description: Checks to see if the domain model contains the same input method.
+        name: has_method
+        parent_id: app_domain_model
+        return_type: bool
+        type: behavior
       name: App Domain Model
       properties:
       - description: The unique domain model class name.
