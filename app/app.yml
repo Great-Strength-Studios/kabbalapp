@@ -262,6 +262,12 @@ domain:
         name: name
         required: true
         type: str
+      - choices:
+        - factory
+        description: The domain method type.
+        name: type
+        required: true
+        type: str
       type: value_object
     domain_model_property:
       base_type_model_id: model_property
