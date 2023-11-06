@@ -251,6 +251,14 @@ domain:
       - name: coerce_key
         type: str
       type: value_object
+    domain_method:
+      base_type_model_id: null
+      class_name: DomainMethod
+      dependencies: []
+      description: A domain method associated with a domain model or repository.
+      name: Domain Method
+      properties: []
+      type: value_object
     domain_model_property:
       base_type_model_id: model_property
       class_name: DomainModelProperty
