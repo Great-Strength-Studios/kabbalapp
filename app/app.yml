@@ -845,6 +845,47 @@ interfaces:
         domain:
           subcommands:
             add_method:
+              arguments:
+              - help: The name of the domain method.
+                name_or_flags:
+                - name
+                type: str
+              - choices:
+                - factory
+                help: The domain method type.
+                name_or_flags:
+                - --type
+                - -t
+                required: true
+                type: str
+              - help: The id of the parent domain model or repository.
+                name_or_flags:
+                - --parent-id
+                - -p
+                required: true
+                type: str
+              - help: The domain method description for inline documentation.
+                name_or_flags:
+                - --description
+                - -d
+                required: true
+                type: str
+              - choices:
+                - str
+                - int
+                - float
+                - bool
+                - date
+                - datetime
+                - model
+                help: The domain method return type.
+                name_or_flags:
+                - --return-type
+                type: str
+              - help: The model id of the return type if the return type is a model.
+                name_or_flags:
+                - --inner-return-type
+                type: str
               help: Adds a new domain method to an existing domain model or repository.
               name: Add Domain Method
             add_model:
