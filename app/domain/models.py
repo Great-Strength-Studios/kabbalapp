@@ -123,3 +123,8 @@ class ModelProperty(ValueObject):
         # Otherwise, set the passed in value to the attribute.
         else:
             setattr(self, setting, value)
+
+
+class DomainMethod(ValueObject):
+    
+    pass
