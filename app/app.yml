@@ -26,6 +26,10 @@ domain:
         parent_id: app_domain_model
         return_type: bool
         type: behavior
+      - description: Adds a new method to the domain model.
+        name: add_method
+        parent_id: app_domain_model
+        type: behavior
       name: App Domain Model
       properties:
       - description: The unique domain model class name.
