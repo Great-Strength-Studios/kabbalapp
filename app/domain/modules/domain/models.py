@@ -65,6 +65,7 @@ class AppDomainModel(Entity):
     base_type_model_id = t.StringType()
     properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
+    methods = t.ListType(t.ModelType(DomainMethod), default=[])
 
     @staticmethod
     def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
@@ -132,3 +133,14 @@ class AppDomainModel(Entity):
 
     def remove_dependency(self, dependency: DomainModelDependency) -> None:
         self.dependencies = [d for d in self.dependencies if d.model_id != dependency.model_id or d.dependency_type != dependency.dependency_type]
+
+    def has_method(self, method: DomainMethod) -> bool:
+        '''Checks to see if the model contains a method with the same name as the input method.
+
+        :param method: The input domain method to verify.
+        :type method: class: `domain.models.DomainMethod`
+        :return: True if the model contains a method with the same name as the input method.
+        :rtype: bool
+        '''
+        # Return True if the model contains a method with the same name as the input method.
+        return any((m.name == method.name for m in self.methods))
