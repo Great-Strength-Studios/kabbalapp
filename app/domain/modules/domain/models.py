@@ -144,3 +144,11 @@ class AppDomainModel(Entity):
         '''
         # Return True if the model contains a method with the same name as the input method.
         return any((m.name == method.name for m in self.methods))
+    
+    def add_method(self, method: DomainMethod) -> None:
+        '''Adds a new method to the domain model.
+
+        :param method: The input domain method to add.
+        :type method: class: `domain.models.DomainMethod`
+        '''
+        self.methods.append(method)
