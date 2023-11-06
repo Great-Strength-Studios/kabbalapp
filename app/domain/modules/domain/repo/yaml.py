@@ -65,10 +65,22 @@ class DomainModelDependencyDataMapper(DomainModelDependency):
         return DomainModelDependency(self.to_primitive('map'))
 
 
+class DomainMethodMapper(DomainMethod):
+    
+        class Options():
+            roles = {
+                'write': blacklist(),
+                'map': blacklist(),
+            }
+    
+        def map(self) -> DomainMethod:
+            return DomainMethod(self.to_primitive('map'))
+
 class AppDomainModelDataMapper(AppDomainModel):
 
     properties = t.ListType(t.ModelType(DomainModelPropertyDataMapper), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
+    methods = t.ListType(t.ModelType(DomainMethodMapper), default=[])
     
     class Options():
         roles = {
@@ -80,6 +92,7 @@ class AppDomainModelDataMapper(AppDomainModel):
         result = AppDomainModel(self.to_primitive('map'))
         result.properties = [property.map() for property in self.properties]
         result.dependencies = [dependency.map() for dependency in self.dependencies]
+        result.methods = [method.map() for method in self.methods]
         return result
     
 
