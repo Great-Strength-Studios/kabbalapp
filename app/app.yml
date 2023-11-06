@@ -268,6 +268,10 @@ domain:
         name: type
         required: true
         type: str
+      - description: The ID of the parent domain model or repository.
+        name: parent_id
+        required: true
+        type: str
       type: value_object
     domain_model_property:
       base_type_model_id: model_property
