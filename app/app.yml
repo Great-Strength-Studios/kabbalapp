@@ -283,6 +283,9 @@ domain:
         description: The domain method return type.
         name: return_type
         type: str
+      - description: The model id of the return type if the return type is a model.
+        name: inner_return_type
+        type: str
       type: value_object
     domain_model_property:
       base_type_model_id: model_property
