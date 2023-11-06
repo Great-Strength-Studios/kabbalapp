@@ -608,6 +608,10 @@ errors:
     error_code: '000020005'
     message:
       en_US: Domain model property with name "{}" not found
+  DOMAIN_METHOD_ALREADY_EXISTS:
+    error_code: '000020008'
+    message:
+      en_US: Domain method with name "{}" already exists on domain model with ID "{}".
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
