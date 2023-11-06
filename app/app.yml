@@ -908,6 +908,7 @@ interfaces:
                 type: str
               - choices:
                 - factory
+                - behavior
                 help: The domain method type.
                 name_or_flags:
                 - --type
