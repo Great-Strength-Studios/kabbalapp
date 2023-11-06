@@ -272,6 +272,10 @@ domain:
         name: parent_id
         required: true
         type: str
+      - description: The domain method description for inline documentation.
+        name: description
+        required: true
+        type: str
       - choices:
         - str
         - int
