@@ -9,6 +9,10 @@ domain:
         dependency_type: property
         model_id: domain_model_property
         module: null
+      - class_name: DomainMethod
+        dependency_type: property
+        model_id: domain_method
+        module: null
       description: Domain Model for the application.
       name: App Domain Model
       properties:
@@ -39,6 +43,12 @@ domain:
         inner_type: model
         inner_type_model_id: domain_model_property
         name: properties
+        type: list
+      - default: '[]'
+        description: The methods associated with the domain model.
+        inner_type: model
+        inner_type_model_id: domain_method
+        name: methods
         type: list
       type: entity
     app_interface_type:
