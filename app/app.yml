@@ -355,7 +355,43 @@ domain:
       description: A parameter for a domain method.
       methods: []
       name: Domain Method Parameter
-      properties: []
+      properties:
+      - description: The name of the method parameter.
+        name: name
+        required: true
+        type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        description: The method parameter data type. Also appears for inline documentation.
+        name: type
+        required: true
+        type: str
+      - description: The method parameter description for inline documentation.
+        name: description
+        required: true
+        type: str
+      - description: True if the parameter is required.
+        name: required
+        type: bool
+      - description: The default value of the method parameter.
+        name: default
+        type: str
+      - description: The inner type if the type happens to be a list, dict, or model
+          type.
+        name: inner_type
+        type: str
+      - description: The model id of the inner type if the inner type of a list or
+          dict type is a model type.
+        name: inner_type_model_id
+        type: str
       type: value_object
     domain_model_property:
       base_type_model_id: model_property
