@@ -315,6 +315,9 @@ domain:
         name: has_parameter
         return_type: bool
         type: behavior
+      - description: Adds the input parameter to the domain method parameters list.
+        name: add_parameter
+        type: behavior
       name: Domain Method
       properties:
       - description: The name of the domain method.
