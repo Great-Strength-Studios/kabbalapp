@@ -129,13 +129,12 @@ class DomainMethod(ValueObject):
     
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=['factory', 'behavior'])
-    parent_id = t.StringType(required=True)
     description = t.StringType()
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     inner_return_type = t.StringType()
 
     @staticmethod
-    def create(name: str, type: str, parent_id: str, description: str, return_type: str = None, inner_return_type: str = None) -> 'DomainMethod':
+    def create(name: str, type: str, description: str, return_type: str = None, inner_return_type: str = None) -> 'DomainMethod':
 
         # Create new model instance.
         result = DomainMethod()
@@ -143,7 +142,6 @@ class DomainMethod(ValueObject):
         # Load attributes from passed in values.
         result.name = name
         result.type = type
-        result.parent_id = parent_id
         result.description = description
         result.return_type = return_type
         result.inner_return_type = inner_return_type

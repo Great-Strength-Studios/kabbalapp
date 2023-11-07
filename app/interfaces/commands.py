@@ -120,6 +120,10 @@ class AddDomainMethod(RequestEvent):
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     inner_return_type = t.StringType()
     
+    class Options():
+        roles = {
+            'domain_method.create': blacklist('parent_id'),
+        }
 
 class PrintDomainModelModule(RequestEvent):
     pass
