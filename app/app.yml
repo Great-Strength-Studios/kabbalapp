@@ -304,7 +304,11 @@ domain:
     domain_method:
       base_type_model_id: null
       class_name: DomainMethod
-      dependencies: []
+      dependencies:
+      - class_name: DomainMethodParameter
+        dependency_type: property
+        model_id: domain_method_parameter
+        module: null
       description: A domain method associated with a domain model or repository.
       methods:
       - description: Factory method that returns a new DomainMethod instance.
@@ -347,6 +351,12 @@ domain:
       - description: The model id of the return type if the return type is a model.
         name: inner_return_type
         type: str
+      - default: '[]'
+        description: The list of domain method parameters..
+        inner_type: model
+        inner_type_model_id: domain_method_parameter
+        name: parameters
+        type: list
       type: value_object
     domain_method_parameter:
       base_type_model_id: null
