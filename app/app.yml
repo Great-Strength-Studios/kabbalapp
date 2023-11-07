@@ -18,17 +18,14 @@ domain:
       - description: Factory method that returns a new AppDomainModel instance.
         inner_return_type: app_domain_model
         name: create
-        parent_id: app_domain_model
         return_type: model
         type: factory
       - description: Checks to see if the domain model contains the same input method.
         name: has_method
-        parent_id: app_domain_model
         return_type: bool
         type: behavior
       - description: Adds a new method to the domain model.
         name: add_method
-        parent_id: app_domain_model
         type: behavior
       name: App Domain Model
       properties:
@@ -233,7 +230,6 @@ domain:
       - description: Factory method that returns a new DateTimeTypeProperties instance.
         inner_return_type: date_time_type_properties
         name: create
-        parent_id: date_time_type_properties
         return_type: model
         type: factory
       name: Date Time Type Properties
@@ -272,7 +268,6 @@ domain:
       - description: Factory method that returns a new DateTypeProperties instance.
         inner_return_type: date_type_properties
         name: create
-        parent_id: date_type_properties
         return_type: model
         type: factory
       name: Date Type Properties
@@ -293,7 +288,6 @@ domain:
       - description: Factory method that returns a new DictTypeProperties instance.
         inner_return_type: dict_type_properties
         name: create
-        parent_id: dict_type_properties
         return_type: model
         type: factory
       name: Dictionary Type Properties
@@ -314,9 +308,13 @@ domain:
       - description: Factory method that returns a new DomainMethod instance.
         inner_return_type: domain_method
         name: create
-        parent_id: domain_method
         return_type: model
         type: factory
+      - description: Returns True if a parameter with the same name as the input parameter
+          exists within the domain method.
+        name: has_parameter
+        return_type: bool
+        type: behavior
       name: Domain Method
       properties:
       - description: The name of the domain method.
@@ -327,10 +325,6 @@ domain:
         - factory
         description: The domain method type.
         name: type
-        required: true
-        type: str
-      - description: The ID of the parent domain model or repository.
-        name: parent_id
         required: true
         type: str
       - description: The domain method description for inline documentation.
@@ -416,7 +410,6 @@ domain:
       - description: Factory method that returns a new DomainModelProperty instance.
         inner_return_type: domain_model_property
         name: create
-        parent_id: domain_model_property
         return_type: model
         type: factory
       name: Domain Model Property
@@ -458,7 +451,6 @@ domain:
       - description: Factory method that returns a new ListTypeProperties instance.
         inner_return_type: list_type_properties
         name: create
-        parent_id: list_type_properties
         return_type: model
         type: factory
       name: List Type Properties
@@ -534,7 +526,6 @@ domain:
       - description: Factory method that returns a new StringTypeProperties instance.
         inner_return_type: string_type_properties
         name: create
-        parent_id: string_type_properties
         return_type: model
         type: factory
       name: String Type Properties
