@@ -348,6 +348,15 @@ domain:
         name: inner_return_type
         type: str
       type: value_object
+    domain_method_parameter:
+      base_type_model_id: null
+      class_name: DomainMethodParameter
+      dependencies: []
+      description: A parameter for a domain method.
+      methods: []
+      name: Domain Method Parameter
+      properties: []
+      type: value_object
     domain_model_property:
       base_type_model_id: model_property
       class_name: DomainModelProperty
