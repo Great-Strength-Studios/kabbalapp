@@ -1022,6 +1022,57 @@ interfaces:
               help: Adds a new domain method to an existing domain model or repository.
               name: Add Domain Method
             add_method_parameter:
+              arguments:
+              - help: parent domain model id
+                name_or_flags:
+                - --parent-model-id
+                - -p
+                required: true
+                type: str
+              - help: method name receiving new parameter
+                name_or_flags:
+                - --method-name
+                - -f
+                required: true
+                type: str
+              - help: method parameter name
+                name_or_flags:
+                - name
+                type: str
+              - choices:
+                - str
+                - int
+                - float
+                - bool
+                - date
+                - datetime
+                - list
+                - dict
+                - model
+                help: method parameter data type
+                name_or_flags:
+                - --type
+                - -t
+                required: true
+              - help: method parameter description for inline documentation
+                name_or_flags:
+                - --description
+                - -d
+                required: true
+              - action: store_true
+                help: True if the parameter is required
+                name_or_flags:
+                - --required
+              - help: parameter default value
+                name_or_flags:
+                - --default
+              - help: inner type if the type is a list, dict, or model type
+                name_or_flags:
+                - --inner-type
+              - help: model id of the inner type if the type is a list or dict type
+                  and the inner type is a model type
+                name_or_flags:
+                - --inner-type-model-id
               help: Adds a parameter to an existing domain method.
               name: Add Domain Method Parameter
             add_model:
