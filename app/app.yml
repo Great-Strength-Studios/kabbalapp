@@ -791,6 +791,10 @@ features:
           functions:
           - data_mapping: add_domain_method
             function_path: domain.add_method
+        add_method_parameter:
+          functions:
+          - data_mapping: add_domain_method_parameter
+            function_path: domain.add_method_parameter
         add_model:
           functions:
           - data_mapping: add_domain_model
