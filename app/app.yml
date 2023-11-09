@@ -27,6 +27,11 @@ domain:
       - description: Adds a new method to the domain model.
         name: add_method
         type: behavior
+      - description: Returns the domain method with the input name.
+        inner_return_type: domain_method
+        name: get_method
+        return_type: model
+        type: behavior
       name: App Domain Model
       properties:
       - description: The unique domain model class name.
