@@ -700,7 +700,7 @@ errors:
     message:
       en_US: Domain method with name "{}" already exists on domain model with ID "{}".
   DOMAIN_METHOD_NOT_FOUND:
-    error_code: '000020009'
+    error_code: 000020009
     message:
       en_US: Domain method with name "{}" not found on domain model with ID "{}".
   DOMAIN_METHOD_PARAMETER_ALREADY_EXISTS:
@@ -1021,6 +1021,9 @@ interfaces:
                 type: str
               help: Adds a new domain method to an existing domain model or repository.
               name: Add Domain Method
+            add_method_parameter:
+              help: Adds a parameter to an existing domain method.
+              name: Add Domain Method Parameter
             add_model:
               arguments:
               - help: domain model class name
