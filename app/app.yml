@@ -699,6 +699,10 @@ errors:
     error_code: 000020008
     message:
       en_US: Domain method with name "{}" already exists on domain model with ID "{}".
+  DOMAIN_METHOD_NOT_FOUND:
+    error_code: '000020009'
+    message:
+      en_US: Domain method with name "{}" not found on domain model with ID "{}".
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020001'
     message:
