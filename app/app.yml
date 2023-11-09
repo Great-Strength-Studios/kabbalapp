@@ -703,6 +703,11 @@ errors:
     error_code: '000020009'
     message:
       en_US: Domain method with name "{}" not found on domain model with ID "{}".
+  DOMAIN_METHOD_PARAMETER_ALREADY_EXISTS:
+    error_code: '000020010'
+    message:
+      en_US: Domain method parameter with name "{}" already exists on domain method
+        with name "{}" on domain model with ID "{}".
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020001'
     message:
