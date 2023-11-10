@@ -867,6 +867,10 @@ features:
           functions:
           - data_mapping: update_domain_model_property
             function_path: domain.update_model_property
+        add_repository:
+          functions:
+          - data_mapping: add_repository
+            function_path: domain.add_repository
     interface:
       features:
         add:
