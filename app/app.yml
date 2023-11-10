@@ -127,6 +127,19 @@ domain:
       methods:
       - description: Factory method to create a new AppRepository instance.
         name: create
+        parameters:
+        - description: The name of the repository.
+          name: name
+          required: true
+          type: str
+        - description: The class name of the repository class.
+          name: class_name
+          required: true
+          type: str
+        - description: The description of the repository for inline documentation.
+          name: description
+          required: true
+          type: str
         type: factory
       name: App Repository
       properties:
