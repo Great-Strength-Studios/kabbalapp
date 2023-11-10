@@ -725,7 +725,12 @@ domain:
           class_name: AppProject
           name: App Project
       name: App Project
-  repositories: {}
+  repositories:
+    domain_repository:
+      class_name: DomainRepository
+      description: The Domain Repository is responsible for managing the domain models,
+        repositories, and modules for an app.
+      name: Domain Repository
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
