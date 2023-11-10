@@ -125,5 +125,20 @@ def add_domain_method(context, request, app_context, **kwargs):
     })
 
 
+def add_domain_method_parameter(context, request, app_context, **kwargs):
+    # Map the values of the request dict to a new Add Domain Method Parameter request instance.
+    return AddDomainMethodParameter({
+        'parent_model_id': request.get('parent_model_id', None),
+        'method_name': request.get('method_name', None),
+        'name': request.get('name', None),
+        'type': request.get('type', None),
+        'inner_type': request.get('inner_type', None),
+        'inner_type_model_id': request.get('inner_type_model_id', None),
+        'required': request.get('required', None),
+        'default': request.get('default', None),
+        'description': request.get('description', None)
+    })
+
+
 def print_domain_model_module(context, request, app_context, **kwargs):
     return PrintDomainModelModule()
