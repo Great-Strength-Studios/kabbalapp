@@ -125,6 +125,19 @@ domain:
       class_name: AppRepository
       description: A repository interface used by the app.
       name: App Repository
+      properties:
+      - description: The name of the repository.
+        name: name
+        required: true
+        type: str
+      - description: The unique class name of the repository.
+        name: class_name
+        required: true
+        type: str
+      - description: The description of the repository for inline documentation.
+        name: description
+        required: true
+        type: str
       type: entity
     cli_argument:
       base_type_model_id: null
