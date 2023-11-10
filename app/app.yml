@@ -1222,6 +1222,20 @@ interfaces:
                 nargs: +
               name: Add Domain Model Property
             add_repository:
+              arguments:
+              - help: repository name
+                name_or_flags:
+                - name
+              - help: repository class name
+                name_or_flags:
+                - --class-name
+                - -c
+                required: true
+              - help: repository description
+                name_or_flags:
+                - --description
+                - -d
+                required: true
               help: add app repository
               name: Add Repository
             remove-model-property:
