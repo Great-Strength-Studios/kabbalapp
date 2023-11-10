@@ -151,4 +151,16 @@ class AppDomainModel(Entity):
         :param method: The input domain method to add.
         :type method: class: `domain.models.DomainMethod`
         '''
+        # Add the method to the methods list.
         self.methods.append(method)
+
+    def get_method(self, method_name: str) -> DomainMethod:
+        '''Returns the domain method with the input name.
+
+        :param method_name: The name of the method to retrieve.
+        :type method_name: str
+        :return: The domain method with the input name.
+        :rtype: class: `domain.models.DomainMethod`
+        '''
+        # Return the domain method with the input name.
+        return next((m for m in self.methods if m.name == method_name), None)
