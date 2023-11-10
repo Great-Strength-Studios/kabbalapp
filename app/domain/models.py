@@ -203,3 +203,43 @@ class DomainMethod(ValueObject):
         '''
         # Add the parameter to the parameters list.
         self.parameters.append(parameter)
+
+
+class AppRepository(Entity):
+    '''A repository interface used to store and retrieve domain models.
+    '''
+
+    id = t.StringType(required=True)
+    name = t.StringType(required=True)
+    class_name = t.StringType(required=True)
+    description = t.StringType(required=True)
+
+    @staticmethod
+    def create(name: str, class_name: str, description: str) -> 'AppRepository':
+        '''Creates a new AppRepository instance.
+        
+        :param name: The name of the repository.
+        :type name: str
+        :param class_name: The class name of the repository.
+        :type class_name: str
+        :param description: The description of the repository for inline documentation.
+        :type description: str
+        :returns: A new AppRepository instance.
+        :rtype: `domain.models.AppRepository`
+        '''
+        # Create new model instance.
+        result = AppRepository()
+
+        # Load attributes from passed in values.
+        result.name = name
+        result.class_name = class_name
+        result.description = description
+
+        # Set id as the lower cased and underscored name.
+        result.id = name.lower().replace(' ', '_')
+
+        # Validate model instance.
+        result.validate()
+
+        # Return model instance.
+        return result

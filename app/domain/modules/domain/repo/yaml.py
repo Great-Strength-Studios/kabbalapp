@@ -113,6 +113,7 @@ class AppDomainModelDataMapper(AppDomainModel):
             'write': blacklist('id'),
             'map': blacklist('properties', 'dependencies'),
         }
+        serialize_when_none = False
 
     def map(self) -> AppDomainModel:
 
@@ -126,6 +127,22 @@ class AppDomainModelDataMapper(AppDomainModel):
         
         # Return the result.
         return result
+    
+
+class AppRepositoryDataMapper(AppRepository):
+    '''Data mapper for AppRepository.
+    
+    '''
+
+    class Options():
+        roles = {
+            'write': blacklist('id'),
+            'map': blacklist(),
+        }
+        serialize_when_none = False
+
+    def map(self) -> AppRepository:
+        return AppRepository(self.to_primitive('map'))
     
 
 class YamlRepository(DomainRepository):
@@ -180,15 +197,15 @@ class YamlRepository(DomainRepository):
 
     def save_domain_model(self, domain_model: AppDomainModel) -> None:
 
-        # Load the schema file data
+        # Load the schema file data.
         import yaml
         with open(self.schema_file_path, 'r') as stream:
             data = yaml.safe_load(stream)
 
-        # Get the value objects data
+        # Get the domain models data.
         domain_model_data = data['domain'].get('models', {})
 
-        # Create a data mapper from the value object
+        # Create a data mapper from the domain model.
         domain_model_mapper = self._to_mapper(AppDomainModelDataMapper, **domain_model.to_primitive())
 
         # Set the required value of all model properties to None if they are False.
@@ -200,5 +217,56 @@ class YamlRepository(DomainRepository):
         domain_model_data[domain_model.id] = domain_model_mapper.to_primitive('write')
 
         # Save the schema file data
+        with open(self.schema_file_path, 'w') as stream:
+            yaml.dump(data, stream)
+
+
+    def get_repository(self, id: str) -> AppRepository:
+        '''Returns the repository with the input id.
+
+        :param id: The id of the repository to retrieve.
+        :type id: str
+        :return: The repository with the input id.
+        :rtype: class: `domain.models.AppRepository`
+        '''
+        
+        # Load the schema file data.
+        import yaml
+        with open(self.schema_file_path, 'r') as stream:
+            data = yaml.safe_load(stream)
+
+        # Get the domain repositories data.
+        repos_data = data['domain'].get('repositories', {})
+
+        # Return the repository if it exists.
+        if id in repos_data:
+            return self._to_mapper(AppRepositoryDataMapper, id=id, **repos_data.get(id)).map()
+        
+        # Otherwise return None if repository is not found.
+        return None
+
+
+    def save_repository(self, repository: AppRepository):
+        '''Saves the input repository.
+
+        :param repository: The repository to save.
+        :type repository: class: `domain.models.AppRepository`
+        '''
+
+        # Load the schema file data.
+        import yaml
+        with open(self.schema_file_path, 'r') as stream:
+            data = yaml.safe_load(stream)
+
+        # Get the domain repositories data.
+        repos_data = data['domain'].get('repositories', {})
+
+        # Create a data mapper from the repository.
+        repository_mapper = self._to_mapper(AppRepositoryDataMapper, **repository.to_primitive())
+
+        # Add the repository to the repositories data.
+        repos_data[repository.id] = repository_mapper.to_primitive('write')
+
+        # Save the schema file data.
         with open(self.schema_file_path, 'w') as stream:
             yaml.dump(data, stream)

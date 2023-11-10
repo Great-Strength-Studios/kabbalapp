@@ -121,6 +121,41 @@ domain:
         required: true
         type: str
       type: entity
+    app_repository:
+      class_name: AppRepository
+      description: A repository interface used by the app.
+      methods:
+      - description: Factory method to create a new AppRepository instance.
+        name: create
+        parameters:
+        - description: The name of the repository.
+          name: name
+          required: true
+          type: str
+        - description: The class name of the repository class.
+          name: class_name
+          required: true
+          type: str
+        - description: The description of the repository for inline documentation.
+          name: description
+          required: true
+          type: str
+        type: factory
+      name: App Repository
+      properties:
+      - description: The name of the repository.
+        name: name
+        required: true
+        type: str
+      - description: The unique class name of the repository.
+        name: class_name
+        required: true
+        type: str
+      - description: The description of the repository for inline documentation.
+        name: description
+        required: true
+        type: str
+      type: entity
     cli_argument:
       base_type_model_id: null
       class_name: CliArgument
@@ -690,7 +725,12 @@ domain:
           class_name: AppProject
           name: App Project
       name: App Project
-  repos: {}
+  repositories:
+    domain_repository:
+      class_name: DomainRepository
+      description: The Domain Repository is responsible for managing the domain models,
+        repositories, and modules for an app.
+      name: Domain Repository
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
@@ -774,6 +814,10 @@ errors:
     error_code: '000020007'
     message:
       en_US: Model property with type "{}" contains invalid type property "{}"
+  REPOSITORY_ALREADY_EXISTS:
+    error_code: '000020011'
+    message:
+      en_US: Repository with name "{}" already exists.
 features:
   groups:
     app:
@@ -820,6 +864,10 @@ features:
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_model_property
+        add_repository:
+          functions:
+          - data_mapping: add_repository
+            function_path: domain.add_repository
         remove_model_property:
           functions:
           - data_mapping: remove_domain_model_property
@@ -1178,6 +1226,23 @@ interfaces:
                 - --poly-type-model-ids
                 nargs: +
               name: Add Domain Model Property
+            add_repository:
+              arguments:
+              - help: repository name
+                name_or_flags:
+                - name
+              - help: repository class name
+                name_or_flags:
+                - --class-name
+                - -c
+                required: true
+              - help: repository description
+                name_or_flags:
+                - --description
+                - -d
+                required: true
+              help: add app repository
+              name: Add Repository
             remove-model-property:
               arguments:
               - help: id of model containing property to remove
