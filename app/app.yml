@@ -30,6 +30,11 @@ domain:
       - description: Returns the domain method with the input name.
         inner_return_type: domain_method
         name: get_method
+        parameters:
+        - description: The name of the method to retrieve.
+          name: method_name
+          required: true
+          type: str
         return_type: model
         type: behavior
       name: App Domain Model
@@ -318,10 +323,22 @@ domain:
       - description: Returns True if a parameter with the same name as the input parameter
           exists within the domain method.
         name: has_parameter
+        parameters:
+        - description: The parameter to check if it already exists in the method.
+          inner_type: domain_method_parameter
+          name: parameter
+          required: true
+          type: model
         return_type: bool
         type: behavior
       - description: Adds the input parameter to the domain method parameters list.
         name: add_parameter
+        parameters:
+        - description: The parameter to add.
+          inner_type: domain_method_parameter
+          name: parameter
+          required: true
+          type: model
         type: behavior
       name: Domain Method
       properties:
