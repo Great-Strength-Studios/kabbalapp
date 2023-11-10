@@ -124,6 +124,10 @@ domain:
     app_repository:
       class_name: AppRepository
       description: A repository interface used by the app.
+      methods:
+      - description: Factory method to create a new AppRepository instance.
+        name: create
+        type: factory
       name: App Repository
       properties:
       - description: The name of the repository.
