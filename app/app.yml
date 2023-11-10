@@ -788,6 +788,10 @@ errors:
     error_code: '000020005'
     message:
       en_US: Domain model property with name "{}" not found
+  REPOSITORY_ALREADY_EXISTS:
+    error_code: '000020011'
+    message:
+      en_US: Repository with name "{}" already exists.
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
