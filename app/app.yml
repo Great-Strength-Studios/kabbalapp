@@ -121,6 +121,11 @@ domain:
         required: true
         type: str
       type: entity
+    app_repository:
+      class_name: AppRepository
+      description: A repository interface used by the app.
+      name: App Repository
+      type: entity
     cli_argument:
       base_type_model_id: null
       class_name: CliArgument
