@@ -125,6 +125,37 @@ class ModelProperty(ValueObject):
             setattr(self, setting, value)
 
 
+class DomainMethodParameter(ValueObject):
+    
+    name = t.StringType(required=True)
+    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
+    description = t.StringType(required=True)
+    inner_type = t.StringType()
+    inner_type_model_id = t.StringType()
+    required = t.BooleanType()
+    default = t.StringType()
+
+    @staticmethod
+    def create(name: str, type: str, inner_type: str = None, inner_type_model_id: str = None, required: bool = None, default: str = None, description: str = None) -> 'DomainMethodParameter':
+
+        # Create new model instance.
+        result = DomainMethodParameter()
+
+        # Load attributes from passed in values.
+        result.name = name
+        result.type = type
+        result.description = description
+        result.inner_type = inner_type
+        result.inner_type_model_id = inner_type_model_id
+        result.required = required
+        result.default = default
+
+        # Validate model instance.
+        result.validate()
+
+        # Return model instance.
+        return result
+
 class DomainMethod(ValueObject):
     
     name = t.StringType(required=True)
@@ -132,6 +163,7 @@ class DomainMethod(ValueObject):
     description = t.StringType()
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     inner_return_type = t.StringType()
+    parameters = t.ListType(t.ModelType(DomainMethodParameter), default=[])
 
     @staticmethod
     def create(name: str, type: str, description: str, return_type: str = None, inner_return_type: str = None) -> 'DomainMethod':
@@ -151,3 +183,23 @@ class DomainMethod(ValueObject):
 
         # Return model instance.
         return result
+    
+    def has_parameter(self, parameter: DomainMethodParameter) -> bool:
+        '''Returns True if a parameter with the same name as the input parameter exists in the domain method parameters list.
+        
+        :param parameter: The parameter to check if it already exists in the method.
+        :type parameter: `domain.models.DomainMethodParameter`
+        :returns: True if the parameter already exists in the method, otherwise False.
+        :rtype: bool
+        '''
+        # Check to see if any existing parameter has a name matching the input parameter name.
+        return any([p.name == parameter.name for p in self.parameters])
+    
+    def add_parameter(self, parameter: DomainMethodParameter):
+        '''Adds the input parameter to the domain method parameters list.
+        
+        :param parameter: The parameter to add to the method.
+        :type parameter: `domain.models.DomainMethodParameter`
+        '''
+        # Add the parameter to the parameters list.
+        self.parameters.append(parameter)
