@@ -63,19 +63,44 @@ class DomainModelDependencyDataMapper(DomainModelDependency):
 
     def map(self) -> DomainModelDependency:
         return DomainModelDependency(self.to_primitive('map'))
+    
 
+class DomainMethodParameterDataMapper(DomainMethodParameter):
+    '''Data mapper for DomainMethodParameter
+    
+    '''
+
+    class Options():
+        roles = {
+            'write': blacklist(),
+            'map': blacklist(),
+        }
+        serialize_when_none = False
+
+    def map(self) -> DomainMethodParameter:
+        return DomainMethodParameter(self.to_primitive('map'))
 
 class DomainMethodDataMapper(DomainMethod):
+
+    parameters = t.ListType(t.ModelType(DomainMethodParameterDataMapper), default=[])
     
-        class Options():
-            roles = {
-                'write': blacklist(),
-                'map': blacklist(),
-            }
-            serialize_when_none = False
-    
-        def map(self) -> DomainMethod:
-            return DomainMethod(self.to_primitive('map'))
+    class Options():
+        roles = {
+            'write': blacklist(),
+            'map': blacklist('parameters'),
+        }
+        serialize_when_none = False
+
+    def map(self) -> DomainMethod:
+
+        # Create the result.
+        result = DomainMethod(self.to_primitive('map'))
+        
+        # Map the parameters
+        result.parameters = [parameter.map() for parameter in self.parameters]
+        
+        # Return the result
+        return result
 
 class AppDomainModelDataMapper(AppDomainModel):
 
@@ -90,10 +115,16 @@ class AppDomainModelDataMapper(AppDomainModel):
         }
 
     def map(self) -> AppDomainModel:
+
+        # Create the result
         result = AppDomainModel(self.to_primitive('map'))
+        
+        # Map the properties, dependencies, and methods.
         result.properties = [property.map() for property in self.properties]
         result.dependencies = [dependency.map() for dependency in self.dependencies]
         result.methods = [method.map() for method in self.methods]
+        
+        # Return the result.
         return result
     
 

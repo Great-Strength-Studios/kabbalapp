@@ -18,17 +18,24 @@ domain:
       - description: Factory method that returns a new AppDomainModel instance.
         inner_return_type: app_domain_model
         name: create
-        parent_id: app_domain_model
         return_type: model
         type: factory
       - description: Checks to see if the domain model contains the same input method.
         name: has_method
-        parent_id: app_domain_model
         return_type: bool
         type: behavior
       - description: Adds a new method to the domain model.
         name: add_method
-        parent_id: app_domain_model
+        type: behavior
+      - description: Returns the domain method with the input name.
+        inner_return_type: domain_method
+        name: get_method
+        parameters:
+        - description: The name of the method to retrieve.
+          name: method_name
+          required: true
+          type: str
+        return_type: model
         type: behavior
       name: App Domain Model
       properties:
@@ -233,7 +240,6 @@ domain:
       - description: Factory method that returns a new DateTimeTypeProperties instance.
         inner_return_type: date_time_type_properties
         name: create
-        parent_id: date_time_type_properties
         return_type: model
         type: factory
       name: Date Time Type Properties
@@ -272,7 +278,6 @@ domain:
       - description: Factory method that returns a new DateTypeProperties instance.
         inner_return_type: date_type_properties
         name: create
-        parent_id: date_type_properties
         return_type: model
         type: factory
       name: Date Type Properties
@@ -293,7 +298,6 @@ domain:
       - description: Factory method that returns a new DictTypeProperties instance.
         inner_return_type: dict_type_properties
         name: create
-        parent_id: dict_type_properties
         return_type: model
         type: factory
       name: Dictionary Type Properties
@@ -304,15 +308,38 @@ domain:
     domain_method:
       base_type_model_id: null
       class_name: DomainMethod
-      dependencies: []
+      dependencies:
+      - class_name: DomainMethodParameter
+        dependency_type: property
+        model_id: domain_method_parameter
+        module: null
       description: A domain method associated with a domain model or repository.
       methods:
       - description: Factory method that returns a new DomainMethod instance.
         inner_return_type: domain_method
         name: create
-        parent_id: domain_method
         return_type: model
         type: factory
+      - description: Returns True if a parameter with the same name as the input parameter
+          exists within the domain method.
+        name: has_parameter
+        parameters:
+        - description: The parameter to check if it already exists in the method.
+          inner_type: domain_method_parameter
+          name: parameter
+          required: true
+          type: model
+        return_type: bool
+        type: behavior
+      - description: Adds the input parameter to the domain method parameters list.
+        name: add_parameter
+        parameters:
+        - description: The parameter to add.
+          inner_type: domain_method_parameter
+          name: parameter
+          required: true
+          type: model
+        type: behavior
       name: Domain Method
       properties:
       - description: The name of the domain method.
@@ -323,10 +350,6 @@ domain:
         - factory
         description: The domain method type.
         name: type
-        required: true
-        type: str
-      - description: The ID of the parent domain model or repository.
-        name: parent_id
         required: true
         type: str
       - description: The domain method description for inline documentation.
@@ -347,6 +370,57 @@ domain:
       - description: The model id of the return type if the return type is a model.
         name: inner_return_type
         type: str
+      - default: '[]'
+        description: The list of domain method parameters..
+        inner_type: model
+        inner_type_model_id: domain_method_parameter
+        name: parameters
+        type: list
+      type: value_object
+    domain_method_parameter:
+      base_type_model_id: null
+      class_name: DomainMethodParameter
+      dependencies: []
+      description: A parameter for a domain method.
+      methods: []
+      name: Domain Method Parameter
+      properties:
+      - description: The name of the method parameter.
+        name: name
+        required: true
+        type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        description: The method parameter data type. Also appears for inline documentation.
+        name: type
+        required: true
+        type: str
+      - description: The method parameter description for inline documentation.
+        name: description
+        required: true
+        type: str
+      - description: True if the parameter is required.
+        name: required
+        type: bool
+      - description: The default value of the method parameter.
+        name: default
+        type: str
+      - description: The inner type if the type happens to be a list, dict, or model
+          type.
+        name: inner_type
+        type: str
+      - description: The model id of the inner type if the inner type of a list or
+          dict type is a model type.
+        name: inner_type_model_id
+        type: str
       type: value_object
     domain_model_property:
       base_type_model_id: model_property
@@ -361,7 +435,6 @@ domain:
       - description: Factory method that returns a new DomainModelProperty instance.
         inner_return_type: domain_model_property
         name: create
-        parent_id: domain_model_property
         return_type: model
         type: factory
       name: Domain Model Property
@@ -403,7 +476,6 @@ domain:
       - description: Factory method that returns a new ListTypeProperties instance.
         inner_return_type: list_type_properties
         name: create
-        parent_id: list_type_properties
         return_type: model
         type: factory
       name: List Type Properties
@@ -479,7 +551,6 @@ domain:
       - description: Factory method that returns a new StringTypeProperties instance.
         inner_return_type: string_type_properties
         name: create
-        parent_id: string_type_properties
         return_type: model
         type: factory
       name: String Type Properties
@@ -645,6 +716,15 @@ errors:
     error_code: 000020008
     message:
       en_US: Domain method with name "{}" already exists on domain model with ID "{}".
+  DOMAIN_METHOD_NOT_FOUND:
+    error_code: 000020009
+    message:
+      en_US: Domain method with name "{}" not found on domain model with ID "{}".
+  DOMAIN_METHOD_PARAMETER_ALREADY_EXISTS:
+    error_code: '000020010'
+    message:
+      en_US: Domain method parameter with name "{}" already exists on domain method
+        with name "{}" on domain model with ID "{}".
   DOMAIN_MODEL_ALREADY_EXISTS:
     error_code: '000020001'
     message:
@@ -728,6 +808,10 @@ features:
           functions:
           - data_mapping: add_domain_method
             function_path: domain.add_method
+        add_method_parameter:
+          functions:
+          - data_mapping: add_domain_method_parameter
+            function_path: domain.add_method_parameter
         add_model:
           functions:
           - data_mapping: add_domain_model
@@ -954,6 +1038,60 @@ interfaces:
                 type: str
               help: Adds a new domain method to an existing domain model or repository.
               name: Add Domain Method
+            add_method_parameter:
+              arguments:
+              - help: parent domain model id
+                name_or_flags:
+                - --parent-model-id
+                - -p
+                required: true
+                type: str
+              - help: method name receiving new parameter
+                name_or_flags:
+                - --method-name
+                - -f
+                required: true
+                type: str
+              - help: method parameter name
+                name_or_flags:
+                - name
+                type: str
+              - choices:
+                - str
+                - int
+                - float
+                - bool
+                - date
+                - datetime
+                - list
+                - dict
+                - model
+                help: method parameter data type
+                name_or_flags:
+                - --type
+                - -t
+                required: true
+              - help: method parameter description for inline documentation
+                name_or_flags:
+                - --description
+                - -d
+                required: true
+              - action: store_true
+                help: True if the parameter is required
+                name_or_flags:
+                - --required
+              - help: parameter default value
+                name_or_flags:
+                - --default
+              - help: inner type if the type is a list, dict, or model type
+                name_or_flags:
+                - --inner-type
+              - help: model id of the inner type if the type is a list or dict type
+                  and the inner type is a model type
+                name_or_flags:
+                - --inner-type-model-id
+              help: Adds a parameter to an existing domain method.
+              name: Add Domain Method Parameter
             add_model:
               arguments:
               - help: domain model class name
