@@ -725,7 +725,7 @@ domain:
           class_name: AppProject
           name: App Project
       name: App Project
-  repos: {}
+  repositories: {}
 errors:
   APP_KEY_REQUIRED:
     error_code: '000000003'
