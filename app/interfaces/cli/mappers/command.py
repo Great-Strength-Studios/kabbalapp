@@ -139,6 +139,13 @@ def add_domain_method_parameter(context, request, app_context, **kwargs):
         'description': request.get('description', None)
     })
 
+def add_repository(context, request, app_context, **kwargs):
+    # Map the values of the request dictionary to the AddRepository request.
+    return AddRepository({
+        'name': request.get('name', None),
+        'class_name': request.get('class_name', None),
+        'description': request.get('description', None)
+    })
 
 def print_domain_model_module(context, request, app_context, **kwargs):
     return PrintDomainModelModule()
