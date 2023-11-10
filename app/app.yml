@@ -788,10 +788,6 @@ errors:
     error_code: '000020005'
     message:
       en_US: Domain model property with name "{}" not found
-  REPOSITORY_ALREADY_EXISTS:
-    error_code: '000020011'
-    message:
-      en_US: Repository with name "{}" already exists.
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
@@ -813,6 +809,10 @@ errors:
     error_code: '000020007'
     message:
       en_US: Model property with type "{}" contains invalid type property "{}"
+  REPOSITORY_ALREADY_EXISTS:
+    error_code: '000020011'
+    message:
+      en_US: Repository with name "{}" already exists.
 features:
   groups:
     app:
@@ -859,6 +859,10 @@ features:
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_model_property
+        add_repository:
+          functions:
+          - data_mapping: add_repository
+            function_path: domain.add_repository
         remove_model_property:
           functions:
           - data_mapping: remove_domain_model_property
@@ -867,10 +871,6 @@ features:
           functions:
           - data_mapping: update_domain_model_property
             function_path: domain.update_model_property
-        add_repository:
-          functions:
-          - data_mapping: add_repository
-            function_path: domain.add_repository
     interface:
       features:
         add:
@@ -1221,6 +1221,9 @@ interfaces:
                 - --poly-type-model-ids
                 nargs: +
               name: Add Domain Model Property
+            add_repository:
+              help: add app repository
+              name: Add Repository
             remove-model-property:
               arguments:
               - help: id of model containing property to remove
