@@ -125,5 +125,22 @@ class AddDomainMethod(RequestEvent):
             'domain_method.create': blacklist('parent_id'),
         }
 
+class AddDomainMethodParameter(RequestEvent):
+    
+        parent_model_id = t.StringType(required=True)
+        method_name = t.StringType(required=True)
+        name = t.StringType(required=True)
+        type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
+        description = t.StringType(required=True)
+        inner_type = t.StringType()
+        inner_type_model_id = t.StringType()
+        required = t.BooleanType()
+        default = t.StringType()
+        
+        class Options():
+            roles = {
+                'domain_method_parameter.create': blacklist('parent_model_id', 'method_name'),
+            }
+
 class PrintDomainModelModule(RequestEvent):
     pass
