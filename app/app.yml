@@ -156,6 +156,17 @@ domain:
         required: true
         type: str
       type: entity
+    app_repository_implementation:
+      class_name: AppRepositoryImplementation
+      description: An implementation of an AppRepository for a particular data storage
+        type.
+      name: App Repository Implementation
+      properties:
+      - description: The name of the repository implementation.
+        name: name
+        required: true
+        type: str
+      type: entity
     cli_argument:
       base_type_model_id: null
       class_name: CliArgument
