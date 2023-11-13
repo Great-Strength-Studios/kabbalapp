@@ -170,6 +170,11 @@ domain:
         name: class_name
         required: true
         type: str
+      - description: The description of the app repository implementation for purposes
+          of inline documentation
+        name: description
+        required: true
+        type: str
       type: entity
     cli_argument:
       base_type_model_id: null
