@@ -123,6 +123,11 @@ domain:
       type: entity
     app_repository:
       class_name: AppRepository
+      dependencies:
+      - class_name: AppRepositoryImplementation
+        dependency_type: property
+        model_id: app_repository_implementation
+        module: null
       description: A repository interface used by the app.
       methods:
       - description: Factory method to create a new AppRepository instance.
@@ -155,6 +160,13 @@ domain:
         name: description
         required: true
         type: str
+      - default: '[]'
+        description: The list of app repository implementations corresponding to the
+          app repository
+        inner_type: model
+        inner_type_model_id: app_repository_implementation
+        name: implementations
+        type: list
       type: entity
     app_repository_implementation:
       class_name: AppRepositoryImplementation
