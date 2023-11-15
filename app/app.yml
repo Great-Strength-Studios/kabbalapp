@@ -146,6 +146,11 @@ domain:
           required: true
           type: str
         type: factory
+      - description: Returns True if the input implementation already exists in the
+          repository implementations list.
+        name: has_implementation
+        return_type: bool
+        type: behavior
       name: App Repository
       properties:
       - description: The name of the repository.
