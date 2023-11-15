@@ -1317,6 +1317,11 @@ interfaces:
               - help: repository implementation name
                 name_or_flags:
                 - name
+              - help: id of parent repository
+                name_or_flags:
+                - --repository-id
+                - -r
+                required: true
               help: add new repository implementation to the app domain
               name: Add Repository Implementation
             add_repository:
