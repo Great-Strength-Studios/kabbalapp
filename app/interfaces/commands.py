@@ -149,5 +149,13 @@ class AddRepository(RequestEvent):
     description = t.StringType(required=True)
     
 
+class AddRepositoryImplementation(RequestEvent):
+
+    name = t.StringType(required=True)
+    class_name = t.StringType(required=True)
+    repository_id = t.StringType(required=True)
+    description = t.StringType(required=True)
+
+
 class PrintDomainModelModule(RequestEvent):
     pass
