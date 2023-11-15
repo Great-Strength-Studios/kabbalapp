@@ -192,6 +192,7 @@ class DomainMethod(ValueObject):
         :returns: True if the parameter already exists in the method, otherwise False.
         :rtype: bool
         '''
+
         # Check to see if any existing parameter has a name matching the input parameter name.
         return any([p.name == parameter.name for p in self.parameters])
     
@@ -201,18 +202,46 @@ class DomainMethod(ValueObject):
         :param parameter: The parameter to add to the method.
         :type parameter: `domain.models.DomainMethodParameter`
         '''
+
         # Add the parameter to the parameters list.
         self.parameters.append(parameter)
+    
+
+class AppRepositoryImplementation(ValueObject):
+    '''An implementation of an AppRepository for a particular data storage type.
+
+    '''
+
+    name = t.StringType(required=True)
+    class_name = t.StringType(required=True)
+    description = t.StringType()
+
+    @staticmethod
+    def create(name: str, class_name: str, description: str) -> 'AppRepositoryImplementation':
+
+        # Create new model instance.
+        result = AppRepositoryImplementation()
+
+        # Load attributes from passed in values.
+        result.name = name
+        result.class_name = class_name
+        result.description = description
+
+        # Validate model instance.
+        result.validate()
+
+        # Return model instance.
+        return result
 
 
 class AppRepository(Entity):
     '''A repository interface used to store and retrieve domain models.
     '''
 
-    id = t.StringType(required=True)
     name = t.StringType(required=True)
     class_name = t.StringType(required=True)
     description = t.StringType(required=True)
+    implementations = t.ListType(t.ModelType(AppRepositoryImplementation), default=[])
 
     @staticmethod
     def create(name: str, class_name: str, description: str) -> 'AppRepository':
@@ -243,3 +272,25 @@ class AppRepository(Entity):
 
         # Return model instance.
         return result
+    
+    def has_implementation(self, implementation_name: str) -> bool:
+        '''Returns True if the input implementation already exists in the repository implementations list.
+        
+        :param implementation_name: The name of the implementation to check if it already exists in the repository.
+        :type implementation: `str`
+        :returns: True if the implementation already exists in the repository, otherwise False.
+        :rtype: bool
+        '''
+
+        # Check to see if any existing implementation has a name matching the input implementation name.
+        return any([i.name == implementation_name for i in self.implementations])
+    
+    def add_implementation(self, implementation: AppRepositoryImplementation):
+        '''Adds the input implementation to the repository implementations list.
+        
+        :param implementation: The implementation to add to the repository.
+        :type implementation: `domain.models.AppRepositoryImplementation`
+        '''
+
+        # Add the implementation to the implementations list.
+        self.implementations.append(implementation)
