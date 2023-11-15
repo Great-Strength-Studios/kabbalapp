@@ -147,5 +147,14 @@ def add_repository(context, request, app_context, **kwargs):
         'description': request.get('description', None)
     })
 
+def add_repository_implementation(context, request, app_context, **kwargs):
+    # Map the values of the request dictionary to the AddRepositoryImplementation request.
+    return AddRepositoryImplementation({
+        'name': request.get('name', None),
+        'class_name': request.get('class_name', None),
+        'repository_id': request.get('repository_id', None),
+        'description': request.get('description', None)
+    })
+
 def print_domain_model_module(context, request, app_context, **kwargs):
     return PrintDomainModelModule()
