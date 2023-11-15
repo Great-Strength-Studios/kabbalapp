@@ -160,6 +160,12 @@ domain:
       - description: Adds the input implementation to the repository implementations
           list.
         name: add_implementation
+        parameters:
+        - description: The implementation to add to the repository.
+          inner_type: app_repository_implementation
+          name: implementation
+          required: true
+          type: model
         type: behavior
       name: App Repository
       properties:
