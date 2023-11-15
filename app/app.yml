@@ -149,6 +149,12 @@ domain:
       - description: Returns True if the input implementation already exists in the
           repository implementations list.
         name: has_implementation
+        parameters:
+        - description: The name of the implementation to check if it already exists
+            in the repository.
+          name: implementation_name
+          required: true
+          type: str
         return_type: bool
         type: behavior
       name: App Repository
