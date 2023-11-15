@@ -157,6 +157,10 @@ domain:
           type: str
         return_type: bool
         type: behavior
+      - description: Adds the input implementation to the repository implementations
+          list.
+        name: add_implementation
+        type: behavior
       name: App Repository
       properties:
       - description: The name of the repository.
