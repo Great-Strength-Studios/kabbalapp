@@ -950,7 +950,9 @@ features:
           - data_mapping: add_repository
             function_path: domain.add_repository
         add_repository_implementation:
-          functions: []
+          functions:
+          - data_mapping: add_repository_implementation
+            function_path: domain.add_repository_implementation
         remove_model_property:
           functions:
           - data_mapping: remove_domain_model_property
