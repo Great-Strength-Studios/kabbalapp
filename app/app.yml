@@ -172,6 +172,12 @@ domain:
       class_name: AppRepositoryImplementation
       description: An implementation of an AppRepository for a particular data storage
         type.
+      methods:
+      - description: Creates a new App Repository Implementation instance.
+        inner_return_type: app_repository_implementation
+        name: create
+        return_type: model
+        type: factory
       name: App Repository Implementation
       properties:
       - description: The name of the repository implementation.
