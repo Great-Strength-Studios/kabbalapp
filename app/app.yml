@@ -803,6 +803,10 @@ domain:
       class_name: DomainRepository
       description: The Domain Repository is responsible for managing the domain models,
         repositories, and modules for an app.
+      implementations:
+      - class_name: YamlDomainRepository
+        description: The Domain Repository implementation for YAML data storage.
+        name: yaml
       name: Domain Repository
 errors:
   APP_KEY_REQUIRED:
@@ -946,14 +950,14 @@ features:
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_model_property
+        add_repo_impl:
+          functions:
+          - data_mapping: add_repository_implementation
+            function_path: domain.add_repository_implementation
         add_repository:
           functions:
           - data_mapping: add_repository
             function_path: domain.add_repository
-        add_repository_implementation:
-          functions:
-          - data_mapping: add_repository_implementation
-            function_path: domain.add_repository_implementation
         remove_model_property:
           functions:
           - data_mapping: remove_domain_model_property
