@@ -1327,6 +1327,10 @@ interfaces:
                 - --class-name
                 - -c
                 required: true
+              - help: description for inline documentation
+                name_or_flags:
+                - --description
+                - -d
               help: add new repository implementation to the app domain
               name: Add Repository Implementation
             add_repository:
