@@ -19,6 +19,13 @@ def handle(context: MessageContext):
     if not domain_repo_instance:
         raise AppError(context.errors.REPOSITORY_NOT_FOUND.format_message(context.data.repository_id))
     
+    # Check to see if the repository implementation already exists.
+    exists = domain_repo_instance.has_implementation(repo_impl.name)
+
+    # Raise app error if repository implementation already exists.
+    if exists:
+        raise AppError(context.errors.REPOSITORY_IMPLEMENTATION_ALREADY_EXISTS.format_message(repo_impl.name, context.data.repository_id))
+    
     # Add the repository implementation to the domain repository.
     domain_repo_instance.add_implementation(repo_impl)
 
