@@ -156,6 +156,11 @@ class AddRepositoryImplementation(RequestEvent):
     repository_id = t.StringType(required=True)
     description = t.StringType(required=True)
 
+    class Options():
+        roles = {
+            'app_repository_implementation.create': blacklist('repository_id'),
+        }
+
 
 class PrintDomainModelModule(RequestEvent):
     pass
