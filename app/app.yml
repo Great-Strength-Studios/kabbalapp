@@ -891,14 +891,15 @@ errors:
     error_code: '000020011'
     message:
       en_US: Repository with name "{}" already exists.
+  REPOSITORY_IMPLEMENTATION_ALREADY_EXISTS:
+    error_code: '000020013'
+    message:
+      en_US: Repository implementation with name "{}" already exists for repository
+        with ID "{}".
   REPOSITORY_NOT_FOUND:
     error_code: '000020012'
     message:
       en_US: Repository with name "{}" not found.
-  REPOSITORY_IMPLEMENTATION_ALREADY_EXISTS:
-    error_code: '000020013'
-    message:
-      en_US: Repository implementation with name "{}" already exists for repository with ID "{}".
 features:
   groups:
     app:
@@ -1311,6 +1312,9 @@ interfaces:
                 - --poly-type-model-ids
                 nargs: +
               name: Add Domain Model Property
+            add_repo_impl:
+              help: add new repository implementation to the app domain
+              name: Add Repository Implementation
             add_repository:
               arguments:
               - help: repository name
