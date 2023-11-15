@@ -123,6 +123,11 @@ domain:
       type: entity
     app_repository:
       class_name: AppRepository
+      dependencies:
+      - class_name: AppRepositoryImplementation
+        dependency_type: property
+        model_id: app_repository_implementation
+        module: null
       description: A repository interface used by the app.
       methods:
       - description: Factory method to create a new AppRepository instance.
@@ -141,17 +146,85 @@ domain:
           required: true
           type: str
         type: factory
+      - description: Returns True if the input implementation already exists in the
+          repository implementations list.
+        name: has_implementation
+        parameters:
+        - description: The name of the implementation to check if it already exists
+            in the repository.
+          name: implementation_name
+          required: true
+          type: str
+        return_type: bool
+        type: behavior
+      - description: Adds the input implementation to the repository implementations
+          list.
+        name: add_implementation
+        parameters:
+        - description: The implementation to add to the repository.
+          inner_type: app_repository_implementation
+          name: implementation
+          required: true
+          type: model
+        type: behavior
       name: App Repository
       properties:
       - description: The name of the repository.
         name: name
         required: true
         type: str
-      - description: The unique class name of the repository.
+      - description: The class name of the repository.
         name: class_name
         required: true
         type: str
       - description: The description of the repository for inline documentation.
+        name: description
+        required: true
+        type: str
+      - default: '[]'
+        description: The list of app repository implementations corresponding to the
+          app repository
+        inner_type: model
+        inner_type_model_id: app_repository_implementation
+        name: implementations
+        type: list
+      type: entity
+    app_repository_implementation:
+      class_name: AppRepositoryImplementation
+      description: An implementation of an AppRepository for a particular data storage
+        type.
+      methods:
+      - description: Creates a new App Repository Implementation instance.
+        inner_return_type: app_repository_implementation
+        name: create
+        parameters:
+        - description: The name of the repository implementation.
+          name: name
+          required: true
+          type: str
+        - description: The class name of the repository implementation.
+          name: class_name
+          required: true
+          type: str
+        - description: The description of the repository implementation for inline
+            documentation.
+          name: description
+          required: false
+          type: str
+        return_type: model
+        type: factory
+      name: App Repository Implementation
+      properties:
+      - description: The name of the repository implementation.
+        name: name
+        required: true
+        type: str
+      - description: The class name of the repository implementation.
+        name: class_name
+        required: true
+        type: str
+      - description: The description of the app repository implementation for purposes
+          of inline documentation
         name: description
         required: true
         type: str
@@ -730,6 +803,10 @@ domain:
       class_name: DomainRepository
       description: The Domain Repository is responsible for managing the domain models,
         repositories, and modules for an app.
+      implementations:
+      - class_name: YamlDomainRepository
+        description: The Domain Repository implementation for YAML data storage.
+        name: yaml
       name: Domain Repository
 errors:
   APP_KEY_REQUIRED:
@@ -818,6 +895,15 @@ errors:
     error_code: '000020011'
     message:
       en_US: Repository with name "{}" already exists.
+  REPOSITORY_IMPLEMENTATION_ALREADY_EXISTS:
+    error_code: '000020013'
+    message:
+      en_US: Repository implementation with name "{}" already exists for repository
+        with ID "{}".
+  REPOSITORY_NOT_FOUND:
+    error_code: '000020012'
+    message:
+      en_US: Repository with name "{}" not found.
 features:
   groups:
     app:
@@ -864,6 +950,10 @@ features:
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_model_property
+        add_repo_impl:
+          functions:
+          - data_mapping: add_repository_implementation
+            function_path: domain.add_repository_implementation
         add_repository:
           functions:
           - data_mapping: add_repository
@@ -1226,6 +1316,27 @@ interfaces:
                 - --poly-type-model-ids
                 nargs: +
               name: Add Domain Model Property
+            add_repo_impl:
+              arguments:
+              - help: repository implementation name
+                name_or_flags:
+                - name
+              - help: id of parent repository
+                name_or_flags:
+                - --repository-id
+                - -r
+                required: true
+              - help: repository implementation class name
+                name_or_flags:
+                - --class-name
+                - -c
+                required: true
+              - help: description for inline documentation
+                name_or_flags:
+                - --description
+                - -d
+              help: add new repository implementation to the app domain
+              name: Add Repository Implementation
             add_repository:
               arguments:
               - help: repository name

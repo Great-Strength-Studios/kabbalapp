@@ -129,10 +129,28 @@ class AppDomainModelDataMapper(AppDomainModel):
         return result
     
 
+class AppRepositoryImplementationDataMapper(AppRepositoryImplementation):
+    '''Data mapper for AppRepositoryImplementation.
+    
+    '''
+    
+    class Options():
+        roles = {
+            'write': blacklist(),
+            'map': blacklist(),
+        }
+        serialize_when_none = False
+
+    def map(self) -> AppRepositoryImplementation:
+        return AppRepositoryImplementation(self.to_primitive('map'))
+    
+
 class AppRepositoryDataMapper(AppRepository):
     '''Data mapper for AppRepository.
     
     '''
+
+    implementations = t.ListType(t.ModelType(AppRepositoryImplementationDataMapper), default=[])
 
     class Options():
         roles = {
@@ -145,7 +163,9 @@ class AppRepositoryDataMapper(AppRepository):
         return AppRepository(self.to_primitive('map'))
     
 
-class YamlRepository(DomainRepository):
+class YamlDomainRepository(DomainRepository):
+    '''The Domain Repository implementation for YAML data storage.
+    '''
 
     def __init__(self, app_directory: str, schema_location: str):
         self.app_directory = app_directory
