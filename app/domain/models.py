@@ -223,9 +223,11 @@ class AppRepositoryImplementation(ValueObject):
         result = AppRepositoryImplementation()
 
         # Load attributes from passed in values.
-        result.name = name
         result.class_name = class_name
         result.description = description
+
+        # Update name to be lower cased and underscored.
+        result.name = name.lower().replace(' ', '_')
 
         # Validate model instance.
         result.validate()

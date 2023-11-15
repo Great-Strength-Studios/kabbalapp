@@ -51,8 +51,8 @@ class Container():
         app_project_repo = self.app_project_repo()
         app_project = app_project_repo.load_project(app_key)
         if app_project.schema_storage_type == 'yaml':
-            from ..domain.modules.domain.repo.yaml import YamlRepository
-            return YamlRepository(app_project.app_directory, app_project.schema_location)
+            from ..domain.modules.domain.repo.yaml import YamlDomainRepository
+            return YamlDomainRepository(app_project.app_directory, app_project.schema_location)
 
 
 # Default dynamic container

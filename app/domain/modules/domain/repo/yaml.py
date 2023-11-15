@@ -163,7 +163,7 @@ class AppRepositoryDataMapper(AppRepository):
         return AppRepository(self.to_primitive('map'))
     
 
-class YamlRepository(DomainRepository):
+class YamlDomainRepository(DomainRepository):
     '''The Domain Repository implementation for YAML data storage.
     '''
 
