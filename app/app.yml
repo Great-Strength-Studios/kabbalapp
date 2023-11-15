@@ -1322,6 +1322,11 @@ interfaces:
                 - --repository-id
                 - -r
                 required: true
+              - help: repository implementation class name
+                name_or_flags:
+                - --class-name
+                - -c
+                required: true
               help: add new repository implementation to the app domain
               name: Add Repository Implementation
             add_repository:
