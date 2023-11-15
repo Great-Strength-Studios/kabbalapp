@@ -176,6 +176,11 @@ domain:
       - description: Creates a new App Repository Implementation instance.
         inner_return_type: app_repository_implementation
         name: create
+        parameters:
+        - description: The name of the repository implementation.
+          name: name
+          required: true
+          type: str
         return_type: model
         type: factory
       name: App Repository Implementation
