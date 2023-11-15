@@ -181,6 +181,10 @@ domain:
           name: name
           required: true
           type: str
+        - description: The class name of the repository implementation.
+          name: class_name
+          required: true
+          type: str
         return_type: model
         type: factory
       name: App Repository Implementation
