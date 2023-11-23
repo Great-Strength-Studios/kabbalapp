@@ -21,7 +21,7 @@ class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTyp
     def map(self) -> TypeProperties:
         return TypeProperties(self.to_primitive('map'))
 
-class DomainModelPropertyDataMapper(DomainModelAttribute):
+class DomainModelAttributeDataMapper(DomainModelAttribute):
 
     type_properties = t.ModelType(TypePropertiesDataMapper, default=None)
 
@@ -104,7 +104,7 @@ class DomainMethodDataMapper(DomainMethod):
 
 class AppDomainModelDataMapper(AppDomainModel):
 
-    attributes = t.ListType(t.ModelType(DomainModelPropertyDataMapper), default=[])
+    attributes = t.ListType(t.ModelType(DomainModelAttributeDataMapper), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
     methods = t.ListType(t.ModelType(DomainMethodDataMapper), default=[])
     
