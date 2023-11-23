@@ -39,6 +39,7 @@ class DomainModelAttribute(ModelProperty):
     
 
 class DomainModelDependency(ValueObject):
+    
     model_id = t.StringType(required=True)
     class_name = t.StringType(required=True)
     dependency_type = t.StringType(required=True, choices=DOMAIN_MODEL_DEPENDENCY_TYPES, default=ATTRIBUTE_DEPENDENCY)
@@ -57,6 +58,7 @@ class DomainModelDependency(ValueObject):
 
 
 class AppDomainModel(Entity):
+
     id = t.StringType(required=True)
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
