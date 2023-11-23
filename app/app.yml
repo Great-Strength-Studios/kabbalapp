@@ -6,11 +6,11 @@ domain:
       class_name: AppDomainModel
       dependencies:
       - class_name: DomainModelAttribute
-        dependency_type: property
+        dependency_type: attribute
         model_id: domain_model_property
         module: null
       - class_name: DomainMethod
-        dependency_type: property
+        dependency_type: attribute
         model_id: domain_method
         module: null
       description: Domain Model for the application.
@@ -125,7 +125,7 @@ domain:
       class_name: AppRepository
       dependencies:
       - class_name: AppRepositoryImplementation
-        dependency_type: property
+        dependency_type: attribute
         model_id: app_repository_implementation
         module: null
       description: A repository interface used by the app.
@@ -271,7 +271,7 @@ domain:
       class_name: CliCommand
       dependencies:
       - class_name: CliArgument
-        dependency_type: property
+        dependency_type: attribute
         model_id: cli_argument
         module: null
       description: A command-line interface command.
@@ -308,11 +308,11 @@ domain:
         model_id: app_interface_type
         module: null
       - class_name: CliCommand
-        dependency_type: property
+        dependency_type: attribute
         model_id: cli_command
         module: null
       - class_name: CliArgument
-        dependency_type: property
+        dependency_type: attribute
         model_id: cli_argument
         module: null
       description: CLI App interface type.
@@ -418,7 +418,7 @@ domain:
       class_name: DomainMethod
       dependencies:
       - class_name: DomainMethodParameter
-        dependency_type: property
+        dependency_type: attribute
         model_id: domain_method_parameter
         module: null
       description: A domain method associated with a domain model or repository.
@@ -598,23 +598,23 @@ domain:
       class_name: ModelProperty
       dependencies:
       - class_name: StringTypeProperties
-        dependency_type: property
+        dependency_type: attribute
         model_id: string_type_properties
         module: null
       - class_name: DateTypeProperties
-        dependency_type: property
+        dependency_type: attribute
         model_id: date_type_properties
         module: null
       - class_name: DateTimeTypeProperties
-        dependency_type: property
+        dependency_type: attribute
         model_id: date_time_type_properties
         module: null
       - class_name: ListTypeProperties
-        dependency_type: property
+        dependency_type: attribute
         model_id: list_type_properties
         module: null
       - class_name: DictTypeProperties
-        dependency_type: property
+        dependency_type: attribute
         model_id: dict_type_properties
         module: null
       methods: []
