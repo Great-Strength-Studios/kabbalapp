@@ -1,2 +1,2 @@
-from .models import AppDomainModel, DomainModelProperty, DomainModelDependency, DomainMethod
+from .models import AppDomainModel, DomainModelAttribute, DomainModelDependency, DomainMethod
 from .repo import DomainRepository
