@@ -65,7 +65,7 @@ domain:
         description: Properties associated with the domain model
         inner_type: model
         inner_type_model_id: domain_model_property
-        name: properties
+        name: attributes
         type: list
       - default: '[]'
         description: The methods associated with the domain model.

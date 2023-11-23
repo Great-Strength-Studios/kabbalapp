@@ -63,7 +63,7 @@ class AppDomainModel(Entity):
     class_name = t.StringType(required=True)
     description = t.StringType(required=True)
     base_type_model_id = t.StringType()
-    properties = t.ListType(t.ModelType(DomainModelAttribute), default=[])
+    attributes = t.ListType(t.ModelType(DomainModelAttribute), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
     methods = t.ListType(t.ModelType(DomainMethod), default=[])
 
