@@ -1,15 +1,15 @@
 from ...models import *
 
 
-class DomainModelProperty(ModelProperty):
+class DomainModelAttribute(ModelProperty):
 
     type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
     inner_type_model_id = t.StringType()
     poly_type_model_ids = t.ListType(t.StringType())
 
     @staticmethod
-    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, poly_type_model_ids: List[str] = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
-        result = DomainModelProperty()
+    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, poly_type_model_ids: List[str] = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelAttribute':
+        result = DomainModelAttribute()
         result.name = name
         result.type = type
         result.inner_type = inner_type
@@ -42,6 +42,7 @@ class DomainModelDependency(ValueObject):
     model_id = t.StringType(required=True)
     class_name = t.StringType(required=True)
     dependency_type = t.StringType(required=True, choices=DOMAIN_MODEL_DEPENDENCY_TYPES, default=PROPERTY_DEPENDENCY)
+    method_name = t.StringType()
     module = t.StringType()
 
     @staticmethod
@@ -63,12 +64,12 @@ class AppDomainModel(Entity):
     class_name = t.StringType(required=True)
     description = t.StringType(required=True)
     base_type_model_id = t.StringType()
-    properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
+    properties = t.ListType(t.ModelType(DomainModelAttribute), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
     methods = t.ListType(t.ModelType(DomainMethod), default=[])
 
     @staticmethod
-    def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
+    def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelAttribute] = []) -> 'AppDomainModel':
         result = AppDomainModel()
         result.name = name
         result.type = type
@@ -89,18 +90,18 @@ class AppDomainModel(Entity):
 
         return result
 
-    def has_property(self, property: DomainModelProperty) -> bool:
+    def has_property(self, property: DomainModelAttribute) -> bool:
         return any((p.name == property.name for p in self.properties))
 
-    def add_property(self, property: DomainModelProperty) -> None:
+    def add_property(self, property: DomainModelAttribute) -> None:
         self.properties.append(property)
 
-    def get_property(self, property_name: str) -> DomainModelProperty:
+    def get_property(self, property_name: str) -> DomainModelAttribute:
         return next((p for p in self.properties if p.name == property_name), None)
 
-    def remove_property(self, property: DomainModelProperty) -> None:
+    def remove_property(self, property: DomainModelAttribute) -> None:
         # Remove the property from the list.
-        properties: List[DomainModelProperty] = [p for p in self.properties if p.name != property.name]
+        properties: List[DomainModelAttribute] = [p for p in self.properties if p.name != property.name]
 
         # Retrieve any potential dependencies of the property to be removed
         dependencies: List[DomainModelDependency] = []
