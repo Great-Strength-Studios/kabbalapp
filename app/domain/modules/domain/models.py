@@ -42,7 +42,6 @@ class DomainModelDependency(ValueObject):
     model_id = t.StringType(required=True)
     class_name = t.StringType(required=True)
     dependency_type = t.StringType(required=True, choices=DOMAIN_MODEL_DEPENDENCY_TYPES, default=ATTRIBUTE_DEPENDENCY)
-    method_name = t.StringType()
     module = t.StringType()
 
     @staticmethod
