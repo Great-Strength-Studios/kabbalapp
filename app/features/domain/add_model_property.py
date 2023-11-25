@@ -42,7 +42,7 @@ def handle(context: MessageContext):
     if type == MODEL_TYPE:
         value_object = domain_repo.get_domain_model(inner_type)
         if not value_object:
-            raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type))
+            raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_INNER_TYPE_NOT_FOUND.format_message(inner_type))
         # Add value object as dependency
         dependency = d.DomainModelDependency.create(
             model_id=inner_type,
@@ -55,7 +55,7 @@ def handle(context: MessageContext):
     elif inner_type == MODEL_TYPE:
         value_object = domain_repo.get_domain_model(inner_type_model_id)
         if not value_object:
-            raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type_model_id))
+            raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_INNER_TYPE_NOT_FOUND.format_message(inner_type_model_id))
         # Add value object as dependency
         dependency = d.DomainModelDependency.create(
             model_id=inner_type_model_id,
@@ -69,7 +69,7 @@ def handle(context: MessageContext):
         for poly_type_model_id in poly_type_model_ids:
             poly_type = domain_repo.get_domain_model(poly_type_model_id)
             if not poly_type:
-                raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(poly_type_model_id))
+                raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_INNER_TYPE_NOT_FOUND.format_message(poly_type_model_id))
             # Add poly type as dependency
             dependency = d.DomainModelDependency.create(
                 model_id=poly_type_model_id,
