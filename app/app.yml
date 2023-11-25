@@ -911,10 +911,10 @@ errors:
     error_code: '000020004'
     message:
       en_US: Domain model property with name "{}" has invalid inner type "{}"
-  DOMAIN_MODEL_PROPERTY_NOT_FOUND:
+  DOMAIN_MODEL_ATTRIBUTE_NOT_FOUND:
     error_code: '000020005'
     message:
-      en_US: Domain model property with name "{}" not found
+      en_US: Domain model attribute with name "{}" not found.
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:

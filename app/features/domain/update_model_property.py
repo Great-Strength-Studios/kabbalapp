@@ -27,7 +27,7 @@ def handle(context: MessageContext):
 
     # Raise app error if domain model attribute is not found.
     if not attribute:
-        raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_NOT_FOUND.format_message(property_name, model_id))
+        raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_NOT_FOUND.format_message(property_name, model_id))
     
     # Update attribute setting.
     attribute.update(property_setting, value)
