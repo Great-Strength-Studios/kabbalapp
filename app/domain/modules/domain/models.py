@@ -91,8 +91,8 @@ class AppDomainModel(Entity):
 
         return result
 
-    def has_attribute(self, attribute_name: DomainModelAttribute) -> bool:
-        return any((p.name == attribute_name.name for p in self.properties))
+    def has_attribute(self, attribute_name: str) -> bool:
+        return any((p.name == attribute_name for p in self.properties))
 
     def add_property(self, property: DomainModelAttribute) -> None:
         self.properties.append(property)

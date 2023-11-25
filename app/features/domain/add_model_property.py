@@ -93,7 +93,7 @@ def handle(context: MessageContext):
     )
 
     # Check to see if attribute already exists on the model.
-    exists = domain_model.has_attribute(attribute)
+    exists = domain_model.has_attribute(attribute.name)
 
     # Raise app error if attribute already exists.
     if exists:
