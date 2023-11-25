@@ -97,7 +97,7 @@ class AppDomainModel(Entity):
     def add_attribute(self, attribute: DomainModelAttribute) -> None:
         self.properties.append(attribute)
 
-    def get_property(self, property_name: str) -> DomainModelAttribute:
+    def get_attribute(self, property_name: str) -> DomainModelAttribute:
         return next((p for p in self.properties if p.name == property_name), None)
 
     def remove_property(self, property: DomainModelAttribute) -> None:
@@ -137,7 +137,7 @@ class AppDomainModel(Entity):
         self.dependencies = [d for d in self.dependencies if d.model_id != dependency.model_id or d.dependency_type != dependency.dependency_type]
 
     def has_method(self, method: DomainMethod) -> bool:
-        '''Checks to see if the model contains a method with the same name as the input method.
+        '''Checks to see if the model contains a method with the same name as the input.
 
         :param method: The input domain method to verify.
         :type method: class: `domain.models.DomainMethod`

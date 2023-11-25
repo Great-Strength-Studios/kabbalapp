@@ -90,6 +90,9 @@ domain:
           required: false
           type: str
         type: behavior
+      - description: Retrieves an attribute from the domain model by attribute name.
+        name: get_attribute
+        type: behavior
       name: App Domain Model
       type: entity
     app_interface_type:
