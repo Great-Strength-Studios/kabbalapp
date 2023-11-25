@@ -97,7 +97,7 @@ def handle(context: MessageContext):
 
     # Raise app error if attribute already exists.
     if exists:
-        raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS.format_message(attribute.name))
+        raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_ALREADY_EXISTS.format_message(attribute.name))
 
     # Add attribute to model.
     domain_model.add_attribute(attribute)

@@ -903,10 +903,10 @@ errors:
     error_code: '000020002'
     message:
       en_US: Domain model with id "{}" not found
-  DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
+  DOMAIN_MODEL_ATTRIBUTE_ALREADY_EXISTS:
     error_code: '000020003'
     message:
-      en_US: Domain model property with name "{}" already exists
+      en_US: Domain model attribute with name "{}" already exists.
   DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND:
     error_code: '000020004'
     message:
