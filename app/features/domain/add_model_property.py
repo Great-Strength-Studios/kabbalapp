@@ -100,7 +100,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS.format_message(attribute.name))
 
     # Add attribute to model.
-    domain_model.add_property(attribute)
+    domain_model.add_attribute(attribute)
 
     # Save domain model.
     domain_repo.save_domain_model(domain_model)

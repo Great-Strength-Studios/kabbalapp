@@ -82,6 +82,9 @@ domain:
           type: str
         return_type: bool
         type: behavior
+      - description: Adds a new attribute to the domain model.
+        name: add_attribute
+        type: behavior
       name: App Domain Model
       type: entity
     app_interface_type:
