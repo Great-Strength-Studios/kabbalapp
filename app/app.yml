@@ -84,6 +84,11 @@ domain:
         type: behavior
       - description: Adds a new attribute to the domain model.
         name: add_attribute
+        parameters:
+        - description: The name of the attribute to add to the domain model.
+          name: attribute
+          required: false
+          type: str
         type: behavior
       name: App Domain Model
       type: entity
