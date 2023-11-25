@@ -100,7 +100,7 @@ class AppDomainModel(Entity):
     def get_attribute(self, property_name: str) -> DomainModelAttribute:
         return next((p for p in self.properties if p.name == property_name), None)
 
-    def remove_property(self, property: DomainModelAttribute) -> None:
+    def remove_attribute(self, property: DomainModelAttribute) -> None:
         # Remove the property from the list.
         properties: List[DomainModelAttribute] = [p for p in self.properties if p.name != property.name]
 

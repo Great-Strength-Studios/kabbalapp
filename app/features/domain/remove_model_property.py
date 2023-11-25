@@ -28,7 +28,7 @@ def handle(context: MessageContext):
         raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_NOT_FOUND.format_message(property_name, model_id))
     
     # Remove model attribute.
-    domain_model.remove_property(attribute)
+    domain_model.remove_attribute(attribute)
 
     # Save domain model.
     domain_repo.save_domain_model(domain_model)
