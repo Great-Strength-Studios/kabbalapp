@@ -92,6 +92,11 @@ domain:
         type: behavior
       - description: Retrieves an attribute from the domain model by attribute name.
         name: get_attribute
+        parameters:
+        - description: The name of the attribute to retrieve from the domain model.
+          name: attribute_name
+          required: false
+          type: str
         type: behavior
       - description: Removes a property from the domain model.
         name: remove_attribute

@@ -97,8 +97,8 @@ class AppDomainModel(Entity):
     def add_attribute(self, attribute: DomainModelAttribute) -> None:
         self.properties.append(attribute)
 
-    def get_attribute(self, property_name: str) -> DomainModelAttribute:
-        return next((p for p in self.properties if p.name == property_name), None)
+    def get_attribute(self, attribute_name: str) -> DomainModelAttribute:
+        return next((p for p in self.properties if p.name == attribute_name), None)
 
     def remove_attribute(self, property: DomainModelAttribute) -> None:
         # Remove the property from the list.
