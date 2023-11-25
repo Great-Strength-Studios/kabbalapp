@@ -47,6 +47,10 @@ domain:
         dependency_type: attribute
         model_id: domain_method
         module: null
+      - class_name: DomainModelAttribute
+        dependency_type: method_parameter
+        model_id: domain_model_attribute
+        module: null
       description: Domain Model for the application.
       methods:
       - description: Factory method that returns a new AppDomainModel instance.
@@ -78,7 +82,7 @@ domain:
         - description: The name of the attribute to check against the list of attributes
             in the domain model.
           name: attribute_name
-          required: false
+          required: true
           type: str
         return_type: bool
         type: behavior
@@ -86,20 +90,27 @@ domain:
         name: add_attribute
         parameters:
         - description: The attribute to add to the domain model.
+          inner_type_model_id: domain_model_attribute
           name: attribute
-          required: false
-          type: str
+          required: true
+          type: model
         type: behavior
       - description: Retrieves an attribute from the domain model by attribute name.
         name: get_attribute
         parameters:
         - description: The name of the attribute to retrieve from the domain model.
           name: attribute_name
-          required: false
+          required: true
           type: str
         type: behavior
       - description: Removes a property from the domain model.
         name: remove_attribute
+        parameters:
+        - description: The attribute to remove from the domain model method.
+          inner_type_model_id: domain_model_attribute
+          name: attribute
+          required: true
+          type: model
         type: behavior
       name: App Domain Model
       type: entity
@@ -558,6 +569,11 @@ domain:
       description: A parameter for a domain method.
       methods: []
       name: Domain Method Parameter
+      type: value_object
+    domain_model_attribute:
+      class_name: DomainModelAttribute
+      description: An attribute of a domain model.
+      name: Domain Model Attribute
       type: value_object
     domain_model_property:
       attributes:

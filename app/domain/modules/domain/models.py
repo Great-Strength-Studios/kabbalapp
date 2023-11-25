@@ -100,23 +100,23 @@ class AppDomainModel(Entity):
     def get_attribute(self, attribute_name: str) -> DomainModelAttribute:
         return next((p for p in self.properties if p.name == attribute_name), None)
 
-    def remove_attribute(self, property: DomainModelAttribute) -> None:
-        # Remove the property from the list.
-        properties: List[DomainModelAttribute] = [p for p in self.properties if p.name != property.name]
+    def remove_attribute(self, attribute: DomainModelAttribute) -> None:
+        # Remove the attribute from the list.
+        properties: List[DomainModelAttribute] = [p for p in self.properties if p.name != attribute.name]
 
-        # Retrieve any potential dependencies of the property to be removed
+        # Retrieve any potential dependencies of the attribute to be removed
         dependencies: List[DomainModelDependency] = []
-        # If the property is a list or dict type, retrieve the dependencies as defined by the inner type model ID.
-        if property.type in [LIST_TYPE, DICT_TYPE] and property.inner_type_model_id is not None:
-            dependencies = [self.get_dependency(property.inner_type_model_id, ATTRIBUTE_DEPENDENCY)]
+        # If the attribute is a list or dict type, retrieve the dependencies as defined by the inner type model ID.
+        if attribute.type in [LIST_TYPE, DICT_TYPE] and attribute.inner_type_model_id is not None:
+            dependencies = [self.get_dependency(attribute.inner_type_model_id, ATTRIBUTE_DEPENDENCY)]
 
-        # If the property is a model type, retrieve the dependencies as defined by the inner type.
-        if property.type == MODEL_TYPE:
-            dependencies = [self.get_dependency(property.inner_type, ATTRIBUTE_DEPENDENCY)]
+        # If the attribute is a model type, retrieve the dependencies as defined by the inner type.
+        if attribute.type == MODEL_TYPE:
+            dependencies = [self.get_dependency(attribute.inner_type, ATTRIBUTE_DEPENDENCY)]
 
-        # If the property is a poly type, retrieve the dependencies as defined by the poly type model IDs.
-        if property.type == POLY_TYPE:
-            dependencies = [self.get_dependency(model_id, ATTRIBUTE_DEPENDENCY) for model_id in property.poly_type_model_ids]
+        # If the attribute is a poly type, retrieve the dependencies as defined by the poly type model IDs.
+        if attribute.type == POLY_TYPE:
+            dependencies = [self.get_dependency(model_id, ATTRIBUTE_DEPENDENCY) for model_id in attribute.poly_type_model_ids]
 
         # Remove the dependencies only if no other properties are dependent on them.
         for dependency in dependencies:
