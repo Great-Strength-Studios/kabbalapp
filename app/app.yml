@@ -74,6 +74,12 @@ domain:
       - description: Returns True if the domain model already contains a method with
           the same name as the input name.
         name: has_attribute
+        parameters:
+        - description: The name of the attribute to check against the list of attributes
+            in the domain model.
+          name: attribute_name
+          required: false
+          type: str
         return_type: bool
         type: behavior
       name: App Domain Model
