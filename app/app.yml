@@ -954,11 +954,13 @@ features:
     app:
       features:
         new:
+          name: Add New App Project
           functions:
           - data_mapping: new_app_project
             function_path: app.new_app_project
           header_mapping: app_project_headers
         set_default:
+          name: Set Default App Project
           functions:
           - data_mapping: set_default_app_project
             function_path: app.set_default_app_project
@@ -966,54 +968,66 @@ features:
     cli:
       features:
         add_argument:
+          name: Add CLI Argument
           functions:
           - data_mapping: add_cli_argument
             function_path: cli.add_argument
         add_command:
+          name: Add CLI Command
           functions:
           - data_mapping: add_cli_command
             function_path: cli.add_command
         add_parent_argument:
+          name: Add CLI Parent Argument
           functions:
           - data_mapping: add_cli_parent_argument
             function_path: cli.add_parent_argument
     domain:
       features:
         add_method:
+          name: Add Domain Model Method
           functions:
           - data_mapping: add_domain_method
             function_path: domain.add_method
         add_method_parameter:
+          name: Add Domain Model Method Parameter
           functions:
           - data_mapping: add_domain_method_parameter
             function_path: domain.add_method_parameter
         add_model:
+          name: Add Domain Model
           functions:
           - data_mapping: add_domain_model
             function_path: domain.add_domain_model
         add_model_property:
+          name: Add Domain Model Property
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_domain_model_attribute
         add_repo_impl:
+          name: Add Repository Implementation
           functions:
           - data_mapping: add_repository_implementation
             function_path: domain.add_repository_implementation
         add_repository:
+          name: Add Repository
           functions:
           - data_mapping: add_repository
             function_path: domain.add_repository
         remove_model_property:
+          name: Remove Domain Model Property
           functions:
           - data_mapping: remove_domain_model_property
             function_path: domain.remove_model_property
         update_model_property:
+          name: Update Domain Model Property
           functions:
           - data_mapping: update_domain_model_property
             function_path: domain.update_model_property
     interface:
       features:
         add:
+          name: Add New App Interface
           functions:
           - data_mapping: add_interface
             function_path: interface.add_interface
