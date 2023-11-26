@@ -20,6 +20,7 @@ class FeatureConfiguration(Model):
                 super().__init__(raw_data=raw_data)
 
         class FunctionConfiguration(Model):
+            name = t.StringType(required=True)
             function_path = t.StringType(required=True)
             data_mapping = t.StringType()
             use_services = t.StringType()
