@@ -20,18 +20,18 @@ def handle(context: MessageContext):
     if not domain_model:
         raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(model_id))
     
-    # Get model property.
-    property = domain_model.get_property(property_name)
+    # Get model attribute.
+    attribute = domain_model.get_attribute(property_name)
     
-    # Raise app error if domain model property is not found.
-    if not property:
-        raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_NOT_FOUND.format_message(property_name, model_id))
+    # Raise app error if domain model attribute is not found.
+    if not attribute:
+        raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_NOT_FOUND.format_message(property_name, model_id))
     
-    # Remove model property.
-    domain_model.remove_property(property)
+    # Remove model attribute.
+    domain_model.remove_attribute(attribute)
 
     # Save domain model.
     domain_repo.save_domain_model(domain_model)
     
     # Return the response.
-    return property
+    return attribute

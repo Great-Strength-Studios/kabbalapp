@@ -1,15 +1,15 @@
 from ...models import *
 
 
-class DomainModelProperty(ModelProperty):
+class DomainModelAttribute(ModelProperty):
 
     type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
     inner_type_model_id = t.StringType()
     poly_type_model_ids = t.ListType(t.StringType())
 
     @staticmethod
-    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, poly_type_model_ids: List[str] = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelProperty':
-        result = DomainModelProperty()
+    def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, poly_type_model_ids: List[str] = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelAttribute':
+        result = DomainModelAttribute()
         result.name = name
         result.type = type
         result.inner_type = inner_type
@@ -39,13 +39,14 @@ class DomainModelProperty(ModelProperty):
     
 
 class DomainModelDependency(ValueObject):
+    
     model_id = t.StringType(required=True)
     class_name = t.StringType(required=True)
-    dependency_type = t.StringType(required=True, choices=DOMAIN_MODEL_DEPENDENCY_TYPES, default=PROPERTY_DEPENDENCY)
+    dependency_type = t.StringType(required=True, choices=DOMAIN_MODEL_DEPENDENCY_TYPES, default=ATTRIBUTE_DEPENDENCY)
     module = t.StringType()
 
     @staticmethod
-    def create(model_id: str, class_name: str, dependency_type: str = PROPERTY_DEPENDENCY, module: str = None) -> 'DomainModelDependency':
+    def create(model_id: str, class_name: str, dependency_type: str = ATTRIBUTE_DEPENDENCY, module: str = None) -> 'DomainModelDependency':
         result = DomainModelDependency()
         result.model_id = model_id
         result.class_name = class_name
@@ -57,18 +58,19 @@ class DomainModelDependency(ValueObject):
 
 
 class AppDomainModel(Entity):
+
     id = t.StringType(required=True)
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
     class_name = t.StringType(required=True)
     description = t.StringType(required=True)
     base_type_model_id = t.StringType()
-    properties = t.ListType(t.ModelType(DomainModelProperty), default=[])
+    attributes = t.ListType(t.ModelType(DomainModelAttribute), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
     methods = t.ListType(t.ModelType(DomainMethod), default=[])
 
     @staticmethod
-    def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelProperty] = []) -> 'AppDomainModel':
+    def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelAttribute] = []) -> 'AppDomainModel':
         result = AppDomainModel()
         result.name = name
         result.type = type
@@ -89,32 +91,32 @@ class AppDomainModel(Entity):
 
         return result
 
-    def has_property(self, property: DomainModelProperty) -> bool:
-        return any((p.name == property.name for p in self.properties))
+    def has_attribute(self, attribute_name: str) -> bool:
+        return any((p.name == attribute_name for p in self.properties))
 
-    def add_property(self, property: DomainModelProperty) -> None:
-        self.properties.append(property)
+    def add_attribute(self, attribute: DomainModelAttribute) -> None:
+        self.properties.append(attribute)
 
-    def get_property(self, property_name: str) -> DomainModelProperty:
-        return next((p for p in self.properties if p.name == property_name), None)
+    def get_attribute(self, attribute_name: str) -> DomainModelAttribute:
+        return next((p for p in self.properties if p.name == attribute_name), None)
 
-    def remove_property(self, property: DomainModelProperty) -> None:
-        # Remove the property from the list.
-        properties: List[DomainModelProperty] = [p for p in self.properties if p.name != property.name]
+    def remove_attribute(self, attribute: DomainModelAttribute) -> None:
+        # Remove the attribute from the list.
+        properties: List[DomainModelAttribute] = [p for p in self.properties if p.name != attribute.name]
 
-        # Retrieve any potential dependencies of the property to be removed
+        # Retrieve any potential dependencies of the attribute to be removed
         dependencies: List[DomainModelDependency] = []
-        # If the property is a list or dict type, retrieve the dependencies as defined by the inner type model ID.
-        if property.type in [LIST_TYPE, DICT_TYPE] and property.inner_type_model_id is not None:
-            dependencies = [self.get_dependency(property.inner_type_model_id, PROPERTY_DEPENDENCY)]
+        # If the attribute is a list or dict type, retrieve the dependencies as defined by the inner type model ID.
+        if attribute.type in [LIST_TYPE, DICT_TYPE] and attribute.inner_type_model_id is not None:
+            dependencies = [self.get_dependency(attribute.inner_type_model_id, ATTRIBUTE_DEPENDENCY)]
 
-        # If the property is a model type, retrieve the dependencies as defined by the inner type.
-        if property.type == MODEL_TYPE:
-            dependencies = [self.get_dependency(property.inner_type, PROPERTY_DEPENDENCY)]
+        # If the attribute is a model type, retrieve the dependencies as defined by the inner type.
+        if attribute.type == MODEL_TYPE:
+            dependencies = [self.get_dependency(attribute.inner_type, ATTRIBUTE_DEPENDENCY)]
 
-        # If the property is a poly type, retrieve the dependencies as defined by the poly type model IDs.
-        if property.type == POLY_TYPE:
-            dependencies = [self.get_dependency(model_id, PROPERTY_DEPENDENCY) for model_id in property.poly_type_model_ids]
+        # If the attribute is a poly type, retrieve the dependencies as defined by the poly type model IDs.
+        if attribute.type == POLY_TYPE:
+            dependencies = [self.get_dependency(model_id, ATTRIBUTE_DEPENDENCY) for model_id in attribute.poly_type_model_ids]
 
         # Remove the dependencies only if no other properties are dependent on them.
         for dependency in dependencies:
@@ -128,14 +130,14 @@ class AppDomainModel(Entity):
         if not any((d.model_id == dependency.model_id for d in self.dependencies)):
             self.dependencies.append(dependency)
 
-    def get_dependency(self, model_id: str, dependency_type: str = PROPERTY_DEPENDENCY) -> DomainModelDependency:
+    def get_dependency(self, model_id: str, dependency_type: str = ATTRIBUTE_DEPENDENCY) -> DomainModelDependency:
         return next((d for d in self.dependencies if d.model_id == model_id and d.dependency_type == dependency_type), None)
 
     def remove_dependency(self, dependency: DomainModelDependency) -> None:
         self.dependencies = [d for d in self.dependencies if d.model_id != dependency.model_id or d.dependency_type != dependency.dependency_type]
 
     def has_method(self, method: DomainMethod) -> bool:
-        '''Checks to see if the model contains a method with the same name as the input method.
+        '''Checks to see if the model contains a method with the same name as the input.
 
         :param method: The input domain method to verify.
         :type method: class: `domain.models.DomainMethod`

@@ -44,13 +44,13 @@ class TypePropertiesBlock(Model):
 
 class DomainModelPropertyBlock(Model):
 
-    property = t.ModelType(d.DomainModelProperty, required=True)
+    attribute = t.ModelType(d.DomainModelAttribute, required=True)
     dependencies = t.ListType(t.ModelType(d.DomainModelDependency))
 
     @staticmethod
-    def create(property: d.DomainModelProperty, dependencies: List[d.DomainModelDependency] = None) -> 'DomainModelPropertyBlock':
+    def create(attribute: d.DomainModelAttribute, dependencies: List[d.DomainModelDependency] = None) -> 'DomainModelPropertyBlock':
         result = DomainModelPropertyBlock()
-        result.property = property
+        result.attribute = attribute
         result.dependencies = dependencies
 
         return result
@@ -63,7 +63,7 @@ class DomainModelPropertyBlock(Model):
         property_str = TAB
 
         # Add the name
-        property_str += f'{self.property.name} = '
+        property_str += f'{self.attribute.name} = '
 
         # Add the type
         def map_type(type: str) -> str:
@@ -88,18 +88,18 @@ class DomainModelPropertyBlock(Model):
             elif type == MODEL_TYPE:
                 return 'Model'
 
-        type_name = map_type(self.property.type)
+        type_name = map_type(self.attribute.type)
         property_str += f't.{type_name}Type('
 
-        if self.property.inner_type is not None:
+        if self.attribute.inner_type is not None:
             dependency = self.dependencies[0] if self.dependencies else None
-            if self.property.type == MODEL_TYPE:
+            if self.attribute.type == MODEL_TYPE:
                 property_str += f'{dependency.class_name}'
-            elif self.property.inner_type == MODEL_TYPE:
+            elif self.attribute.inner_type == MODEL_TYPE:
                 property_str += f't.ModelType({dependency.class_name})'
             else:
-                property_str += f't.{map_type(self.property.inner_type)}Type'
-        elif self.property.type == POLY_TYPE:
+                property_str += f't.{map_type(self.attribute.inner_type)}Type'
+        elif self.attribute.type == POLY_TYPE:
             poly_types = []
             for dependency in self.dependencies:
                 poly_types.append(dependency.class_name)
@@ -109,40 +109,40 @@ class DomainModelPropertyBlock(Model):
         type_args = []
 
         # Add the required flag
-        if self.property.required:
+        if self.attribute.required:
             type_args.append('required=True')
         
         # Add the default flag
-        if self.property.default is not None:
-            # Stringify the default if it the property type is a string
-            if self.property.type == STR_TYPE:
-                type_args.append(f"default='{self.property.default}'")
+        if self.attribute.default is not None:
+            # Stringify the default if it the attribute type is a string
+            if self.attribute.type == STR_TYPE:
+                type_args.append(f"default='{self.attribute.default}'")
             else:
-                type_args.append(f'default={self.property.default}')
+                type_args.append(f'default={self.attribute.default}')
 
         # Add the choices flag
-        if self.property.choices:
-            if self.property.type == STR_TYPE:
-                choices = self.property.choices
-            elif self.property.type == INT_TYPE:
-                choices = [int(choice) for choice in self.property.choices]
+        if self.attribute.choices:
+            if self.attribute.type == STR_TYPE:
+                choices = self.attribute.choices
+            elif self.attribute.type == INT_TYPE:
+                choices = [int(choice) for choice in self.attribute.choices]
             type_args.append(f'choices={str(choices)}')
 
-        # If the property has type properties, add them
-        if self.property.type_properties is not None:
-            type_properties_block = TypePropertiesBlock.create(self.property.type_properties)
+        # If the attribute has type properties, add them
+        if self.attribute.type_properties is not None:
+            type_properties_block = TypePropertiesBlock.create(self.attribute.type_properties)
             type_args.extend(type_properties_block.print_lines())
         
-        # Add the type args to the property string
+        # Add the type args to the attribute string
         if len(type_args) > 0:
-            if self.property.inner_type is not None:
+            if self.attribute.inner_type is not None:
                 property_str += ', '
             property_str += ', '.join(type_args)
         
         # Close the type
         property_str += ')'
 
-        # Add the property string to the print lines
+        # Add the attribute string to the print lines
         print_lines.append(property_str)
 
         # Return list
@@ -260,12 +260,12 @@ class AppDomainModelBlock(Model):
                 print_lines.append('')
             
             # Otherwise, add the properties
-            for property in domain_model.properties:
-                if property.type == 'poly':
-                    dependencies = [d for d in domain_model.dependencies if d.model_id in property.poly_type_model_ids]
+            for attribute in domain_model.properties:
+                if attribute.type == 'poly':
+                    dependencies = [d for d in domain_model.dependencies if d.model_id in attribute.poly_type_model_ids]
                 else:
-                    dependencies = [d for d in domain_model.dependencies if d.model_id == property.inner_type or d.model_id == property.inner_type_model_id]
-                property_block = DomainModelPropertyBlock.create(property, dependencies)
+                    dependencies = [d for d in domain_model.dependencies if d.model_id == attribute.inner_type or d.model_id == attribute.inner_type_model_id]
+                property_block = DomainModelPropertyBlock.create(attribute, dependencies)
                 print_lines.extend(property_block.print_lines())
             
             # Increment the counter

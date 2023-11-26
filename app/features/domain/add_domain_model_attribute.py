@@ -32,7 +32,7 @@ def handle(context: MessageContext):
     # Create type properties
     try:
         type_properties = create_type_properties(type, **type_properties)
-    # Raise a invalid type property error if the type property is invalid.
+    # Raise a invalid type attribute error if the type attribute is invalid.
     except TypeError as e:
         import re
         invalid_arg = re.search(r"unexpected keyword argument '(.*)'", str(e)).group(1)
@@ -42,7 +42,7 @@ def handle(context: MessageContext):
     if type == MODEL_TYPE:
         value_object = domain_repo.get_domain_model(inner_type)
         if not value_object:
-            raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type))
+            raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_INNER_TYPE_NOT_FOUND.format_message(inner_type))
         # Add value object as dependency
         dependency = d.DomainModelDependency.create(
             model_id=inner_type,
@@ -55,12 +55,12 @@ def handle(context: MessageContext):
     elif inner_type == MODEL_TYPE:
         value_object = domain_repo.get_domain_model(inner_type_model_id)
         if not value_object:
-            raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(inner_type_model_id))
+            raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_INNER_TYPE_NOT_FOUND.format_message(inner_type_model_id))
         # Add value object as dependency
         dependency = d.DomainModelDependency.create(
             model_id=inner_type_model_id,
             class_name=value_object.class_name,
-            dependency_type='property'
+            dependency_type='attribute'
         )
         domain_model.add_dependency(dependency)
     
@@ -69,17 +69,17 @@ def handle(context: MessageContext):
         for poly_type_model_id in poly_type_model_ids:
             poly_type = domain_repo.get_domain_model(poly_type_model_id)
             if not poly_type:
-                raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND.format_message(poly_type_model_id))
+                raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_INNER_TYPE_NOT_FOUND.format_message(poly_type_model_id))
             # Add poly type as dependency
             dependency = d.DomainModelDependency.create(
                 model_id=poly_type_model_id,
                 class_name=poly_type.class_name,
-                dependency_type='property'
+                dependency_type='attribute'
             )
             domain_model.add_dependency(dependency)
 
-    # Create a new model property
-    property = d.DomainModelProperty.create(
+    # Create a new model attribute
+    attribute = d.DomainModelAttribute.create(
         name=name,
         type=type,
         inner_type=inner_type,
@@ -92,18 +92,18 @@ def handle(context: MessageContext):
         type_properties=type_properties
     )
 
-    # Check to see if property already exists on the model.
-    exists = domain_model.has_property(property)
+    # Check to see if attribute already exists on the model.
+    exists = domain_model.has_attribute(attribute.name)
 
-    # Raise app error if property already exists.
+    # Raise app error if attribute already exists.
     if exists:
-        raise AppError(context.errors.DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS.format_message(property.name))
+        raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_ALREADY_EXISTS.format_message(attribute.name))
 
-    # Add property to model.
-    domain_model.add_property(property)
+    # Add attribute to model.
+    domain_model.add_attribute(attribute)
 
     # Save domain model.
     domain_repo.save_domain_model(domain_model)
 
     # Return response.
-    return property
+    return attribute

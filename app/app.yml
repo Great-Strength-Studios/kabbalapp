@@ -2,16 +2,54 @@ domain:
   factories: {}
   models:
     app_domain_model:
-      base_type_model_id: null
+      attributes:
+      - description: The unique domain model class name.
+        name: class_name
+        required: true
+        type: str
+      - description: The domain model name.
+        name: name
+        required: true
+        type: str
+      - choices:
+        - entity
+        - value_object
+        description: The domain model type.
+        name: type
+        required: true
+        type: str
+      - description: The domain model description for inline documentation.
+        name: description
+        required: true
+        type: str
+      - description: The domain model id of the optional base type.
+        name: base_type_model_id
+        type: str
+      - default: '[]'
+        description: Attributes associated with the domain model.
+        inner_type: model
+        inner_type_model_id: domain_model_property
+        name: attributes
+        type: list
+      - default: '[]'
+        description: The methods associated with the domain model.
+        inner_type: model
+        inner_type_model_id: domain_method
+        name: methods
+        type: list
       class_name: AppDomainModel
       dependencies:
-      - class_name: DomainModelProperty
-        dependency_type: property
+      - class_name: DomainModelAttribute
+        dependency_type: attribute
         model_id: domain_model_property
         module: null
       - class_name: DomainMethod
-        dependency_type: property
+        dependency_type: attribute
         model_id: domain_method
+        module: null
+      - class_name: DomainModelAttribute
+        dependency_type: method_parameter
+        model_id: domain_model_attribute
         module: null
       description: Domain Model for the application.
       methods:
@@ -37,50 +75,47 @@ domain:
           type: str
         return_type: model
         type: behavior
+      - description: Returns True if the domain model already contains a method with
+          the same name as the input name.
+        name: has_attribute
+        parameters:
+        - description: The name of the attribute to check against the list of attributes
+            in the domain model.
+          name: attribute_name
+          required: true
+          type: str
+        return_type: bool
+        type: behavior
+      - description: Adds a new attribute to the domain model.
+        name: add_attribute
+        parameters:
+        - description: The attribute to add to the domain model.
+          inner_type_model_id: domain_model_attribute
+          name: attribute
+          required: true
+          type: model
+        type: behavior
+      - description: Retrieves an attribute from the domain model by attribute name.
+        name: get_attribute
+        parameters:
+        - description: The name of the attribute to retrieve from the domain model.
+          name: attribute_name
+          required: true
+          type: str
+        type: behavior
+      - description: Removes a property from the domain model.
+        name: remove_attribute
+        parameters:
+        - description: The attribute to remove from the domain model method.
+          inner_type_model_id: domain_model_attribute
+          name: attribute
+          required: true
+          type: model
+        type: behavior
       name: App Domain Model
-      properties:
-      - description: The unique domain model class name.
-        name: class_name
-        required: true
-        type: str
-      - description: The domain model name.
-        name: name
-        required: true
-        type: str
-      - choices:
-        - entity
-        - value_object
-        description: The domain model type.
-        name: type
-        required: true
-        type: str
-      - description: The domain model description for inline documentation.
-        name: description
-        required: true
-        type: str
-      - description: The domain model id of the optional base type.
-        name: base_type_model_id
-        type: str
-      - default: '[]'
-        description: Properties associated with the domain model
-        inner_type: model
-        inner_type_model_id: domain_model_property
-        name: properties
-        type: list
-      - default: '[]'
-        description: The methods associated with the domain model.
-        inner_type: model
-        inner_type_model_id: domain_method
-        name: methods
-        type: list
       type: entity
     app_interface_type:
-      base_type_model_id: null
-      class_name: AppInterfaceType
-      dependencies: []
-      description: The application interface type.
-      name: App Interface Type
-      properties:
+      attributes:
       - description: App interface type name.
         name: name
         required: true
@@ -89,14 +124,14 @@ domain:
         name: type
         required: true
         type: str
+      base_type_model_id: null
+      class_name: AppInterfaceType
+      dependencies: []
+      description: The application interface type.
+      name: App Interface Type
       type: entity
     app_project:
-      base_type_model_id: null
-      class_name: AppProject
-      dependencies: []
-      description: Application project configuration
-      name: App Project
-      properties:
+      attributes:
       - description: App project name.
         name: name
         required: true
@@ -120,12 +155,37 @@ domain:
         name: version
         required: true
         type: str
+      base_type_model_id: null
+      class_name: AppProject
+      dependencies: []
+      description: Application project configuration
+      name: App Project
       type: entity
     app_repository:
+      attributes:
+      - description: The name of the repository.
+        name: name
+        required: true
+        type: str
+      - description: The class name of the repository.
+        name: class_name
+        required: true
+        type: str
+      - description: The description of the repository for inline documentation.
+        name: description
+        required: true
+        type: str
+      - default: '[]'
+        description: The list of app repository implementations corresponding to the
+          app repository
+        inner_type: model
+        inner_type_model_id: app_repository_implementation
+        name: implementations
+        type: list
       class_name: AppRepository
       dependencies:
       - class_name: AppRepositoryImplementation
-        dependency_type: property
+        dependency_type: attribute
         model_id: app_repository_implementation
         module: null
       description: A repository interface used by the app.
@@ -168,28 +228,22 @@ domain:
           type: model
         type: behavior
       name: App Repository
-      properties:
-      - description: The name of the repository.
+      type: entity
+    app_repository_implementation:
+      attributes:
+      - description: The name of the repository implementation.
         name: name
         required: true
         type: str
-      - description: The class name of the repository.
+      - description: The class name of the repository implementation.
         name: class_name
         required: true
         type: str
-      - description: The description of the repository for inline documentation.
+      - description: The description of the app repository implementation for purposes
+          of inline documentation
         name: description
         required: true
         type: str
-      - default: '[]'
-        description: The list of app repository implementations corresponding to the
-          app repository
-        inner_type: model
-        inner_type_model_id: app_repository_implementation
-        name: implementations
-        type: list
-      type: entity
-    app_repository_implementation:
       class_name: AppRepositoryImplementation
       description: An implementation of an AppRepository for a particular data storage
         type.
@@ -214,28 +268,9 @@ domain:
         return_type: model
         type: factory
       name: App Repository Implementation
-      properties:
-      - description: The name of the repository implementation.
-        name: name
-        required: true
-        type: str
-      - description: The class name of the repository implementation.
-        name: class_name
-        required: true
-        type: str
-      - description: The description of the app repository implementation for purposes
-          of inline documentation
-        name: description
-        required: true
-        type: str
       type: entity
     cli_argument:
-      base_type_model_id: null
-      class_name: CliArgument
-      dependencies: []
-      description: A command-line interface argument.
-      name: CLI Argument
-      properties:
+      attributes:
       - description: The name or flags for the CLI argument.
         inner_type: str
         name: name_or_flags
@@ -265,18 +300,14 @@ domain:
       - description: The specialized action for the CLI argument.
         name: action
         type: str
+      base_type_model_id: null
+      class_name: CliArgument
+      dependencies: []
+      description: A command-line interface argument.
+      name: CLI Argument
       type: value_object
     cli_command:
-      base_type_model_id: null
-      class_name: CliCommand
-      dependencies:
-      - class_name: CliArgument
-        dependency_type: property
-        model_id: cli_argument
-        module: null
-      description: A command-line interface command.
-      name: CLI Command
-      properties:
+      attributes:
       - description: The command key for a CLI command.
         name: command_key
         required: true
@@ -298,26 +329,18 @@ domain:
         inner_type_model_id: cli_argument
         name: arguments
         type: list
-      type: entity
-    cli_interface_type:
-      base_type_model_id: app_interface_type
-      class_name: CliInterfaceType
+      base_type_model_id: null
+      class_name: CliCommand
       dependencies:
-      - class_name: AppInterfaceType
-        dependency_type: base_type
-        model_id: app_interface_type
-        module: null
-      - class_name: CliCommand
-        dependency_type: property
-        model_id: cli_command
-        module: null
       - class_name: CliArgument
-        dependency_type: property
+        dependency_type: attribute
         model_id: cli_argument
         module: null
-      description: CLI App interface type.
-      name: CLI Interface Type
-      properties:
+      description: A command-line interface command.
+      name: CLI Command
+      type: entity
+    cli_interface_type:
+      attributes:
       - description: CLI interface type mappers.
         inner_type: str
         name: mappers
@@ -334,24 +357,26 @@ domain:
         inner_type_model_id: cli_argument
         name: parent_arguments
         type: list
+      base_type_model_id: app_interface_type
+      class_name: CliInterfaceType
+      dependencies:
+      - class_name: AppInterfaceType
+        dependency_type: base_type
+        model_id: app_interface_type
+        module: null
+      - class_name: CliCommand
+        dependency_type: attribute
+        model_id: cli_command
+        module: null
+      - class_name: CliArgument
+        dependency_type: attribute
+        model_id: cli_argument
+        module: null
+      description: CLI App interface type.
+      name: CLI Interface Type
       type: entity
     date_time_type_properties:
-      base_type_model_id: type_properties
-      class_name: DateTimeTypeProperties
-      dependencies:
-      - class_name: TypeProperties
-        dependency_type: base_type
-        model_id: type_properties
-        module: null
-      description: null
-      methods:
-      - description: Factory method that returns a new DateTimeTypeProperties instance.
-        inner_return_type: date_time_type_properties
-        name: create
-        return_type: model
-        type: factory
-      name: Date Time Type Properties
-      properties:
+      attributes:
       - name: formats
         type: str
       - name: serialized_format
@@ -372,8 +397,26 @@ domain:
       - default: 'False'
         name: drop_tzinfo
         type: bool
+      base_type_model_id: type_properties
+      class_name: DateTimeTypeProperties
+      dependencies:
+      - class_name: TypeProperties
+        dependency_type: base_type
+        model_id: type_properties
+        module: null
+      description: null
+      methods:
+      - description: Factory method that returns a new DateTimeTypeProperties instance.
+        inner_return_type: date_time_type_properties
+        name: create
+        return_type: model
+        type: factory
+      name: Date Time Type Properties
       type: value_object
     date_type_properties:
+      attributes:
+      - name: formats
+        type: str
       base_type_model_id: type_properties
       class_name: DateTypeProperties
       dependencies:
@@ -389,11 +432,11 @@ domain:
         return_type: model
         type: factory
       name: Date Type Properties
-      properties:
-      - name: formats
-        type: str
       type: value_object
     dict_type_properties:
+      attributes:
+      - name: coerce_key
+        type: str
       base_type_model_id: type_properties
       class_name: DictTypeProperties
       dependencies:
@@ -409,47 +452,9 @@ domain:
         return_type: model
         type: factory
       name: Dictionary Type Properties
-      properties:
-      - name: coerce_key
-        type: str
       type: value_object
     domain_method:
-      base_type_model_id: null
-      class_name: DomainMethod
-      dependencies:
-      - class_name: DomainMethodParameter
-        dependency_type: property
-        model_id: domain_method_parameter
-        module: null
-      description: A domain method associated with a domain model or repository.
-      methods:
-      - description: Factory method that returns a new DomainMethod instance.
-        inner_return_type: domain_method
-        name: create
-        return_type: model
-        type: factory
-      - description: Returns True if a parameter with the same name as the input parameter
-          exists within the domain method.
-        name: has_parameter
-        parameters:
-        - description: The parameter to check if it already exists in the method.
-          inner_type: domain_method_parameter
-          name: parameter
-          required: true
-          type: model
-        return_type: bool
-        type: behavior
-      - description: Adds the input parameter to the domain method parameters list.
-        name: add_parameter
-        parameters:
-        - description: The parameter to add.
-          inner_type: domain_method_parameter
-          name: parameter
-          required: true
-          type: model
-        type: behavior
-      name: Domain Method
-      properties:
+      attributes:
       - description: The name of the domain method.
         name: name
         required: true
@@ -484,15 +489,44 @@ domain:
         inner_type_model_id: domain_method_parameter
         name: parameters
         type: list
+      base_type_model_id: null
+      class_name: DomainMethod
+      dependencies:
+      - class_name: DomainMethodParameter
+        dependency_type: attribute
+        model_id: domain_method_parameter
+        module: null
+      description: A domain method associated with a domain model or repository.
+      methods:
+      - description: Factory method that returns a new DomainMethod instance.
+        inner_return_type: domain_method
+        name: create
+        return_type: model
+        type: factory
+      - description: Returns True if a parameter with the same name as the input parameter
+          exists within the domain method.
+        name: has_parameter
+        parameters:
+        - description: The parameter to check if it already exists in the method.
+          inner_type: domain_method_parameter
+          name: parameter
+          required: true
+          type: model
+        return_type: bool
+        type: behavior
+      - description: Adds the input parameter to the domain method parameters list.
+        name: add_parameter
+        parameters:
+        - description: The parameter to add.
+          inner_type: domain_method_parameter
+          name: parameter
+          required: true
+          type: model
+        type: behavior
+      name: Domain Method
       type: value_object
     domain_method_parameter:
-      base_type_model_id: null
-      class_name: DomainMethodParameter
-      dependencies: []
-      description: A parameter for a domain method.
-      methods: []
-      name: Domain Method Parameter
-      properties:
+      attributes:
       - description: The name of the method parameter.
         name: name
         required: true
@@ -529,24 +563,20 @@ domain:
           dict type is a model type.
         name: inner_type_model_id
         type: str
+      base_type_model_id: null
+      class_name: DomainMethodParameter
+      dependencies: []
+      description: A parameter for a domain method.
+      methods: []
+      name: Domain Method Parameter
+      type: value_object
+    domain_model_attribute:
+      class_name: DomainModelAttribute
+      description: An attribute of a domain model.
+      name: Domain Model Attribute
       type: value_object
     domain_model_property:
-      base_type_model_id: model_property
-      class_name: DomainModelProperty
-      dependencies:
-      - class_name: ModelProperty
-        dependency_type: base_type
-        model_id: model_property
-        module: null
-      description: A property for a domain model.
-      methods:
-      - description: Factory method that returns a new DomainModelProperty instance.
-        inner_return_type: domain_model_property
-        name: create
-        return_type: model
-        type: factory
-      name: Domain Model Property
-      properties:
+      attributes:
       - choices:
         - str
         - int
@@ -570,8 +600,28 @@ domain:
         inner_type: str
         name: poly_type_model_ids
         type: list
+      base_type_model_id: model_property
+      class_name: DomainModelAttribute
+      dependencies:
+      - class_name: ModelProperty
+        dependency_type: base_type
+        model_id: model_property
+        module: null
+      description: A property for a domain model.
+      methods:
+      - description: Factory method that returns a new DomainModelAttribute instance.
+        inner_return_type: domain_model_property
+        name: create
+        return_type: model
+        type: factory
+      name: Domain Model Property
       type: value_object
     list_type_properties:
+      attributes:
+      - name: min_size
+        type: int
+      - name: max_size
+        type: int
       base_type_model_id: type_properties
       class_name: ListTypeProperties
       dependencies:
@@ -587,39 +637,9 @@ domain:
         return_type: model
         type: factory
       name: List Type Properties
-      properties:
-      - name: min_size
-        type: int
-      - name: max_size
-        type: int
       type: value_object
     model_property:
-      base_type_model_id: null
-      class_name: ModelProperty
-      dependencies:
-      - class_name: StringTypeProperties
-        dependency_type: property
-        model_id: string_type_properties
-        module: null
-      - class_name: DateTypeProperties
-        dependency_type: property
-        model_id: date_type_properties
-        module: null
-      - class_name: DateTimeTypeProperties
-        dependency_type: property
-        model_id: date_time_type_properties
-        module: null
-      - class_name: ListTypeProperties
-        dependency_type: property
-        model_id: list_type_properties
-        module: null
-      - class_name: DictTypeProperties
-        dependency_type: property
-        model_id: dict_type_properties
-        module: null
-      methods: []
-      name: Model Property
-      properties:
+      attributes:
       - name: name
         required: true
         type: str
@@ -645,8 +665,40 @@ domain:
         - list_type_properties
         - dict_type_properties
         type: poly
+      base_type_model_id: null
+      class_name: ModelProperty
+      dependencies:
+      - class_name: StringTypeProperties
+        dependency_type: attribute
+        model_id: string_type_properties
+        module: null
+      - class_name: DateTypeProperties
+        dependency_type: attribute
+        model_id: date_type_properties
+        module: null
+      - class_name: DateTimeTypeProperties
+        dependency_type: attribute
+        model_id: date_time_type_properties
+        module: null
+      - class_name: ListTypeProperties
+        dependency_type: attribute
+        model_id: list_type_properties
+        module: null
+      - class_name: DictTypeProperties
+        dependency_type: attribute
+        model_id: dict_type_properties
+        module: null
+      methods: []
+      name: Model Property
       type: value_object
     string_type_properties:
+      attributes:
+      - name: regex
+        type: str
+      - name: min_length
+        type: int
+      - name: max_length
+        type: int
       base_type_model_id: type_properties
       class_name: StringTypeProperties
       dependencies:
@@ -662,26 +714,17 @@ domain:
         return_type: model
         type: factory
       name: String Type Properties
-      properties:
-      - name: regex
-        type: str
-      - name: min_length
-        type: int
-      - name: max_length
-        type: int
       type: value_object
     type_properties:
+      attributes: []
       class_name: TypeProperties
       name: Type Properties
-      properties: []
       type: value_object
   modules:
     cli:
       aliases: null
       components:
-      - class_name: CliArgument
-        name: App CLI Argument
-        properties:
+      - attributes:
           action:
             description: argument action
             name: Action
@@ -713,10 +756,10 @@ domain:
             description: app arggument type
             name: Type
             type: str
+        class_name: CliArgument
+        name: App CLI Argument
         type: value_object
-      - class_name: CliCommand
-        name: App CLI Command
-        properties:
+      - attributes:
           arguments:
             description: app command arguments list
             inner_type: CliArgument
@@ -743,11 +786,9 @@ domain:
             name: Sub-command key
             required: false
             type: str
-      - class_name: CliInterface
-        factory_method:
-          method_name: create
-        name: App CLI Interface
-        properties:
+        class_name: CliCommand
+        name: App CLI Command
+      - attributes:
           type:
             choices:
             - cli
@@ -756,6 +797,10 @@ domain:
             name: type
             required: true
             type: str
+        class_name: CliInterface
+        factory_method:
+          method_name: create
+        name: App CLI Interface
       dependencies:
       - i
       name: cli
@@ -770,9 +815,7 @@ domain:
       aliases:
       - i
       components:
-      - class_name: AppInterface
-        name: App Interface
-        properties:
+      - attributes:
           mappers:
             description: interface mapper functions
             inner_type: str
@@ -787,6 +830,8 @@ domain:
             name: type
             required: true
             type: str
+        class_name: AppInterface
+        name: App Interface
         type: entity
       name: App Interface
     project:
@@ -858,18 +903,18 @@ errors:
     error_code: '000020002'
     message:
       en_US: Domain model with id "{}" not found
-  DOMAIN_MODEL_PROPERTY_ALREADY_EXISTS:
+  DOMAIN_MODEL_ATTRIBUTE_ALREADY_EXISTS:
     error_code: '000020003'
     message:
-      en_US: Domain model property with name "{}" already exists
-  DOMAIN_MODEL_PROPERTY_INNER_TYPE_NOT_FOUND:
+      en_US: Domain model attribute with name "{}" already exists.
+  DOMAIN_MODEL_ATTRIBUTE_INNER_TYPE_NOT_FOUND:
     error_code: '000020004'
     message:
-      en_US: Domain model property with name "{}" has invalid inner type "{}"
-  DOMAIN_MODEL_PROPERTY_NOT_FOUND:
+      en_US: Domain model attribute with name "{}" has invalid inner type "{}".
+  DOMAIN_MODEL_ATTRIBUTE_NOT_FOUND:
     error_code: '000020005'
     message:
-      en_US: Domain model property with name "{}" not found
+      en_US: Domain model attribute with name "{}" not found.
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
@@ -949,7 +994,7 @@ features:
         add_model_property:
           functions:
           - data_mapping: add_domain_model_property
-            function_path: domain.add_model_property
+            function_path: domain.add_domain_model_attribute
         add_repo_impl:
           functions:
           - data_mapping: add_repository_implementation
@@ -1441,8 +1486,7 @@ interfaces:
         - --verbose
 requests:
   add_domain_model:
-    class_name: AddDomainModel
-    properties:
+    attributes:
     - description: The domain model name.
       name: name
       required: true
@@ -1465,9 +1509,9 @@ requests:
     - description: The domain model id of the base type.
       name: base_type_model_id
       type: str
+    class_name: AddDomainModel
   update_domain_model_property:
-    class_name: UpdateDomainModelProperty
-    properties:
+    attributes:
     - name: model_id
       required: true
       type: str
@@ -1485,3 +1529,4 @@ requests:
       type: str
     - name: value
       type: str
+    class_name: UpdateDomainModelProperty

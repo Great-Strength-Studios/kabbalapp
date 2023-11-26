@@ -21,7 +21,7 @@ class TypePropertiesDataMapper(StringTypeProperties, ListTypeProperties, DateTyp
     def map(self) -> TypeProperties:
         return TypeProperties(self.to_primitive('map'))
 
-class DomainModelPropertyDataMapper(DomainModelProperty):
+class DomainModelAttributeDataMapper(DomainModelAttribute):
 
     type_properties = t.ModelType(TypePropertiesDataMapper, default=None)
 
@@ -32,9 +32,9 @@ class DomainModelPropertyDataMapper(DomainModelProperty):
         }
         serialize_when_none = False
 
-    def map(self) -> DomainModelProperty:
+    def map(self) -> DomainModelAttribute:
         # Create the result
-        result = DomainModelProperty(self.to_primitive('map'))
+        result = DomainModelAttribute(self.to_primitive('map'))
         # Return result if type properties is None
         if self.type_properties is None:
             return result
@@ -104,7 +104,7 @@ class DomainMethodDataMapper(DomainMethod):
 
 class AppDomainModelDataMapper(AppDomainModel):
 
-    properties = t.ListType(t.ModelType(DomainModelPropertyDataMapper), default=[])
+    attributes = t.ListType(t.ModelType(DomainModelAttributeDataMapper), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
     methods = t.ListType(t.ModelType(DomainMethodDataMapper), default=[])
     
@@ -121,7 +121,7 @@ class AppDomainModelDataMapper(AppDomainModel):
         result = AppDomainModel(self.to_primitive('map'))
         
         # Map the properties, dependencies, and methods.
-        result.properties = [property.map() for property in self.properties]
+        result.attributes = [attribute.map() for attribute in self.attributes]
         result.dependencies = [dependency.map() for dependency in self.dependencies]
         result.methods = [method.map() for method in self.methods]
         
@@ -229,9 +229,9 @@ class YamlDomainRepository(DomainRepository):
         domain_model_mapper = self._to_mapper(AppDomainModelDataMapper, **domain_model.to_primitive())
 
         # Set the required value of all model properties to None if they are False.
-        for property in domain_model_mapper.properties:
-            if property.required == False:
-                property.required = None
+        for attribute in domain_model_mapper.attributes:
+            if attribute.required == False:
+                attribute.required = None
 
         # Add the value object to the value objects data
         domain_model_data[domain_model.id] = domain_model_mapper.to_primitive('write')
