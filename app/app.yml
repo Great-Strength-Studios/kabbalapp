@@ -1389,6 +1389,7 @@ interfaces:
                 - --poly-type-model-ids
                 nargs: +
               name: Add Domain Model Attribute
+              help: add new attribute to domain model
             add_repo_impl:
               arguments:
               - help: repository implementation name
