@@ -1558,4 +1558,4 @@ requests:
       type: str
     - name: value
       type: str
-    class_name: UpdateDomainModelProperty
+    class_name: UpdateDomainModelAttribute

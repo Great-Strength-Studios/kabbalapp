@@ -97,7 +97,7 @@ class AddDomainModelAttribute(RequestEvent):
     type_properties = t.DictType(t.StringType(), default={})
 
 
-class UpdateDomainModelProperty(RequestEvent):
+class UpdateDomainModelAttribute(RequestEvent):
     
     model_id = t.StringType(required=True)
     property_name = t.StringType(required=True)
