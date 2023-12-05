@@ -1553,7 +1553,7 @@ requests:
       - default
       - choices
       - description
-      name: property_setting
+      name: attribute_setting
       required: true
       type: str
     - name: value
