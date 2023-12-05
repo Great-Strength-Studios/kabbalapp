@@ -1454,8 +1454,8 @@ interfaces:
                 type: str
               - help: name of property to update
                 name_or_flags:
-                - --property-name
-                - -p
+                - --attribute-name
+                - -a
                 required: true
                 type: str
               - choices:
