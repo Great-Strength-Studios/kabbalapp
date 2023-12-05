@@ -1007,8 +1007,8 @@ features:
           - data_mapping: add_domain_model
             function_path: domain.add_domain_model
             name: Add Domain Model
-        add_model_property:
-          name: Add Domain Model Property
+        add_model_attr:
+          name: Add Domain Model Attribute
           functions:
           - data_mapping: add_domain_model_property
             function_path: domain.add_domain_model_attribute
