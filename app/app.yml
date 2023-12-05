@@ -1376,7 +1376,7 @@ interfaces:
               - help: inner type for compound types (list, dict)
                 name_or_flags:
                 - --inner-type
-              - help: domain model property type properties separated by '='
+              - help: attribute type properties separated by '='
                 name_or_flags:
                 - --type-properties
                 nargs: +
