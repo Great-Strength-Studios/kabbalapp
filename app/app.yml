@@ -1475,7 +1475,7 @@ interfaces:
                 - --value
                 - -v
                 type: str
-              help: updates model property setting
+              help: updates model attribute setting
               name: Update Model Attribute
         interface:
           subcommands:
