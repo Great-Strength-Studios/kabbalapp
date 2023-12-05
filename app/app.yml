@@ -1446,7 +1446,7 @@ interfaces:
               name: Remove Model Property
             update-model-attr:
               arguments:
-              - help: id of model containing property to update
+              - help: parent model id of attribute to update
                 name_or_flags:
                 - --parent-model-id
                 - -p
