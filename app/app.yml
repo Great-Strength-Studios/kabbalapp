@@ -1331,16 +1331,16 @@ interfaces:
                 required: true
                 type: str
               name: Add Domain Model
-            add_model_property:
+            add_model_attr:
               arguments:
-              - help: domain model property choices
+              - help: attribute value choices
                 name_or_flags:
                 - --choices
                 nargs: +
-              - help: default domain model property value
+              - help: default attribute value
                 name_or_flags:
                 - --default
-              - help: domain model property description
+              - help: component description
                 name_or_flags:
                 - -d
                 - --description
@@ -1350,11 +1350,11 @@ interfaces:
                 - -p
                 - --parent-model-id
                 required: true
-              - help: domain model property name
+              - help: attribute name
                 name_or_flags:
                 - name
               - action: store_true
-                help: require value for domain model property
+                help: value for attribute is required
                 name_or_flags:
                 - --required
               - choices:
@@ -1369,7 +1369,7 @@ interfaces:
                 - poly
                 - model
                 default: str
-                help: domain model property type
+                help: data type
                 name_or_flags:
                 - --type
                 - -t
@@ -1380,7 +1380,7 @@ interfaces:
                 name_or_flags:
                 - --type-properties
                 nargs: +
-              - help: model id if inner type of compound model propery is a value
+              - help: model id if type or inner type is a model
                   object
                 name_or_flags:
                 - --inner-type-model-id
@@ -1388,7 +1388,7 @@ interfaces:
                 name_or_flags:
                 - --poly-type-model-ids
                 nargs: +
-              name: Add Domain Model Property
+              name: Add Domain Model Attribute
             add_repo_impl:
               arguments:
               - help: repository implementation name
