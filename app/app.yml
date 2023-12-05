@@ -1012,7 +1012,7 @@ features:
           functions:
           - data_mapping: add_domain_model_attribute
             function_path: domain.add_domain_model_attribute
-            name: Add Domain Model Property
+            name: Add Domain Model Attribute
         add_repo_impl:
           name: Add Repository Implementation
           functions:
