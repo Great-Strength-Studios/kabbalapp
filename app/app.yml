@@ -1034,7 +1034,7 @@ features:
         update_model_attr:
           name: Update Domain Model Attribute
           functions:
-          - data_mapping: update_domain_model_property
+          - data_mapping: update_domain_model_attribute
             function_path: domain.update_domain_model_attribute
             name: Update Domain Model Property
     interface:
@@ -1539,7 +1539,7 @@ requests:
       name: base_type_model_id
       type: str
     class_name: AddDomainModel
-  update_domain_model_property:
+  update_domain_model_attribute:
     attributes:
     - name: model_id
       required: true

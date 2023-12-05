@@ -95,7 +95,7 @@ def add_domain_model_attribute(context, request, app_context, **kwargs):
     })
 
 
-def update_domain_model_property(context, request, app_context, **kwargs):
+def update_domain_model_attribute(context, request, app_context, **kwargs):
     # Map the values of the request dict to a new UpdateDomainModelAttribute object.
     # Set the values to None by default.
     return UpdateDomainModelAttribute({
