@@ -1544,7 +1544,7 @@ requests:
     - name: model_id
       required: true
       type: str
-    - name: property_name
+    - name: attribute_name
       required: true
       type: str
     - choices:
