@@ -1035,7 +1035,7 @@ features:
           name: Update Domain Model Property
           functions:
           - data_mapping: update_domain_model_property
-            function_path: domain.update_model_property
+            function_path: domain.update_domain_model_attribute
             name: Update Domain Model Property
     interface:
       features:
