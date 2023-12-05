@@ -1031,12 +1031,12 @@ features:
           - data_mapping: remove_domain_model_property
             function_path: domain.remove_model_property
             name: Remove Domain Model Property
-        update_model_property:
-          name: Update Domain Model Property
+        update_model_attr:
+          name: Update Domain Model Attribute
           functions:
-          - data_mapping: update_domain_model_property
-            function_path: domain.update_model_property
-            name: Update Domain Model Property
+          - data_mapping: update_domain_model_attribute
+            function_path: domain.update_domain_model_attribute
+            name: Update Domain Model Attribute
     interface:
       features:
         add:
@@ -1389,6 +1389,7 @@ interfaces:
                 - --poly-type-model-ids
                 nargs: +
               name: Add Domain Model Attribute
+              help: add new attribute to domain model
             add_repo_impl:
               arguments:
               - help: repository implementation name
@@ -1443,18 +1444,18 @@ interfaces:
                 type: str
               help: remove domain model property
               name: Remove Model Property
-            update-model-property:
+            update-model-attr:
               arguments:
-              - help: id of model containing property to update
+              - help: parent model id of attribute to update
                 name_or_flags:
-                - --model-id
-                - -m
+                - --parent-model-id
+                - -p
                 required: true
                 type: str
-              - help: name of property to update
+              - help: name of attribute to update
                 name_or_flags:
-                - --property-name
-                - -p
+                - --attribute-name
+                - -a
                 required: true
                 type: str
               - choices:
@@ -1463,19 +1464,19 @@ interfaces:
                 - default
                 - choices
                 - description
-                help: the model property setting to be updated
+                help: attribute setting to update
                 name_or_flags:
-                - --property-setting
+                - --attribute-setting
                 - -s
                 required: true
                 type: str
-              - help: the value of the property setting to update
+              - help: the attribute setting value to update
                 name_or_flags:
                 - --value
                 - -v
                 type: str
-              help: updates model property setting
-              name: Update Model Property
+              help: updates model attribute setting
+              name: Update Model Attribute
         interface:
           subcommands:
             add:
@@ -1538,12 +1539,12 @@ requests:
       name: base_type_model_id
       type: str
     class_name: AddDomainModel
-  update_domain_model_property:
+  update_domain_model_attribute:
     attributes:
     - name: model_id
       required: true
       type: str
-    - name: property_name
+    - name: attribute_name
       required: true
       type: str
     - choices:
@@ -1552,9 +1553,9 @@ requests:
       - default
       - choices
       - description
-      name: property_setting
+      name: attribute_setting
       required: true
       type: str
     - name: value
       type: str
-    class_name: UpdateDomainModelProperty
+    class_name: UpdateDomainModelAttribute

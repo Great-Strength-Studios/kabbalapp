@@ -5,8 +5,8 @@ def handle(context: MessageContext):
 
     # Unpack request.
     model_id = context.data.model_id
-    property_name = context.data.property_name
-    property_setting = context.data.property_setting
+    attribute_name = context.data.attribute_name
+    attribute_setting = context.data.attribute_setting
     value = context.data.value
 
     # Get app project key.
@@ -23,14 +23,14 @@ def handle(context: MessageContext):
         raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(model_id))
     
     # Get domain model attribute.
-    attribute = domain_model.get_attribute(property_name)
+    attribute = domain_model.get_attribute(attribute_name)
 
     # Raise app error if domain model attribute is not found.
     if not attribute:
-        raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_NOT_FOUND.format_message(property_name, model_id))
+        raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_NOT_FOUND.format_message(attribute_name, model_id))
     
     # Update attribute setting.
-    attribute.update(property_setting, value)
+    attribute.update(attribute_setting, value)
 
     # Save domain model.
     domain_repo.save_domain_model(domain_model)
