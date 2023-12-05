@@ -1444,7 +1444,7 @@ interfaces:
                 type: str
               help: remove domain model property
               name: Remove Model Property
-            update-model-property:
+            update-model-attr:
               arguments:
               - help: id of model containing property to update
                 name_or_flags:
@@ -1476,7 +1476,7 @@ interfaces:
                 - -v
                 type: str
               help: updates model property setting
-              name: Update Model Property
+              name: Update Model Attribute
         interface:
           subcommands:
             add:
