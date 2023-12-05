@@ -1466,7 +1466,7 @@ interfaces:
                 - description
                 help: the model property setting to be updated
                 name_or_flags:
-                - --property-setting
+                - --attribute-setting
                 - -s
                 required: true
                 type: str
