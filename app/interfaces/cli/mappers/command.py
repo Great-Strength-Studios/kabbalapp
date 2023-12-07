@@ -100,8 +100,8 @@ def update_domain_model_attribute(context, request, app_context, **kwargs):
     # Set the values to None by default.
     return UpdateDomainModelAttribute({
         'model_id': request.get('model_id', None),
-        'attribute_name': request.get('property_name', None),
-        'attribute_setting': request.get('property_setting', None),
+        'attribute_name': request.get('attribute_name', None),
+        'attribute_setting': request.get('attribute_name', None),
         'value': request.get('value', None)
     })
 
