@@ -99,7 +99,7 @@ class AddDomainModelAttribute(RequestEvent):
 
 class UpdateDomainModelAttribute(RequestEvent):
     
-    model_id = t.StringType(required=True)
+    parent_model_id = t.StringType(required=True)
     attribute_name = t.StringType(required=True)
     attribute_setting = t.StringType(required=True, choices=['name', 'required', 'default', 'choices', 'description'])
     value = t.StringType()
