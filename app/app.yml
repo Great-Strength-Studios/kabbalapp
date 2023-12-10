@@ -1436,7 +1436,7 @@ interfaces:
                 - -p
                 required: true
                 type: str
-              - help: name of property to remove
+              - help: name of attribute to remove
                 name_or_flags:
                 - --attribute-name
                 - -a
