@@ -1438,8 +1438,8 @@ interfaces:
                 type: str
               - help: name of property to remove
                 name_or_flags:
-                - --property-name
-                - -p
+                - --attribute-name
+                - -a
                 required: true
                 type: str
               help: remove domain model property
