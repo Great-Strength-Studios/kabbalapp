@@ -1030,7 +1030,7 @@ features:
           functions:
           - data_mapping: remove_domain_model_attribute
             function_path: domain.remove_domain_model_attribute
-            name: Remove Domain Model Property
+            name: Remove Domain Model Attribute
         update_model_attr:
           name: Update Domain Model Attribute
           functions:
