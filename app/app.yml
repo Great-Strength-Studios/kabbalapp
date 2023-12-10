@@ -1432,8 +1432,8 @@ interfaces:
               arguments:
               - help: id of model containing property to remove
                 name_or_flags:
-                - --model-id
-                - -m
+                - --parent-model-id
+                - -p
                 required: true
                 type: str
               - help: name of property to remove
