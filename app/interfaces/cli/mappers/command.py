@@ -99,17 +99,17 @@ def update_domain_model_attribute(context, request, app_context, **kwargs):
     # Map the values of the request dict to a new UpdateDomainModelAttribute object.
     # Set the values to None by default.
     return UpdateDomainModelAttribute({
-        'model_id': request.get('model_id', None),
-        'attribute_name': request.get('property_name', None),
-        'attribute_setting': request.get('property_setting', None),
+        'parent_model_id': request.get('parent_model_id', None),
+        'attribute_name': request.get('attribute_name', None),
+        'attribute_setting': request.get('attribute_name', None),
         'value': request.get('value', None)
     })
 
 
-def remove_domain_model_property(context, request, app_context, **kwargs):
-    return RemoveDomainModelProperty({
-        'model_id': request.get('model_id', None),
-        'property_name': request.get('property_name', None)
+def remove_domain_model_attribute(context, request, app_context, **kwargs):
+    return RemoveDomainModelAttribute({
+        'parent_model_id': request.get('parent_model_id', None),
+        'attribute_name': request.get('attribute_name', None)
     })
 
 

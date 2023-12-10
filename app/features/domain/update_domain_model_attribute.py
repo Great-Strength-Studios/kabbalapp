@@ -4,7 +4,7 @@ from ...domain import *
 def handle(context: MessageContext):
 
     # Unpack request.
-    model_id = context.data.model_id
+    parent_model_id = context.data.parent_model_id
     attribute_name = context.data.attribute_name
     attribute_setting = context.data.attribute_setting
     value = context.data.value
@@ -16,18 +16,18 @@ def handle(context: MessageContext):
     domain_repo: d.DomainRepository = context.services.domain_repo(app_key)
 
     # Get domain model.
-    domain_model = domain_repo.get_domain_model(model_id)
+    domain_model = domain_repo.get_domain_model(parent_model_id)
 
     # Raise app error if domain model is not found.
     if not domain_model:
-        raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(model_id))
+        raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(parent_model_id))
     
     # Get domain model attribute.
     attribute = domain_model.get_attribute(attribute_name)
 
     # Raise app error if domain model attribute is not found.
     if not attribute:
-        raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_NOT_FOUND.format_message(attribute_name, model_id))
+        raise AppError(context.errors.DOMAIN_MODEL_ATTRIBUTE_NOT_FOUND.format_message(attribute_name, parent_model_id))
     
     # Update attribute setting.
     attribute.update(attribute_setting, value)

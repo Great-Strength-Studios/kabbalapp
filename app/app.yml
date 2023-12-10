@@ -1025,12 +1025,12 @@ features:
           - data_mapping: add_repository
             function_path: domain.add_repository
             name: Add Repository
-        remove_model_property:
-          name: Remove Domain Model Property
+        remove_model_attr:
+          name: Remove Domain Model Attribute
           functions:
-          - data_mapping: remove_domain_model_property
-            function_path: domain.remove_model_property
-            name: Remove Domain Model Property
+          - data_mapping: remove_domain_model_attribute
+            function_path: domain.remove_domain_model_attribute
+            name: Remove Domain Model Attribute
         update_model_attr:
           name: Update Domain Model Attribute
           functions:
@@ -1428,23 +1428,23 @@ interfaces:
                 required: true
               help: add app repository
               name: Add Repository
-            remove-model-property:
+            remove_model_attr:
               arguments:
-              - help: id of model containing property to remove
+              - help: parent model id of attribute to remove
                 name_or_flags:
-                - --model-id
-                - -m
-                required: true
-                type: str
-              - help: name of property to remove
-                name_or_flags:
-                - --property-name
+                - --parent-model-id
                 - -p
                 required: true
                 type: str
-              help: remove domain model property
-              name: Remove Model Property
-            update-model-attr:
+              - help: name of attribute to remove
+                name_or_flags:
+                - --attribute-name
+                - -a
+                required: true
+                type: str
+              help: remove domain model attribute
+              name: Remove Domain Model Attribute
+            update_model_attr:
               arguments:
               - help: parent model id of attribute to update
                 name_or_flags:
