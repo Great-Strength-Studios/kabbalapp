@@ -1430,7 +1430,7 @@ interfaces:
               name: Add Repository
             remove_model_attr:
               arguments:
-              - help: id of model containing property to remove
+              - help: parent model id of attribute to remove
                 name_or_flags:
                 - --parent-model-id
                 - -p
