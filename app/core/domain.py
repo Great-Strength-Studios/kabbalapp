@@ -3,14 +3,14 @@ from schematics import types as t, Model
 from schematics.transforms import blacklist, whitelist
 from schematics.types.serializable import serializable
 
-class DomainModel(Model):
+class AppDomainModel(Model):
     pass
 
 
-class ValueObject(DomainModel):
+class ValueObject(AppDomainModel):
     pass
 
 
-class Entity(DomainModel):
+class Entity(AppDomainModel):
 
     id = t.StringType(required=True)
