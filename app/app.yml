@@ -1428,7 +1428,7 @@ interfaces:
                 required: true
               help: add app repository
               name: Add Repository
-            remove-model-property:
+            remove_model_attr:
               arguments:
               - help: id of model containing property to remove
                 name_or_flags:
@@ -1443,8 +1443,8 @@ interfaces:
                 required: true
                 type: str
               help: remove domain model property
-              name: Remove Model Property
-            update-model-attr:
+              name: Remove Domain Model Attribute
+            update_model_attr:
               arguments:
               - help: parent model id of attribute to update
                 name_or_flags:
