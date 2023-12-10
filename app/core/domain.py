@@ -6,6 +6,7 @@ from schematics.types.serializable import serializable
 class AppDomainModel(Model):
     
     name = t.StringType()
+    description = t.StringType()
 
 
 class ValueObject(AppDomainModel):
