@@ -1442,7 +1442,7 @@ interfaces:
                 - -a
                 required: true
                 type: str
-              help: remove domain model property
+              help: remove domain model attribute
               name: Remove Domain Model Attribute
             update_model_attr:
               arguments:
