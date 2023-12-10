@@ -106,7 +106,7 @@ def update_domain_model_attribute(context, request, app_context, **kwargs):
     })
 
 
-def remove_domain_model_property(context, request, app_context, **kwargs):
+def remove_domain_model_attribute(context, request, app_context, **kwargs):
     return RemoveDomainModelProperty({
         'model_id': request.get('model_id', None),
         'property_name': request.get('property_name', None)
