@@ -1025,8 +1025,8 @@ features:
           - data_mapping: add_repository
             function_path: domain.add_repository
             name: Add Repository
-        remove_model_property:
-          name: Remove Domain Model Property
+        remove_model_attr:
+          name: Remove Domain Model Attribute
           functions:
           - data_mapping: remove_domain_model_property
             function_path: domain.remove_model_property
