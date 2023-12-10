@@ -4,7 +4,8 @@ from schematics.transforms import blacklist, whitelist
 from schematics.types.serializable import serializable
 
 class AppDomainModel(Model):
-    pass
+    
+    name = t.StringType()
 
 
 class ValueObject(AppDomainModel):
