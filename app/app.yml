@@ -567,22 +567,6 @@ domain:
       type: value_object
     domain_model_attribute:
       attributes:
-      - choices:
-        - str
-        - int
-        - float
-        - bool
-        - date
-        - datetime
-        - timestamp
-        - list
-        - dict
-        - poly
-        - model
-        description: The domain model property type.
-        name: type
-        required: true
-        type: str
       - description: The inner type domain model ID for a model-typed property.
         name: inner_type_model_id
         type: str

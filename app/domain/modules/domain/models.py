@@ -3,7 +3,6 @@ from ...models import *
 
 class DomainModelAttribute(Attribute):
 
-    type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
     inner_type_model_id = t.StringType()
     poly_type_model_ids = t.ListType(t.StringType())
 
