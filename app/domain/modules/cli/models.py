@@ -4,7 +4,7 @@ from ...models import *
 from .. import interface, interface as i
 
 
-class CliArgument(ValueObject):
+class CliArgument(AppValueObject):
     name_or_flags = t.ListType(t.StringType, required=True)
     help = t.StringType(required=True)
     type = t.StringType(choices=['str', 'int', 'float'])

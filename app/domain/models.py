@@ -2,7 +2,7 @@ from ..core.domain import *
 from .constants import *
 
 
-class TypeProperties(ValueObject):
+class TypeProperties(AppValueObject):
     pass
 
 
@@ -94,7 +94,7 @@ class ListTypeProperties(TypeProperties):
 
         return result
     
-class ModelProperty(ValueObject):
+class ModelProperty(AppValueObject):
 
     type = t.StringType(required=True)
     inner_type = t.StringType()
@@ -123,7 +123,7 @@ class ModelProperty(ValueObject):
             setattr(self, setting, value)
 
 
-class DomainMethodParameter(ValueObject):
+class DomainMethodParameter(AppValueObject):
     
     type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     inner_type = t.StringType()
@@ -152,7 +152,7 @@ class DomainMethodParameter(ValueObject):
         # Return model instance.
         return result
 
-class DomainMethod(ValueObject):
+class DomainMethod(AppValueObject):
     
     type = t.StringType(required=True, choices=['factory', 'behavior'])
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
@@ -201,7 +201,7 @@ class DomainMethod(ValueObject):
         self.parameters.append(parameter)
     
 
-class AppRepositoryImplementation(ValueObject):
+class AppRepositoryImplementation(AppValueObject):
     '''An implementation of an AppRepository for a particular data storage type.
 
     '''
