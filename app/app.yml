@@ -538,12 +538,12 @@ domain:
         inner_type: str
         name: poly_type_model_ids
         type: list
-      base_type_model_id: model_property
+      base_type_model_id: attribute
       class_name: DomainModelAttribute
       dependencies:
       - class_name: Attribute
         dependency_type: base_type
-        model_id: model_property
+        model_id: attribute
         module: null
       description: A property for a domain model.
       methods:
@@ -576,7 +576,7 @@ domain:
         type: factory
       name: List Type Properties
       type: value_object
-    model_property:
+    attribute:
       attributes:
       - name: type
         required: true
