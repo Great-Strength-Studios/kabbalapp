@@ -59,25 +59,22 @@ class DomainModelDependency(ValueObject):
 
 class AppDomainModel(Entity):
 
-    id = t.StringType(required=True)
-    name = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
     class_name = t.StringType(required=True)
-    description = t.StringType(required=True)
     base_type_model_id = t.StringType()
     attributes = t.ListType(t.ModelType(DomainModelAttribute), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
     methods = t.ListType(t.ModelType(DomainMethod), default=[])
 
     @staticmethod
-    def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, properties: List[DomainModelAttribute] = []) -> 'AppDomainModel':
+    def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, attributes: List[DomainModelAttribute] = []) -> 'AppDomainModel':
         result = AppDomainModel()
         result.name = name
         result.type = type
         result.class_name = class_name
         result.description = description
         result.base_type_model_id = base_type_model_id
-        result.properties = properties
+        result.attributes = attributes
 
         # Convert python camel case to snake case if ID is not provided
         if id is None:
@@ -92,17 +89,17 @@ class AppDomainModel(Entity):
         return result
 
     def has_attribute(self, attribute_name: str) -> bool:
-        return any((p.name == attribute_name for p in self.properties))
+        return any((p.name == attribute_name for p in self.attributes))
 
     def add_attribute(self, attribute: DomainModelAttribute) -> None:
-        self.properties.append(attribute)
+        self.attributes.append(attribute)
 
     def get_attribute(self, attribute_name: str) -> DomainModelAttribute:
-        return next((p for p in self.properties if p.name == attribute_name), None)
+        return next((a for a in self.attributes if a.name == attribute_name), None)
 
     def remove_attribute(self, attribute: DomainModelAttribute) -> None:
         # Remove the attribute from the list.
-        properties: List[DomainModelAttribute] = [p for p in self.properties if p.name != attribute.name]
+        attributes: List[DomainModelAttribute] = [a for a in self.attributes if a.name != attribute.name]
 
         # Retrieve any potential dependencies of the attribute to be removed
         dependencies: List[DomainModelDependency] = []
@@ -118,13 +115,13 @@ class AppDomainModel(Entity):
         if attribute.type == POLY_TYPE:
             dependencies = [self.get_dependency(model_id, ATTRIBUTE_DEPENDENCY) for model_id in attribute.poly_type_model_ids]
 
-        # Remove the dependencies only if no other properties are dependent on them.
+        # Remove the dependencies only if no other attributes are dependent on them.
         for dependency in dependencies:
-            if not any((p.has_dependency(dependency.model_id) for p in properties)):
+            if not any((a.has_dependency(dependency.model_id) for a in attributes)):
                 self.remove_dependency(dependency)
 
-        # Set the properties to the new list.
-        self.properties = properties
+        # Set the attributes to the new list.
+        self.attributes = attributes
 
     def add_dependency(self, dependency: DomainModelDependency) -> None:
         if not any((d.model_id == dependency.model_id for d in self.dependencies)):

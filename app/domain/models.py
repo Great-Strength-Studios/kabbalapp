@@ -96,13 +96,11 @@ class ListTypeProperties(TypeProperties):
     
 class ModelProperty(ValueObject):
 
-    name = t.StringType(required=True)
     type = t.StringType(required=True)
     inner_type = t.StringType()
     required = t.BooleanType()
     default = t.StringType()
     choices = t.ListType(t.StringType)
-    description = t.StringType()
     type_properties = t.PolyModelType([StringTypeProperties, DateTypeProperties, DateTimeTypeProperties, ListTypeProperties, DictTypeProperties])
 
     def update(self, setting: str, value: str = None):
@@ -127,9 +125,7 @@ class ModelProperty(ValueObject):
 
 class DomainMethodParameter(ValueObject):
     
-    name = t.StringType(required=True)
     type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
-    description = t.StringType(required=True)
     inner_type = t.StringType()
     inner_type_model_id = t.StringType()
     required = t.BooleanType()
@@ -158,9 +154,7 @@ class DomainMethodParameter(ValueObject):
 
 class DomainMethod(ValueObject):
     
-    name = t.StringType(required=True)
     type = t.StringType(required=True, choices=['factory', 'behavior'])
-    description = t.StringType()
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     inner_return_type = t.StringType()
     parameters = t.ListType(t.ModelType(DomainMethodParameter), default=[])
@@ -212,9 +206,7 @@ class AppRepositoryImplementation(ValueObject):
 
     '''
 
-    name = t.StringType(required=True)
     class_name = t.StringType(required=True)
-    description = t.StringType()
 
     @staticmethod
     def create(name: str, class_name: str, description: str) -> 'AppRepositoryImplementation':
@@ -240,9 +232,7 @@ class AppRepository(Entity):
     '''A repository interface used to store and retrieve domain models.
     '''
 
-    name = t.StringType(required=True)
     class_name = t.StringType(required=True)
-    description = t.StringType(required=True)
     implementations = t.ListType(t.ModelType(AppRepositoryImplementation), default=[])
 
     @staticmethod

@@ -7,19 +7,11 @@ domain:
         name: class_name
         required: true
         type: str
-      - description: The domain model name.
-        name: name
-        required: true
-        type: str
       - choices:
         - entity
         - value_object
         description: The domain model type.
         name: type
-        required: true
-        type: str
-      - description: The domain model description for inline documentation.
-        name: description
         required: true
         type: str
       - description: The domain model id of the optional base type.
@@ -116,26 +108,16 @@ domain:
       type: entity
     app_interface_type:
       attributes:
-      - description: App interface type name.
-        name: name
-        required: true
-        type: str
       - description: App interface type designation.
         name: type
         required: true
         type: str
-      base_type_model_id: null
       class_name: AppInterfaceType
-      dependencies: []
       description: The application interface type.
       name: App Interface Type
       type: entity
     app_project:
       attributes:
-      - description: App project name.
-        name: name
-        required: true
-        type: str
       - description: The directory containing the app project.
         name: app_directory
         required: true
@@ -155,24 +137,14 @@ domain:
         name: version
         required: true
         type: str
-      base_type_model_id: null
       class_name: AppProject
-      dependencies: []
       description: Application project configuration
       name: App Project
       type: entity
     app_repository:
       attributes:
-      - description: The name of the repository.
-        name: name
-        required: true
-        type: str
       - description: The class name of the repository.
         name: class_name
-        required: true
-        type: str
-      - description: The description of the repository for inline documentation.
-        name: description
         required: true
         type: str
       - default: '[]'
@@ -231,17 +203,8 @@ domain:
       type: entity
     app_repository_implementation:
       attributes:
-      - description: The name of the repository implementation.
-        name: name
-        required: true
-        type: str
       - description: The class name of the repository implementation.
         name: class_name
-        required: true
-        type: str
-      - description: The description of the app repository implementation for purposes
-          of inline documentation
-        name: description
         required: true
         type: str
       class_name: AppRepositoryImplementation
@@ -315,10 +278,6 @@ domain:
       - description: The sub-command key for a CLI command.
         name: subcommand_key
         type: str
-      - description: The name of the CLI command.
-        name: name
-        required: true
-        type: str
       - description: The help text for the CLI command.
         name: help
         required: true
@@ -329,7 +288,6 @@ domain:
         inner_type_model_id: cli_argument
         name: arguments
         type: list
-      base_type_model_id: null
       class_name: CliCommand
       dependencies:
       - class_name: CliArgument
@@ -455,18 +413,10 @@ domain:
       type: value_object
     domain_method:
       attributes:
-      - description: The name of the domain method.
-        name: name
-        required: true
-        type: str
       - choices:
         - factory
         description: The domain method type.
         name: type
-        required: true
-        type: str
-      - description: The domain method description for inline documentation.
-        name: description
         required: true
         type: str
       - choices:
@@ -489,7 +439,6 @@ domain:
         inner_type_model_id: domain_method_parameter
         name: parameters
         type: list
-      base_type_model_id: null
       class_name: DomainMethod
       dependencies:
       - class_name: DomainMethodParameter
@@ -527,10 +476,6 @@ domain:
       type: value_object
     domain_method_parameter:
       attributes:
-      - description: The name of the method parameter.
-        name: name
-        required: true
-        type: str
       - choices:
         - str
         - int
@@ -543,10 +488,6 @@ domain:
         - model
         description: The method parameter data type. Also appears for inline documentation.
         name: type
-        required: true
-        type: str
-      - description: The method parameter description for inline documentation.
-        name: description
         required: true
         type: str
       - description: True if the parameter is required.
@@ -563,11 +504,8 @@ domain:
           dict type is a model type.
         name: inner_type_model_id
         type: str
-      base_type_model_id: null
       class_name: DomainMethodParameter
-      dependencies: []
       description: A parameter for a domain method.
-      methods: []
       name: Domain Method Parameter
       type: value_object
     domain_model_attribute:
@@ -640,9 +578,6 @@ domain:
       type: value_object
     model_property:
       attributes:
-      - name: name
-        required: true
-        type: str
       - name: type
         required: true
         type: str
@@ -655,8 +590,6 @@ domain:
       - inner_type: str
         name: choices
         type: list
-      - name: description
-        type: str
       - name: type_properties
         poly_type_model_ids:
         - string_type_properties
@@ -665,7 +598,6 @@ domain:
         - list_type_properties
         - dict_type_properties
         type: poly
-      base_type_model_id: null
       class_name: ModelProperty
       dependencies:
       - class_name: StringTypeProperties
@@ -688,7 +620,6 @@ domain:
         dependency_type: attribute
         model_id: dict_type_properties
         module: null
-      methods: []
       name: Model Property
       type: value_object
     string_type_properties:
@@ -891,18 +822,6 @@ errors:
     error_code: '000020001'
     message:
       en_US: Domain model of type "{}" with class name "{}" already exists
-  DOMAIN_MODEL_BASE_TYPE_NOT_FOUND:
-    error_code: '000020005'
-    message:
-      en_US: Domain model with id "{}" not found and can not be used as base type.
-  DOMAIN_MODEL_INVALID_BASE_TYPE:
-    error_code: '000020006'
-    message:
-      en_US: Domain model with id "{}" is not a valid base type "{}".
-  DOMAIN_MODEL_NOT_FOUND:
-    error_code: '000020002'
-    message:
-      en_US: Domain model with id "{}" not found
   DOMAIN_MODEL_ATTRIBUTE_ALREADY_EXISTS:
     error_code: '000020003'
     message:
@@ -915,6 +834,18 @@ errors:
     error_code: '000020005'
     message:
       en_US: Domain model attribute with name "{}" not found.
+  DOMAIN_MODEL_BASE_TYPE_NOT_FOUND:
+    error_code: '000020005'
+    message:
+      en_US: Domain model with id "{}" not found and can not be used as base type.
+  DOMAIN_MODEL_INVALID_BASE_TYPE:
+    error_code: '000020006'
+    message:
+      en_US: Domain model with id "{}" is not a valid base type "{}".
+  DOMAIN_MODEL_NOT_FOUND:
+    error_code: '000020002'
+    message:
+      en_US: Domain model with id "{}" not found
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
@@ -954,97 +885,97 @@ features:
     app:
       features:
         new:
-          name: Add New App Project
           functions:
           - data_mapping: new_app_project
             function_path: app.new_app_project
             name: Add New App Project
           header_mapping: app_project_headers
+          name: Add New App Project
         set_default:
-          name: Set Default App Project
           functions:
           - data_mapping: set_default_app_project
             function_path: app.set_default_app_project
             name: Set Default App Project
           header_mapping: app_project_headers
+          name: Set Default App Project
     cli:
       features:
         add_argument:
-          name: Add CLI Argument
           functions:
           - data_mapping: add_cli_argument
             function_path: cli.add_argument
             name: Add CLI Argument
+          name: Add CLI Argument
         add_command:
-          name: Add CLI Command
           functions:
           - data_mapping: add_cli_command
             function_path: cli.add_command
             name: Add CLI Command
+          name: Add CLI Command
         add_parent_argument:
-          name: Add CLI Parent Argument
           functions:
           - data_mapping: add_cli_parent_argument
             function_path: cli.add_parent_argument
             name: Add CLI Parent Argument
+          name: Add CLI Parent Argument
     domain:
       features:
         add_method:
-          name: Add Domain Model Method
           functions:
           - data_mapping: add_domain_method
             function_path: domain.add_method
             name: Add Domain Model Method
+          name: Add Domain Model Method
         add_method_parameter:
-          name: Add Domain Model Method Parameter
           functions:
           - data_mapping: add_domain_method_parameter
             function_path: domain.add_method_parameter
             name: Add Domain Model Method Parameter
+          name: Add Domain Model Method Parameter
         add_model:
-          name: Add Domain Model
           functions:
           - data_mapping: add_domain_model
             function_path: domain.add_domain_model
             name: Add Domain Model
+          name: Add Domain Model
         add_model_attr:
-          name: Add Domain Model Attribute
           functions:
           - data_mapping: add_domain_model_attribute
             function_path: domain.add_domain_model_attribute
             name: Add Domain Model Attribute
+          name: Add Domain Model Attribute
         add_repo_impl:
-          name: Add Repository Implementation
           functions:
           - data_mapping: add_repository_implementation
             function_path: domain.add_repository_implementation
             name: Add Repository Implementation
+          name: Add Repository Implementation
         add_repository:
-          name: Add Repository
           functions:
           - data_mapping: add_repository
             function_path: domain.add_repository
             name: Add Repository
+          name: Add Repository
         remove_model_attr:
-          name: Remove Domain Model Attribute
           functions:
           - data_mapping: remove_domain_model_attribute
             function_path: domain.remove_domain_model_attribute
             name: Remove Domain Model Attribute
+          name: Remove Domain Model Attribute
         update_model_attr:
-          name: Update Domain Model Attribute
           functions:
           - data_mapping: update_domain_model_attribute
             function_path: domain.update_domain_model_attribute
             name: Update Domain Model Attribute
+          name: Update Domain Model Attribute
     interface:
       features:
         add:
-          name: Add New App Interface
           functions:
           - data_mapping: add_interface
             function_path: interface.add_interface
             name: Add New App Interface
+          name: Add New App Interface
 interfaces:
   types:
     cli:
@@ -1380,16 +1311,15 @@ interfaces:
                 name_or_flags:
                 - --type-properties
                 nargs: +
-              - help: model id if type or inner type is a model
-                  object
+              - help: model id if type or inner type is a model object
                 name_or_flags:
                 - --inner-type-model-id
               - help: model ids for a poly-model property type
                 name_or_flags:
                 - --poly-type-model-ids
                 nargs: +
-              name: Add Domain Model Attribute
               help: add new attribute to domain model
+              name: Add Domain Model Attribute
             add_repo_impl:
               arguments:
               - help: repository implementation name
