@@ -50,7 +50,6 @@ class CliArgument(ValueObject):
 class CliCommand(Entity):
     command_key = t.StringType(required=True)
     subcommand_key = t.StringType()
-    name = t.StringType(required=True)
     help = t.StringType(required=True)
     arguments = t.ListType(t.ModelType(CliArgument), default=[])
 

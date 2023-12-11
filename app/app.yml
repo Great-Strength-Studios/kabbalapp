@@ -278,10 +278,6 @@ domain:
       - description: The sub-command key for a CLI command.
         name: subcommand_key
         type: str
-      - description: The name of the CLI command.
-        name: name
-        required: true
-        type: str
       - description: The help text for the CLI command.
         name: help
         required: true
@@ -292,7 +288,6 @@ domain:
         inner_type_model_id: cli_argument
         name: arguments
         type: list
-      base_type_model_id: null
       class_name: CliCommand
       dependencies:
       - class_name: CliArgument
