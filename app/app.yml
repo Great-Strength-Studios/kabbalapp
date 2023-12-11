@@ -632,9 +632,6 @@ domain:
       type: value_object
     model_property:
       attributes:
-      - name: name
-        required: true
-        type: str
       - name: type
         required: true
         type: str
@@ -657,7 +654,6 @@ domain:
         - list_type_properties
         - dict_type_properties
         type: poly
-      base_type_model_id: null
       class_name: ModelProperty
       dependencies:
       - class_name: StringTypeProperties
@@ -680,7 +676,6 @@ domain:
         dependency_type: attribute
         model_id: dict_type_properties
         module: null
-      methods: []
       name: Model Property
       type: value_object
     string_type_properties:

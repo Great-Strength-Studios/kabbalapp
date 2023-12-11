@@ -96,7 +96,6 @@ class ListTypeProperties(TypeProperties):
     
 class ModelProperty(ValueObject):
 
-    name = t.StringType(required=True)
     type = t.StringType(required=True)
     inner_type = t.StringType()
     required = t.BooleanType()
