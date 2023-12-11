@@ -108,17 +108,11 @@ domain:
       type: entity
     app_interface_type:
       attributes:
-      - description: App interface type name.
-        name: name
-        required: true
-        type: str
       - description: App interface type designation.
         name: type
         required: true
         type: str
-      base_type_model_id: null
       class_name: AppInterfaceType
-      dependencies: []
       description: The application interface type.
       name: App Interface Type
       type: entity
