@@ -1,7 +1,7 @@
 from ...models import *
 
 
-class DomainModelAttribute(ModelProperty):
+class DomainModelAttribute(Attribute):
 
     type = t.StringType(required=True, choices=DOMAIN_PROPERTY_TYPES)
     inner_type_model_id = t.StringType()

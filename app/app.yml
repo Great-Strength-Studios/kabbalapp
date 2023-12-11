@@ -541,7 +541,7 @@ domain:
       base_type_model_id: model_property
       class_name: DomainModelAttribute
       dependencies:
-      - class_name: ModelProperty
+      - class_name: Attribute
         dependency_type: base_type
         model_id: model_property
         module: null
@@ -598,7 +598,7 @@ domain:
         - list_type_properties
         - dict_type_properties
         type: poly
-      class_name: ModelProperty
+      class_name: Attribute
       dependencies:
       - class_name: StringTypeProperties
         dependency_type: attribute

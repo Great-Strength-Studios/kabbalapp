@@ -94,7 +94,7 @@ class ListTypeProperties(TypeProperties):
 
         return result
     
-class ModelProperty(AppValueObject):
+class Attribute(AppValueObject):
 
     type = t.StringType(required=True)
     inner_type = t.StringType()

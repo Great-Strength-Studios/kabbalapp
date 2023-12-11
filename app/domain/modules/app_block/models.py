@@ -42,14 +42,14 @@ class TypePropertiesBlock(Model):
         return '\n'.join(self.print_lines())
 
 
-class DomainModelPropertyBlock(Model):
+class DomainAttributeBlock(Model):
 
     attribute = t.ModelType(d.DomainModelAttribute, required=True)
     dependencies = t.ListType(t.ModelType(d.DomainModelDependency))
 
     @staticmethod
-    def create(attribute: d.DomainModelAttribute, dependencies: List[d.DomainModelDependency] = None) -> 'DomainModelPropertyBlock':
-        result = DomainModelPropertyBlock()
+    def create(attribute: d.DomainModelAttribute, dependencies: List[d.DomainModelDependency] = None) -> 'DomainAttributeBlock':
+        result = DomainAttributeBlock()
         result.attribute = attribute
         result.dependencies = dependencies
 
@@ -265,7 +265,7 @@ class AppDomainModelBlock(Model):
                     dependencies = [d for d in domain_model.dependencies if d.model_id in attribute.poly_type_model_ids]
                 else:
                     dependencies = [d for d in domain_model.dependencies if d.model_id == attribute.inner_type or d.model_id == attribute.inner_type_model_id]
-                property_block = DomainModelPropertyBlock.create(attribute, dependencies)
+                property_block = DomainAttributeBlock.create(attribute, dependencies)
                 print_lines.extend(property_block.print_lines())
             
             # Increment the counter
