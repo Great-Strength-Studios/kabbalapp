@@ -57,7 +57,7 @@ class DomainModelDependencyDataMapper(DomainModelDependency):
 
     class Options():
         roles = {
-            'write': blacklist(),
+            'write': blacklist('name', 'description'),
             'map': blacklist(),
         }
 
