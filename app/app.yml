@@ -7,10 +7,6 @@ domain:
         name: class_name
         required: true
         type: str
-      - description: The domain model name.
-        name: name
-        required: true
-        type: str
       - choices:
         - entity
         - value_object
@@ -891,18 +887,6 @@ errors:
     error_code: '000020001'
     message:
       en_US: Domain model of type "{}" with class name "{}" already exists
-  DOMAIN_MODEL_BASE_TYPE_NOT_FOUND:
-    error_code: '000020005'
-    message:
-      en_US: Domain model with id "{}" not found and can not be used as base type.
-  DOMAIN_MODEL_INVALID_BASE_TYPE:
-    error_code: '000020006'
-    message:
-      en_US: Domain model with id "{}" is not a valid base type "{}".
-  DOMAIN_MODEL_NOT_FOUND:
-    error_code: '000020002'
-    message:
-      en_US: Domain model with id "{}" not found
   DOMAIN_MODEL_ATTRIBUTE_ALREADY_EXISTS:
     error_code: '000020003'
     message:
@@ -915,6 +899,18 @@ errors:
     error_code: '000020005'
     message:
       en_US: Domain model attribute with name "{}" not found.
+  DOMAIN_MODEL_BASE_TYPE_NOT_FOUND:
+    error_code: '000020005'
+    message:
+      en_US: Domain model with id "{}" not found and can not be used as base type.
+  DOMAIN_MODEL_INVALID_BASE_TYPE:
+    error_code: '000020006'
+    message:
+      en_US: Domain model with id "{}" is not a valid base type "{}".
+  DOMAIN_MODEL_NOT_FOUND:
+    error_code: '000020002'
+    message:
+      en_US: Domain model with id "{}" not found
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
@@ -954,97 +950,97 @@ features:
     app:
       features:
         new:
-          name: Add New App Project
           functions:
           - data_mapping: new_app_project
             function_path: app.new_app_project
             name: Add New App Project
           header_mapping: app_project_headers
+          name: Add New App Project
         set_default:
-          name: Set Default App Project
           functions:
           - data_mapping: set_default_app_project
             function_path: app.set_default_app_project
             name: Set Default App Project
           header_mapping: app_project_headers
+          name: Set Default App Project
     cli:
       features:
         add_argument:
-          name: Add CLI Argument
           functions:
           - data_mapping: add_cli_argument
             function_path: cli.add_argument
             name: Add CLI Argument
+          name: Add CLI Argument
         add_command:
-          name: Add CLI Command
           functions:
           - data_mapping: add_cli_command
             function_path: cli.add_command
             name: Add CLI Command
+          name: Add CLI Command
         add_parent_argument:
-          name: Add CLI Parent Argument
           functions:
           - data_mapping: add_cli_parent_argument
             function_path: cli.add_parent_argument
             name: Add CLI Parent Argument
+          name: Add CLI Parent Argument
     domain:
       features:
         add_method:
-          name: Add Domain Model Method
           functions:
           - data_mapping: add_domain_method
             function_path: domain.add_method
             name: Add Domain Model Method
+          name: Add Domain Model Method
         add_method_parameter:
-          name: Add Domain Model Method Parameter
           functions:
           - data_mapping: add_domain_method_parameter
             function_path: domain.add_method_parameter
             name: Add Domain Model Method Parameter
+          name: Add Domain Model Method Parameter
         add_model:
-          name: Add Domain Model
           functions:
           - data_mapping: add_domain_model
             function_path: domain.add_domain_model
             name: Add Domain Model
+          name: Add Domain Model
         add_model_attr:
-          name: Add Domain Model Attribute
           functions:
           - data_mapping: add_domain_model_attribute
             function_path: domain.add_domain_model_attribute
             name: Add Domain Model Attribute
+          name: Add Domain Model Attribute
         add_repo_impl:
-          name: Add Repository Implementation
           functions:
           - data_mapping: add_repository_implementation
             function_path: domain.add_repository_implementation
             name: Add Repository Implementation
+          name: Add Repository Implementation
         add_repository:
-          name: Add Repository
           functions:
           - data_mapping: add_repository
             function_path: domain.add_repository
             name: Add Repository
+          name: Add Repository
         remove_model_attr:
-          name: Remove Domain Model Attribute
           functions:
           - data_mapping: remove_domain_model_attribute
             function_path: domain.remove_domain_model_attribute
             name: Remove Domain Model Attribute
+          name: Remove Domain Model Attribute
         update_model_attr:
-          name: Update Domain Model Attribute
           functions:
           - data_mapping: update_domain_model_attribute
             function_path: domain.update_domain_model_attribute
             name: Update Domain Model Attribute
+          name: Update Domain Model Attribute
     interface:
       features:
         add:
-          name: Add New App Interface
           functions:
           - data_mapping: add_interface
             function_path: interface.add_interface
             name: Add New App Interface
+          name: Add New App Interface
 interfaces:
   types:
     cli:
@@ -1380,16 +1376,15 @@ interfaces:
                 name_or_flags:
                 - --type-properties
                 nargs: +
-              - help: model id if type or inner type is a model
-                  object
+              - help: model id if type or inner type is a model object
                 name_or_flags:
                 - --inner-type-model-id
               - help: model ids for a poly-model property type
                 name_or_flags:
                 - --poly-type-model-ids
                 nargs: +
-              name: Add Domain Model Attribute
               help: add new attribute to domain model
+              name: Add Domain Model Attribute
             add_repo_impl:
               arguments:
               - help: repository implementation name
