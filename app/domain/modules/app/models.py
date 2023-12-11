@@ -1,6 +1,6 @@
 from ...models import *
 
-class AppProject(Entity):
+class AppProject(AppEntity):
     app_directory = t.StringType(required=True)
     schema_storage_type = t.StringType(choices=['yaml'], default='yaml')
     schema_location = t.StringType(required=True, default='app/app.yml')
