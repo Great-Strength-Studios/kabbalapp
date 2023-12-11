@@ -154,7 +154,6 @@ class DomainMethodParameter(ValueObject):
 
 class DomainMethod(ValueObject):
     
-    name = t.StringType(required=True)
     type = t.StringType(required=True, choices=['factory', 'behavior'])
     description = t.StringType()
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])

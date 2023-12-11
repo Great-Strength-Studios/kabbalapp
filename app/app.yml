@@ -447,10 +447,6 @@ domain:
       type: value_object
     domain_method:
       attributes:
-      - description: The name of the domain method.
-        name: name
-        required: true
-        type: str
       - choices:
         - factory
         description: The domain method type.
@@ -481,7 +477,6 @@ domain:
         inner_type_model_id: domain_method_parameter
         name: parameters
         type: list
-      base_type_model_id: null
       class_name: DomainMethod
       dependencies:
       - class_name: DomainMethodParameter
