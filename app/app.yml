@@ -232,6 +232,63 @@ domain:
         type: factory
       name: App Repository Implementation
       type: entity
+    attribute:
+      attributes:
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        - poly
+        name: type
+        required: true
+        type: str
+      - name: inner_type
+        type: str
+      - name: required
+        type: bool
+      - name: default
+        type: str
+      - inner_type: str
+        name: choices
+        type: list
+      - name: type_properties
+        poly_type_model_ids:
+        - string_type_properties
+        - date_type_properties
+        - date_time_type_properties
+        - list_type_properties
+        - dict_type_properties
+        type: poly
+      class_name: Attribute
+      dependencies:
+      - class_name: StringTypeProperties
+        dependency_type: attribute
+        model_id: string_type_properties
+        module: null
+      - class_name: DateTypeProperties
+        dependency_type: attribute
+        model_id: date_type_properties
+        module: null
+      - class_name: DateTimeTypeProperties
+        dependency_type: attribute
+        model_id: date_time_type_properties
+        module: null
+      - class_name: ListTypeProperties
+        dependency_type: attribute
+        model_id: list_type_properties
+        module: null
+      - class_name: DictTypeProperties
+        dependency_type: attribute
+        model_id: dict_type_properties
+        module: null
+      name: Model Property
+      type: value_object
     cli_argument:
       attributes:
       - description: The name or flags for the CLI argument.
@@ -575,52 +632,6 @@ domain:
         return_type: model
         type: factory
       name: List Type Properties
-      type: value_object
-    attribute:
-      attributes:
-      - name: type
-        required: true
-        type: str
-      - name: inner_type
-        type: str
-      - name: required
-        type: bool
-      - name: default
-        type: str
-      - inner_type: str
-        name: choices
-        type: list
-      - name: type_properties
-        poly_type_model_ids:
-        - string_type_properties
-        - date_type_properties
-        - date_time_type_properties
-        - list_type_properties
-        - dict_type_properties
-        type: poly
-      class_name: Attribute
-      dependencies:
-      - class_name: StringTypeProperties
-        dependency_type: attribute
-        model_id: string_type_properties
-        module: null
-      - class_name: DateTypeProperties
-        dependency_type: attribute
-        model_id: date_type_properties
-        module: null
-      - class_name: DateTimeTypeProperties
-        dependency_type: attribute
-        model_id: date_time_type_properties
-        module: null
-      - class_name: ListTypeProperties
-        dependency_type: attribute
-        model_id: list_type_properties
-        module: null
-      - class_name: DictTypeProperties
-        dependency_type: attribute
-        model_id: dict_type_properties
-        module: null
-      name: Model Property
       type: value_object
     string_type_properties:
       attributes:

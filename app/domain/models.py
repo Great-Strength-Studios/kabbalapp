@@ -96,7 +96,7 @@ class ListTypeProperties(TypeProperties):
     
 class Attribute(AppValueObject):
 
-    type = t.StringType(required=True)
+    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model', 'poly'])
     inner_type = t.StringType()
     required = t.BooleanType()
     default = t.StringType()
