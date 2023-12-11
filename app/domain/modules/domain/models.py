@@ -95,11 +95,11 @@ class AppDomainModel(Entity):
         self.attributes.append(attribute)
 
     def get_attribute(self, attribute_name: str) -> DomainModelAttribute:
-        return next((p for p in self.attributes if p.name == attribute_name), None)
+        return next((a for a in self.attributes if a.name == attribute_name), None)
 
     def remove_attribute(self, attribute: DomainModelAttribute) -> None:
         # Remove the attribute from the list.
-        attributes: List[DomainModelAttribute] = [p for p in self.attributes if p.name != attribute.name]
+        attributes: List[DomainModelAttribute] = [a for a in self.attributes if a.name != attribute.name]
 
         # Retrieve any potential dependencies of the attribute to be removed
         dependencies: List[DomainModelDependency] = []
