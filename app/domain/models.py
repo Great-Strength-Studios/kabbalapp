@@ -206,7 +206,6 @@ class AppRepositoryImplementation(ValueObject):
 
     '''
 
-    name = t.StringType(required=True)
     class_name = t.StringType(required=True)
     description = t.StringType()
 

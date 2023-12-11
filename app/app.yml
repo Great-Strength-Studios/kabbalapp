@@ -223,10 +223,6 @@ domain:
       type: entity
     app_repository_implementation:
       attributes:
-      - description: The name of the repository implementation.
-        name: name
-        required: true
-        type: str
       - description: The class name of the repository implementation.
         name: class_name
         required: true
