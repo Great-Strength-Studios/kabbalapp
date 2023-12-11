@@ -233,7 +233,6 @@ class AppRepository(Entity):
     '''
 
     class_name = t.StringType(required=True)
-    description = t.StringType(required=True)
     implementations = t.ListType(t.ModelType(AppRepositoryImplementation), default=[])
 
     @staticmethod
