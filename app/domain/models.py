@@ -207,7 +207,6 @@ class AppRepositoryImplementation(ValueObject):
     '''
 
     class_name = t.StringType(required=True)
-    description = t.StringType()
 
     @staticmethod
     def create(name: str, class_name: str, description: str) -> 'AppRepositoryImplementation':

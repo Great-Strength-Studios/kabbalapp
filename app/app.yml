@@ -227,11 +227,6 @@ domain:
         name: class_name
         required: true
         type: str
-      - description: The description of the app repository implementation for purposes
-          of inline documentation
-        name: description
-        required: true
-        type: str
       class_name: AppRepositoryImplementation
       description: An implementation of an AppRepository for a particular data storage
         type.
