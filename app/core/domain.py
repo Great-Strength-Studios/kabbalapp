@@ -13,6 +13,6 @@ class AppValueObject(AppDomainModel):
     pass
 
 
-class Entity(AppDomainModel):
+class AppEntity(AppDomainModel):
 
     id = t.StringType(required=True)

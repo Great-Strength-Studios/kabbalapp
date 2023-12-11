@@ -47,7 +47,7 @@ class CliArgument(AppValueObject):
         return argument
 
 
-class CliCommand(Entity):
+class CliCommand(AppEntity):
     command_key = t.StringType(required=True)
     subcommand_key = t.StringType()
     help = t.StringType(required=True)

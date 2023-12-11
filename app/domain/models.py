@@ -228,7 +228,7 @@ class AppRepositoryImplementation(AppValueObject):
         return result
 
 
-class AppRepository(Entity):
+class AppRepository(AppEntity):
     '''A repository interface used to store and retrieve domain models.
     '''
 
