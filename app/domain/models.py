@@ -126,7 +126,6 @@ class ModelProperty(ValueObject):
 class DomainMethodParameter(ValueObject):
     
     type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
-    description = t.StringType(required=True)
     inner_type = t.StringType()
     inner_type_model_id = t.StringType()
     required = t.BooleanType()

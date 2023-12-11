@@ -533,10 +533,6 @@ domain:
         name: type
         required: true
         type: str
-      - description: The method parameter description for inline documentation.
-        name: description
-        required: true
-        type: str
       - description: True if the parameter is required.
         name: required
         type: bool
