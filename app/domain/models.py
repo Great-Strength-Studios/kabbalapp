@@ -101,7 +101,6 @@ class ModelProperty(ValueObject):
     required = t.BooleanType()
     default = t.StringType()
     choices = t.ListType(t.StringType)
-    description = t.StringType()
     type_properties = t.PolyModelType([StringTypeProperties, DateTypeProperties, DateTimeTypeProperties, ListTypeProperties, DictTypeProperties])
 
     def update(self, setting: str, value: str = None):
