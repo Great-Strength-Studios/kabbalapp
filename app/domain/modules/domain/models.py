@@ -59,7 +59,6 @@ class DomainModelDependency(ValueObject):
 
 class AppDomainModel(Entity):
 
-    id = t.StringType(required=True)
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
     class_name = t.StringType(required=True)
