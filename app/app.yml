@@ -566,11 +566,6 @@ domain:
       name: Domain Method Parameter
       type: value_object
     domain_model_attribute:
-      class_name: DomainModelAttribute
-      description: An attribute of a domain model.
-      name: Domain Model Attribute
-      type: value_object
-    domain_model_property:
       attributes:
       - choices:
         - str
@@ -602,14 +597,14 @@ domain:
         dependency_type: base_type
         model_id: attribute
         module: null
-      description: A property for a domain model.
+      description: A domain model attribute.
       methods:
       - description: Factory method that returns a new DomainModelAttribute instance.
-        inner_return_type: domain_model_property
+        inner_return_type: domain_model_attribute
         name: create
         return_type: model
         type: factory
-      name: Domain Model Property
+      name: Domain Model Attribute
       type: value_object
     list_type_properties:
       attributes:
