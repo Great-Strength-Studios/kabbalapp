@@ -9,7 +9,7 @@ class AppDomainModel(Model):
     description = t.StringType()
 
 
-class ValueObject(AppDomainModel):
+class AppValueObject(AppDomainModel):
     pass
 
 

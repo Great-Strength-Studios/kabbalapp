@@ -38,7 +38,7 @@ class DomainModelAttribute(ModelProperty):
             return False
     
 
-class DomainModelDependency(ValueObject):
+class DomainModelDependency(AppValueObject):
     
     model_id = t.StringType(required=True)
     class_name = t.StringType(required=True)

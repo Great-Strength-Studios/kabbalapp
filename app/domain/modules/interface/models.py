@@ -1,4 +1,4 @@
 from .. import *
 
-class AppInterfaceType(ValueObject):
+class AppInterfaceType(AppValueObject):
     type = t.StringType(required=True)
