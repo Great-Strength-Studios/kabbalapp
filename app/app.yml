@@ -519,10 +519,6 @@ domain:
       type: value_object
     domain_method_parameter:
       attributes:
-      - description: The name of the method parameter.
-        name: name
-        required: true
-        type: str
       - choices:
         - str
         - int
@@ -555,11 +551,8 @@ domain:
           dict type is a model type.
         name: inner_type_model_id
         type: str
-      base_type_model_id: null
       class_name: DomainMethodParameter
-      dependencies: []
       description: A parameter for a domain method.
-      methods: []
       name: Domain Method Parameter
       type: value_object
     domain_model_attribute:
