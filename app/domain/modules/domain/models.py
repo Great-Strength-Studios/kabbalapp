@@ -34,6 +34,7 @@ class DomainModelAttribute(Attribute):
     def create(name: str, parent_model_id: str,  type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, poly_type_model_ids: List[str] = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelAttribute':
         result = DomainModelAttribute()
         result.name = name
+        result.parent_model_id = parent_model_id
         result.type = type
         result.inner_type = inner_type
         result.inner_type_model_id = inner_type_model_id
