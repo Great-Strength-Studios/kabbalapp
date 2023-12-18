@@ -268,6 +268,11 @@ domain:
       - description: The model id of the type if the the type or inner type is a model.
         name: inner_type_model_id
         type: str
+      - description: The list of model ids for an attribute that can be multiple data
+          types.
+        inner_type: str
+        name: poly_model_type_ids
+        type: list
       class_name: Attribute
       dependencies:
       - class_name: StringTypeProperties
