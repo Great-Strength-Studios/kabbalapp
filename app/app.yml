@@ -591,6 +591,11 @@ domain:
       - description: Factory method that returns a new DomainModelAttribute instance.
         inner_return_type: domain_model_attribute
         name: create
+        parameters:
+        - description: The id of the parent domain model.
+          name: parent_model_id
+          required: true
+          type: str
         return_type: model
         type: factory
       name: Domain Model Attribute
