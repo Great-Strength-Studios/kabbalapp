@@ -27,14 +27,20 @@ class DomainModelAttributeDataMapper(DomainModelAttribute):
 
     class Options():
         roles = {
-            'write': blacklist(),
+            'write': blacklist('parent_model_id'),
             'map': blacklist('type_properties'),
         }
         serialize_when_none = False
 
-    def map(self) -> DomainModelAttribute:
+    def map(self, **kwargs) -> DomainModelAttribute:
         # Create the result
         result = DomainModelAttribute(self.to_primitive('map'))
+
+        # Set the kwargs 
+        # TODO - Put this in the mapper kabbalapp core base class.
+        for attribute, value in kwargs.items():
+            setattr(result, attribute, value)
+
         # Return result if type properties is None
         if self.type_properties is None:
             return result
@@ -49,6 +55,8 @@ class DomainModelAttributeDataMapper(DomainModelAttribute):
             result.type_properties = DateTypeProperties(self.type_properties.to_primitive('map.date'))
         elif self.type == DATETIME_TYPE:
             result.type_properties = DateTimeTypeProperties(self.type_properties.to_primitive('map.datetime'))
+
+            
         # Return the result
         return result
     
