@@ -2,6 +2,33 @@ from ...models import *
 
 
 class DomainModelAttribute(Attribute):
+    '''A domain model attribute.
+
+    :param parent_model_id: The id of the parent domain model.
+    :type parent_model_id: str
+    :param name: The name of the attribute.
+    :type name: str
+    :param type: The type of the attribute.
+    :type type: str
+    :param inner_type: The inner type of the attribute.
+    :type inner_type: str
+    :param inner_type_model_id: The inner type model ID of the attribute.
+    :type inner_type_model_id: str
+    :param poly_type_model_ids: The poly type model IDs of the attribute.
+    :type poly_type_model_ids: List[str]
+    :param required: The required flag of the attribute.
+    :type required: bool
+    :param default: The default value of the attribute.
+    :type default: str
+    :param choices: The choices of the attribute.
+    :type choices: List[str]
+    :param description: The description of the attribute.
+    :type description: str
+    :param type_properties: The type properties of the attribute.
+    :type type_properties: class: `domain.models.TypeProperties`
+    '''
+
+    parent_model_id = t.StringType(required=True)
 
     @staticmethod
     def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, poly_type_model_ids: List[str] = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelAttribute':

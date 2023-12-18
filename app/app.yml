@@ -574,6 +574,11 @@ domain:
       name: Domain Method Parameter
       type: value_object
     domain_model_attribute:
+      attributes:
+      - description: The id of the parent domain model.
+        name: parent_model_id
+        required: true
+        type: str
       base_type_model_id: attribute
       class_name: DomainModelAttribute
       dependencies:
