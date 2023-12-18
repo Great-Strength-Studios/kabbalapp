@@ -3,8 +3,6 @@ from ...models import *
 
 class DomainModelAttribute(Attribute):
 
-    poly_type_model_ids = t.ListType(t.StringType())
-
     @staticmethod
     def create(name: str, type: str = 'str', inner_type: str = None, inner_type_model_id: str = None, poly_type_model_ids: List[str] = None, required: bool = None, default: str = None, choices: List[str] = None, description: str = None, type_properties: TypeProperties = None) -> 'DomainModelAttribute':
         result = DomainModelAttribute()

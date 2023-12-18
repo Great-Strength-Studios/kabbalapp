@@ -574,11 +574,6 @@ domain:
       name: Domain Method Parameter
       type: value_object
     domain_model_attribute:
-      attributes:
-      - description: The inner type domain model IDs for a poly-typed property.
-        inner_type: str
-        name: poly_type_model_ids
-        type: list
       base_type_model_id: attribute
       class_name: DomainModelAttribute
       dependencies:
