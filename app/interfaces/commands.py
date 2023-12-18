@@ -96,6 +96,11 @@ class AddDomainModelAttribute(RequestEvent):
     description = t.StringType()
     type_properties = t.DictType(t.StringType(), default={})
 
+    class Options():
+        roles = {
+            'domain_model_attribute.create': blacklist('type_properties'),
+        }
+
 
 class UpdateDomainModelAttribute(RequestEvent):
     

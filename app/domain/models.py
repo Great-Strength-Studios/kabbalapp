@@ -94,10 +94,12 @@ class ListTypeProperties(TypeProperties):
 
         return result
     
-class ModelProperty(AppValueObject):
+class Attribute(AppValueObject):
 
-    type = t.StringType(required=True)
+    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model', 'poly'])
     inner_type = t.StringType()
+    inner_type_model_id = t.StringType()
+    poly_type_model_ids = t.ListType(t.StringType())
     required = t.BooleanType()
     default = t.StringType()
     choices = t.ListType(t.StringType)

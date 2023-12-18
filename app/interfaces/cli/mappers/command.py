@@ -101,7 +101,7 @@ def update_domain_model_attribute(context, request, app_context, **kwargs):
     return UpdateDomainModelAttribute({
         'parent_model_id': request.get('parent_model_id', None),
         'attribute_name': request.get('attribute_name', None),
-        'attribute_setting': request.get('attribute_name', None),
+        'attribute_setting': request.get('attribute_setting', None),
         'value': request.get('value', None)
     })
 

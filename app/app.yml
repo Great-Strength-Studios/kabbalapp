@@ -232,6 +232,71 @@ domain:
         type: factory
       name: App Repository Implementation
       type: entity
+    attribute:
+      attributes:
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        - poly
+        name: type
+        required: true
+        type: str
+      - name: inner_type
+        type: str
+      - name: required
+        type: bool
+      - name: default
+        type: str
+      - inner_type: str
+        name: choices
+        type: list
+      - name: type_properties
+        poly_type_model_ids:
+        - string_type_properties
+        - date_type_properties
+        - date_time_type_properties
+        - list_type_properties
+        - dict_type_properties
+        type: poly
+      - description: The model id of the type if the the type or inner type is a model.
+        name: inner_type_model_id
+        type: str
+      - description: The list of model ids for an attribute that can be multiple data
+          types.
+        inner_type: str
+        name: poly_model_type_ids
+        type: list
+      class_name: Attribute
+      dependencies:
+      - class_name: StringTypeProperties
+        dependency_type: attribute
+        model_id: string_type_properties
+        module: null
+      - class_name: DateTypeProperties
+        dependency_type: attribute
+        model_id: date_type_properties
+        module: null
+      - class_name: DateTimeTypeProperties
+        dependency_type: attribute
+        model_id: date_time_type_properties
+        module: null
+      - class_name: ListTypeProperties
+        dependency_type: attribute
+        model_id: list_type_properties
+        module: null
+      - class_name: DictTypeProperties
+        dependency_type: attribute
+        model_id: dict_type_properties
+        module: null
+      name: Model Property
+      type: value_object
     cli_argument:
       attributes:
       - description: The name or flags for the CLI argument.
@@ -509,50 +574,31 @@ domain:
       name: Domain Method Parameter
       type: value_object
     domain_model_attribute:
-      class_name: DomainModelAttribute
-      description: An attribute of a domain model.
-      name: Domain Model Attribute
-      type: value_object
-    domain_model_property:
       attributes:
-      - choices:
-        - str
-        - int
-        - float
-        - bool
-        - date
-        - datetime
-        - timestamp
-        - list
-        - dict
-        - poly
-        - model
-        description: The domain model property type.
-        name: type
+      - description: The id of the parent domain model.
+        name: parent_model_id
         required: true
         type: str
-      - description: The inner type domain model ID for a model-typed property.
-        name: inner_type_model_id
-        type: str
-      - description: The inner type domain model IDs for a poly-typed property.
-        inner_type: str
-        name: poly_type_model_ids
-        type: list
-      base_type_model_id: model_property
+      base_type_model_id: attribute
       class_name: DomainModelAttribute
       dependencies:
-      - class_name: ModelProperty
+      - class_name: Attribute
         dependency_type: base_type
-        model_id: model_property
+        model_id: attribute
         module: null
-      description: A property for a domain model.
+      description: A domain model attribute.
       methods:
       - description: Factory method that returns a new DomainModelAttribute instance.
-        inner_return_type: domain_model_property
+        inner_return_type: domain_model_attribute
         name: create
+        parameters:
+        - description: The id of the parent domain model.
+          name: parent_model_id
+          required: true
+          type: str
         return_type: model
         type: factory
-      name: Domain Model Property
+      name: Domain Model Attribute
       type: value_object
     list_type_properties:
       attributes:
@@ -575,52 +621,6 @@ domain:
         return_type: model
         type: factory
       name: List Type Properties
-      type: value_object
-    model_property:
-      attributes:
-      - name: type
-        required: true
-        type: str
-      - name: inner_type
-        type: str
-      - name: required
-        type: bool
-      - name: default
-        type: str
-      - inner_type: str
-        name: choices
-        type: list
-      - name: type_properties
-        poly_type_model_ids:
-        - string_type_properties
-        - date_type_properties
-        - date_time_type_properties
-        - list_type_properties
-        - dict_type_properties
-        type: poly
-      class_name: ModelProperty
-      dependencies:
-      - class_name: StringTypeProperties
-        dependency_type: attribute
-        model_id: string_type_properties
-        module: null
-      - class_name: DateTypeProperties
-        dependency_type: attribute
-        model_id: date_type_properties
-        module: null
-      - class_name: DateTimeTypeProperties
-        dependency_type: attribute
-        model_id: date_time_type_properties
-        module: null
-      - class_name: ListTypeProperties
-        dependency_type: attribute
-        model_id: list_type_properties
-        module: null
-      - class_name: DictTypeProperties
-        dependency_type: attribute
-        model_id: dict_type_properties
-        module: null
-      name: Model Property
       type: value_object
     string_type_properties:
       attributes:
