@@ -131,7 +131,7 @@ class AppDomainModelDataMapper(AppDomainModel):
         # Map the properties, dependencies, and methods.
         result.attributes = [attribute.map() for attribute in self.attributes]
         result.dependencies = [dependency.map() for dependency in self.dependencies]
-        result.methods = [method.map() for method in self.methods]
+        result.methods = [method.map(parent_model_id=self.id) for method in self.methods]
         
         # Return the result.
         return result
