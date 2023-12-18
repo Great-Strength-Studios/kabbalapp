@@ -265,6 +265,9 @@ domain:
         - list_type_properties
         - dict_type_properties
         type: poly
+      - description: The model id of the type if the the type or inner type is a model.
+        name: inner_type_model_id
+        type: str
       class_name: Attribute
       dependencies:
       - class_name: StringTypeProperties

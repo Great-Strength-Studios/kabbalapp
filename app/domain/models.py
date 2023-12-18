@@ -98,6 +98,7 @@ class Attribute(AppValueObject):
 
     type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model', 'poly'])
     inner_type = t.StringType()
+    inner_type_model_id = t.StringType()
     required = t.BooleanType()
     default = t.StringType()
     choices = t.ListType(t.StringType)
