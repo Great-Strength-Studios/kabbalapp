@@ -136,7 +136,6 @@ class Parameter(AppValueObject):
 
 class DomainMethodParameter(Parameter):
     
-    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     inner_type = t.StringType()
     inner_type_model_id = t.StringType()
     required = t.BooleanType()
