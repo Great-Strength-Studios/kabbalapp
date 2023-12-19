@@ -623,6 +623,21 @@ domain:
       name: List Type Properties
       type: value_object
     parameter:
+      attributes:
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        description: The date type of the parameter.
+        name: type
+        required: true
+        type: str
       class_name: Parameter
       description: The base class for an app parameter.
       name: Parameter

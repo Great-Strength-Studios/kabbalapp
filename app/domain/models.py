@@ -292,4 +292,4 @@ class AppRepository(AppEntity):
 
 class Parameter(AppValueObject):
 
-    pass
+    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
