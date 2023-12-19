@@ -647,6 +647,9 @@ domain:
       - description: True if the parameter is required.
         name: required
         type: bool
+      - description: The default parameter value.
+        name: default
+        type: str
       class_name: Parameter
       description: The base class for an app parameter.
       name: Parameter

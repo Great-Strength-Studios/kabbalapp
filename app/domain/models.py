@@ -296,3 +296,4 @@ class Parameter(AppValueObject):
     inner_type = t.StringType()
     type_model_id = t.StringType()
     required = t.BooleanType()
+    default = t.StringType()
