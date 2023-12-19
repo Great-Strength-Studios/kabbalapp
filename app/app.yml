@@ -547,10 +547,6 @@ domain:
       - description: The default value of the method parameter.
         name: default
         type: str
-      - description: The inner type if the type happens to be a list, dict, or model
-          type.
-        name: inner_type
-        type: str
       - description: The model id of the inner type if the inner type of a list or
           dict type is a model type.
         name: inner_type_model_id
