@@ -288,3 +288,8 @@ class AppRepository(AppEntity):
 
         # Add the implementation to the implementations list.
         self.implementations.append(implementation)
+
+
+class Parameter(AppValueObject):
+
+    pass

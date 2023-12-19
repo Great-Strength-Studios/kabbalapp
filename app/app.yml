@@ -622,6 +622,11 @@ domain:
         type: factory
       name: List Type Properties
       type: value_object
+    parameter:
+      class_name: Parameter
+      description: The base class for an app parameter.
+      name: Parameter
+      type: value_object
     string_type_properties:
       attributes:
       - name: regex
