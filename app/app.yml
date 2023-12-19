@@ -644,6 +644,9 @@ domain:
       - description: The id of the type model if the type or inner type is a model.
         name: type_model_id
         type: str
+      - description: True if the parameter is required.
+        name: required
+        type: bool
       class_name: Parameter
       description: The base class for an app parameter.
       name: Parameter
