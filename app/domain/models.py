@@ -147,7 +147,7 @@ class DomainMethodParameter(Parameter):
         result.type = type
         result.description = description
         result.inner_type = inner_type
-        result.inner_type_model_id = inner_type_model_id
+        result.type_model_id = inner_type_model_id
         result.required = required
         result.default = default
 
