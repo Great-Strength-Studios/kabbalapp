@@ -136,7 +136,6 @@ class Parameter(AppValueObject):
 
 class DomainMethodParameter(Parameter):
     
-    required = t.BooleanType()
     default = t.StringType()
 
     @staticmethod

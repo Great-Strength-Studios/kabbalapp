@@ -541,9 +541,6 @@ domain:
       type: value_object
     domain_method_parameter:
       attributes:
-      - description: True if the parameter is required.
-        name: required
-        type: bool
       - description: The default value of the method parameter.
         name: default
         type: str
