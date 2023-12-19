@@ -136,7 +136,6 @@ class Parameter(AppValueObject):
 
 class DomainMethodParameter(Parameter):
     
-    inner_type_model_id = t.StringType()
     required = t.BooleanType()
     default = t.StringType()
 
