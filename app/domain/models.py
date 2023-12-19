@@ -136,8 +136,6 @@ class Parameter(AppValueObject):
 
 class DomainMethodParameter(Parameter):
     
-    default = t.StringType()
-
     @staticmethod
     def create(name: str, type: str, inner_type: str = None, inner_type_model_id: str = None, required: bool = None, default: str = None, description: str = None) -> 'DomainMethodParameter':
 

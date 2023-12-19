@@ -540,10 +540,6 @@ domain:
       name: Domain Method
       type: value_object
     domain_method_parameter:
-      attributes:
-      - description: The default value of the method parameter.
-        name: default
-        type: str
       base_type_model_id: parameter
       class_name: DomainMethodParameter
       description: A parameter for a domain method.
