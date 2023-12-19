@@ -125,7 +125,16 @@ class Attribute(AppValueObject):
             setattr(self, setting, value)
 
 
-class DomainMethodParameter(AppValueObject):
+class Parameter(AppValueObject):
+
+    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
+    inner_type = t.StringType()
+    type_model_id = t.StringType()
+    required = t.BooleanType()
+    default = t.StringType()
+
+
+class DomainMethodParameter(Parameter):
     
     type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     inner_type = t.StringType()
@@ -288,12 +297,3 @@ class AppRepository(AppEntity):
 
         # Add the implementation to the implementations list.
         self.implementations.append(implementation)
-
-
-class Parameter(AppValueObject):
-
-    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
-    inner_type = t.StringType()
-    type_model_id = t.StringType()
-    required = t.BooleanType()
-    default = t.StringType()

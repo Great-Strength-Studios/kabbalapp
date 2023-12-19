@@ -569,6 +569,7 @@ domain:
           dict type is a model type.
         name: inner_type_model_id
         type: str
+      base_type_model_id: parameter
       class_name: DomainMethodParameter
       description: A parameter for a domain method.
       name: Domain Method Parameter
