@@ -638,6 +638,9 @@ domain:
         name: type
         required: true
         type: str
+      - description: The inner type of the parameter if the type is a list or dictionary.
+        name: inner_type
+        type: str
       class_name: Parameter
       description: The base class for an app parameter.
       name: Parameter

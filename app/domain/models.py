@@ -293,3 +293,4 @@ class AppRepository(AppEntity):
 class Parameter(AppValueObject):
 
     type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
+    inner_type = t.StringType()
