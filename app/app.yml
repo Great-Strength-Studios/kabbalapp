@@ -540,35 +540,7 @@ domain:
       name: Domain Method
       type: value_object
     domain_method_parameter:
-      attributes:
-      - choices:
-        - str
-        - int
-        - float
-        - bool
-        - date
-        - datetime
-        - list
-        - dict
-        - model
-        description: The method parameter data type. Also appears for inline documentation.
-        name: type
-        required: true
-        type: str
-      - description: True if the parameter is required.
-        name: required
-        type: bool
-      - description: The default value of the method parameter.
-        name: default
-        type: str
-      - description: The inner type if the type happens to be a list, dict, or model
-          type.
-        name: inner_type
-        type: str
-      - description: The model id of the inner type if the inner type of a list or
-          dict type is a model type.
-        name: inner_type_model_id
-        type: str
+      base_type_model_id: parameter
       class_name: DomainMethodParameter
       description: A parameter for a domain method.
       name: Domain Method Parameter
@@ -621,6 +593,38 @@ domain:
         return_type: model
         type: factory
       name: List Type Properties
+      type: value_object
+    parameter:
+      attributes:
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        description: The date type of the parameter.
+        name: type
+        required: true
+        type: str
+      - description: The inner type of the parameter if the type is a list or dictionary.
+        name: inner_type
+        type: str
+      - description: The id of the type model if the type or inner type is a model.
+        name: type_model_id
+        type: str
+      - description: True if the parameter is required.
+        name: required
+        type: bool
+      - description: The default parameter value.
+        name: default
+        type: str
+      class_name: Parameter
+      description: The base class for an app parameter.
+      name: Parameter
       type: value_object
     string_type_properties:
       attributes:

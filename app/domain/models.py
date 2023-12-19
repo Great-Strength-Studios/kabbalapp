@@ -125,14 +125,17 @@ class Attribute(AppValueObject):
             setattr(self, setting, value)
 
 
-class DomainMethodParameter(AppValueObject):
-    
-    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
+class Parameter(AppValueObject):
+
+    type = t.StringType(required=True, choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
     inner_type = t.StringType()
-    inner_type_model_id = t.StringType()
+    type_model_id = t.StringType()
     required = t.BooleanType()
     default = t.StringType()
 
+
+class DomainMethodParameter(Parameter):
+    
     @staticmethod
     def create(name: str, type: str, inner_type: str = None, inner_type_model_id: str = None, required: bool = None, default: str = None, description: str = None) -> 'DomainMethodParameter':
 
@@ -144,7 +147,7 @@ class DomainMethodParameter(AppValueObject):
         result.type = type
         result.description = description
         result.inner_type = inner_type
-        result.inner_type_model_id = inner_type_model_id
+        result.type_model_id = inner_type_model_id
         result.required = required
         result.default = default
 
