@@ -601,6 +601,19 @@ domain:
         name: method_name
         required: true
         type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        description: The return type of the method.
+        name: return_type
+        type: str
       class_name: Method
       description: The base class for an app class method.
       name: Method

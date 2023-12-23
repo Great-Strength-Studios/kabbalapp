@@ -137,6 +137,7 @@ class Parameter(AppValueObject):
 class Method(AppValueObject):
 
     method_name = t.StringType(required=True)
+    return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
 
 
 class DomainMethodParameter(Parameter):
