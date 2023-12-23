@@ -626,6 +626,10 @@ domain:
           or a dictionary.
         name: inner_return_type
         type: str
+      - description: The model id of the return type if the return type or inner return
+          type is a model.
+        name: return_type_model_id
+        type: str
       class_name: Method
       description: The base class for an app class method.
       name: Method
