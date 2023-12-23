@@ -213,16 +213,6 @@ class DomainMethod(Method):
         # Check to see if any existing parameter has a name matching the input parameter name.
         return any([p.name == parameter.name for p in self.parameters])
     
-    def add_parameter(self, parameter: DomainMethodParameter):
-        '''Adds the input parameter to the domain method parameters list.
-        
-        :param parameter: The parameter to add to the method.
-        :type parameter: `domain.models.DomainMethodParameter`
-        '''
-
-        # Add the parameter to the parameters list.
-        self.parameters.append(parameter)
-    
 
 class AppRepositoryImplementation(AppValueObject):
     '''An implementation of an AppRepository for a particular data storage type.

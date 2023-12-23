@@ -514,15 +514,6 @@ domain:
           type: model
         return_type: bool
         type: behavior
-      - description: Adds the input parameter to the domain method parameters list.
-        name: add_parameter
-        parameters:
-        - description: The parameter to add.
-          inner_type: domain_method_parameter
-          name: parameter
-          required: true
-          type: model
-        type: behavior
       name: Domain Method
       type: value_object
     domain_method_parameter:
