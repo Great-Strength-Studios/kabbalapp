@@ -150,7 +150,8 @@ class Method(AppValueObject):
         :type parameter: `domain.models.Parameter`
         '''
 
-        pass
+        # Add the parameter to the parameters list.
+        self.parameters.append(parameter)
 
 
 class DomainMethodParameter(Parameter):
