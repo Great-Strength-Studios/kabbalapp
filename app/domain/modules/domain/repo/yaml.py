@@ -99,7 +99,7 @@ class DomainMethodDataMapper(DomainMethod):
         }
         serialize_when_none = False
 
-    def map(self) -> DomainMethod:
+    def map(self, **kwargs) -> DomainMethod:
 
         # Create the result.
         result = DomainMethod(self.to_primitive('map'))
