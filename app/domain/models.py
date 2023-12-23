@@ -136,7 +136,7 @@ class Parameter(AppValueObject):
 
 class Method(AppValueObject):
 
-    pass
+    method_name = t.StringType(required=True)
 
 
 class DomainMethodParameter(Parameter):

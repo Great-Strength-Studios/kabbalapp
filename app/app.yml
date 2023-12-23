@@ -595,6 +595,12 @@ domain:
       name: List Type Properties
       type: value_object
     method:
+      attributes:
+      - description: The printed method name in the app. Unless specified, this value
+          defaults to the configured domain model method case type.
+        name: method_name
+        required: true
+        type: str
       class_name: Method
       description: The base class for an app class method.
       name: Method
