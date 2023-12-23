@@ -484,20 +484,6 @@ domain:
         name: type
         required: true
         type: str
-      - choices:
-        - str
-        - int
-        - float
-        - bool
-        - date
-        - datetime
-        - model
-        description: The domain method return type.
-        name: return_type
-        type: str
-      - description: The model id of the return type if the return type is a model.
-        name: inner_return_type
-        type: str
       - default: '[]'
         description: The list of domain method parameters..
         inner_type: model
@@ -527,15 +513,6 @@ domain:
           required: true
           type: model
         return_type: bool
-        type: behavior
-      - description: Adds the input parameter to the domain method parameters list.
-        name: add_parameter
-        parameters:
-        - description: The parameter to add.
-          inner_type: domain_method_parameter
-          name: parameter
-          required: true
-          type: model
         type: behavior
       name: Domain Method
       type: value_object
@@ -593,6 +570,67 @@ domain:
         return_type: model
         type: factory
       name: List Type Properties
+      type: value_object
+    method:
+      attributes:
+      - description: The printed method name in the app. Unless specified, this value
+          defaults to the configured domain model method case type.
+        name: method_name
+        required: true
+        type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        description: The return type of the method.
+        name: return_type
+        type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - model
+        description: The inner return type of the method if the return type is a list
+          or a dictionary.
+        name: inner_return_type
+        type: str
+      - description: The model id of the return type if the return type or inner return
+          type is a model.
+        name: return_type_model_id
+        type: str
+      - default: '[]'
+        description: The list of method paremters.
+        inner_type: model
+        inner_type_model_id: parameter
+        name: parameters
+        type: list
+      class_name: Method
+      dependencies:
+      - class_name: Parameter
+        dependency_type: attribute
+        model_id: parameter
+        module: null
+      description: The base class for an app class method.
+      methods:
+      - description: Adds the input parameter to the list of method parameters.
+        name: add_parameter
+        parameters:
+        - description: The parameter to add to the method.
+          inner_type: parameter
+          name: parameter
+          required: false
+          type: model
+        type: behavior
+      name: Method
       type: value_object
     parameter:
       attributes:

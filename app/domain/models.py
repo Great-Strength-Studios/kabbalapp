@@ -134,6 +134,26 @@ class Parameter(AppValueObject):
     default = t.StringType()
 
 
+class Method(AppValueObject):
+
+    method_name = t.StringType(required=True)
+    return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
+    inner_return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
+    return_type_model_id = t.StringType()
+    parameters = t.ListType(t.ModelType(Parameter), default=[])
+
+    def add_parameter(self, parameter: Parameter):
+        '''
+        Adds the input parameter to the list of method parameters.
+        
+        :param parameter: The parameter to add to the method.
+        :type parameter: `domain.models.Parameter`
+        '''
+
+        # Add the parameter to the parameters list.
+        self.parameters.append(parameter)
+
+
 class DomainMethodParameter(Parameter):
     
     @staticmethod
@@ -157,11 +177,9 @@ class DomainMethodParameter(Parameter):
         # Return model instance.
         return result
 
-class DomainMethod(AppValueObject):
+class DomainMethod(Method):
     
     type = t.StringType(required=True, choices=['factory', 'behavior'])
-    return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
-    inner_return_type = t.StringType()
     parameters = t.ListType(t.ModelType(DomainMethodParameter), default=[])
 
     @staticmethod
@@ -194,16 +212,6 @@ class DomainMethod(AppValueObject):
 
         # Check to see if any existing parameter has a name matching the input parameter name.
         return any([p.name == parameter.name for p in self.parameters])
-    
-    def add_parameter(self, parameter: DomainMethodParameter):
-        '''Adds the input parameter to the domain method parameters list.
-        
-        :param parameter: The parameter to add to the method.
-        :type parameter: `domain.models.DomainMethodParameter`
-        '''
-
-        # Add the parameter to the parameters list.
-        self.parameters.append(parameter)
     
 
 class AppRepositoryImplementation(AppValueObject):
