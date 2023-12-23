@@ -646,6 +646,12 @@ domain:
       methods:
       - description: Adds the input parameter to the list of method parameters.
         name: add_parameter
+        parameters:
+        - description: The parameter to add to the method.
+          inner_type: parameter
+          name: parameter
+          required: false
+          type: model
         type: behavior
       name: Method
       type: value_object

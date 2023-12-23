@@ -142,10 +142,12 @@ class Method(AppValueObject):
     return_type_model_id = t.StringType()
     parameters = t.ListType(t.ModelType(Parameter), default=[])
 
-    def add_parameter(self):
+    def add_parameter(self, parameter: Parameter):
         '''
         Adds the input parameter to the list of method parameters.
         
+        :param parameter: The parameter to add to the method.
+        :type parameter: `domain.models.Parameter`
         '''
 
         pass
