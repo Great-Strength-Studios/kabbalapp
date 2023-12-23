@@ -484,9 +484,6 @@ domain:
         name: type
         required: true
         type: str
-      - description: The model id of the return type if the return type is a model.
-        name: inner_return_type
-        type: str
       - default: '[]'
         description: The list of domain method parameters..
         inner_type: model
