@@ -643,6 +643,10 @@ domain:
         model_id: parameter
         module: null
       description: The base class for an app class method.
+      methods:
+      - description: Adds the input parameter to the list of method parameters.
+        name: add_parameter
+        type: behavior
       name: Method
       type: value_object
     parameter:

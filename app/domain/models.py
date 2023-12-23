@@ -142,6 +142,14 @@ class Method(AppValueObject):
     return_type_model_id = t.StringType()
     parameters = t.ListType(t.ModelType(Parameter), default=[])
 
+    def add_parameter(self):
+        '''
+        Adds the input parameter to the list of method parameters.
+        
+        '''
+
+        pass
+
 
 class DomainMethodParameter(Parameter):
     
