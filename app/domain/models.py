@@ -177,7 +177,7 @@ class DomainMethodParameter(Parameter):
         # Return model instance.
         return result
 
-class DomainMethod(AppValueObject):
+class DomainMethod(Method):
     
     type = t.StringType(required=True, choices=['factory', 'behavior'])
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
