@@ -594,6 +594,11 @@ domain:
         type: factory
       name: List Type Properties
       type: value_object
+    method:
+      class_name: Method
+      description: The base class for an app class method.
+      name: Method
+      type: value_object
     parameter:
       attributes:
       - choices:

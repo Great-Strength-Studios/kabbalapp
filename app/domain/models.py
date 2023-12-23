@@ -134,6 +134,11 @@ class Parameter(AppValueObject):
     default = t.StringType()
 
 
+class Method(AppValueObject):
+
+    pass
+
+
 class DomainMethodParameter(Parameter):
     
     @staticmethod
