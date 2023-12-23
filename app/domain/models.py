@@ -180,7 +180,6 @@ class DomainMethodParameter(Parameter):
 class DomainMethod(Method):
     
     type = t.StringType(required=True, choices=['factory', 'behavior'])
-    return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     inner_return_type = t.StringType()
     parameters = t.ListType(t.ModelType(DomainMethodParameter), default=[])
 

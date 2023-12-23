@@ -484,17 +484,6 @@ domain:
         name: type
         required: true
         type: str
-      - choices:
-        - str
-        - int
-        - float
-        - bool
-        - date
-        - datetime
-        - model
-        description: The domain method return type.
-        name: return_type
-        type: str
       - description: The model id of the return type if the return type is a model.
         name: inner_return_type
         type: str
