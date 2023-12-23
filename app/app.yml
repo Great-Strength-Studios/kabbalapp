@@ -630,7 +630,18 @@ domain:
           type is a model.
         name: return_type_model_id
         type: str
+      - default: '[]'
+        description: The list of method paremters.
+        inner_type: model
+        inner_type_model_id: parameter
+        name: parameters
+        type: list
       class_name: Method
+      dependencies:
+      - class_name: Parameter
+        dependency_type: attribute
+        model_id: parameter
+        module: null
       description: The base class for an app class method.
       name: Method
       type: value_object

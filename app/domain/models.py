@@ -140,6 +140,7 @@ class Method(AppValueObject):
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
     inner_return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     return_type_model_id = t.StringType()
+    parameters = t.ListType(t.ModelType(Parameter), default=[])
 
 
 class DomainMethodParameter(Parameter):
