@@ -223,8 +223,6 @@ class AppRepositoryImplementation(Class):
 
     '''
 
-    class_name = t.StringType(required=True)
-
     @staticmethod
     def create(name: str, class_name: str, description: str) -> 'AppRepositoryImplementation':
 

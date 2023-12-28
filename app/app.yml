@@ -194,11 +194,6 @@ domain:
       name: App Repository
       type: entity
     app_repository_implementation:
-      attributes:
-      - description: The class name of the repository implementation.
-        name: class_name
-        required: true
-        type: str
       base_type_model_id: class
       class_name: AppRepositoryImplementation
       description: An implementation of an AppRepository for a particular data storage
