@@ -218,7 +218,7 @@ class DomainMethod(Method):
         return any([p.name == parameter.name for p in self.parameters])
     
 
-class AppRepositoryImplementation(AppValueObject):
+class AppRepositoryImplementation(Class):
     '''An implementation of an AppRepository for a particular data storage type.
 
     '''
