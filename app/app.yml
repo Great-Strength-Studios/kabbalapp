@@ -548,6 +548,10 @@ domain:
       name: Domain Model Attribute
       type: value_object
     function:
+      attributes:
+      - description: The name of the function to be printed in code.
+        name: function_name
+        type: str
       class_name: Function
       description: The base class for an app function.
       name: Function

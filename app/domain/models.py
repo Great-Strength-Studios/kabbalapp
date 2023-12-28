@@ -156,7 +156,7 @@ class Method(AppValueObject):
 
 class Function(AppEntity):
 
-    pass
+    function_name = t.StringType(required=True)
 
 
 class Class(AppEntity):
