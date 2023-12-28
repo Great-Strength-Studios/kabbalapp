@@ -566,6 +566,18 @@ domain:
         description: The return type of the function.
         name: return_type
         type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - model
+        description: The inner return type of the function if the return type is a
+          list or dictionary.
+        name: inner_return_type
+        type: str
       class_name: Function
       description: The base class for an app function.
       name: Function
