@@ -157,6 +157,7 @@ class Method(AppValueObject):
 class Function(AppEntity):
 
     function_name = t.StringType(required=True)
+    return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
 
 
 class Class(AppEntity):

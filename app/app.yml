@@ -553,6 +553,19 @@ domain:
         name: function_name
         required: true
         type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        description: The return type of the function.
+        name: return_type
+        type: str
       class_name: Function
       description: The base class for an app function.
       name: Function
