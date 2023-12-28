@@ -153,6 +153,27 @@ class Method(AppValueObject):
         # Add the parameter to the parameters list.
         self.parameters.append(parameter)
 
+
+class Function(AppEntity):
+
+    function_name = t.StringType(required=True)
+    return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
+    inner_return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
+    return_type_model_id = t.StringType()
+    parameters = t.ListType(t.ModelType(Parameter), default=[])
+
+    def add_parameter(self, parameter: Parameter):
+        '''
+        Adds a new parameter to the function parameters list.
+
+        :param parameter: The parameter to add to the function parameters list.
+        :type parameter: `domain.models.Parameter`
+        '''
+
+        # Add the parameter to the parameters list.
+        self.parameters.append(parameter)
+
+
 class Class(AppEntity):
 
     class_name = t.StringType(required=True)
@@ -194,6 +215,8 @@ class DomainMethod(Method):
 
         # Load attributes from passed in values.
         result.name = name
+        # Set the method name to the snake case version of the input name.
+        result.method_name = name.lower().replace(' ', '_')
         result.type = type
         result.description = description
         result.return_type = return_type

@@ -94,7 +94,7 @@ class DomainMethodDataMapper(DomainMethod):
     
     class Options():
         roles = {
-            'write': blacklist(),
+            'write': blacklist('method_name'),
             'map': blacklist('parameters'),
         }
         serialize_when_none = False

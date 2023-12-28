@@ -547,6 +547,67 @@ domain:
         type: factory
       name: Domain Model Attribute
       type: value_object
+    function:
+      attributes:
+      - description: The name of the function to be printed in code.
+        name: function_name
+        required: true
+        type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - list
+        - dict
+        - model
+        description: The return type of the function.
+        name: return_type
+        type: str
+      - choices:
+        - str
+        - int
+        - float
+        - bool
+        - date
+        - datetime
+        - model
+        description: The inner return type of the function if the return type is a
+          list or dictionary.
+        name: inner_return_type
+        type: str
+      - description: The id of the model type to return if the type or inner type
+          is a model.
+        name: return_type_model_id
+        type: str
+      - default: '[]'
+        description: The list of parameters associated with the function.
+        inner_type: model
+        inner_type_model_id: paramter
+        name: parameters
+        type: list
+      class_name: Function
+      dependencies:
+      - class_name: Parameter
+        dependency_type: method_parameter
+        model_id: parameter
+        module: null
+      description: The base class for an app function.
+      methods:
+      - description: Adds a new parameter to the function parameters list.
+        name: add_parameter
+        parameters:
+        - description: The parameter to add to the function parameters list.
+          inner_type: model
+          inner_type_model_id: parameter
+          name: parameter
+          required: true
+          type: model
+        type: behavior
+      name: Function
+      type: entity
     list_type_properties:
       attributes:
       - name: min_size
