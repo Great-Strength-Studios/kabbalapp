@@ -551,6 +551,7 @@ domain:
       attributes:
       - description: The name of the function to be printed in code.
         name: function_name
+        required: true
         type: str
       class_name: Function
       description: The base class for an app function.
