@@ -3,10 +3,6 @@ domain:
   models:
     app_domain_model:
       attributes:
-      - description: The unique domain model class name.
-        name: class_name
-        required: true
-        type: str
       - choices:
         - entity
         - value_object
@@ -29,6 +25,7 @@ domain:
         inner_type_model_id: domain_method
         name: methods
         type: list
+      base_type_model_id: class
       class_name: AppDomainModel
       dependencies:
       - class_name: DomainModelAttribute
@@ -82,7 +79,6 @@ domain:
         name: add_attribute
         parameters:
         - description: The attribute to add to the domain model.
-          inner_type_model_id: domain_model_attribute
           name: attribute
           required: true
           type: model
@@ -99,7 +95,6 @@ domain:
         name: remove_attribute
         parameters:
         - description: The attribute to remove from the domain model method.
-          inner_type_model_id: domain_model_attribute
           name: attribute
           required: true
           type: model
@@ -143,10 +138,6 @@ domain:
       type: entity
     app_repository:
       attributes:
-      - description: The class name of the repository.
-        name: class_name
-        required: true
-        type: str
       - default: '[]'
         description: The list of app repository implementations corresponding to the
           app repository
@@ -154,6 +145,7 @@ domain:
         inner_type_model_id: app_repository_implementation
         name: implementations
         type: list
+      base_type_model_id: class
       class_name: AppRepository
       dependencies:
       - class_name: AppRepositoryImplementation
@@ -202,11 +194,7 @@ domain:
       name: App Repository
       type: entity
     app_repository_implementation:
-      attributes:
-      - description: The class name of the repository implementation.
-        name: class_name
-        required: true
-        type: str
+      base_type_model_id: class
       class_name: AppRepositoryImplementation
       description: An implementation of an AppRepository for a particular data storage
         type.
@@ -297,6 +285,16 @@ domain:
         module: null
       name: Model Property
       type: value_object
+    class:
+      attributes:
+      - description: The name of the class as it appears in code.
+        name: class_name
+        required: true
+        type: str
+      class_name: Class
+      description: The base class for an app class.
+      name: Class
+      type: entity
     cli_argument:
       attributes:
       - description: The name or flags for the CLI argument.

@@ -81,10 +81,9 @@ class DomainModelDependency(AppValueObject):
         return result
 
 
-class AppDomainModel(AppEntity):
+class AppDomainModel(Class):
 
     type = t.StringType(required=True, choices=DOMAIN_MODEL_TYPES)
-    class_name = t.StringType(required=True)
     base_type_model_id = t.StringType()
     attributes = t.ListType(t.ModelType(DomainModelAttribute), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])

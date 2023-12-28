@@ -153,6 +153,10 @@ class Method(AppValueObject):
         # Add the parameter to the parameters list.
         self.parameters.append(parameter)
 
+class Class(AppEntity):
+
+    class_name = t.StringType(required=True)
+
 
 class DomainMethodParameter(Parameter):
     
@@ -214,12 +218,10 @@ class DomainMethod(Method):
         return any([p.name == parameter.name for p in self.parameters])
     
 
-class AppRepositoryImplementation(AppValueObject):
+class AppRepositoryImplementation(Class):
     '''An implementation of an AppRepository for a particular data storage type.
 
     '''
-
-    class_name = t.StringType(required=True)
 
     @staticmethod
     def create(name: str, class_name: str, description: str) -> 'AppRepositoryImplementation':
@@ -241,11 +243,10 @@ class AppRepositoryImplementation(AppValueObject):
         return result
 
 
-class AppRepository(AppEntity):
+class AppRepository(Class):
     '''A repository interface used to store and retrieve domain models.
     '''
 
-    class_name = t.StringType(required=True)
     implementations = t.ListType(t.ModelType(AppRepositoryImplementation), default=[])
 
     @staticmethod
