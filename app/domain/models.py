@@ -204,6 +204,8 @@ class DomainMethod(Method):
 
         # Load attributes from passed in values.
         result.name = name
+        # Set the method name to the snake case version of the input name.
+        result.method_name = name.lower().replace(' ', '_')
         result.type = type
         result.description = description
         result.return_type = return_type
