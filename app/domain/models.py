@@ -153,6 +153,12 @@ class Method(AppValueObject):
         # Add the parameter to the parameters list.
         self.parameters.append(parameter)
 
+
+class Function(AppEntity):
+
+    pass
+
+
 class Class(AppEntity):
 
     class_name = t.StringType(required=True)

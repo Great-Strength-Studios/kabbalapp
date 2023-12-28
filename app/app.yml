@@ -547,6 +547,11 @@ domain:
         type: factory
       name: Domain Model Attribute
       type: value_object
+    function:
+      class_name: Function
+      description: The base class for an app function.
+      name: Function
+      type: entity
     list_type_properties:
       attributes:
       - name: min_size
