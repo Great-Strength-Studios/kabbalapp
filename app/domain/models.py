@@ -162,6 +162,13 @@ class Function(AppEntity):
     return_type_model_id = t.StringType()
     parameters = t.ListType(t.ModelType(Parameter), default=[])
 
+    def add_parameter(self):
+        '''
+        Adds a new parameter to the function parameters list.
+        '''
+
+        pass
+
 
 class Class(AppEntity):
 

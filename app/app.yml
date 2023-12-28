@@ -590,6 +590,10 @@ domain:
         type: list
       class_name: Function
       description: The base class for an app function.
+      methods:
+      - description: Adds a new parameter to the function parameters list.
+        name: add_parameter
+        type: behavior
       name: Function
       type: entity
     list_type_properties:
