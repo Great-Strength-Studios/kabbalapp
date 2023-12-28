@@ -3,10 +3,6 @@ domain:
   models:
     app_domain_model:
       attributes:
-      - description: The unique domain model class name.
-        name: class_name
-        required: true
-        type: str
       - choices:
         - entity
         - value_object
@@ -83,7 +79,6 @@ domain:
         name: add_attribute
         parameters:
         - description: The attribute to add to the domain model.
-          inner_type_model_id: domain_model_attribute
           name: attribute
           required: true
           type: model
@@ -100,7 +95,6 @@ domain:
         name: remove_attribute
         parameters:
         - description: The attribute to remove from the domain model method.
-          inner_type_model_id: domain_model_attribute
           name: attribute
           required: true
           type: model
