@@ -29,6 +29,7 @@ domain:
         inner_type_model_id: domain_method
         name: methods
         type: list
+      base_type_model_id: class
       class_name: AppDomainModel
       dependencies:
       - class_name: DomainModelAttribute
