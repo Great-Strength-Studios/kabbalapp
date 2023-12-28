@@ -589,10 +589,22 @@ domain:
         name: parameters
         type: list
       class_name: Function
+      dependencies:
+      - class_name: Parameter
+        dependency_type: method_parameter
+        model_id: parameter
+        module: null
       description: The base class for an app function.
       methods:
       - description: Adds a new parameter to the function parameters list.
         name: add_parameter
+        parameters:
+        - description: The parameter to add to the function parameters list.
+          inner_type: model
+          inner_type_model_id: parameter
+          name: parameter
+          required: true
+          type: model
         type: behavior
       name: Function
       type: entity

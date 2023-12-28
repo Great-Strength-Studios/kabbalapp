@@ -162,9 +162,12 @@ class Function(AppEntity):
     return_type_model_id = t.StringType()
     parameters = t.ListType(t.ModelType(Parameter), default=[])
 
-    def add_parameter(self):
+    def add_parameter(self, parameter: Parameter):
         '''
         Adds a new parameter to the function parameters list.
+
+        :param parameter: The parameter to add to the function parameters list.
+        :type parameter: `domain.models.Parameter`
         '''
 
         pass
