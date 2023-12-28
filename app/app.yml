@@ -298,6 +298,11 @@ domain:
       name: Model Property
       type: value_object
     class:
+      attributes:
+      - description: The name of the class as it appears in code.
+        name: class_name
+        required: true
+        type: str
       class_name: Class
       description: The base class for an app class.
       name: Class

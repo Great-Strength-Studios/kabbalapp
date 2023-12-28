@@ -155,7 +155,7 @@ class Method(AppValueObject):
 
 class Class(AppEntity):
 
-    pass
+    class_name = t.StringType(required=True)
 
 
 class DomainMethodParameter(Parameter):
