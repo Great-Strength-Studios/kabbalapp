@@ -170,7 +170,8 @@ class Function(AppEntity):
         :type parameter: `domain.models.Parameter`
         '''
 
-        pass
+        # Add the parameter to the parameters list.
+        self.parameters.append(parameter)
 
 
 class Class(AppEntity):
