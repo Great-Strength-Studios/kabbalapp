@@ -149,6 +149,7 @@ domain:
         inner_type_model_id: app_repository_implementation
         name: implementations
         type: list
+      base_type_model_id: class
       class_name: AppRepository
       dependencies:
       - class_name: AppRepositoryImplementation
