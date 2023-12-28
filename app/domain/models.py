@@ -153,6 +153,10 @@ class Method(AppValueObject):
         # Add the parameter to the parameters list.
         self.parameters.append(parameter)
 
+class Class(AppEntity):
+
+    pass
+
 
 class DomainMethodParameter(Parameter):
     
