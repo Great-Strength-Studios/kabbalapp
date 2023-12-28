@@ -578,6 +578,10 @@ domain:
           list or dictionary.
         name: inner_return_type
         type: str
+      - description: The id of the model type to return if the type or inner type
+          is a model.
+        name: return_type_model_id
+        type: str
       class_name: Function
       description: The base class for an app function.
       name: Function
