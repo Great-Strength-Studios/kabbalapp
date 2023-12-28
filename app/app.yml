@@ -138,10 +138,6 @@ domain:
       type: entity
     app_repository:
       attributes:
-      - description: The class name of the repository.
-        name: class_name
-        required: true
-        type: str
       - default: '[]'
         description: The list of app repository implementations corresponding to the
           app repository

@@ -249,7 +249,6 @@ class AppRepository(Class):
     '''A repository interface used to store and retrieve domain models.
     '''
 
-    class_name = t.StringType(required=True)
     implementations = t.ListType(t.ModelType(AppRepositoryImplementation), default=[])
 
     @staticmethod
