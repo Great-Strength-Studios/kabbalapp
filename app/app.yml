@@ -1,7 +1,7 @@
 domain:
   factories: {}
   models:
-    app_domain_model:
+    domain_model:
       attributes:
       - choices:
         - entity
@@ -26,7 +26,7 @@ domain:
         name: methods
         type: list
       base_type_model_id: class
-      class_name: AppDomainModel
+      class_name: DomainModel
       dependencies:
       - class_name: DomainModelAttribute
         dependency_type: attribute
@@ -42,8 +42,8 @@ domain:
         module: null
       description: Domain Model for the application.
       methods:
-      - description: Factory method that returns a new AppDomainModel instance.
-        inner_return_type: app_domain_model
+      - description: Creates a new Domain Model instance.
+        inner_return_type: domain_model
         name: create
         return_type: model
         type: factory

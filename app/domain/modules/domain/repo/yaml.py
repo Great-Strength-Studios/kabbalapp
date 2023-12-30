@@ -110,7 +110,7 @@ class DomainMethodDataMapper(DomainMethod):
         # Return the result
         return result
 
-class AppDomainModelDataMapper(AppDomainModel):
+class DomainModelDataMapper(DomainModel):
 
     attributes = t.ListType(t.ModelType(DomainModelAttributeDataMapper), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
@@ -123,10 +123,10 @@ class AppDomainModelDataMapper(AppDomainModel):
         }
         serialize_when_none = False
 
-    def map(self) -> AppDomainModel:
+    def map(self) -> DomainModel:
 
         # Create the result
-        result = AppDomainModel(self.to_primitive('map'))
+        result = DomainModel(self.to_primitive('map'))
         
         # Map the properties, dependencies, and methods.
         result.attributes = [attribute.map() for attribute in self.attributes]
@@ -187,7 +187,7 @@ class YamlDomainRepository(DomainRepository):
     def _to_mapper(self, mapper_type: type, **data):
         return mapper_type(data, strict=False)
     
-    def get_domain_model(self, id: str) -> AppDomainModel:
+    def get_domain_model(self, id: str) -> DomainModel:
         
         # Load the schema file data
         import yaml
@@ -197,13 +197,13 @@ class YamlDomainRepository(DomainRepository):
         # First check the value objects
         model_data = data['domain'].get('models', {})
         if id in model_data:
-            mapper = self._to_mapper(AppDomainModelDataMapper, id=id, **model_data.get(id))
+            mapper = self._to_mapper(DomainModelDataMapper, id=id, **model_data.get(id))
             return mapper.map()
         
         # Otherwise return None if no domain models are found.
         return None
     
-    def get_domain_models(self, type: str = None) -> List[AppDomainModel]:
+    def get_domain_models(self, type: str = None) -> List[DomainModel]:
 
         # Load the schema file data
         import yaml
@@ -214,7 +214,7 @@ class YamlDomainRepository(DomainRepository):
         model_data = data['domain'].get('models', {})
 
         # Return the value objects
-        domain_models = [self._to_mapper(AppDomainModelDataMapper, id=id, **value_object).map() for id, value_object in model_data.items()]
+        domain_models = [self._to_mapper(DomainModelDataMapper, id=id, **value_object).map() for id, value_object in model_data.items()]
 
         # Filter out type is specified
         if type is not None:
@@ -223,7 +223,7 @@ class YamlDomainRepository(DomainRepository):
         # Return the domain models
         return domain_models
 
-    def save_domain_model(self, domain_model: AppDomainModel) -> None:
+    def save_domain_model(self, domain_model: DomainModel) -> None:
 
         # Load the schema file data.
         import yaml
@@ -234,7 +234,7 @@ class YamlDomainRepository(DomainRepository):
         domain_model_data = data['domain'].get('models', {})
 
         # Create a data mapper from the domain model.
-        domain_model_mapper = self._to_mapper(AppDomainModelDataMapper, **domain_model.to_primitive())
+        domain_model_mapper = self._to_mapper(DomainModelDataMapper, **domain_model.to_primitive())
 
         # Set the required value of all model properties to None if they are False.
         for attribute in domain_model_mapper.attributes:

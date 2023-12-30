@@ -155,10 +155,10 @@ class DomainAttributeBlock(Model):
 class AppDomainModelBlock(Model):
 
     file_path = t.StringType(required=True)
-    domain_models = t.ListType(t.ModelType(d.AppDomainModel), default=[])
+    domain_models = t.ListType(t.ModelType(d.DomainModel), default=[])
 
     @staticmethod
-    def create(project_path: str, domain_models: List[d.AppDomainModel]) -> 'AppDomainModelBlock':
+    def create(project_path: str, domain_models: List[d.DomainModel]) -> 'AppDomainModelBlock':
         import os
         file_path = os.path.join(project_path, 'app', 'domain', 'models.py')
 
@@ -168,7 +168,7 @@ class AppDomainModelBlock(Model):
 
         return result
     
-    def add_domain_model(self, domain_model: d.AppDomainModel):
+    def add_domain_model(self, domain_model: d.DomainModel):
         self.domain_models.append(domain_model)
 
     def sort_dependencies(self):
