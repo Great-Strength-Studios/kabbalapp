@@ -110,7 +110,7 @@ class DomainMethodDataMapper(DomainMethod):
         # Return the result
         return result
 
-class AppDomainModelDataMapper(DomainModel):
+class DomainModelDataMapper(DomainModel):
 
     attributes = t.ListType(t.ModelType(DomainModelAttributeDataMapper), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
@@ -197,7 +197,7 @@ class YamlDomainRepository(DomainRepository):
         # First check the value objects
         model_data = data['domain'].get('models', {})
         if id in model_data:
-            mapper = self._to_mapper(AppDomainModelDataMapper, id=id, **model_data.get(id))
+            mapper = self._to_mapper(DomainModelDataMapper, id=id, **model_data.get(id))
             return mapper.map()
         
         # Otherwise return None if no domain models are found.
@@ -214,7 +214,7 @@ class YamlDomainRepository(DomainRepository):
         model_data = data['domain'].get('models', {})
 
         # Return the value objects
-        domain_models = [self._to_mapper(AppDomainModelDataMapper, id=id, **value_object).map() for id, value_object in model_data.items()]
+        domain_models = [self._to_mapper(DomainModelDataMapper, id=id, **value_object).map() for id, value_object in model_data.items()]
 
         # Filter out type is specified
         if type is not None:
@@ -234,7 +234,7 @@ class YamlDomainRepository(DomainRepository):
         domain_model_data = data['domain'].get('models', {})
 
         # Create a data mapper from the domain model.
-        domain_model_mapper = self._to_mapper(AppDomainModelDataMapper, **domain_model.to_primitive())
+        domain_model_mapper = self._to_mapper(DomainModelDataMapper, **domain_model.to_primitive())
 
         # Set the required value of all model properties to None if they are False.
         for attribute in domain_model_mapper.attributes:
