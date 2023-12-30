@@ -1,7 +1,7 @@
 domain:
   factories: {}
   models:
-    app_domain_model:
+    domain_model:
       attributes:
       - choices:
         - entity
@@ -43,7 +43,7 @@ domain:
       description: Domain Model for the application.
       methods:
       - description: Factory method that returns a new AppDomainModel instance.
-        inner_return_type: app_domain_model
+        inner_return_type: domain_model
         name: create
         return_type: model
         type: factory
