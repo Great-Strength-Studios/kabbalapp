@@ -91,6 +91,27 @@ class DomainModel(Class):
 
     @staticmethod
     def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, attributes: List[DomainModelAttribute] = []) -> 'DomainModel':
+        '''
+        Creates a new Domain Model instance.
+
+        :param name: The name of the domain model.
+        :type name: str
+        :param type: The type of the domain model.
+        :type type: str
+        :param class_name: The class name of the domain model.
+        :type class_name: str
+        :param description: The description of the domain model.
+        :type description: str
+        :param id: The id of the domain model.
+        :type id: str
+        :param base_type_model_id: The base type model id of the domain model.
+        :type base_type_model_id: str
+        :param attributes: The attributes of the domain model.
+        :type attributes: List[DomainModelAttribute]
+        :return: The new Domain Model instance.
+        :rtype: class: `domain.modules.domain.models.DomainModel`
+        '''
+        
         result = DomainModel()
         result.name = name
         result.type = type

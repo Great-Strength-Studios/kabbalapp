@@ -42,7 +42,7 @@ domain:
         module: null
       description: Domain Model for the application.
       methods:
-      - description: Factory method that returns a new AppDomainModel instance.
+      - description: Creates a new Domain Model instance.
         inner_return_type: domain_model
         name: create
         return_type: model
