@@ -26,7 +26,7 @@ domain:
         name: methods
         type: list
       base_type_model_id: class
-      class_name: AppDomainModel
+      class_name: DomainModel
       dependencies:
       - class_name: DomainModelAttribute
         dependency_type: attribute

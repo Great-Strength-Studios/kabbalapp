@@ -10,7 +10,7 @@ def handle(context: MessageContext):
     domain_repo: d.DomainRepository = context.services.domain_repo(app_key)
 
     # Create new value object instance.
-    domain_model = d.AppDomainModel.create(**context.data.to_primitive())
+    domain_model = d.DomainModel.create(**context.data.to_primitive())
 
     # Check to see if existing domain model exists.
     existing_model = domain_repo.get_domain_model(domain_model.id)

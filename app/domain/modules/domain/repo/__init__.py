@@ -5,13 +5,13 @@ class DomainRepository():
     '''
 
     # TODO: Incorporate real domain model later.
-    def get_domain_model(self, id: str) -> AppDomainModel:
+    def get_domain_model(self, id: str) -> DomainModel:
         pass
 
-    def get_domain_models(self, type: str = None) -> List[AppDomainModel]:
+    def get_domain_models(self, type: str = None) -> List[DomainModel]:
         pass
 
-    def save_domain_model(self, domain_model: AppDomainModel) -> None:
+    def save_domain_model(self, domain_model: DomainModel) -> None:
         pass
 
     def get_repository(self, id: str) -> AppRepository:
