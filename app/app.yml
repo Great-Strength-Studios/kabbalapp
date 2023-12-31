@@ -1270,6 +1270,8 @@ interfaces:
                 - bool
                 - date
                 - datetime
+                - list
+                - dict
                 - model
                 help: The domain method return type.
                 name_or_flags:
