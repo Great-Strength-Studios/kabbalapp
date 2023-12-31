@@ -399,6 +399,12 @@ domain:
       - description: Factory method that returns a new DomainMethod instance.
         inner_return_type: domain_method
         name: create
+        parameters:
+        - description: The model id of the return type if the return type or inner
+            return type is a model.
+          name: inner_type_model_id
+          required: false
+          type: str
         return_type: model
         type: factory
       - description: Returns True if a parameter with the same name as the input parameter
