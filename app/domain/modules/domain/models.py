@@ -87,7 +87,7 @@ class DomainModel(Class):
     base_type_model_id = t.StringType()
     attributes = t.ListType(t.ModelType(DomainModelAttribute), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependency), default=[])
-    methods = t.ListType(t.ModelType(DomainMethod), default=[])
+    methods = t.ListType(t.ModelType(DomainModelMethod), default=[])
 
     @staticmethod
     def create(name: str, type: str, class_name: str, description: str, id: str = None, base_type_model_id: str = None, attributes: List[DomainModelAttribute] = []) -> 'DomainModel':
@@ -177,33 +177,33 @@ class DomainModel(Class):
     def remove_dependency(self, dependency: DomainModelDependency) -> None:
         self.dependencies = [d for d in self.dependencies if d.model_id != dependency.model_id or d.dependency_type != dependency.dependency_type]
 
-    def has_method(self, method: DomainMethod) -> bool:
+    def has_method(self, method: DomainModelMethod) -> bool:
         '''Checks to see if the model contains a method with the same name as the input.
 
         :param method: The input domain method to verify.
-        :type method: class: `domain.models.DomainMethod`
+        :type method: class: `domain.models.DomainModelMethod`
         :return: True if the model contains a method with the same name as the input method.
         :rtype: bool
         '''
         # Return True if the model contains a method with the same name as the input method.
         return any((m.name == method.name for m in self.methods))
     
-    def add_method(self, method: DomainMethod) -> None:
+    def add_method(self, method: DomainModelMethod) -> None:
         '''Adds a new method to the domain model.
 
         :param method: The input domain method to add.
-        :type method: class: `domain.models.DomainMethod`
+        :type method: class: `domain.models.DomainModelMethod`
         '''
         # Add the method to the methods list.
         self.methods.append(method)
 
-    def get_method(self, method_name: str) -> DomainMethod:
+    def get_method(self, method_name: str) -> DomainModelMethod:
         '''Returns the domain method with the input name.
 
         :param method_name: The name of the method to retrieve.
         :type method_name: str
         :return: The domain method with the input name.
-        :rtype: class: `domain.models.DomainMethod`
+        :rtype: class: `domain.models.DomainModelMethod`
         '''
         # Return the domain method with the input name.
         return next((m for m in self.methods if m.name == method_name), None)

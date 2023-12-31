@@ -374,7 +374,7 @@ domain:
         type: factory
       name: Dictionary Type Properties
       type: value_object
-    domain_method:
+    domain_model_method:
       attributes:
       - choices:
         - factory
@@ -388,7 +388,7 @@ domain:
         inner_type_model_id: domain_method_parameter
         name: parameters
         type: list
-      class_name: DomainMethod
+      class_name: DomainModelMethod
       dependencies:
       - class_name: DomainMethodParameter
         dependency_type: attribute
@@ -397,7 +397,7 @@ domain:
       description: A domain method associated with a domain model or repository.
       methods:
       - description: Factory method that returns a new DomainMethod instance.
-        inner_return_type: domain_method
+        inner_return_type: domain_model_method
         name: create
         parameters:
         - description: The model id of the return type if the return type or inner
@@ -447,7 +447,7 @@ domain:
       - default: '[]'
         description: The methods associated with the domain model.
         inner_type: model
-        inner_type_model_id: domain_method
+        inner_type_model_id: domain_model_method
         name: methods
         type: list
       base_type_model_id: class
@@ -457,9 +457,9 @@ domain:
         dependency_type: attribute
         model_id: domain_model_property
         module: null
-      - class_name: DomainMethod
+      - class_name: DomainModelMethod
         dependency_type: attribute
-        model_id: domain_method
+        model_id: domain_model_method
         module: null
       - class_name: DomainModelAttribute
         dependency_type: method_parameter
@@ -480,7 +480,7 @@ domain:
         name: add_method
         type: behavior
       - description: Returns the domain method with the input name.
-        inner_return_type: domain_method
+        inner_return_type: domain_model_method
         name: get_method
         parameters:
         - description: The name of the method to retrieve.
@@ -1033,8 +1033,8 @@ features:
       features:
         add_method:
           functions:
-          - data_mapping: add_domain_method
-            function_path: domain.add_method
+          - data_mapping: add_domain_model_method
+            function_path: domain.add_domain_model_method
             name: Add Domain Model Method
           name: Add Domain Model Method
         add_method_parameter:
@@ -1263,7 +1263,7 @@ interfaces:
                 type: str
               - help: The id of the parent domain model or repository.
                 name_or_flags:
-                - --parent-id
+                - --parent-model-id
                 - -p
                 required: true
                 type: str
