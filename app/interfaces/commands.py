@@ -124,6 +124,7 @@ class AddDomainMethod(RequestEvent):
     description = t.StringType(required=True)
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
     inner_return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
+    return_type_model_id = t.StringType()
     
     class Options():
         roles = {
