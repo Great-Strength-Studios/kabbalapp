@@ -26,6 +26,20 @@ def handle(context: MessageContext):
     if exists:
         raise AppError(context.errors.DOMAIN_METHOD_ALREADY_EXISTS.format_message(domain_method.name, domain_model.id))
     
+    # If the domain method return type or inner return type is a model, then we need to set the model id.
+    if domain_method.return_type == MODEL_TYPE or domain_method.inner_return_type == MODEL_TYPE:
+        return_type_model = domain_repo.get_domain_model(domain_method.return_type_model_id)
+        # Raise app error if the return type model does not exist.
+        if not return_type_model:
+            raise AppError(context.errors.DOMAIN_MODEL_RETURN_TYPE_NOT_FOUND.format_message(domain_method.method_name, domain_method.return_type_model_id))
+        # Create a new method-type domain model dependency and add it to the domain model.
+        dependency = d.DomainModelDependency.create(
+            model_id=return_type_model.id,
+            class_name=return_type_model.class_name,
+            dependency_type=METHOD_DEPENDENCY
+        )
+        domain_model.add_dependency(dependency)
+
     # Add the Domain Method to the parent Domain Model.
     domain_model.add_method(domain_method)
 
