@@ -1277,7 +1277,15 @@ interfaces:
                 name_or_flags:
                 - --return-type
                 type: str
-              - help: The model id of the return type if the return type is a model.
+              - choices:
+                - str
+                - int
+                - float
+                - bool
+                - date
+                - datetime
+                - model
+                help: The model id of the return type if the return type is a model.
                 name_or_flags:
                 - --inner-return-type
                 type: str
