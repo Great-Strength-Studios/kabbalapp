@@ -1033,7 +1033,7 @@ features:
       features:
         add_method:
           functions:
-          - data_mapping: add_domain_method
+          - data_mapping: add_domain_model_method
             function_path: domain.add_domain_model_method
             name: Add Domain Model Method
           name: Add Domain Model Method
