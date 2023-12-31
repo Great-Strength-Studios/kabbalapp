@@ -221,6 +221,7 @@ class DomainMethod(Method):
         result.description = description
         result.return_type = return_type
         result.inner_return_type = inner_return_type
+        result.return_type_model_id = return_type_model_id
 
         # Validate model instance.
         result.validate()
