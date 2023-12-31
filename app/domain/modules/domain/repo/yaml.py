@@ -88,7 +88,7 @@ class DomainMethodParameterDataMapper(DomainMethodParameter):
     def map(self) -> DomainMethodParameter:
         return DomainMethodParameter(self.to_primitive('map'))
 
-class DomainMethodDataMapper(DomainModelMethod):
+class DomainModelMethodDataMapper(DomainModelMethod):
 
     parameters = t.ListType(t.ModelType(DomainMethodParameterDataMapper), default=[])
     
@@ -114,7 +114,7 @@ class DomainModelDataMapper(DomainModel):
 
     attributes = t.ListType(t.ModelType(DomainModelAttributeDataMapper), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
-    methods = t.ListType(t.ModelType(DomainMethodDataMapper), default=[])
+    methods = t.ListType(t.ModelType(DomainModelMethodDataMapper), default=[])
     
     class Options():
         roles = {
