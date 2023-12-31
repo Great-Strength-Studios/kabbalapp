@@ -953,6 +953,10 @@ errors:
     error_code: '000020002'
     message:
       en_US: Domain model with id "{}" not found
+  DOMAIN_MODEL_RETURN_TYPE_NOT_FOUND:
+    error_code : '000020016'
+    message:
+      en_US: Domain model method "{}" has invalid model return type "{}".
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
