@@ -208,7 +208,7 @@ class DomainMethod(Method):
     parameters = t.ListType(t.ModelType(DomainMethodParameter), default=[])
 
     @staticmethod
-    def create(name: str, type: str, description: str, return_type: str = None, inner_return_type: str = None) -> 'DomainMethod':
+    def create(name: str, type: str, description: str, return_type: str = None, inner_return_type: str = None, return_type_model_id: str = None) -> 'DomainMethod':
 
         # Create new model instance.
         result = DomainMethod()
@@ -221,6 +221,7 @@ class DomainMethod(Method):
         result.description = description
         result.return_type = return_type
         result.inner_return_type = inner_return_type
+        result.return_type_model_id = return_type_model_id
 
         # Validate model instance.
         result.validate()

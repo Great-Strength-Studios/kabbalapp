@@ -1,106 +1,6 @@
 domain:
   factories: {}
   models:
-    domain_model:
-      attributes:
-      - choices:
-        - entity
-        - value_object
-        description: The domain model type.
-        name: type
-        required: true
-        type: str
-      - description: The domain model id of the optional base type.
-        name: base_type_model_id
-        type: str
-      - default: '[]'
-        description: Attributes associated with the domain model.
-        inner_type: model
-        inner_type_model_id: domain_model_property
-        name: attributes
-        type: list
-      - default: '[]'
-        description: The methods associated with the domain model.
-        inner_type: model
-        inner_type_model_id: domain_method
-        name: methods
-        type: list
-      base_type_model_id: class
-      class_name: DomainModel
-      dependencies:
-      - class_name: DomainModelAttribute
-        dependency_type: attribute
-        model_id: domain_model_property
-        module: null
-      - class_name: DomainMethod
-        dependency_type: attribute
-        model_id: domain_method
-        module: null
-      - class_name: DomainModelAttribute
-        dependency_type: method_parameter
-        model_id: domain_model_attribute
-        module: null
-      description: Domain Model for the application.
-      methods:
-      - description: Creates a new Domain Model instance.
-        inner_return_type: domain_model
-        name: create
-        return_type: model
-        type: factory
-      - description: Checks to see if the domain model contains the same input method.
-        name: has_method
-        return_type: bool
-        type: behavior
-      - description: Adds a new method to the domain model.
-        name: add_method
-        type: behavior
-      - description: Returns the domain method with the input name.
-        inner_return_type: domain_method
-        name: get_method
-        parameters:
-        - description: The name of the method to retrieve.
-          name: method_name
-          required: true
-          type: str
-        return_type: model
-        type: behavior
-      - description: Returns True if the domain model already contains a method with
-          the same name as the input name.
-        name: has_attribute
-        parameters:
-        - description: The name of the attribute to check against the list of attributes
-            in the domain model.
-          name: attribute_name
-          required: true
-          type: str
-        return_type: bool
-        type: behavior
-      - description: Adds a new attribute to the domain model.
-        name: add_attribute
-        parameters:
-        - description: The attribute to add to the domain model.
-          name: attribute
-          required: true
-          type: model
-        type: behavior
-      - description: Retrieves an attribute from the domain model by attribute name.
-        name: get_attribute
-        parameters:
-        - description: The name of the attribute to retrieve from the domain model.
-          name: attribute_name
-          required: true
-          type: str
-        type: behavior
-      - description: Removes a property from the domain model.
-        name: remove_attribute
-        parameters:
-        - description: The attribute to remove from the domain model method.
-          name: attribute
-          required: true
-          type: model
-        type: behavior
-      name: App Domain Model
-      type: entity
     app_interface_type:
       attributes:
       - description: App interface type designation.
@@ -499,6 +399,12 @@ domain:
       - description: Factory method that returns a new DomainMethod instance.
         inner_return_type: domain_method
         name: create
+        parameters:
+        - description: The model id of the return type if the return type or inner
+            return type is a model.
+          name: inner_type_model_id
+          required: false
+          type: str
         return_type: model
         type: factory
       - description: Returns True if a parameter with the same name as the input parameter
@@ -520,6 +426,106 @@ domain:
       description: A parameter for a domain method.
       name: Domain Method Parameter
       type: value_object
+    domain_model:
+      attributes:
+      - choices:
+        - entity
+        - value_object
+        description: The domain model type.
+        name: type
+        required: true
+        type: str
+      - description: The domain model id of the optional base type.
+        name: base_type_model_id
+        type: str
+      - default: '[]'
+        description: Attributes associated with the domain model.
+        inner_type: model
+        inner_type_model_id: domain_model_property
+        name: attributes
+        type: list
+      - default: '[]'
+        description: The methods associated with the domain model.
+        inner_type: model
+        inner_type_model_id: domain_method
+        name: methods
+        type: list
+      base_type_model_id: class
+      class_name: DomainModel
+      dependencies:
+      - class_name: DomainModelAttribute
+        dependency_type: attribute
+        model_id: domain_model_property
+        module: null
+      - class_name: DomainMethod
+        dependency_type: attribute
+        model_id: domain_method
+        module: null
+      - class_name: DomainModelAttribute
+        dependency_type: method_parameter
+        model_id: domain_model_attribute
+        module: null
+      description: Domain Model for the application.
+      methods:
+      - description: Creates a new Domain Model instance.
+        inner_return_type: domain_model
+        name: create
+        return_type: model
+        type: factory
+      - description: Checks to see if the domain model contains the same input method.
+        name: has_method
+        return_type: bool
+        type: behavior
+      - description: Adds a new method to the domain model.
+        name: add_method
+        type: behavior
+      - description: Returns the domain method with the input name.
+        inner_return_type: domain_method
+        name: get_method
+        parameters:
+        - description: The name of the method to retrieve.
+          name: method_name
+          required: true
+          type: str
+        return_type: model
+        type: behavior
+      - description: Returns True if the domain model already contains a method with
+          the same name as the input name.
+        name: has_attribute
+        parameters:
+        - description: The name of the attribute to check against the list of attributes
+            in the domain model.
+          name: attribute_name
+          required: true
+          type: str
+        return_type: bool
+        type: behavior
+      - description: Adds a new attribute to the domain model.
+        name: add_attribute
+        parameters:
+        - description: The attribute to add to the domain model.
+          name: attribute
+          required: true
+          type: model
+        type: behavior
+      - description: Retrieves an attribute from the domain model by attribute name.
+        name: get_attribute
+        parameters:
+        - description: The name of the attribute to retrieve from the domain model.
+          name: attribute_name
+          required: true
+          type: str
+        type: behavior
+      - description: Removes a property from the domain model.
+        name: remove_attribute
+        parameters:
+        - description: The attribute to remove from the domain model method.
+          name: attribute
+          required: true
+          type: model
+        type: behavior
+      name: App Domain Model
+      type: entity
     domain_model_attribute:
       attributes:
       - description: The id of the parent domain model.
@@ -947,6 +953,10 @@ errors:
     error_code: '000020002'
     message:
       en_US: Domain model with id "{}" not found
+  DOMAIN_MODEL_RETURN_TYPE_NOT_FOUND:
+    error_code : '000020016'
+    message:
+      en_US: Domain model method "{}" has invalid model return type "{}".
   ENDPOINT_NOT_FOUND:
     error_code: '000000002'
     message:
@@ -1270,15 +1280,29 @@ interfaces:
                 - bool
                 - date
                 - datetime
+                - list
+                - dict
                 - model
                 help: The domain method return type.
                 name_or_flags:
                 - --return-type
                 type: str
-              - help: The model id of the return type if the return type is a model.
+              - choices:
+                - str
+                - int
+                - float
+                - bool
+                - date
+                - datetime
+                - model
+                help: The model id of the return type if the return type is a model.
                 name_or_flags:
                 - --inner-return-type
                 type: str
+              - help: model id of return type if method return type or inner return
+                  type is model
+                name_or_flags:
+                - --return-type-model-id
               help: Adds a new domain method to an existing domain model or repository.
               name: Add Domain Method
             add_method_parameter:

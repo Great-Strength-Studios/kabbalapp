@@ -121,7 +121,8 @@ def add_domain_method(context, request, app_context, **kwargs):
         'parent_id': request.get('parent_id', None),
         'description': request.get('description', None),
         'return_type': request.get('return_type', None),
-        'inner_return_type': request.get('inner_return_type', None)
+        'inner_return_type': request.get('inner_return_type', None),
+        'return_type_model_id': request.get('return_type_model_id', None)
     })
 
 
