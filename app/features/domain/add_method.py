@@ -13,11 +13,11 @@ def handle(context: MessageContext):
     domain_repo: d.DomainRepository = context.services.domain_repo(app_key)
 
     # Retrieve the Domain Model from the Domain Method parent id.
-    domain_model = domain_repo.get_domain_model(context.data.parent_id)
+    domain_model = domain_repo.get_domain_model(context.data.parent_model_id)
 
     # Raise app error if the parent Domain Model does not exist.
     if not domain_model:
-        raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(context.data.parent_id))
+        raise AppError(context.errors.DOMAIN_MODEL_NOT_FOUND.format_message(context.data.parent_model_id))
     
     # Check to see if the Domain Model already contains the Domain Method.
     exists = domain_model.has_method(domain_method)

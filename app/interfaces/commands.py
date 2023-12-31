@@ -120,7 +120,7 @@ class AddDomainModelMethod(RequestEvent):
 
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=['factory', 'behavior'])
-    parent_id = t.StringType(required=True)
+    parent_model_id = t.StringType(required=True)
     description = t.StringType(required=True)
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
     inner_return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
