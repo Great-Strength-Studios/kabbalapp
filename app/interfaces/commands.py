@@ -116,7 +116,7 @@ class RemoveDomainModelAttribute(RequestEvent):
     attribute_name = t.StringType(required=True)
     
 
-class AddDomainMethod(RequestEvent):
+class AddDomainModelMethod(RequestEvent):
 
     name = t.StringType(required=True)
     type = t.StringType(required=True, choices=['factory', 'behavior'])

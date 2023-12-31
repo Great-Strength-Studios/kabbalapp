@@ -115,7 +115,7 @@ def remove_domain_model_attribute(context, request, app_context, **kwargs):
 
 def add_domain_method(context, request, app_context, **kwargs):
     # Map the values of the request dict to a new Add Domain Method request instance.
-    return AddDomainMethod({
+    return AddDomainModelMethod({
         'name': request.get('name', None),
         'type': request.get('type', None),
         'parent_id': request.get('parent_id', None),
