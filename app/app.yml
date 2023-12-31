@@ -1263,7 +1263,7 @@ interfaces:
                 type: str
               - help: The id of the parent domain model or repository.
                 name_or_flags:
-                - --parent-id
+                - --parent-model-id
                 - -p
                 required: true
                 type: str
