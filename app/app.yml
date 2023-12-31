@@ -388,7 +388,7 @@ domain:
         inner_type_model_id: domain_method_parameter
         name: parameters
         type: list
-      class_name: DomainMethod
+      class_name: DomainModelMethod
       dependencies:
       - class_name: DomainMethodParameter
         dependency_type: attribute
@@ -457,7 +457,7 @@ domain:
         dependency_type: attribute
         model_id: domain_model_property
         module: null
-      - class_name: DomainMethod
+      - class_name: DomainModelMethod
         dependency_type: attribute
         model_id: domain_model_method
         module: null

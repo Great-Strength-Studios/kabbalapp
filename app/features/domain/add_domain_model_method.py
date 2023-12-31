@@ -4,7 +4,7 @@ from ...domain import *
 def handle(context: MessageContext):
 
     # Create new Domain Method instance from the input request data.
-    domain_method = d.DomainMethod.create(**context.data.to_primitive('domain_method.create'))
+    domain_method = d.DomainModelMethod.create(**context.data.to_primitive('domain_method.create'))
 
     # Retreive app key from headers.
     app_key = context.headers.get('app_key', None)
