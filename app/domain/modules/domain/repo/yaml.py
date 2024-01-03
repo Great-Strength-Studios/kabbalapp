@@ -116,18 +116,16 @@ class DomainModelDataMapper(DomainModel):
     dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
     methods = t.DictType(t.ModelType(DomainModelMethodDataMapper), default={})
 
-
     def __init__(self, data, **kwargs):
         data = self.preprocess(data)
         super().__init__(data, **kwargs)
 
     def preprocess(self, data):
+        # Get the methods and default to an empty dict if it is not present.
         methods = data.get('methods', {})
+        # Convert the methods to a list if it is a dict.
         if isinstance(methods, list):
-            methods_dict = {}
-            for method in methods:
-                methods_dict[method['name']] = method
-            data['methods'] = methods_dict
+            data['methods'] = {method['name']: method for method in methods}
         return data
 
     class Options():
