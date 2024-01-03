@@ -114,12 +114,24 @@ class DomainModelDataMapper(DomainModel):
 
     attributes = t.ListType(t.ModelType(DomainModelAttributeDataMapper), default=[])
     dependencies = t.ListType(t.ModelType(DomainModelDependencyDataMapper), default=[])
-    methods = t.ListType(t.ModelType(DomainModelMethodDataMapper), default=[])
-    
+    methods = t.DictType(t.ModelType(DomainModelMethodDataMapper), default={})
+
+    def __init__(self, data, **kwargs):
+        data = self.preprocess(data)
+        super().__init__(data, **kwargs)
+
+    def preprocess(self, data):
+        # Get the methods and default to an empty dict if it is not present.
+        methods = data.get('methods', {})
+        # Convert the methods to a list if it is a dict.
+        if isinstance(methods, list):
+            data['methods'] = {method['name']: method for method in methods}
+        return data
+
     class Options():
         roles = {
             'write': blacklist('id'),
-            'map': blacklist('properties', 'dependencies'),
+            'map': blacklist('attributes', 'dependencies', 'methods'),
         }
         serialize_when_none = False
 
@@ -131,7 +143,7 @@ class DomainModelDataMapper(DomainModel):
         # Map the properties, dependencies, and methods.
         result.attributes = [attribute.map() for attribute in self.attributes]
         result.dependencies = [dependency.map() for dependency in self.dependencies]
-        result.methods = [method.map(parent_model_id=self.id) for method in self.methods]
+        result.methods = [method.map(method_name=method_name) for method_name, method in self.methods.items()]
         
         # Return the result.
         return result

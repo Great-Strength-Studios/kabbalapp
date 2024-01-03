@@ -125,10 +125,11 @@ class AddDomainModelMethod(RequestEvent):
     return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'list', 'dict', 'model'])
     inner_return_type = t.StringType(choices=['str', 'int', 'float', 'bool', 'date', 'datetime', 'model'])
     return_type_model_id = t.StringType()
+    method_name = t.StringType()
     
     class Options():
         roles = {
-            'domain_method.create': blacklist('parent_id'),
+            'domain_method.create': blacklist('parent_model_id'),
         }
 
 class AddDomainMethodParameter(RequestEvent):
