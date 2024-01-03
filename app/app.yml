@@ -59,7 +59,7 @@ domain:
         add_implementation:
           description: Adds the input implementation to the repository implementations
             list.
-          name: add_implementation
+          name: Add Implementation
           parameters:
           - description: The implementation to add to the repository.
             inner_type: app_repository_implementation
@@ -69,7 +69,7 @@ domain:
           type: behavior
         create:
           description: Factory method to create a new AppRepository instance.
-          name: create
+          name: Create
           parameters:
           - description: The name of the repository.
             name: name
@@ -87,7 +87,7 @@ domain:
         has_implementation:
           description: Returns True if the input implementation already exists in
             the repository implementations list.
-          name: has_implementation
+          name: Has Implementation
           parameters:
           - description: The name of the implementation to check if it already exists
               in the repository.
@@ -107,7 +107,7 @@ domain:
         create:
           description: Creates a new App Repository Implementation instance.
           inner_return_type: app_repository_implementation
-          name: create
+          name: Create
           parameters:
           - description: The name of the repository implementation.
             name: name
@@ -341,7 +341,7 @@ domain:
         create:
           description: Factory method that returns a new DateTimeTypeProperties instance.
           inner_return_type: date_time_type_properties
-          name: create
+          name: Create
           return_type: model
           type: factory
       name: Date Time Type Properties
@@ -362,7 +362,7 @@ domain:
         create:
           description: Factory method that returns a new DateTypeProperties instance.
           inner_return_type: date_type_properties
-          name: create
+          name: Create
           return_type: model
           type: factory
       name: Date Type Properties
@@ -383,7 +383,7 @@ domain:
         create:
           description: Factory method that returns a new DictTypeProperties instance.
           inner_return_type: dict_type_properties
-          name: create
+          name: Create
           return_type: model
           type: factory
       name: Dictionary Type Properties
@@ -438,7 +438,7 @@ domain:
       methods:
         add_attribute:
           description: Adds a new attribute to the domain model.
-          name: add_attribute
+          name: Add Attribute
           parameters:
           - description: The attribute to add to the domain model.
             name: attribute
@@ -447,17 +447,17 @@ domain:
           type: behavior
         add_method:
           description: Adds a new method to the domain model.
-          name: add_method
+          name: Add Method
           type: behavior
         create:
           description: Creates a new Domain Model instance.
           inner_return_type: domain_model
-          name: create
+          name: Create
           return_type: model
           type: factory
         get_attribute:
           description: Retrieves an attribute from the domain model by attribute name.
-          name: get_attribute
+          name: Get Attribute
           parameters:
           - description: The name of the attribute to retrieve from the domain model.
             name: attribute_name
@@ -467,7 +467,7 @@ domain:
         get_method:
           description: Returns the domain method with the input name.
           inner_return_type: domain_model_method
-          name: get_method
+          name: Get Method
           parameters:
           - description: The name of the method to retrieve.
             name: method_name
@@ -478,7 +478,7 @@ domain:
         has_attribute:
           description: Returns True if the domain model already contains a method
             with the same name as the input name.
-          name: has_attribute
+          name: Has Attribute
           parameters:
           - description: The name of the attribute to check against the list of attributes
               in the domain model.
@@ -489,12 +489,12 @@ domain:
           type: behavior
         has_method:
           description: Checks to see if the domain model contains the same input method.
-          name: has_method
+          name: Has Method
           return_type: bool
           type: behavior
         remove_attribute:
           description: Removes a property from the domain model.
-          name: remove_attribute
+          name: Remove Attribute
           parameters:
           - description: The attribute to remove from the domain model method.
             name: attribute
@@ -521,7 +521,7 @@ domain:
         create:
           description: Factory method that returns a new DomainModelAttribute instance.
           inner_return_type: domain_model_attribute
-          name: create
+          name: Create
           parameters:
           - description: The id of the parent domain model.
             name: parent_model_id
@@ -556,7 +556,7 @@ domain:
         create:
           description: Factory method that returns a new DomainMethod instance.
           inner_return_type: domain_model_method
-          name: create
+          name: Create
           parameters:
           - description: The model id of the return type if the return type or inner
               return type is a model.
@@ -572,7 +572,7 @@ domain:
         has_parameter:
           description: Returns True if a parameter with the same name as the input
             parameter exists within the domain method.
-          name: has_parameter
+          name: Has Parameter
           parameters:
           - description: The parameter to check if it already exists in the method.
             inner_type: domain_method_parameter
@@ -634,7 +634,7 @@ domain:
       methods:
         add_parameter:
           description: Adds a new parameter to the function parameters list.
-          name: add_parameter
+          name: Add Parameter
           parameters:
           - description: The parameter to add to the function parameters list.
             inner_type: model
@@ -663,7 +663,7 @@ domain:
         create:
           description: Factory method that returns a new ListTypeProperties instance.
           inner_return_type: list_type_properties
-          name: create
+          name: Create
           return_type: model
           type: factory
       name: List Type Properties
@@ -720,7 +720,7 @@ domain:
       methods:
         add_parameter:
           description: Adds the input parameter to the list of method parameters.
-          name: add_parameter
+          name: Add Parameter
           parameters:
           - description: The parameter to add to the method.
             inner_type: parameter
@@ -783,7 +783,7 @@ domain:
         create:
           description: Factory method that returns a new StringTypeProperties instance.
           inner_return_type: string_type_properties
-          name: create
+          name: Create
           return_type: model
           type: factory
       name: String Type Properties
