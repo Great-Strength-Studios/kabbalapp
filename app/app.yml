@@ -1212,6 +1212,9 @@ interfaces:
                   type is model
                 name_or_flags:
                 - --return-type-model-id
+              - help: method name if different than name
+                name_or_flags:
+                - --method-name
               help: Adds a new domain method to an existing domain model or repository.
               name: Add Domain Method
             add_method_parameter:
