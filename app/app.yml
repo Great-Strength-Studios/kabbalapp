@@ -9,6 +9,7 @@ domain:
         type: str
       class_name: AppInterfaceType
       description: The application interface type.
+      methods: {}
       name: App Interface Type
       type: entity
     app_project:
@@ -34,6 +35,7 @@ domain:
         type: str
       class_name: AppProject
       description: Application project configuration
+      methods: {}
       name: App Project
       type: entity
     app_repository:
@@ -54,43 +56,46 @@ domain:
         module: null
       description: A repository interface used by the app.
       methods:
-      - description: Factory method to create a new AppRepository instance.
-        name: create
-        parameters:
-        - description: The name of the repository.
-          name: name
-          required: true
-          type: str
-        - description: The class name of the repository class.
-          name: class_name
-          required: true
-          type: str
-        - description: The description of the repository for inline documentation.
-          name: description
-          required: true
-          type: str
-        type: factory
-      - description: Returns True if the input implementation already exists in the
-          repository implementations list.
-        name: has_implementation
-        parameters:
-        - description: The name of the implementation to check if it already exists
-            in the repository.
-          name: implementation_name
-          required: true
-          type: str
-        return_type: bool
-        type: behavior
-      - description: Adds the input implementation to the repository implementations
-          list.
-        name: add_implementation
-        parameters:
-        - description: The implementation to add to the repository.
-          inner_type: app_repository_implementation
-          name: implementation
-          required: true
-          type: model
-        type: behavior
+        add_implementation:
+          description: Adds the input implementation to the repository implementations
+            list.
+          name: add_implementation
+          parameters:
+          - description: The implementation to add to the repository.
+            inner_type: app_repository_implementation
+            name: implementation
+            required: true
+            type: model
+          type: behavior
+        create:
+          description: Factory method to create a new AppRepository instance.
+          name: create
+          parameters:
+          - description: The name of the repository.
+            name: name
+            required: true
+            type: str
+          - description: The class name of the repository class.
+            name: class_name
+            required: true
+            type: str
+          - description: The description of the repository for inline documentation.
+            name: description
+            required: true
+            type: str
+          type: factory
+        has_implementation:
+          description: Returns True if the input implementation already exists in
+            the repository implementations list.
+          name: has_implementation
+          parameters:
+          - description: The name of the implementation to check if it already exists
+              in the repository.
+            name: implementation_name
+            required: true
+            type: str
+          return_type: bool
+          type: behavior
       name: App Repository
       type: entity
     app_repository_implementation:
@@ -99,25 +104,26 @@ domain:
       description: An implementation of an AppRepository for a particular data storage
         type.
       methods:
-      - description: Creates a new App Repository Implementation instance.
-        inner_return_type: app_repository_implementation
-        name: create
-        parameters:
-        - description: The name of the repository implementation.
-          name: name
-          required: true
-          type: str
-        - description: The class name of the repository implementation.
-          name: class_name
-          required: true
-          type: str
-        - description: The description of the repository implementation for inline
-            documentation.
-          name: description
-          required: false
-          type: str
-        return_type: model
-        type: factory
+        create:
+          description: Creates a new App Repository Implementation instance.
+          inner_return_type: app_repository_implementation
+          name: create
+          parameters:
+          - description: The name of the repository implementation.
+            name: name
+            required: true
+            type: str
+          - description: The class name of the repository implementation.
+            name: class_name
+            required: true
+            type: str
+          - description: The description of the repository implementation for inline
+              documentation.
+            name: description
+            required: false
+            type: str
+          return_type: model
+          type: factory
       name: App Repository Implementation
       type: entity
     attribute:
@@ -183,6 +189,7 @@ domain:
         dependency_type: attribute
         model_id: dict_type_properties
         module: null
+      methods: {}
       name: Model Property
       type: value_object
     class:
@@ -193,6 +200,7 @@ domain:
         type: str
       class_name: Class
       description: The base class for an app class.
+      methods: {}
       name: Class
       type: entity
     cli_argument:
@@ -230,6 +238,7 @@ domain:
       class_name: CliArgument
       dependencies: []
       description: A command-line interface argument.
+      methods: {}
       name: CLI Argument
       type: value_object
     cli_command:
@@ -258,6 +267,7 @@ domain:
         model_id: cli_argument
         module: null
       description: A command-line interface command.
+      methods: {}
       name: CLI Command
       type: entity
     cli_interface_type:
@@ -294,6 +304,7 @@ domain:
         model_id: cli_argument
         module: null
       description: CLI App interface type.
+      methods: {}
       name: CLI Interface Type
       type: entity
     date_time_type_properties:
@@ -327,11 +338,12 @@ domain:
         module: null
       description: null
       methods:
-      - description: Factory method that returns a new DateTimeTypeProperties instance.
-        inner_return_type: date_time_type_properties
-        name: create
-        return_type: model
-        type: factory
+        create:
+          description: Factory method that returns a new DateTimeTypeProperties instance.
+          inner_return_type: date_time_type_properties
+          name: create
+          return_type: model
+          type: factory
       name: Date Time Type Properties
       type: value_object
     date_type_properties:
@@ -347,11 +359,12 @@ domain:
         module: null
       description: null
       methods:
-      - description: Factory method that returns a new DateTypeProperties instance.
-        inner_return_type: date_type_properties
-        name: create
-        return_type: model
-        type: factory
+        create:
+          description: Factory method that returns a new DateTypeProperties instance.
+          inner_return_type: date_type_properties
+          name: create
+          return_type: model
+          type: factory
       name: Date Type Properties
       type: value_object
     dict_type_properties:
@@ -367,63 +380,19 @@ domain:
         module: null
       description: null
       methods:
-      - description: Factory method that returns a new DictTypeProperties instance.
-        inner_return_type: dict_type_properties
-        name: create
-        return_type: model
-        type: factory
+        create:
+          description: Factory method that returns a new DictTypeProperties instance.
+          inner_return_type: dict_type_properties
+          name: create
+          return_type: model
+          type: factory
       name: Dictionary Type Properties
-      type: value_object
-    domain_model_method:
-      attributes:
-      - choices:
-        - factory
-        description: The domain method type.
-        name: type
-        required: true
-        type: str
-      - default: '[]'
-        description: The list of domain method parameters..
-        inner_type: model
-        inner_type_model_id: domain_method_parameter
-        name: parameters
-        type: list
-      class_name: DomainModelMethod
-      dependencies:
-      - class_name: DomainMethodParameter
-        dependency_type: attribute
-        model_id: domain_method_parameter
-        module: null
-      description: A domain method associated with a domain model or repository.
-      methods:
-      - description: Factory method that returns a new DomainMethod instance.
-        inner_return_type: domain_model_method
-        name: create
-        parameters:
-        - description: The model id of the return type if the return type or inner
-            return type is a model.
-          name: inner_type_model_id
-          required: false
-          type: str
-        return_type: model
-        type: factory
-      - description: Returns True if a parameter with the same name as the input parameter
-          exists within the domain method.
-        name: has_parameter
-        parameters:
-        - description: The parameter to check if it already exists in the method.
-          inner_type: domain_method_parameter
-          name: parameter
-          required: true
-          type: model
-        return_type: bool
-        type: behavior
-      name: Domain Method
       type: value_object
     domain_method_parameter:
       base_type_model_id: parameter
       class_name: DomainMethodParameter
       description: A parameter for a domain method.
+      methods: {}
       name: Domain Method Parameter
       type: value_object
     domain_model:
@@ -467,63 +436,71 @@ domain:
         module: null
       description: Domain Model for the application.
       methods:
-      - description: Creates a new Domain Model instance.
-        inner_return_type: domain_model
-        name: create
-        return_type: model
-        type: factory
-      - description: Checks to see if the domain model contains the same input method.
-        name: has_method
-        return_type: bool
-        type: behavior
-      - description: Adds a new method to the domain model.
-        name: add_method
-        type: behavior
-      - description: Returns the domain method with the input name.
-        inner_return_type: domain_model_method
-        name: get_method
-        parameters:
-        - description: The name of the method to retrieve.
-          name: method_name
-          required: true
-          type: str
-        return_type: model
-        type: behavior
-      - description: Returns True if the domain model already contains a method with
-          the same name as the input name.
-        name: has_attribute
-        parameters:
-        - description: The name of the attribute to check against the list of attributes
-            in the domain model.
-          name: attribute_name
-          required: true
-          type: str
-        return_type: bool
-        type: behavior
-      - description: Adds a new attribute to the domain model.
-        name: add_attribute
-        parameters:
-        - description: The attribute to add to the domain model.
-          name: attribute
-          required: true
-          type: model
-        type: behavior
-      - description: Retrieves an attribute from the domain model by attribute name.
-        name: get_attribute
-        parameters:
-        - description: The name of the attribute to retrieve from the domain model.
-          name: attribute_name
-          required: true
-          type: str
-        type: behavior
-      - description: Removes a property from the domain model.
-        name: remove_attribute
-        parameters:
-        - description: The attribute to remove from the domain model method.
-          name: attribute
-          required: true
-          type: model
-        type: behavior
+        add_attribute:
+          description: Adds a new attribute to the domain model.
+          name: add_attribute
+          parameters:
+          - description: The attribute to add to the domain model.
+            name: attribute
+            required: true
+            type: model
+          type: behavior
+        add_method:
+          description: Adds a new method to the domain model.
+          name: add_method
+          type: behavior
+        create:
+          description: Creates a new Domain Model instance.
+          inner_return_type: domain_model
+          name: create
+          return_type: model
+          type: factory
+        get_attribute:
+          description: Retrieves an attribute from the domain model by attribute name.
+          name: get_attribute
+          parameters:
+          - description: The name of the attribute to retrieve from the domain model.
+            name: attribute_name
+            required: true
+            type: str
+          type: behavior
+        get_method:
+          description: Returns the domain method with the input name.
+          inner_return_type: domain_model_method
+          name: get_method
+          parameters:
+          - description: The name of the method to retrieve.
+            name: method_name
+            required: true
+            type: str
+          return_type: model
+          type: behavior
+        has_attribute:
+          description: Returns True if the domain model already contains a method
+            with the same name as the input name.
+          name: has_attribute
+          parameters:
+          - description: The name of the attribute to check against the list of attributes
+              in the domain model.
+            name: attribute_name
+            required: true
+            type: str
+          return_type: bool
+          type: behavior
+        has_method:
+          description: Checks to see if the domain model contains the same input method.
+          name: has_method
+          return_type: bool
+          type: behavior
+        remove_attribute:
+          description: Removes a property from the domain model.
+          name: remove_attribute
+          parameters:
+          - description: The attribute to remove from the domain model method.
+            name: attribute
+            required: true
+            type: model
+          type: behavior
       name: App Domain Model
       type: entity
     domain_model_attribute:
@@ -541,17 +518,66 @@ domain:
         module: null
       description: A domain model attribute.
       methods:
-      - description: Factory method that returns a new DomainModelAttribute instance.
-        inner_return_type: domain_model_attribute
-        name: create
-        parameters:
-        - description: The id of the parent domain model.
-          name: parent_model_id
-          required: true
-          type: str
-        return_type: model
-        type: factory
+        create:
+          description: Factory method that returns a new DomainModelAttribute instance.
+          inner_return_type: domain_model_attribute
+          name: create
+          parameters:
+          - description: The id of the parent domain model.
+            name: parent_model_id
+            required: true
+            type: str
+          return_type: model
+          type: factory
       name: Domain Model Attribute
+      type: value_object
+    domain_model_method:
+      attributes:
+      - choices:
+        - factory
+        description: The domain method type.
+        name: type
+        required: true
+        type: str
+      - default: '[]'
+        description: The list of domain method parameters..
+        inner_type: model
+        inner_type_model_id: domain_method_parameter
+        name: parameters
+        type: list
+      class_name: DomainModelMethod
+      dependencies:
+      - class_name: DomainMethodParameter
+        dependency_type: attribute
+        model_id: domain_method_parameter
+        module: null
+      description: A domain method associated with a domain model or repository.
+      methods:
+        create:
+          description: Factory method that returns a new DomainMethod instance.
+          inner_return_type: domain_model_method
+          name: create
+          parameters:
+          - description: The model id of the return type if the return type or inner
+              return type is a model.
+            name: inner_type_model_id
+            required: false
+            type: str
+          return_type: model
+          type: factory
+        has_parameter:
+          description: Returns True if a parameter with the same name as the input
+            parameter exists within the domain method.
+          name: has_parameter
+          parameters:
+          - description: The parameter to check if it already exists in the method.
+            inner_type: domain_method_parameter
+            name: parameter
+            required: true
+            type: model
+          return_type: bool
+          type: behavior
+      name: Domain Method
       type: value_object
     function:
       attributes:
@@ -602,16 +628,17 @@ domain:
         module: null
       description: The base class for an app function.
       methods:
-      - description: Adds a new parameter to the function parameters list.
-        name: add_parameter
-        parameters:
-        - description: The parameter to add to the function parameters list.
-          inner_type: model
-          inner_type_model_id: parameter
-          name: parameter
-          required: true
-          type: model
-        type: behavior
+        add_parameter:
+          description: Adds a new parameter to the function parameters list.
+          name: add_parameter
+          parameters:
+          - description: The parameter to add to the function parameters list.
+            inner_type: model
+            inner_type_model_id: parameter
+            name: parameter
+            required: true
+            type: model
+          type: behavior
       name: Function
       type: entity
     list_type_properties:
@@ -629,11 +656,12 @@ domain:
         module: null
       description: null
       methods:
-      - description: Factory method that returns a new ListTypeProperties instance.
-        inner_return_type: list_type_properties
-        name: create
-        return_type: model
-        type: factory
+        create:
+          description: Factory method that returns a new ListTypeProperties instance.
+          inner_return_type: list_type_properties
+          name: create
+          return_type: model
+          type: factory
       name: List Type Properties
       type: value_object
     method:
@@ -686,15 +714,16 @@ domain:
         module: null
       description: The base class for an app class method.
       methods:
-      - description: Adds the input parameter to the list of method parameters.
-        name: add_parameter
-        parameters:
-        - description: The parameter to add to the method.
-          inner_type: parameter
-          name: parameter
-          required: false
-          type: model
-        type: behavior
+        add_parameter:
+          description: Adds the input parameter to the list of method parameters.
+          name: add_parameter
+          parameters:
+          - description: The parameter to add to the method.
+            inner_type: parameter
+            name: parameter
+            required: false
+            type: model
+          type: behavior
       name: Method
       type: value_object
     parameter:
@@ -727,6 +756,7 @@ domain:
         type: str
       class_name: Parameter
       description: The base class for an app parameter.
+      methods: {}
       name: Parameter
       type: value_object
     string_type_properties:
@@ -746,16 +776,18 @@ domain:
         module: null
       description: null
       methods:
-      - description: Factory method that returns a new StringTypeProperties instance.
-        inner_return_type: string_type_properties
-        name: create
-        return_type: model
-        type: factory
+        create:
+          description: Factory method that returns a new StringTypeProperties instance.
+          inner_return_type: string_type_properties
+          name: create
+          return_type: model
+          type: factory
       name: String Type Properties
       type: value_object
     type_properties:
       attributes: []
       class_name: TypeProperties
+      methods: {}
       name: Type Properties
       type: value_object
   repositories:
@@ -831,7 +863,7 @@ errors:
     message:
       en_US: Domain model with id "{}" not found
   DOMAIN_MODEL_RETURN_TYPE_NOT_FOUND:
-    error_code : '000020016'
+    error_code: '000020016'
     message:
       en_US: Domain model method "{}" has invalid model return type "{}".
   ENDPOINT_NOT_FOUND:
