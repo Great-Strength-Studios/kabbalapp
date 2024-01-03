@@ -563,6 +563,10 @@ domain:
             name: inner_type_model_id
             required: false
             type: str
+          - description: The name of the method to be printed.
+            name: method_name
+            required: false
+            type: str
           return_type: model
           type: factory
         has_parameter:

@@ -208,15 +208,15 @@ class DomainModelMethod(Method):
     parameters = t.ListType(t.ModelType(DomainMethodParameter), default=[])
 
     @staticmethod
-    def create(name: str, type: str, description: str, return_type: str = None, inner_return_type: str = None, return_type_model_id: str = None) -> 'DomainModelMethod':
+    def create(name: str, type: str, description: str, method_name: str = None, return_type: str = None, inner_return_type: str = None, return_type_model_id: str = None) -> 'DomainModelMethod':
 
         # Create new model instance.
         result = DomainModelMethod()
 
         # Load attributes from passed in values.
         result.name = name
-        # Set the method name to the snake case version of the input name.
-        result.method_name = name.lower().replace(' ', '_')
+        # Set the method name to the snake case version of the input name if it is not provided.
+        result.method_name = method_name if method_name is not None else name.lower().replace(' ', '_')
         result.type = type
         result.description = description
         result.return_type = return_type
