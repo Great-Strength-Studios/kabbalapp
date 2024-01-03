@@ -128,7 +128,7 @@ class AddDomainModelMethod(RequestEvent):
     
     class Options():
         roles = {
-            'domain_method.create': blacklist('parent_id'),
+            'domain_method.create': blacklist('parent_model_id'),
         }
 
 class AddDomainMethodParameter(RequestEvent):
