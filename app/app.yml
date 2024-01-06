@@ -1174,7 +1174,7 @@ interfaces:
                 - -t
                 required: true
                 type: str
-              - help: The id of the parent domain model or repository.
+              - help: parent domain model id
                 name_or_flags:
                 - --parent-model-id
                 - -p
