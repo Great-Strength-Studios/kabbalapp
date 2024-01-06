@@ -1196,7 +1196,7 @@ interfaces:
                 - list
                 - dict
                 - model
-                help: The domain method return type.
+                help: method return type
                 name_or_flags:
                 - --return-type
                 type: str
