@@ -1180,7 +1180,7 @@ interfaces:
                 - -p
                 required: true
                 type: str
-              - help: The domain method description for inline documentation.
+              - help: description for inline documentation
                 name_or_flags:
                 - --description
                 - -d
