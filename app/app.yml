@@ -1161,7 +1161,7 @@ interfaces:
           subcommands:
             add_method:
               arguments:
-              - help: The name of the domain method.
+              - help: method name
                 name_or_flags:
                 - name
                 type: str
