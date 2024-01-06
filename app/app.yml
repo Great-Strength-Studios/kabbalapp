@@ -1208,7 +1208,7 @@ interfaces:
                 - date
                 - datetime
                 - model
-                help: The model id of the return type if the return type is a model.
+                help: inner return type if method return type is list or dict
                 name_or_flags:
                 - --inner-return-type
                 type: str
