@@ -1161,26 +1161,26 @@ interfaces:
           subcommands:
             add_method:
               arguments:
-              - help: The name of the domain method.
+              - help: method name
                 name_or_flags:
                 - name
                 type: str
               - choices:
                 - factory
                 - behavior
-                help: The domain method type.
+                help: method type
                 name_or_flags:
                 - --type
                 - -t
                 required: true
                 type: str
-              - help: The id of the parent domain model or repository.
+              - help: parent domain model id
                 name_or_flags:
                 - --parent-model-id
                 - -p
                 required: true
                 type: str
-              - help: The domain method description for inline documentation.
+              - help: description for inline documentation
                 name_or_flags:
                 - --description
                 - -d
@@ -1196,7 +1196,7 @@ interfaces:
                 - list
                 - dict
                 - model
-                help: The domain method return type.
+                help: method return type
                 name_or_flags:
                 - --return-type
                 type: str
@@ -1208,7 +1208,7 @@ interfaces:
                 - date
                 - datetime
                 - model
-                help: The model id of the return type if the return type is a model.
+                help: inner return type if method return type is list or dict
                 name_or_flags:
                 - --inner-return-type
                 type: str
