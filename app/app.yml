@@ -1168,7 +1168,7 @@ interfaces:
               - choices:
                 - factory
                 - behavior
-                help: The domain method type.
+                help: method type
                 name_or_flags:
                 - --type
                 - -t
